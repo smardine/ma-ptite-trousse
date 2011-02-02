@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/container"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+ <ListView
+        android:id="@+id/list"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@color/app_color" 
+		android:textColor="@color/text_color" 
+        >
+<RelativeLayout></RelativeLayout>
+</ListView>
+
+
+
+        
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_height="fill_parent" 
+    android:layout_width="fill_parent" 
+    android:background="@color/app_color"
+    android:id="@+id/linearCategorie"
+    android:visibility="gone">
+     
+     <ScrollView android:layout_marginBottom="1dip" android:id="@+id/ScrollView01" android:layout_height="fill_parent" android:layout_width="fill_parent">
+        <RelativeLayout android:layout_marginTop="-1dip" android:gravity="bottom" android:layout_height="wrap_content" android:layout_width="fill_parent" android:background="@color/app_color">
+	        <ListView android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/produitListViewRecherche" android:background="@color/app_color" android:layout_below="@+id/ImageViewVisage"></ListView>
+			<Button android:clickable="true" 
+android:layout_height="wrap_content" 
+android:layout_width="wrap_content" 
+android:textColor="@color/text_color" 
+android:text="uoter" 
+android:id="@+id/BtRetour" 
+> </Button>
+        </RelativeLayout>  
+            
+     </ScrollView>
+
+
+</LinearLayout>
+<RelativeLayout></RelativeLayout>
+</FrameLayout>
+
+	

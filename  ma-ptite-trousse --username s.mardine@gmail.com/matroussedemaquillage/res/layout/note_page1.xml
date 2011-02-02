@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_height="fill_parent" 
+    android:layout_width="fill_parent" 
+    android:background="@color/app_color">
+     <LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+android:id="@+id/LinearLayoutNote1"
+ android:background="@color/app_color" 
+  android:layout_width="fill_parent" 
+  android:orientation="horizontal" 
+  android:layout_height="wrap_content" 
+  android:visibility="visible" 
+  android:layout_below="@+id/ImageView01_note1" 
+  android:layout_marginTop="10dip"
+  android:layout_marginLeft="40dip" android:layout_marginRight="35dip">
+	
+<ImageView android:id="@+id/IvAddNote" 
+android:layout_height="wrap_content" 
+android:src="@drawable/button_ajouter" 
+android:layout_width="0dp" 
+android:visibility="visible" 
+android:layout_weight="1" 
+android:layout_gravity="center_vertical|center_horizontal"></ImageView>
+<ImageView 
+android:layout_width="0dp" 
+android:visibility="visible" 
+android:layout_weight="1"
+android:layout_height="wrap_content" 
+android:id="@+id/IvJeterNote" 
+android:src="@drawable/button_jeter" 
+android:layout_gravity="center_vertical|center_horizontal"></ImageView>
+
+</LinearLayout>
+<ImageView android:id="@+id/ImageView01_note1" android:layout_alignParentTop="true" android:layout_alignParentBottom="false" android:visibility="visible" android:background="@drawable/theme1_background_bande_haut" android:layout_width="wrap_content" android:layout_height="wrap_content"/>  	
+<ImageView android:id="@+id/ImageView03_note1" android:layout_alignParentLeft="true" android:background="@drawable/theme1_background_bande_gauche" android:layout_height="wrap_content" android:layout_width="wrap_content"/>
+<ImageView android:id="@+id/ImageView04_note1" android:layout_alignParentRight="true" android:background="@drawable/theme1_background_bande_droite" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+	 
+	
+	
+	<ListView android:layout_height="wrap_content"  
+	android:id="@+id/produitListViewNote" 
+	android:background="@color/app_color" 
+	android:layout_marginLeft="40dip" 
+	android:layout_below="@+id/LinearLayoutNote1" 
+	android:layout_marginTop="20dip" android:layout_width="fill_parent" android:layout_marginRight="55dip" android:divider="@drawable/separateur" android:dividerHeight="1dip"> 
+	</ListView>
+	
+</RelativeLayout>
+
