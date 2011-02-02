@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+       
+  <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_height="fill_parent" android:layout_width="fill_parent" android:background="@color/app_color">
+   
+     <ScrollView android:layout_marginBottom="1dip" android:id="@+id/ScrollView01_page3" android:layout_height="fill_parent" android:layout_width="fill_parent">  
+		<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical" android:layout_height="wrap_content" android:layout_width="fill_parent" android:background="@color/app_color"> 
+    		<ImageView android:id="@+id/ImageView03_page3" android:layout_alignParentLeft="true" android:gravity="top" android:background="@drawable/theme_bisounours_background_bande_gauche" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+			<ImageView android:id="@+id/ImageView04_page3" android:layout_alignParentRight="true" android:gravity="top" android:background="@drawable/theme_bisounours_background_bande_droite" android:layout_height="wrap_content" android:layout_width="wrap_content"/><ImageView android:id="@+id/ImageView01_page2" android:layout_alignParentTop="true" android:layout_alignParentBottom="false" android:layout_height="140dip" android:background="@drawable/theme_bisounours_background_bande_haut" android:layout_width="fill_parent" />
+	        	        
+	        <TextView android:id="@+id/textview_Page2" android:layout_width="360dip" android:layout_marginLeft="64dip" android:layout_marginRight="58dip" android:layout_height="wrap_content" android:text="Tapez au moins les deux premières lettres de la marque " android:layout_below="@+id/ImageView01_page2" android:layout_centerHorizontal="true" android:layout_marginTop="25dip"/>
+    		<AutoCompleteTextView android:id="@+id/autocomplete_marque_Page2" android:layout_width="300dip" android:layout_height="wrap_content" android:layout_marginLeft="64dip" android:layout_marginRight="58dip" android:layout_below="@+id/textview_Page2" android:layout_centerHorizontal="true" android:layout_marginTop="10dip" android:maxLines="1" android:clickable="true" android:completionThreshold="1"/>
+			<Button android:id="@+id/ButtonValider2_Page2" android:layout_height="wrap_content" android:layout_width="wrap_content" android:layout_below="@+id/autocomplete_marque_Page2" android:text="Valider" android:gravity="right" android:layout_centerHorizontal="true" android:layout_marginTop="25dip"/>
+        </RelativeLayout>
+	</ScrollView>
+</LinearLayout>

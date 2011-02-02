@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_height="fill_parent" 
+    android:layout_width="fill_parent" 
+    android:background="@color/app_color">
+
+	<ImageView android:id="@+id/ImageView01_page4" android:layout_below="@+id/ButtonValiderFinal_page4" android:layout_alignParentTop="true" android:layout_alignParentBottom="false" android:layout_height="140dip" android:background="@drawable/theme1_background_bande_haut" android:layout_width="fill_parent"></ImageView>
+  		<ScrollView android:layout_marginBottom="1dip" android:id="@+id/ScrollView01_page4" android:layout_height="fill_parent" android:layout_width="fill_parent">
+			<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical" android:layout_height="fill_parent" android:layout_width="fill_parent" android:background="@color/app_color"> 
+				<ImageView android:id="@+id/ImageView03_page4" android:layout_height="wrap_content" android:layout_alignParentLeft="true" android:background="@drawable/theme1_background_bande_gauche" android:layout_width="31dip"></ImageView> 
+				<ImageView android:id="@+id/ImageView04_page4" android:layout_height="wrap_content" android:layout_alignParentRight="true" android:layout_width="31dip" android:background="@drawable/theme1_background_bande_droite"></ImageView>
+				      
+				
+				<TextView 	android:id="@+id/CategorieRecap_page4" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Categorie :" android:textColor="@color/text_color" android:background="@color/app_color" android:layout_marginLeft="64dip" android:layout_marginRight="58dip" android:layout_centerHorizontal="true" android:layout_marginTop="10dip"/>  
+				<TextView 	android:id="@+id/CategorieRecap2_page4" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="nom de la catégorie" android:textColor="@color/text_color" android:background="@color/app_color" android:layout_marginLeft="64dip" android:layout_marginRight="58dip" android:layout_below="@+id/CategorieRecap_page4" android:layout_centerHorizontal="true" android:layout_marginTop="2dip" android:textStyle="italic"/>  
+				              
+				<TextView 	android:id="@+id/MarqueRecap_page4" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Marque :" android:textColor="@color/text_color" android:background="@color/app_color" android:layout_below="@+id/CategorieRecap2_page4" android:layout_centerHorizontal="true" android:layout_marginLeft="64dip" android:layout_marginRight="58dip" android:layout_marginTop="5dip"/> 
+				<TextView 	android:id="@+id/MarqueRecap2_page4" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="nom de la marque" android:textColor="@color/text_color" android:background="@color/app_color" android:layout_below="@+id/MarqueRecap_page4" android:layout_centerHorizontal="true" android:layout_marginLeft="64dip" android:layout_marginRight="58dip" android:layout_marginTop="2dip" android:textStyle="italic"/>             
+				                                 
+				<TextView 	android:id="@+id/NomRecap_page4" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Nom du produit :" android:textColor="@color/text_color" android:background="@color/app_color" android:layout_below="@+id/MarqueRecap2_page4" android:layout_centerHorizontal="true" android:layout_marginLeft="64dip" android:layout_marginRight="58dip" android:layout_marginTop="5dip"/>      
+				<TextView 	android:id="@+id/NomRecap2_page4" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="nom produit" android:textColor="@color/text_color" android:background="@color/app_color" android:layout_below="@+id/NomRecap_page4" android:layout_centerHorizontal="true" android:layout_marginLeft="64dip" android:layout_marginRight="58dip" android:layout_marginTop="2dip" android:textStyle="italic"/>     
+				            
+				<TextView 	android:id="@+id/TeinteRecap_page4" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Numero de teinte :" android:textColor="@color/text_color" android:background="@color/app_color" android:layout_below="@+id/NomRecap2_page4" android:layout_centerHorizontal="true" android:layout_marginLeft="64dip" android:layout_marginRight="58dip" android:layout_marginTop="5dip"/> 
+				<TextView 	android:id="@+id/TeinteRecap2_page4" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="numteinte" android:textColor="@color/text_color" android:background="@color/app_color" android:layout_below="@+id/TeinteRecap_page4" android:layout_centerHorizontal="true" android:layout_marginLeft="64dip" android:layout_marginRight="58dip" android:layout_marginTop="2dip" android:textStyle="italic"/> 
+				         	
+				<TextView 	android:id="@+id/dateDisplayRecap_page4" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Date d'achat :" android:textColor="@color/text_color" android:background="@color/app_color" android:layout_below="@+id/TeinteRecap2_page4" android:layout_centerHorizontal="true" android:layout_marginLeft="64dip" android:layout_marginRight="58dip" android:layout_marginTop="5dip"/> 
+				<TextView 	android:id="@+id/dateDisplayRecap2_page4" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="date" android:textColor="@color/text_color" android:background="@color/app_color" android:layout_below="@+id/dateDisplayRecap_page4" android:layout_centerHorizontal="true" android:layout_marginLeft="64dip" android:layout_marginRight="58dip" android:layout_marginTop="2dip" android:textStyle="italic"/>            
+				             
+				<TextView 	android:id="@+id/DureeVieRecap_page4" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Durée de vie :" android:textColor="@color/text_color" android:background="@color/app_color" android:layout_below="@+id/dateDisplayRecap2_page4" android:layout_centerHorizontal="true" android:layout_marginLeft="64dip" android:layout_marginRight="58dip" android:layout_marginTop="5dip"/>  
+				<TextView 	android:id="@+id/DureeVieRecap2_page4" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="durrevie" android:textColor="@color/text_color" android:background="@color/app_color" android:layout_below="@+id/DureeVieRecap_page4" android:layout_centerHorizontal="true" android:layout_marginLeft="64dip" android:layout_marginRight="58dip" android:layout_marginTop="2dip" android:textStyle="italic"/>          	
+				         	
+				<Button 	android:id="@+id/ButtonValiderFinal_page4" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Valider" android:textColor="@color/text_color" android:layout_below="@+id/DureeVieRecap2_page4" android:layout_centerHorizontal="true" android:layout_marginTop="5dip"/> 
+			</RelativeLayout>
+		</ScrollView>
+</LinearLayout>
+

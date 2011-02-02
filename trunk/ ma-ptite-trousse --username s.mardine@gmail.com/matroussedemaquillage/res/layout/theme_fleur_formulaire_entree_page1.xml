@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_height="fill_parent"
+     android:layout_width="fill_parent" 
+     android:background="@color/app_color"
+     android:id="@+id/layout_page1">
+      
+     <ScrollView android:layout_marginBottom="1dip" android:id="@+id/ScrollView01_page1" android:layout_height="fill_parent" android:layout_width="fill_parent">
+        <RelativeLayout android:layout_marginTop="-1dip" android:gravity="bottom" android:layout_height="wrap_content" android:layout_width="fill_parent" android:background="@color/app_color">
+			<ImageView android:id="@+id/ImageView03_page1" android:layout_alignParentLeft="true" android:background="@drawable/theme_fleur_background_bande_gauche" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+			<ImageView android:id="@+id/ImageView04_page1" android:layout_alignParentRight="true" android:background="@drawable/theme_fleur_background_bande_droite" android:layout_height="wrap_content" android:layout_width="wrap_content"/><ImageView android:id="@+id/ImageView01_page1" android:layout_alignParentTop="true" android:layout_alignParentBottom="false" android:background="@drawable/theme_fleur_background_bande_haut" android:layout_height="wrap_content" android:layout_width="wrap_content" />
+     		
+	        
+	        <ImageView android:id="@+id/ImageViewVisage_page1" android:layout_width="wrap_content" android:layout_below="@+id/ImageView01_page1" android:background="@drawable/theme_fleur_button_categorie_visage" android:layout_centerHorizontal="true" android:layout_height="wrap_content" android:layout_marginTop="10dip"/>
+			
+			<ImageView android:id="@+id/ImageViewYeux_page1" android:layout_width="wrap_content" android:layout_below="@+id/ImageViewVisage_page1" android:background="@drawable/theme_fleur_button_categorie_yeux" android:layout_centerHorizontal="true" android:layout_height="wrap_content" android:layout_marginTop="10dip"/>
+			
+			<ImageView android:id="@+id/ImageViewLevres_page1" android:layout_below="@+id/ImageViewYeux_page1" android:layout_width="wrap_content" android:background="@drawable/theme_fleur_button_categorie_levres" android:layout_marginTop="10dip" android:layout_height="wrap_content" android:layout_centerHorizontal="true"/>
+			
+			<ImageView android:id="@+id/ImageViewAutres_page1" android:layout_below="@+id/ImageViewLevres_page1" android:layout_width="wrap_content" android:background="@drawable/theme_fleur_button_categorie_autres" android:layout_marginTop="10dip" android:layout_centerHorizontal="true" android:layout_height="wrap_content"/>
+			
+			
+        </RelativeLayout>  
+     </ScrollView>
+     	
+</LinearLayout>
+
+
+
+ 
+ 

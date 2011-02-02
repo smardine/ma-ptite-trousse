@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_height="fill_parent" 
+    android:layout_width="fill_parent" 
+    android:background="@color/app_color">
+
+	<ImageView android:id="@+id/ImageView01_notesaisie" android:layout_alignParentTop="true" android:layout_alignParentBottom="false" android:layout_height="140dip" android:visibility="visible" android:background="@drawable/theme1_background_bande_haut" android:layout_width="fill_parent"/>
+  		<ScrollView android:layout_marginBottom="1dip" android:id="@+id/ScrollView01_page4" android:layout_height="fill_parent" android:layout_width="fill_parent">
+			<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical" android:layout_height="fill_parent" android:layout_width="fill_parent" android:background="@color/app_color"> 
+				  	
+     			<ImageView android:id="@+id/ImageView03_notesaisie" android:layout_height="1200dip" android:layout_alignParentLeft="true" android:background="@drawable/theme1_background_bande_gauche" android:layout_width="31dip"/>
+	 			<ImageView android:id="@+id/ImageView04_notesaisie" android:layout_height="1200dip" android:layout_alignParentRight="true" android:layout_width="31dip" android:background="@drawable/theme1_background_bande_droite"/>
+	 			<TextView android:layout_height="wrap_content" android:layout_below="@id/ImageView01_notesaisie" android:layout_marginTop="20dip" android:layout_marginLeft="40dip" android:layout_marginRight="60dip" android:layout_width="fill_parent" android:hint="Titre" android:id="@+id/TvTitreNote" android:textColor="@color/text_color" android:textSize="16sp" android:textStyle="bold" android:visibility="visible"></TextView>
+				<TextView android:text="@+id/EditText01" 
+android:id="@+id/TvMessageNote" 
+android:layout_below="@+id/TvTitreNote" 
+android:visibility="visible" 
+android:maxLines="25" 
+android:inputType="textMultiLine" 
+android:layout_width="fill_parent" 
+android:layout_marginLeft="40dip" 
+android:layout_marginRight="60dip" 
+android:textColor="@color/text_color" 
+android:layout_height="wrap_content" 
+android:lineSpacingExtra="1.0px" 
+android:gravity="top"
+android:drawSelectorOnTop="true" 
+android:background="@drawable/pink_gradient_filled_box" 
+android:minLines="15" android:layout_marginTop="20dip"></TextView><ImageView android:background="@drawable/button_modifier" android:layout_height="25dip" android:layout_width="25dip" android:layout_marginRight="5dip" android:layout_toLeftOf="@+id/ImageView04_notesaisie" android:layout_marginTop="20dip" android:id="@+id/IvChangerTitre"></ImageView><ImageView android:layout_marginTop="10dip" android:layout_height="25dip" android:layout_width="25dip" android:layout_marginRight="5dip" android:layout_toLeftOf="@+id/ImageView04_notesaisie" android:background="@drawable/button_modifier" android:id="@+id/IvChangerMessage" android:layout_below="@+id/IvChangerTitre"></ImageView>
+
+
+ 
+
+</RelativeLayout>
+</ScrollView>
+</LinearLayout>
+
