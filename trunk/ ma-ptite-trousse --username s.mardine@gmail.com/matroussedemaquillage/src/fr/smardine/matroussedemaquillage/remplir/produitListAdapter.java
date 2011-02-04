@@ -33,7 +33,7 @@ public class produitListAdapter extends BaseAdapter implements OnCheckedChangeLi
 	public int getCount() {
 		// TODO Auto-generated method stub
 		return this.produits.size();
-	}
+	}  
 
 	@Override
 	public Object getItem(int arg0) {

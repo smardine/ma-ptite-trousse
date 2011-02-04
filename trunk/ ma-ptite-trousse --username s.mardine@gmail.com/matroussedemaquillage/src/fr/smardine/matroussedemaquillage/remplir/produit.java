@@ -9,4 +9,4 @@ public class produit {
 		nom = _nom;
 		checked = _checked;
 	}
-}
+}  

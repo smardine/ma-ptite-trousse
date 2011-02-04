@@ -1,10 +1,7 @@
 package fr.smardine.matroussedemaquillage.variableglobale;
 
 public enum EnCategorieVisage {
-	Blush (0,"Blush"),
-	Correcteurs_Bases(1, "Correcteurs - Bases"),
-	FONDS_DE_TEINTS(2, "Fonds de teint"), 
-	Poudres(3,"Poudres");
+	Blush(0, "Blush"), Correcteurs_Bases(1, "Correcteurs - Bases"), FONDS_DE_TEINTS(2, "Fonds de teint"), Poudres(3, "Poudres");
 
 	private int code;
 	private String lib;
@@ -13,12 +10,11 @@ public enum EnCategorieVisage {
 		code = p_code;
 		lib = p_lib;
 	}
-	
-	
 
-	public Long getIdent (){
-		return Long.valueOf(ordinal()); 
+	public Long getIdent() {
+		return Long.valueOf(ordinal());
 	}
+
 	public int getCode() {
 		return code;
 	}
@@ -34,7 +30,5 @@ public enum EnCategorieVisage {
 	public void setLib(String p_lib) {
 		lib = p_lib;
 	}
-
-
 
 }
