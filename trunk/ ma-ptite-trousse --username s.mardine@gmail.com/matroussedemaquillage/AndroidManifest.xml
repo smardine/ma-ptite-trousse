@@ -12,7 +12,7 @@
 
     
 
-<activity android:name=".remplir.formulaire_entree_page1bis"></activity><activity android:screenOrientation="portrait" android:name=".remplir.formulaire_entree_page3"></activity>
+<activity android:name=".remplir.formulaire_entree_page1bis" android:screenOrientation="portrait"></activity><activity android:screenOrientation="portrait" android:name=".remplir.formulaire_entree_page3"></activity>
 
 
 
