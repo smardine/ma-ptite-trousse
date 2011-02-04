@@ -49,6 +49,7 @@ public class choix_produit_a_duppliquer extends Activity implements OnItemClickL
 	String DateChoisie = "";
 	String numTeinte = "";
 	String nomProduitRecup = "";
+	String SousCat="";
 	int VISIBLE = 1, INVISIBLE = 4, GONE = 8;
 
 	/** Called when the activity is first created. */
@@ -373,7 +374,7 @@ public class choix_produit_a_duppliquer extends Activity implements OnItemClickL
 
 		ArrayList[] trousse_final = objBd.renvoi_liste_TrousseFinalComplete(Colonnes, IdProduit);
 		nomProduitRecup = trousse_final[0].toString().replace("[", "").replace("]", "");
-		String SousCat = trousse_final[1].toString().replace("[", "").replace("]", "");
+		SousCat = trousse_final[1].toString().replace("[", "").replace("]", "");
 		numTeinte = trousse_final[3].toString().replace("[", "").replace("]", "");
 		DureeVie = trousse_final[4].toString().replace("[", "").replace("]", "");
 		DateChoisie = trousse_final[6].toString().replace("[", "").replace("]", "");

@@ -30,7 +30,7 @@ import fr.smardine.matroussedemaquillage.variableglobale.EnTheme;
 public class Main extends Activity implements OnClickListener {
 	ImageView BtRemplir, BtPerimé, BtDuppliquer, BtNotes;
 	Intent intentFormPage1, intentRecherche, intentDupplique, intentParametres, intentNote;
-	AlertDialog.Builder adSortie, adHelp;
+	AlertDialog.Builder adSortie, adHelp,adInfoProduitPerimé;
 	BDAcces objBd;
 	Context ctx = Main.this;
 	boolean nouveau = false, dupplique = false;
@@ -40,6 +40,26 @@ public class Main extends Activity implements OnClickListener {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		// ExceptionHandler.register(this, "http://simon.mardine.free.fr/trousse_maquillage/test/server.php","ma_ptite_trousse");
+		
+		adInfoProduitPerimé = new AlertDialog.Builder(this);
+		adInfoProduitPerimé.setTitle("Alerte");
+		adInfoProduitPerimé.setMessage("Un ou plusieur(s) produit(s) sont perimé(s) ou arrivent a leur date de permeption, voulez vous afficher ces produits?\n"
+						+ "Vous pouvez désactiver cette alerte en passant par le bouton \"menu\" puis \"parametre\"");
+		adInfoProduitPerimé.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
+
+			@Override
+			public void onClick(DialogInterface dialog, int id) {
+				
+				Intent intentRecherche = new Intent(Main.this, recherchetabsbuttons.class);
+				intentRecherche.putExtra("calledFromMain", true);
+				// on demarre la nouvelle activité
+				startActivity(intentRecherche);
+				finish();
+
+			}
+		});
+		adInfoProduitPerimé.setNegativeButton("Non", null);
+		
 		adSortie = new AlertDialog.Builder(ctx);
 		adSortie.setTitle("Petite vérification");
 		adSortie.setIcon(R.drawable.ad_question);
@@ -300,6 +320,14 @@ public class Main extends Activity implements OnClickListener {
 		 */
 
 		ChoisiLeTheme();
+		
+		boolean isLaunchFromEntrypoint = getIntent().getBooleanExtra("calledFromEntryPoint", false);
+		if (isLaunchFromEntrypoint){
+			boolean isMessageAlerteAAfficher = getIntent().getBooleanExtra("AfficheProduitPerimé", false);
+			if (isMessageAlerteAAfficher){
+				adInfoProduitPerimé.show();
+			}
+		}
 
 		/*
 		 * AlphaAnimation anim11 = new AlphaAnimation(1, 0.2f); anim11.setDuration (5000); BtRemplir.startAnimation (anim11);
