@@ -537,7 +537,7 @@ protected void onResume() {
 	   	 System.out.println("Nombre de champ modifié : "+nbdechamp);
 	   	 objBd.close();
 	   	 
-    }
+    }  
    
     if (IsCalledFromPage2){
     	MarqueChoisie = getIntent().getStringExtra("MarqueChoisie").trim();

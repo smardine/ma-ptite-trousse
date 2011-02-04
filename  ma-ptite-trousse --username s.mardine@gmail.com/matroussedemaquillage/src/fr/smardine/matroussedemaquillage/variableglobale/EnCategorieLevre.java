@@ -1,9 +1,8 @@
 package fr.smardine.matroussedemaquillage.variableglobale;
 
 public enum EnCategorieLevre {
-	Crayons_contour (0,"Crayons contour"),
-	RougesAlevres(1,"Rouges à lèvres");
-	
+	Crayons_contour(0, "Crayons contour"), RougesAlevres(1, "Rouges à lèvres");
+
 	private int code;
 	private String lib;
 
@@ -11,12 +10,11 @@ public enum EnCategorieLevre {
 		code = p_code;
 		lib = p_lib;
 	}
-	
-	
 
-	public Long getIdent (){
-		return Long.valueOf(ordinal()); 
+	public Long getIdent() {
+		return Long.valueOf(ordinal());
 	}
+
 	public int getCode() {
 		return code;
 	}

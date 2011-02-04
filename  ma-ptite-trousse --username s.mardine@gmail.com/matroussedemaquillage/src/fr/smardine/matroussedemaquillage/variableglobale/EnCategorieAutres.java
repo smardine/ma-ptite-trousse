@@ -1,9 +1,8 @@
 package fr.smardine.matroussedemaquillage.variableglobale;
 
 public enum EnCategorieAutres {
-	Pinceaux (0,"Pinceaux"),
-	VernisAongles(1,"Vernis à ongles");
-	
+	Pinceaux(0, "Pinceaux"), VernisAongles(1, "Vernis à ongles");
+
 	private int code;
 	private String lib;
 
@@ -11,12 +10,11 @@ public enum EnCategorieAutres {
 		code = p_code;
 		lib = p_lib;
 	}
-	
-	
 
-	public Long getIdent (){
-		return Long.valueOf(ordinal()); 
+	public Long getIdent() {
+		return Long.valueOf(ordinal());
 	}
+
 	public int getCode() {
 		return code;
 	}

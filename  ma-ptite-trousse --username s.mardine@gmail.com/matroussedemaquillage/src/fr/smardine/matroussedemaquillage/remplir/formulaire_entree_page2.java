@@ -467,7 +467,7 @@ protected void onResume() {
   		    numTeinte=getIntent().getStringExtra("NumTeinte").trim();
   		    DureeVie=getIntent().getStringExtra("DurreeDeVie").trim();
   	  }	
-  	
+  	  
   	if (IsCalledFromPage3){
   	 MarqueChoisie=getIntent().getStringExtra ("MarqueChoisie").trim();   
      int taille=MarqueChoisie.length();
