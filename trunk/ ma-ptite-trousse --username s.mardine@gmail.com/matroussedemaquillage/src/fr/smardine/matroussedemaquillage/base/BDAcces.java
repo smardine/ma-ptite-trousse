@@ -938,6 +938,68 @@ public class BDAcces {
 		}
 	}
 
+	public ArrayList[] renvoi_liste_TrousseFinalAvecFiltrage(String ScriptSQL, String[] p_colonnes) {
+		// String SQL = "SELECT " + p_colonnes + " FROM produit_Enregistre where nom_souscatergorie LIKE '%?%'";
+
+		Cursor objCursor = mDb.rawQuery(ScriptSQL, null);
+		int iPostidProduit = objCursor.getColumnIndex(p_colonnes[0]);
+		int iPostnomProduit = objCursor.getColumnIndex(p_colonnes[1]);
+		int iPostDateAchat = objCursor.getColumnIndex(p_colonnes[2]);
+		int iPostDateAchat1 = objCursor.getColumnIndex(p_colonnes[3]);
+
+		int itotal = objCursor.getCount();
+		ArrayList<String> aTableRetourId = new ArrayList<String>();
+		ArrayList<String> aTableRetourNom = new ArrayList<String>();
+		ArrayList<String> aTableRetourDateAchat = new ArrayList<String>();
+		ArrayList<String> aTableRetourDateAchat1 = new ArrayList<String>();
+
+		objCursor.moveToFirst();
+		ArrayList[] aTableRetour = new ArrayList[4];
+
+		/* Check if our result was valid. */
+		if (objCursor != null) {
+			for (int i = 0; i < itotal; i++) {
+				String resultId = "", resultnom_produits = "", resultDateAchat = "", resultDateAchat1 = "";// ,resultDatePeremption="";
+				resultId = objCursor.getString(iPostidProduit);
+				resultnom_produits = objCursor.getString(iPostnomProduit);
+				resultDateAchat = objCursor.getString(iPostDateAchat);
+				resultDateAchat1 = objCursor.getString(iPostDateAchat1);
+
+				if (!resultId.equals(null)) {
+					aTableRetourId.add(resultId);
+				} else {
+					aTableRetourId.add("vide");
+				}
+				if (!resultnom_produits.equals(null)) {
+					aTableRetourNom.add(resultnom_produits);
+				} else {
+					aTableRetourNom.add("vide");
+				}
+
+				if (!resultDateAchat.equals(null)) {
+					aTableRetourDateAchat.add(resultDateAchat);
+				} else {
+					aTableRetourDateAchat.add("vide");
+				}
+
+				if (!resultDateAchat1.equals(null)) {
+					aTableRetourDateAchat1.add(resultDateAchat1);
+				} else {
+					aTableRetourDateAchat1.add("vide");
+				}
+
+				objCursor.moveToNext();
+			}
+		}
+		objCursor.close();
+		aTableRetour[0] = aTableRetourId;
+		aTableRetour[1] = aTableRetourNom;
+		aTableRetour[2] = aTableRetourDateAchat;
+		aTableRetour[3] = aTableRetourDateAchat1;
+
+		return aTableRetour;
+	}
+
 	@SuppressWarnings("rawtypes")
 	public ArrayList[] renvoi_liste_TrousseFinal(String[] colonne, String OrderBy, String GroupBy, String condition, String[] conditionArgs) {
 
