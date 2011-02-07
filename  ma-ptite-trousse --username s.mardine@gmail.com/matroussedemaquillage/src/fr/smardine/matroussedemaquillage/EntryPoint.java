@@ -74,8 +74,7 @@ public class EntryPoint extends Activity {
 			// on demarre la nouvelle activité
 			startActivity(intentRecherche);
 			finish();
-			
-			
+
 		} else {
 			remplissageBase();
 			Intent intentMain = new Intent(EntryPoint.this, Main.class);
@@ -152,11 +151,9 @@ public class EntryPoint extends Activity {
 		super.onResume();
 		handler.removeCallbacks(updateTimeTask);
 		handler.postDelayed(updateTimeTask, 1000);
-		
+
 		@SuppressWarnings("unused")
 		AsyncTask<?, ?, ?> execute = new CheckTask().execute("");
-
-		
 
 	}
 
@@ -271,26 +268,25 @@ public class EntryPoint extends Activity {
 
 		objBd.open();
 		/* int nbLigneModifiée = */objBd.majTable(Table, modifiedValues, whereClause, whereArgs);
-		 objBd.close();
+		objBd.close();
 
 	}
 
 	public void remplissageBase() {
 		// TODO Auto-generated method stub
-//		 try{
-//		
-//		 objBd.open();
-//		 String [] ScriptSql = G_remplirBase.SCRIPT_REMPLIR_BASE_TEST;
-//		 for (int i=0;i<ScriptSql.length;i++){
-//		 objBd.execSQL(ScriptSql[i]);
-//		 }
-//		 objBd.close();
-//		
-//		
-//		 //objBd.close();
-//		 }catch (Exception e){
-//		 System.out.println("message d'erreur "+e);
-//		 }
+		// try {
+		//
+		// objBd.open();
+		// String[] ScriptSql = G_remplirBase.SCRIPT_REMPLIR_BASE_TEST;
+		// for (int i = 0; i < ScriptSql.length; i++) {
+		// objBd.execSQL(ScriptSql[i]);
+		// }
+		// objBd.close();
+		//
+		// // objBd.close();
+		// } catch (Exception e) {
+		// System.out.println("message d'erreur " + e);
+		// }
 
 	}
 
@@ -343,7 +339,7 @@ public class EntryPoint extends Activity {
 			if (nbDenregistrement > 0) {
 				String[] colonne = new String[] { "Date_Peremption_milli", "id_produits", "DateAchat", "Duree_Vie" };
 				objBd.open();
-				
+
 				ArrayList[] datePerem = objBd.VerifAuDemarrage(colonne, "", "");
 				// objBd.close();
 				// / dans le cas ou il y a des caracteres bizarre dans un des champs => correction
@@ -355,10 +351,10 @@ public class EntryPoint extends Activity {
 					if (j > 0) {
 						total = (100 * j) / nbDenregistrement;
 						total = total / 2;
-						
+
 					}
 					String s_idProduit = datePerem[1].get(j).toString().replace("[", "").replace("]", "");
-					
+
 					// //////////////////////////////////
 					// Correction des champs en base ////
 					// //////////////////////////////////
