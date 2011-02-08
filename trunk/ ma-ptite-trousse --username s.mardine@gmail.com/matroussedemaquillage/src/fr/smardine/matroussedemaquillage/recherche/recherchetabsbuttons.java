@@ -105,16 +105,17 @@ public class recherchetabsbuttons extends Activity implements OnClickListener, O
 				@Override
 				public void afterTextChanged(Editable s) {
 					String str = EtFiltrage.getText().toString();
-					if (!str.equals("")) {
-						filtreSelonSaisieEtBtActive(str, Cat.isChecked(), Marque.isChecked(), Tout.isChecked());
-						// int ValeurRentrée = Integer.parseInt(str);
-						// if (ValeurRentrée > 99) {
-						// EtFiltrage.setText("99");
-						// }
-						// if (ValeurRentrée <= 0) {
-						// EtFiltrage.setText("1");
-						// }
-					}
+
+					// if (!str.equals("")) {
+					filtreSelonSaisieEtBtActive(str, Cat.isChecked(), Marque.isChecked(), Tout.isChecked());
+					// int ValeurRentrée = Integer.parseInt(str);
+					// if (ValeurRentrée > 99) {
+					// EtFiltrage.setText("99");
+					// }
+					// if (ValeurRentrée <= 0) {
+					// EtFiltrage.setText("1");
+					// / // }
+					// }
 
 				}
 
@@ -149,10 +150,11 @@ public class recherchetabsbuttons extends Activity implements OnClickListener, O
 			adAucunProduit.setMessage("Aucun produit n'est actuellement enregistré dans Ma p'tite trousse");
 			adAucunProduit.setPositiveButton("Ok", null);
 
-			produitRecherche.removeAll(produitRecherche);
-			produitRechercheTitre.removeAll(produitRechercheTitre);
-			AfficheLeContenu("TitreTout", produitRechercheTitre, ProduitListViewTitre, null);
-			AfficheLeContenu("Tout", produitRecherche, ProduitListView1, null);
+			// produitRecherche.removeAll(produitRecherche);
+			// produitRechercheTitre.removeAll(produitRechercheTitre);
+			// AfficheLeContenu("TitreTout", produitRechercheTitre, ProduitListViewTitre, null);
+			// AfficheLeContenu("ToutAvecFiltrage", produitRecherche, ProduitListView1, null);
+			filtreSelonSaisieEtBtActive("", Cat.isChecked(), Marque.isChecked(), Tout.isChecked());
 
 		}
 
@@ -461,28 +463,34 @@ public class recherchetabsbuttons extends Activity implements OnClickListener, O
 			Cat.setChecked(true);
 			Marque.setChecked(false);
 			Tout.setChecked(false);
-			produitRecherche.removeAll(produitRecherche);
-			produitRechercheTitre.removeAll(produitRechercheTitre);
-			AfficheLeContenu("TitreCat", produitRechercheTitre, ProduitListViewTitre, null);
-			AfficheLeContenu("Catégorie", produitRecherche, ProduitListView1, null);
+			String filtrage = EtFiltrage.getText().toString();
+			filtreSelonSaisieEtBtActive(filtrage, Cat.isChecked(), Marque.isChecked(), Tout.isChecked());
+			// produitRecherche.removeAll(produitRecherche);
+			// produitRechercheTitre.removeAll(produitRechercheTitre);
+			// AfficheLeContenu("TitreCat", produitRechercheTitre, ProduitListViewTitre, null);
+			// AfficheLeContenu("Catégorie", produitRecherche, ProduitListView1, null);
 		}
 		if (v == Marque) {
 			Cat.setChecked(false);
 			Marque.setChecked(true);
 			Tout.setChecked(false);
-			produitRecherche.removeAll(produitRecherche);
-			produitRechercheTitre.removeAll(produitRechercheTitre);
-			AfficheLeContenu("TitreMarque", produitRechercheTitre, ProduitListViewTitre, null);
-			AfficheLeContenu("Marque", produitRecherche, ProduitListView1, null);
+			String filtrage = EtFiltrage.getText().toString();
+			filtreSelonSaisieEtBtActive(filtrage, Cat.isChecked(), Marque.isChecked(), Tout.isChecked());
+			// produitRecherche.removeAll(produitRecherche);
+			// produitRechercheTitre.removeAll(produitRechercheTitre);
+			// AfficheLeContenu("TitreMarque", produitRechercheTitre, ProduitListViewTitre, null);
+			// AfficheLeContenu("Marque", produitRecherche, ProduitListView1, null);
 		}
 		if (v == Tout) {
 			Cat.setChecked(false);
 			Marque.setChecked(false);
 			Tout.setChecked(true);
-			produitRecherche.removeAll(produitRecherche);
-			produitRechercheTitre.removeAll(produitRechercheTitre);
-			AfficheLeContenu("TitreTout", produitRechercheTitre, ProduitListViewTitre, null);
-			AfficheLeContenu("Tout", produitRecherche, ProduitListView1, null);
+			String filtrage = EtFiltrage.getText().toString();
+			filtreSelonSaisieEtBtActive(filtrage, Cat.isChecked(), Marque.isChecked(), Tout.isChecked());
+			// produitRecherche.removeAll(produitRecherche);
+			// produitRechercheTitre.removeAll(produitRechercheTitre);
+			// AfficheLeContenu("TitreTout", produitRechercheTitre, ProduitListViewTitre, null);
+			// AfficheLeContenu("Tout", produitRecherche, ProduitListView1, null);
 		}
 
 	}
@@ -496,23 +504,23 @@ public class recherchetabsbuttons extends Activity implements OnClickListener, O
 		if (TypeRecherche.equals("TitreCat")) {
 			produitFinal.add(new produitRecherche("", "Catégorie", "Produit", "Marque"));
 		}
-		if (TypeRecherche.equals("Catégorie")) {
-
-			String[] Colonnes = { "id_produits", "nom_produit", "nom_souscatergorie", "nom_marque" };
-			ArrayList[] ListeProduits = objBd.renvoi_liste_TrousseFinal(Colonnes, "nom_souscatergorie", "", "", null);
-			int nbdobjet = ListeProduits[0].size();
-			if (nbdobjet != 0) {
-				for (int j = 0; j < nbdobjet; j++) {
-					String IdProduit = ListeProduits[0].get(j).toString().replace("[", "").replace("]", "");
-					String NomProduits = ListeProduits[1].get(j).toString().replace("[", "").replace("]", "");
-					String NomCatégorie = ListeProduits[2].get(j).toString().replace("[", "").replace("]", "");
-					String Marque = ListeProduits[3].get(j).toString().replace("[", "").replace("]", "");
-					produitFinal.add(new produitRecherche(IdProduit, NomCatégorie, NomProduits, Marque));
-				}
-			} else {
-				adAucunProduit.show();
-			}
-		}
+		// if (TypeRecherche.equals("Catégorie")) {
+		//
+		// String[] Colonnes = { "id_produits", "nom_produit", "nom_souscatergorie", "nom_marque" };
+		// ArrayList[] ListeProduits = objBd.renvoi_liste_TrousseFinal(Colonnes, "nom_souscatergorie", "", "", null);
+		// int nbdobjet = ListeProduits[0].size();
+		// if (nbdobjet != 0) {
+		// for (int j = 0; j < nbdobjet; j++) {
+		// String IdProduit = ListeProduits[0].get(j).toString().replace("[", "").replace("]", "");
+		// String NomProduits = ListeProduits[1].get(j).toString().replace("[", "").replace("]", "");
+		// String NomCatégorie = ListeProduits[2].get(j).toString().replace("[", "").replace("]", "");
+		// String Marque = ListeProduits[3].get(j).toString().replace("[", "").replace("]", "");
+		// produitFinal.add(new produitRecherche(IdProduit, NomCatégorie, NomProduits, Marque));
+		// }
+		// } else {
+		// adAucunProduit.show();
+		// }
+		// }
 
 		if (TypeRecherche.equals("CatégorieAvecFiltrage")) {
 
@@ -530,31 +538,31 @@ public class recherchetabsbuttons extends Activity implements OnClickListener, O
 					String Marque = ListeProduits[3].get(j).toString().replace("[", "").replace("]", "");
 					produitFinal.add(new produitRecherche(IdProduit, NomCatégorie, NomProduits, Marque));
 				}
-			} else {
-				adAucunProduit.show();
-			}
+			} // else {
+				// adAucunProduit.show();
+				// }
 		}
 		if (TypeRecherche.equals("TitreMarque")) {
 			produitFinal.add(new produitRecherche("", "Marque", "Produit", "Catégorie"));
 		}
-		if (TypeRecherche.equals("Marque")) {
-
-			String[] Colonnes = { "id_produits", "nom_produit", "nom_marque", "nom_souscatergorie" };
-
-			ArrayList[] ListeProduits = objBd.renvoi_liste_TrousseFinal(Colonnes, "nom_marque", "", "", null);
-			int nbdobjet = ListeProduits[0].size();
-			if (nbdobjet != 0) {
-				for (int j = 0; j < nbdobjet; j++) {
-					String IdProduit = ListeProduits[0].get(j).toString();
-					String NomProduits = ListeProduits[1].get(j).toString();
-					String NomMarque = ListeProduits[2].get(j).toString();
-					String Cat = ListeProduits[3].get(j).toString();
-					produitFinal.add(new produitRecherche(IdProduit, NomMarque, NomProduits, Cat));
-				}
-			} else {
-				adAucunProduit.show();
-			}
-		}
+		// if (TypeRecherche.equals("Marque")) {
+		//
+		// String[] Colonnes = { "id_produits", "nom_produit", "nom_marque", "nom_souscatergorie" };
+		//
+		// ArrayList[] ListeProduits = objBd.renvoi_liste_TrousseFinal(Colonnes, "nom_marque", "", "", null);
+		// int nbdobjet = ListeProduits[0].size();
+		// if (nbdobjet != 0) {
+		// for (int j = 0; j < nbdobjet; j++) {
+		// String IdProduit = ListeProduits[0].get(j).toString();
+		// String NomProduits = ListeProduits[1].get(j).toString();
+		// String NomMarque = ListeProduits[2].get(j).toString();
+		// String Cat = ListeProduits[3].get(j).toString();
+		// produitFinal.add(new produitRecherche(IdProduit, NomMarque, NomProduits, Cat));
+		// }
+		// } else {
+		// adAucunProduit.show();
+		// }
+		// }
 		if (TypeRecherche.equals("MarqueAvecFiltrage")) {
 
 			String[] Colonnes = { "id_produits", "nom_produit", "nom_marque", "nom_souscatergorie" };
@@ -570,37 +578,38 @@ public class recherchetabsbuttons extends Activity implements OnClickListener, O
 					String Cat = ListeProduits[3].get(j).toString();
 					produitFinal.add(new produitRecherche(IdProduit, NomMarque, NomProduits, Cat));
 				}
-			} else {
-				adAucunProduit.show();
-			}
+			} // else {
+				// adAucunProduit.show();
+				// }
 		}
 		if (TypeRecherche.equals("TitreTout")) {
 			produitFinal.add(new produitRecherche("", "Marque", "Produit", "Catégorie"));
 		}
-		if (TypeRecherche.equals("Tout")) {
-
-			String[] Colonnes = { "id_produits", "nom_produit", "nom_marque", "nom_souscatergorie" };
-
-			ArrayList[] ListeProduits = objBd.renvoi_liste_TrousseFinal(Colonnes, "id_produits", "", "", null);
-			int nbdobjet = ListeProduits[0].size();
-			if (nbdobjet != 0) {
-				for (int j = 0; j < nbdobjet; j++) {
-					String IdProduit = ListeProduits[0].get(j).toString();
-					String NomProduits = ListeProduits[1].get(j).toString();
-					String NomMarque = ListeProduits[2].get(j).toString();
-					String Cat = ListeProduits[3].get(j).toString();
-					produitFinal.add(new produitRecherche(IdProduit, NomMarque, NomProduits, Cat));
-				}
-			} else {
-				adAucunProduit.show();
-			}
-		}
+		// if (TypeRecherche.equals("Tout")) {
+		//
+		// String[] Colonnes = { "id_produits", "nom_produit", "nom_marque", "nom_souscatergorie" };
+		//
+		// ArrayList[] ListeProduits = objBd.renvoi_liste_TrousseFinal(Colonnes, "id_produits", "", "", null);
+		// int nbdobjet = ListeProduits[0].size();
+		// if (nbdobjet != 0) {
+		// for (int j = 0; j < nbdobjet; j++) {
+		// String IdProduit = ListeProduits[0].get(j).toString();
+		// String NomProduits = ListeProduits[1].get(j).toString();
+		// String NomMarque = ListeProduits[2].get(j).toString();
+		// String Cat = ListeProduits[3].get(j).toString();
+		// produitFinal.add(new produitRecherche(IdProduit, NomMarque, NomProduits, Cat));
+		// }
+		// } else {
+		// adAucunProduit.show();
+		// }
+		// }
 		if (TypeRecherche.equals("ToutAvecFiltrage")) {
 
 			String[] Colonnes = { "id_produits", "nom_produit", "nom_marque", "nom_souscatergorie" };
 
-			String SQL = "SELECT id_produits,nom_produit,nom_souscatergorie,nom_marque FROM produit_Enregistre where nom_produit LIKE '%"
-					+ p_Filtrage + "%'";
+			String SQL = "SELECT" + " id_produits,nom_produit,nom_souscatergorie,nom_marque " + "FROM produit_Enregistre "
+					+ "where nom_produit LIKE '%" + p_Filtrage + "%' " + "or nom_marque LIKE '%" + p_Filtrage + "%' "
+					+ "or nom_souscatergorie LIKE '%" + p_Filtrage + "%'";
 			ArrayList[] ListeProduits = objBd.renvoi_liste_TrousseFinalAvecFiltrage(SQL, Colonnes);
 			int nbdobjet = ListeProduits[0].size();
 			if (nbdobjet != 0) {
@@ -611,9 +620,9 @@ public class recherchetabsbuttons extends Activity implements OnClickListener, O
 					String Cat = ListeProduits[3].get(j).toString();
 					produitFinal.add(new produitRecherche(IdProduit, NomMarque, NomProduits, Cat));
 				}
-			} else {
-				adAucunProduit.show();
-			}
+			} // else {
+				// adAucunProduit.show();
+				// }
 		}
 		if (TypeRecherche.equals("TitrePerime")) {
 			produitFinal.add(new produitRecherche("", "Date péremp.", "Produit", "Marque"));
