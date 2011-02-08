@@ -3,6 +3,7 @@ package fr.smardine.matroussedemaquillage.variableglobale;
 public class G_changeLog {
 
 	public static String Changement = "Version 1.89: \n"
+			+ "Ajout d'un filtrage sur les resultats d'une recherche, par Marque, par Catégorie, ou par Nom de produit."
 			+ "Ajout d'une animation au lancement de l'appli"
 			+ "Simplification de la fonction de remplissage de la trousse, 2 fenetres au lieu de 4\n"
 			+ "La date d'achat d'un produit s'affiche désormais sous la forme jj/MM/AAAA au lieu de jj-MM-AAAA\n"
