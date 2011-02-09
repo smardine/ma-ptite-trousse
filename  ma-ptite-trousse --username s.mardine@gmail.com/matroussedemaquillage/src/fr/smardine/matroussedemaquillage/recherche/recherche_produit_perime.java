@@ -623,7 +623,7 @@ public class recherche_produit_perime extends Activity implements OnClickListene
 			return true;
 		}
 		if (keyCode == KeyEvent.KEYCODE_SEARCH) {
-			Intent intentRecherche = new Intent(this, recherche_produit_perime.class);
+			Intent intentRecherche = new Intent(this, recherchetabsbuttons.class);
 			// on demarre la nouvelle activité
 			startActivity(intentRecherche);
 			finish();
