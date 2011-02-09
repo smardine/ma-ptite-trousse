@@ -14,7 +14,9 @@ import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.InputType;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -227,8 +229,10 @@ public class affiche_detail extends Activity implements OnClickListener {
 		MarqueDetail.setText(new StringBuilder().append(trousse_final[7].toString().replace("[", "").replace("]", "")));
 		nomProduitDetail.setText(new StringBuilder().append(trousse_final[0].toString().replace("[", "").replace("]", "")));
 		numeroTeinteDetail.setText(new StringBuilder().append(trousse_final[3].toString().replace("[", "").replace("]", "")));
-		DateAchatDetail.setText(new StringBuilder().append(trousse_final[6].toString().replace("[", "").replace("]", "")));
-		DatePeremtionDetail.setText(new StringBuilder().append(trousse_final[5].toString().replace("[", "").replace("]", "")));
+		DateAchatDetail
+				.setText(new StringBuilder().append(trousse_final[6].toString().replace("[", "").replace("]", "").replace("-", "/")));
+		DatePeremtionDetail.setText(new StringBuilder().append(trousse_final[5].toString().replace("[", "").replace("]", "")
+				.replace("-", "/")));
 
 		DuréeVie = trousse_final[4].toString().replace("[", "").replace("]", "");
 		objBd.close();
@@ -256,8 +260,8 @@ public class affiche_detail extends Activity implements OnClickListener {
 			DurreeVie = "" + nbMoisDurreeDeVie + "";
 		}
 
-		String DatePeremption = DatePeremtionDetail.getText().toString().trim().replace("[", "").replace("]", "");
-		String DateAchat = DateAchatDetail.getText().toString().trim().replace("[", "").replace("]", "");
+		String DatePeremption = DatePeremtionDetail.getText().toString().trim().replace("[", "").replace("]", "").replace("/", "-");
+		String DateAchat = DateAchatDetail.getText().toString().trim().replace("[", "").replace("]", "").replace("/", "-");
 		String NomMarque = MarqueDetail.getText().toString().trim().replace("[", "").replace("]", "");
 
 		ContentValues modifiedValues = new ContentValues();
@@ -290,9 +294,9 @@ public class affiche_detail extends Activity implements OnClickListener {
 			mMonth = monthOfYear;
 			mDay = dayOfMonth;
 			// updateDisplay();
-			DateAchatDetail.setText(new StringBuilder().append(mDay).append("-")
+			DateAchatDetail.setText(new StringBuilder().append(mDay).append("/")
 			// Month is 0 based so add 1
-					.append(mMonth + 1).append("-").append(mYear).append(" "));
+					.append(mMonth + 1).append("/").append(mYear).append(" "));
 		}
 	};
 
@@ -351,11 +355,13 @@ public class affiche_detail extends Activity implements OnClickListener {
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
-			Intent recherche = new Intent(this, recherchetabsbuttons.class);
+			Intent recherche;
 			if (IsCalledFromMain && IsAffichageProduitPerimé) {
-
+				recherche = new Intent(this, recherche_produit_perime.class);
 				recherche.putExtra("calledFromMain", true);
 				recherche.putExtra("AfficheProduitPerimé", true);
+			} else {
+				recherche = new Intent(this, recherchetabsbuttons.class);
 			}
 			majTableProduit();
 			startActivity(recherche);
@@ -394,6 +400,39 @@ public class affiche_detail extends Activity implements OnClickListener {
 		}
 		if (v == BTChangerDatePermeption) {
 			final EditText inputDurreeVie = new EditText(this);
+			inputDurreeVie.addTextChangedListener(new TextWatcher() {
+				@SuppressWarnings("unused")
+				int len = 0;
+
+				@Override
+				public void afterTextChanged(Editable s) {
+					String str = inputDurreeVie.getText().toString();
+					if (!str.equals("")) {
+						int ValeurRentrée = Integer.parseInt(str);
+						if (ValeurRentrée > 99) {
+							inputDurreeVie.setText("99");
+						}
+						if (ValeurRentrée <= 0) {
+							inputDurreeVie.setText("1");
+						}
+					} else {
+						inputDurreeVie.setText("1");
+					}
+
+				}
+
+				@Override
+				public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
+
+					String str = inputDurreeVie.getText().toString();
+					len = str.length();
+				}
+
+				@Override
+				public void onTextChanged(CharSequence s, int start, int before, int count) {
+				}
+
+			});
 			// get the current date
 			adChoixNbMois = new AlertDialog.Builder(this);
 			adChoixNbMois.setTitle("Durrée de vie");
@@ -414,7 +453,7 @@ public class affiche_detail extends Activity implements OnClickListener {
 					int nbJours = nbMoisDurreeDeVie * 30;
 
 					String DateAchat = DateAchatDetail.getText().toString().trim();
-					String tabAchat[] = DateAchat.split("-");
+					String tabAchat[] = DateAchat.split("/");
 					int jourAchat = Integer.parseInt(tabAchat[0]);
 					int mois = Integer.parseInt(tabAchat[1]) - 1;// les mois commence à 0 (janvier) et se termine à 11 (decembre)
 					int annee = Integer.parseInt(tabAchat[2]) - 1900;// les années commence à 0(1900), pour avoir l'année exacte a partir
@@ -426,7 +465,7 @@ public class affiche_detail extends Activity implements OnClickListener {
 					DatePeremtInMilli = DateAchatAuformatDate.getTime();// on recupere la date d'achat au format milliseconde
 					Date DatePeremption = getDateAfterDays(DatePeremtInMilli, nbJours);// on calcule la date de permetpion en fonction de la
 																						// date d'achat+nb de jour donné par l'utilisateur
-					DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+					DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 					String Date_Peremption = dateFormat.format(DatePeremption);// date de peremtion au format jj/mm/aaaa
 
 					DatePeremtInMilli = DatePeremption.getTime(); // on converti la date de permeption en milliseconde

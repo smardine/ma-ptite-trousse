@@ -273,7 +273,7 @@ public class EntryPoint extends Activity {
 	}
 
 	public void remplissageBase() {
-		// TODO Auto-generated method stub
+		// // TODO Auto-generated method stub
 		// try {
 		//
 		// objBd.open();
