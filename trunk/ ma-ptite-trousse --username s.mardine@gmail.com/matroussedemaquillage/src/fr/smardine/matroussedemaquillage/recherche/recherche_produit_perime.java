@@ -38,7 +38,7 @@ import fr.smardine.matroussedemaquillage.param.tab_param;
 import fr.smardine.matroussedemaquillage.recherche.produitRechercheListAdapter.ViewHolder;
 import fr.smardine.matroussedemaquillage.variableglobale.EnTheme;
 
-public class recherchetabsbuttons extends Activity implements OnClickListener, OnItemClickListener, OnItemLongClickListener {
+public class recherche_produit_perime extends Activity implements OnClickListener, OnItemClickListener, OnItemLongClickListener {
 	ToggleButton Cat, Marque, Tout;
 	EditText EtFiltrage;
 	ArrayList<produitRecherche> produitRecherche = new ArrayList<produitRecherche>();
@@ -48,7 +48,7 @@ public class recherchetabsbuttons extends Activity implements OnClickListener, O
 	produitRechercheListAdapter adpt;
 	BDAcces objBd;
 	AlertDialog.Builder adAucunProduit;
-	Context ctx = recherchetabsbuttons.this;
+	Context ctx = recherche_produit_perime.this;
 	// TextView RechercheTxt1;
 	String MarqueChoisie;
 	String DureeVie;
@@ -73,10 +73,25 @@ public class recherchetabsbuttons extends Activity implements OnClickListener, O
 
 		ChoisiLeTheme();
 
+		// RechercheTxt1 = (TextView) this.findViewById(R.id.Text1Rech);
+		ProduitListView1 = (ListView) this.findViewById(R.id.produitListViewRecherche);
+		ProduitListViewTitre = (ListView) this.findViewById(R.id.produitListViewRechercheTitre);
+
 		Cat = (ToggleButton) findViewById(R.id.BTcat);
 		Marque = (ToggleButton) findViewById(R.id.BTmarque);
 		Tout = (ToggleButton) findViewById(R.id.BTtout);
 		EtFiltrage = (EditText) findViewById(R.id.EtFiltrage);
+
+		ProduitListView1.setOnItemClickListener(this);
+		ProduitListView1.setOnItemLongClickListener(this);
+		Cat.setOnClickListener(this);
+		Marque.setOnClickListener(this);
+		Tout.setOnClickListener(this);
+
+		adAucunProduit = new AlertDialog.Builder(this);
+		adAucunProduit.setTitle("Pour information");
+		adAucunProduit.setMessage("Aucun de vos produit n'est périmé actuellement");
+		adAucunProduit.setPositiveButton("Ok", null);
 
 		EtFiltrage.addTextChangedListener(new TextWatcher() {
 			@SuppressWarnings("unused")
@@ -101,26 +116,12 @@ public class recherchetabsbuttons extends Activity implements OnClickListener, O
 			}
 		});
 
-		ProduitListView1 = (ListView) this.findViewById(R.id.produitListViewRecherche);
-		ProduitListViewTitre = (ListView) this.findViewById(R.id.produitListViewRechercheTitre);
-
-		ProduitListView1.setOnItemClickListener(this);
-		ProduitListView1.setOnItemLongClickListener(this);
-		Cat.setOnClickListener(this);
-		Marque.setOnClickListener(this);
-		Tout.setOnClickListener(this);
-
 		/*
 		 * int largeurBtCat = Marque.getWidth(); Cat.setWidth(largeurBtCat); Tout.setWidth(largeurBtCat);
 		 */
 
-		adAucunProduit = new AlertDialog.Builder(this);
-		adAucunProduit.setTitle("Pour information");
-		adAucunProduit.setMessage("Aucun produit n'est actuellement enregistré dans Ma p'tite trousse");
-		adAucunProduit.setPositiveButton("Ok", null);
-
 		filtreSelonSaisieEtBtActive("", Cat.isChecked(), Marque.isChecked(), Tout.isChecked());
-		this.setTitle("Recherche d'un produit");
+		this.setTitle("Produit(s) périmé(s)");
 
 	}
 
@@ -384,7 +385,7 @@ public class recherchetabsbuttons extends Activity implements OnClickListener, O
 		// on demarre la nouvelle activité
 		intentDetail.putExtra("IDProduit", IdProduit);
 		intentDetail.putExtra("calledFromMain", IsCalledFromMain);
-		intentDetail.putExtra("AfficheProduitPerimé", false);
+		intentDetail.putExtra("AfficheProduitPerimé", true);
 		startActivity(intentDetail);
 		finish();
 
@@ -399,7 +400,10 @@ public class recherchetabsbuttons extends Activity implements OnClickListener, O
 			Tout.setChecked(false);
 			String filtrage = EtFiltrage.getText().toString();
 			filtreSelonSaisieEtBtActive(filtrage, Cat.isChecked(), Marque.isChecked(), Tout.isChecked());
-
+			// produitRecherche.removeAll(produitRecherche);
+			// produitRechercheTitre.removeAll(produitRechercheTitre);
+			// AfficheLeContenu("TitreCat", produitRechercheTitre, ProduitListViewTitre, null);
+			// AfficheLeContenu("Catégorie", produitRecherche, ProduitListView1, null);
 		}
 		if (v == Marque) {
 			Cat.setChecked(false);
@@ -407,7 +411,10 @@ public class recherchetabsbuttons extends Activity implements OnClickListener, O
 			Tout.setChecked(false);
 			String filtrage = EtFiltrage.getText().toString();
 			filtreSelonSaisieEtBtActive(filtrage, Cat.isChecked(), Marque.isChecked(), Tout.isChecked());
-
+			// produitRecherche.removeAll(produitRecherche);
+			// produitRechercheTitre.removeAll(produitRechercheTitre);
+			// AfficheLeContenu("TitreMarque", produitRechercheTitre, ProduitListViewTitre, null);
+			// AfficheLeContenu("Marque", produitRecherche, ProduitListView1, null);
 		}
 		if (v == Tout) {
 			Cat.setChecked(false);
@@ -415,7 +422,10 @@ public class recherchetabsbuttons extends Activity implements OnClickListener, O
 			Tout.setChecked(true);
 			String filtrage = EtFiltrage.getText().toString();
 			filtreSelonSaisieEtBtActive(filtrage, Cat.isChecked(), Marque.isChecked(), Tout.isChecked());
-
+			// produitRecherche.removeAll(produitRecherche);
+			// produitRechercheTitre.removeAll(produitRechercheTitre);
+			// AfficheLeContenu("TitreTout", produitRechercheTitre, ProduitListViewTitre, null);
+			// AfficheLeContenu("Tout", produitRecherche, ProduitListView1, null);
 		}
 
 	}
@@ -427,15 +437,19 @@ public class recherchetabsbuttons extends Activity implements OnClickListener, O
 		objBd.open();
 
 		if (TypeRecherche.equals("TitreCat")) {
-			produitFinal.add(new produitRecherche("", "Catégorie", "Produit", "Marque"));
+			produitFinal.add(new produitRecherche("", "Date Peremp.", "Produit", "Marque"));
 		}
 
 		if (TypeRecherche.equals("CatégorieAvecFiltrage")) {
 
-			String[] Colonnes = { "id_produits", "nom_produit", "nom_souscatergorie", "nom_marque" };
+			String[] Colonnes = { "id_produits", "nom_produit", "Date_Peremption", "nom_marque" };
 
-			String SQL = "SELECT id_produits,nom_produit,nom_souscatergorie,nom_marque FROM produit_Enregistre where nom_souscatergorie LIKE '%"
-					+ p_Filtrage + "%' ORDER BY nom_souscatergorie";
+			String SQL = "SELECT " + "id_produits,nom_produit,Date_Peremption,nom_marque "//
+					+ "FROM produit_Enregistre "//
+					+ "where " //
+					+ "(IS_PERIME='true' or IS_PRESQUE_PERIME='true') " //
+					+ "ORDER BY Date_Peremption";
+
 			ArrayList[] ListeProduits = objBd.renvoi_liste_TrousseFinalAvecFiltrage(SQL, Colonnes);
 			int nbdobjet = ListeProduits[0].size();
 			if (nbdobjet != 0) {
@@ -444,100 +458,88 @@ public class recherchetabsbuttons extends Activity implements OnClickListener, O
 					String NomProduits = ListeProduits[1].get(j).toString().replace("[", "").replace("]", "");
 					String NomCatégorie = ListeProduits[2].get(j).toString().replace("[", "").replace("]", "");
 					String Marque = ListeProduits[3].get(j).toString().replace("[", "").replace("]", "");
-					produitFinal.add(new produitRecherche(IdProduit, NomCatégorie, NomProduits, Marque));
+					produitFinal.add(new produitRecherche(IdProduit, NomCatégorie.replaceAll("-", "/"), NomProduits, Marque));
 				}
 			} // else {
 				// adAucunProduit.show();
 				// }
 		}
 		if (TypeRecherche.equals("TitreMarque")) {
-			produitFinal.add(new produitRecherche("", "Marque", "Produit", "Catégorie"));
+			produitFinal.add(new produitRecherche("", "Date Peremp", "Produit", "Marque"));
 		}
 
 		if (TypeRecherche.equals("MarqueAvecFiltrage")) {
 
-			String[] Colonnes = { "id_produits", "nom_produit", "nom_marque", "nom_souscatergorie" };
-			String SQL = "SELECT id_produits,nom_produit,nom_souscatergorie,nom_marque FROM produit_Enregistre where nom_marque LIKE '%"
-					+ p_Filtrage + "%' ORDER BY nom_marque";
+			String[] Colonnes = { "id_produits", "nom_marque", "nom_produit", "Date_Peremption" };
+			String SQL = "SELECT " //
+					+ "id_produits,nom_produit,nom_marque,Date_Peremption" //
+					+ " FROM produit_Enregistre"//
+					+ " where (nom_marque LIKE '%" + p_Filtrage
+					+ "%' and (IS_PERIME='true' or IS_PRESQUE_PERIME='true'))"
+					+ "ORDER BY nom_marque";
 			ArrayList[] ListeProduits = objBd.renvoi_liste_TrousseFinalAvecFiltrage(SQL, Colonnes);
 			int nbdobjet = ListeProduits[0].size();
 			if (nbdobjet != 0) {
 				for (int j = 0; j < nbdobjet; j++) {
-					String IdProduit = ListeProduits[0].get(j).toString();
-					String NomProduits = ListeProduits[1].get(j).toString();
-					String NomMarque = ListeProduits[2].get(j).toString();
-					String Cat = ListeProduits[3].get(j).toString();
-					produitFinal.add(new produitRecherche(IdProduit, NomMarque, NomProduits, Cat));
+					String idProduit = ListeProduits[0].get(j).toString();
+					String nomMarque = ListeProduits[1].get(j).toString();
+					String nomProduit = ListeProduits[2].get(j).toString();
+					String datePeremp = ListeProduits[3].get(j).toString();
+					produitFinal.add(new produitRecherche(idProduit, datePeremp.replaceAll("-", "/"), nomProduit, nomMarque));
 				}
 			} // else {
 				// adAucunProduit.show();
 				// }
 		}
 		if (TypeRecherche.equals("TitreTout")) {
-			produitFinal.add(new produitRecherche("", "Marque", "Produit", "Catégorie"));
+			produitFinal.add(new produitRecherche("", "Date péremp.", "Produit", "Marque"));
 		}
-		// if (TypeRecherche.equals("Tout")) {
-		//
-		// String[] Colonnes = { "id_produits", "nom_produit", "nom_marque", "nom_souscatergorie" };
-		//
-		// ArrayList[] ListeProduits = objBd.renvoi_liste_TrousseFinal(Colonnes, "id_produits", "", "", null);
-		// int nbdobjet = ListeProduits[0].size();
-		// if (nbdobjet != 0) {
-		// for (int j = 0; j < nbdobjet; j++) {
-		// String IdProduit = ListeProduits[0].get(j).toString();
-		// String NomProduits = ListeProduits[1].get(j).toString();
-		// String NomMarque = ListeProduits[2].get(j).toString();
-		// String Cat = ListeProduits[3].get(j).toString();
-		// produitFinal.add(new produitRecherche(IdProduit, NomMarque, NomProduits, Cat));
-		// }
-		// } else {
-		// adAucunProduit.show();
-		// }
-		// }
+
 		if (TypeRecherche.equals("ToutAvecFiltrage")) {
 
-			String[] Colonnes = { "id_produits", "nom_produit", "nom_marque", "nom_souscatergorie" };
+			String[] Colonnes = { "id_produits", "Date_Peremption", "nom_produit", "nom_marque" };
 
-			String SQL = "SELECT" + " id_produits,nom_produit,nom_souscatergorie,nom_marque " + "FROM produit_Enregistre "
-					+ "where nom_produit LIKE '%" + p_Filtrage + "%' " + "or nom_marque LIKE '%" + p_Filtrage + "%' "
-					+ "or nom_souscatergorie LIKE '%" + p_Filtrage + "%' ORDER BY id_produits";
+			String SQL = "SELECT" + " id_produits,Date_Peremption,nom_produit,nom_marque " + "FROM produit_Enregistre "
+					+ "where ((nom_produit LIKE '%" + p_Filtrage + "%' " + "or nom_marque LIKE '%" + p_Filtrage + "%' "
+					+ "or Date_Peremption LIKE '%" + p_Filtrage + "%') and (IS_PERIME='true' or IS_PRESQUE_PERIME='true'))"
+					+ "ORDER BY id_produits";
 			ArrayList[] ListeProduits = objBd.renvoi_liste_TrousseFinalAvecFiltrage(SQL, Colonnes);
 			int nbdobjet = ListeProduits[0].size();
 			if (nbdobjet != 0) {
 				for (int j = 0; j < nbdobjet; j++) {
 					String IdProduit = ListeProduits[0].get(j).toString();
-					String NomProduits = ListeProduits[1].get(j).toString();
-					String NomMarque = ListeProduits[2].get(j).toString();
-					String Cat = ListeProduits[3].get(j).toString();
-					produitFinal.add(new produitRecherche(IdProduit, NomMarque, NomProduits, Cat));
+					String datePeremption = ListeProduits[1].get(j).toString();
+					String nomProduit = ListeProduits[2].get(j).toString();
+					String nomMarque = ListeProduits[3].get(j).toString();
+					produitFinal.add(new produitRecherche(IdProduit, datePeremption.replaceAll("-", "/"), nomProduit, nomMarque));
 				}
 			} // else {
 				// adAucunProduit.show();
 				// }
 		}
-		if (TypeRecherche.equals("TitrePerime")) {
-			produitFinal.add(new produitRecherche("", "Date péremp.", "Produit", "Marque"));
-		}
-		if (TypeRecherche.equals("Perimé")) {
-
-			String[] Colonnes = { "id_produits", "nom_produit", "Date_Peremption", "nom_marque" };
-			String condition = "IS_PERIME=? or IS_PRESQUE_PERIME=?";
-			String[] args = { "true", "true" };
-
-			ArrayList[] ListeProduits = objBd.renvoi_liste_TrousseFinal(Colonnes, "id_produits", "", condition, args);
-			int nbdobjet = ListeProduits[0].size();
-			if (nbdobjet != 0) {
-				for (int j = 0; j < nbdobjet; j++) {
-					String IdProduit = ListeProduits[0].get(j).toString();
-					String NomProduits = ListeProduits[1].get(j).toString();
-					String Date_Peremption = ListeProduits[2].get(j).toString();
-					String Marque = ListeProduits[3].get(j).toString();
-					produitFinal.add(new produitRecherche(IdProduit, Date_Peremption, NomProduits, Marque));
-				}
-			} else {
-				adAucunProduit.show();
-			}
-		}
+		// if (TypeRecherche.equals("TitrePerime")) {
+		// produitFinal.add(new produitRecherche("", "Date péremp.", "Produit", "Marque"));
+		// }
+		// if (TypeRecherche.equals("Perimé")) {
+		//
+		// String[] Colonnes = { "id_produits", "nom_produit", "Date_Peremption", "nom_marque" };
+		// String condition = "IS_PERIME=? or IS_PRESQUE_PERIME=?";
+		// String[] args = { "true", "true" };
+		//
+		// ArrayList[] ListeProduits = objBd.renvoi_liste_TrousseFinal(Colonnes, "id_produits", "", condition, args);
+		// int nbdobjet = ListeProduits[0].size();
+		// if (nbdobjet != 0) {
+		// for (int j = 0; j < nbdobjet; j++) {
+		// String IdProduit = ListeProduits[0].get(j).toString();
+		// String NomProduits = ListeProduits[1].get(j).toString();
+		// String Date_Peremption = ListeProduits[2].get(j).toString();
+		// String Marque = ListeProduits[3].get(j).toString();
+		// produitFinal.add(new produitRecherche(IdProduit, Date_Peremption, NomProduits, Marque));
+		// }
+		// } else {
+		// adAucunProduit.show();
+		// }
+		// }
 
 		objBd.close();
 		// animation d'affichage cascade du haut vers le bas
@@ -621,7 +623,7 @@ public class recherchetabsbuttons extends Activity implements OnClickListener, O
 			return true;
 		}
 		if (keyCode == KeyEvent.KEYCODE_SEARCH) {
-			Intent intentRecherche = new Intent(this, recherchetabsbuttons.class);
+			Intent intentRecherche = new Intent(this, recherche_produit_perime.class);
 			// on demarre la nouvelle activité
 			startActivity(intentRecherche);
 			finish();

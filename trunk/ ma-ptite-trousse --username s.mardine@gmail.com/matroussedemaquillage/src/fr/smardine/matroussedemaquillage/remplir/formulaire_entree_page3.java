@@ -52,7 +52,7 @@ public class formulaire_entree_page3 extends Activity implements OnClickListener
 	private int mYear;
 	private int mMonth;
 	private int mDay;
-	
+
 	private boolean NouveauProduit = false, Duppliquer = false, acceuil = false;
 
 	static final int DATE_DIALOG_ID = 0;
@@ -62,7 +62,7 @@ public class formulaire_entree_page3 extends Activity implements OnClickListener
 	String numeroDeTeinte = "";
 	String DateAchat = "";
 	String DureeVie = "";
-	String Cat="";
+	String Cat = "";
 
 	// /////////////////////////
 
@@ -173,6 +173,8 @@ public class formulaire_entree_page3 extends Activity implements OnClickListener
 					if (ValeurRentrée <= 0) {
 						dureeVie.setText("1");
 					}
+				} else {
+					dureeVie.setText("1");
 				}
 
 			}
@@ -399,12 +401,8 @@ public class formulaire_entree_page3 extends Activity implements OnClickListener
 			} else {
 				adRecap = new AlertDialog.Builder(this);
 				adRecap.setTitle("Souhaitez-vous ajouter ce produit à ma p’tite trousse ?");
-				adRecap.setMessage(Cat+"\n"
-						+MarqueChoisie+"\n"
-						+nomDuProduit+"\n"
-						+"Numéro de teinte : " + numeroDeTeinte + "\n"
-						+ "Date d'achat : " + DateAchat + "\n" 
-						+ "Durée de vie : " + DureeVie + " mois");
+				adRecap.setMessage(Cat + "\n" + MarqueChoisie + "\n" + nomDuProduit + "\n" + "Numéro de teinte : " + numeroDeTeinte + "\n"
+						+ "Date d'achat : " + DateAchat + "\n" + "Durée de vie : " + DureeVie + " mois");
 				adRecap.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
 
 					@Override

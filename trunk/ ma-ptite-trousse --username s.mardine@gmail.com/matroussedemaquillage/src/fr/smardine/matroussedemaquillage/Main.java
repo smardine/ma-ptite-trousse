@@ -22,6 +22,7 @@ import com.example.android.apis.animation.Animlineaire;
 import fr.smardine.matroussedemaquillage.base.BDAcces;
 import fr.smardine.matroussedemaquillage.note.note_page1;
 import fr.smardine.matroussedemaquillage.param.tab_param;
+import fr.smardine.matroussedemaquillage.recherche.recherche_produit_perime;
 import fr.smardine.matroussedemaquillage.recherche.recherchetabsbuttons;
 import fr.smardine.matroussedemaquillage.remplir.choix_produit_a_duppliquer;
 import fr.smardine.matroussedemaquillage.remplir.formulaire_entree_page1bis;
@@ -51,7 +52,7 @@ public class Main extends Activity implements OnClickListener {
 			@Override
 			public void onClick(DialogInterface dialog, int id) {
 
-				Intent intentRecherche = new Intent(Main.this, recherchetabsbuttons.class);
+				Intent intentRecherche = new Intent(Main.this, recherche_produit_perime.class);
 				intentRecherche.putExtra("calledFromMain", true);
 				// on demarre la nouvelle activité
 				startActivity(intentRecherche);
@@ -254,7 +255,7 @@ public class Main extends Activity implements OnClickListener {
 			ArrayList[] ListeProduits = objBd.renvoi_liste_TrousseFinal(Colonnes, "id_produits", "", condition, args);
 			int nbdobjet = ListeProduits[0].size();
 			if (nbdobjet != 0) {
-				intentRecherche = new Intent(Main.this, recherchetabsbuttons.class);
+				intentRecherche = new Intent(Main.this, recherche_produit_perime.class);
 				intentRecherche.putExtra("calledFromMain", true);
 				intentRecherche.putExtra("AfficheProduitPerimé", true);
 				// on demarre la nouvelle activité
