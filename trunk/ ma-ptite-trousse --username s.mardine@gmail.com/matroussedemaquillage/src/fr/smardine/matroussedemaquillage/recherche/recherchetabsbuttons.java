@@ -170,13 +170,13 @@ public class recherchetabsbuttons extends Activity implements OnClickListener, O
 		String nomThemeChoisi = Param[2].get(0).toString().trim();
 
 		if (EnTheme.Bisounours.getLib().equals(nomThemeChoisi)) {
-			setContentView(R.layout.theme_bisounours_affiche_liste_produit_perime);
+			setContentView(R.layout.theme_bisounours_recherche);
 		}
 		if (EnTheme.Classique.getLib().equals(nomThemeChoisi)) {
-			setContentView(R.layout.affiche_liste_produit_perime);
+			setContentView(R.layout.recherche);
 		}
 		if (EnTheme.Fleur.getLib().equals(nomThemeChoisi)) {
-			setContentView(R.layout.theme_fleur_affiche_liste_produit_perime);
+			setContentView(R.layout.theme_fleur_recherche);
 
 		}
 
