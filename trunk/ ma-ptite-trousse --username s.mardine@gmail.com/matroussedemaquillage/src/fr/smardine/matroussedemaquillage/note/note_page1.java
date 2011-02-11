@@ -32,7 +32,8 @@ import fr.smardine.matroussedemaquillage.R;
 import fr.smardine.matroussedemaquillage.base.BDAcces;
 import fr.smardine.matroussedemaquillage.note.noteListAdapter.ViewHolder;
 import fr.smardine.matroussedemaquillage.param.tab_param;
-import fr.smardine.matroussedemaquillage.recherche.recherchetabsbuttons;
+import fr.smardine.matroussedemaquillage.recherche.Recherche;
+import fr.smardine.matroussedemaquillage.variableglobale.ActivityParam;
 import fr.smardine.matroussedemaquillage.variableglobale.EnTheme;
 
 public class note_page1 extends Activity implements OnItemClickListener, OnClickListener, OnItemLongClickListener {
@@ -138,8 +139,8 @@ public class note_page1 extends Activity implements OnItemClickListener, OnClick
 			// l'identifiant integer est moins gourmand en ressource que le string
 			case 2000:
 				Toast.makeText(this, "Recherche", 1000).show();
-				Intent intentRecherche = new Intent(this, recherchetabsbuttons.class);
-				intentRecherche.putExtra("calledFromMain", true);
+				Intent intentRecherche = new Intent(this, Recherche.class);
+				intentRecherche.putExtra(ActivityParam.LaunchFromNotePage1, true);
 				// on demarre la nouvelle activité
 				startActivity(intentRecherche);
 				finish();
@@ -147,6 +148,7 @@ public class note_page1 extends Activity implements OnItemClickListener, OnClick
 			case 2001:
 				Toast.makeText(this, "Paramètres", 1000).show();
 				Intent intentParametres = new Intent(this, tab_param.class);
+				intentParametres.putExtra(ActivityParam.LaunchFromNotePage1, true);
 				// on demarre la nouvelle activité
 				startActivity(intentParametres);
 				finish();
@@ -280,13 +282,13 @@ public class note_page1 extends Activity implements OnItemClickListener, OnClick
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
 
 			Intent Main = new Intent(this, Main.class);
-			Main.putExtra("calledFromNote", true);
+			Main.putExtra(ActivityParam.LaunchFromNotePage1, true);
 			startActivity(Main);
 			finish();
 			return true;
 		}
 		if (keyCode == KeyEvent.KEYCODE_SEARCH) {
-			Intent intentRecherche = new Intent(this, recherchetabsbuttons.class);
+			Intent intentRecherche = new Intent(this, Recherche.class);
 			// on demarre la nouvelle activité
 			startActivity(intentRecherche);
 			finish();
@@ -314,7 +316,7 @@ public class note_page1 extends Activity implements OnItemClickListener, OnClick
 		Txt02 = (String) holder.TvTitreNote.getText();
 
 		intentSaisieNote = new Intent(note_page1.this, note_saisie.class);
-		intentSaisieNote.putExtra("IdNote", Txt01);
+		intentSaisieNote.putExtra(ActivityParam.IdNote, Txt01);
 		startActivity(intentSaisieNote);
 		finish();
 

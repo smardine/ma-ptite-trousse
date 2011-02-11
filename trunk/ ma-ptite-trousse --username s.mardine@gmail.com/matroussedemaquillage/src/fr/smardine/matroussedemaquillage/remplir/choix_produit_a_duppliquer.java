@@ -28,10 +28,11 @@ import fr.smardine.matroussedemaquillage.R;
 import fr.smardine.matroussedemaquillage.base.BDAcces;
 import fr.smardine.matroussedemaquillage.note.note_page1;
 import fr.smardine.matroussedemaquillage.param.tab_param;
+import fr.smardine.matroussedemaquillage.recherche.Recherche;
 import fr.smardine.matroussedemaquillage.recherche.produitRecherche;
 import fr.smardine.matroussedemaquillage.recherche.produitRechercheListAdapter;
 import fr.smardine.matroussedemaquillage.recherche.produitRechercheListAdapter.ViewHolder;
-import fr.smardine.matroussedemaquillage.recherche.recherchetabsbuttons;
+import fr.smardine.matroussedemaquillage.variableglobale.ActivityParam;
 import fr.smardine.matroussedemaquillage.variableglobale.EnTheme;
 
 public class choix_produit_a_duppliquer extends Activity implements OnItemClickListener {
@@ -49,7 +50,7 @@ public class choix_produit_a_duppliquer extends Activity implements OnItemClickL
 	String DateChoisie = "";
 	String numTeinte = "";
 	String nomProduitRecup = "";
-	String SousCat="";
+	String SousCat = "";
 	int VISIBLE = 1, INVISIBLE = 4, GONE = 8;
 
 	/** Called when the activity is first created. */
@@ -137,8 +138,8 @@ public class choix_produit_a_duppliquer extends Activity implements OnItemClickL
 			// l'identifiant integer est moins gourmand en ressource que le string
 			case 2000:
 				Toast.makeText(this, "Recherche", 1000).show();
-				Intent intentRecherche = new Intent(this, recherchetabsbuttons.class);
-				intentRecherche.putExtra("calledFromMain", true);
+				Intent intentRecherche = new Intent(this, Recherche.class);
+				intentRecherche.putExtra(ActivityParam.LaunchFromMain, true);
 				// on demarre la nouvelle activité
 				startActivity(intentRecherche);
 				finish();
@@ -146,6 +147,7 @@ public class choix_produit_a_duppliquer extends Activity implements OnItemClickL
 			case 2001:
 				Toast.makeText(this, "Paramètres", 1000).show();
 				Intent intentParametres = new Intent(this, tab_param.class);
+				intentParametres.putExtra(ActivityParam.LaunchFromDuppliquer, true);
 				// on demarre la nouvelle activité
 				startActivity(intentParametres);
 				finish();
@@ -247,9 +249,9 @@ public class choix_produit_a_duppliquer extends Activity implements OnItemClickL
 	protected void onResume() {
 		super.onResume();
 
-		boolean IsCalledFromMain = getIntent().getBooleanExtra("calledFromMain", false);
-		boolean IsCalledFromPageRecap = getIntent().getBooleanExtra("calledFromRecap", false);
-		boolean IsCalledFromDetail = getIntent().getBooleanExtra("LaunchByDetail", false);
+		boolean IsCalledFromMain = getIntent().getBooleanExtra(ActivityParam.LaunchFromMain, false);
+		boolean IsCalledFromPageRecap = getIntent().getBooleanExtra(ActivityParam.LaunchFromPageRecap, false);
+		boolean IsCalledFromDetail = getIntent().getBooleanExtra(ActivityParam.LaunchFromAfficheDetail, false);
 
 		if (IsCalledFromMain || IsCalledFromPageRecap) {
 			popUp("IscreatFormRecap: " + IsCalledFromPageRecap);
@@ -266,20 +268,20 @@ public class choix_produit_a_duppliquer extends Activity implements OnItemClickL
 			System.out.println("Nombre de champ modifié : " + nbdechamp);
 			objBd.close();
 		}
-		boolean IsCalledFromPage2 = getIntent().getBooleanExtra("LaunchByPage2", false);
-		if (IsCalledFromPage2) {
-			MarqueChoisie = getIntent().getStringExtra("MarqueChoisie").trim();
-			DureeVie = getIntent().getStringExtra("DurreeDeVie").trim();
-			DateChoisie = getIntent().getStringExtra("DateAchat").trim();
-			numTeinte = getIntent().getStringExtra("NumTeinte").trim();
-			nomProduitRecup = getIntent().getStringExtra("NomProduit").trim();
-		}
+		// boolean IsCalledFromPage2 = getIntent().getBooleanExtra("LaunchByPage2", false);
+		// if (IsCalledFromPage2) {
+		// MarqueChoisie = getIntent().getStringExtra("MarqueChoisie").trim();
+		// DureeVie = getIntent().getStringExtra("DurreeDeVie").trim();
+		// DateChoisie = getIntent().getStringExtra("DateAchat").trim();
+		// numTeinte = getIntent().getStringExtra("NumTeinte").trim();
+		// nomProduitRecup = getIntent().getStringExtra("NomProduit").trim();
+		// }
 		if (IsCalledFromDetail) {
-			MarqueChoisie = getIntent().getStringExtra("MarqueChoisie").trim();
-			DureeVie = getIntent().getStringExtra("DurreeDeVie").trim();
-			DateChoisie = getIntent().getStringExtra("DateAchat").trim();
-			numTeinte = getIntent().getStringExtra("NumTeinte").trim();
-			nomProduitRecup = getIntent().getStringExtra("NomProduit").trim();
+			MarqueChoisie = getIntent().getStringExtra(ActivityParam.Marque).trim();
+			DureeVie = getIntent().getStringExtra(ActivityParam.DurreeDeVie).trim();
+			DateChoisie = getIntent().getStringExtra(ActivityParam.DateAchat).trim();
+			numTeinte = getIntent().getStringExtra(ActivityParam.NumeroDeTeinte).trim();
+			nomProduitRecup = getIntent().getStringExtra(ActivityParam.NomProduit).trim();
 		}
 
 	}
@@ -311,13 +313,13 @@ public class choix_produit_a_duppliquer extends Activity implements OnItemClickL
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
 
 			Intent Main = new Intent(this, Main.class);
-			Main.putExtra("calledFromDupplique", true);
+			Main.putExtra(ActivityParam.LaunchFromDuppliquer, true);
 			startActivity(Main);
 			finish();
 			return true;
 		}
 		if (keyCode == KeyEvent.KEYCODE_SEARCH) {
-			Intent intentRecherche = new Intent(this, recherchetabsbuttons.class);
+			Intent intentRecherche = new Intent(this, Recherche.class);
 			// on demarre la nouvelle activité
 			startActivity(intentRecherche);
 			finish();
@@ -409,13 +411,13 @@ public class choix_produit_a_duppliquer extends Activity implements OnItemClickL
 		//
 		Intent intentPage3Dupplique = new Intent(this, formulaire_entree_page3.class);
 		// on demarre la nouvelle activité
-		intentPage3Dupplique.putExtra("MarqueChoisie", MarqueChoisie.trim());
-		intentPage3Dupplique.putExtra("DurreeDeVie", DureeVie.trim());
-		intentPage3Dupplique.putExtra("DateAchat", DateChoisie.trim());
-		intentPage3Dupplique.putExtra("NumTeinte", numTeinte.trim());
-		intentPage3Dupplique.putExtra("NomProduit", nomProduitRecup.trim());
+		intentPage3Dupplique.putExtra(ActivityParam.Marque, MarqueChoisie.trim());
+		intentPage3Dupplique.putExtra(ActivityParam.DurreeDeVie, DureeVie.trim());
+		intentPage3Dupplique.putExtra(ActivityParam.DateAchat, DateChoisie.trim());
+		intentPage3Dupplique.putExtra(ActivityParam.NumeroDeTeinte, numTeinte.trim());
+		intentPage3Dupplique.putExtra(ActivityParam.NomProduit, nomProduitRecup.trim());
 
-		intentPage3Dupplique.putExtra("LaunchByDupplique", true);
+		intentPage3Dupplique.putExtra(ActivityParam.LaunchFromDuppliquer, true);
 
 		startActivity(intentPage3Dupplique);
 		finish();

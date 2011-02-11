@@ -43,7 +43,8 @@ import fr.smardine.matroussedemaquillage.R;
 import fr.smardine.matroussedemaquillage.base.BDAcces;
 import fr.smardine.matroussedemaquillage.note.note_page1;
 import fr.smardine.matroussedemaquillage.param.tab_param;
-import fr.smardine.matroussedemaquillage.recherche.recherchetabsbuttons;
+import fr.smardine.matroussedemaquillage.recherche.Recherche;
+import fr.smardine.matroussedemaquillage.variableglobale.ActivityParam;
 import fr.smardine.matroussedemaquillage.variableglobale.EnCategorieAutres;
 import fr.smardine.matroussedemaquillage.variableglobale.EnCategorieLevre;
 import fr.smardine.matroussedemaquillage.variableglobale.EnCategorieVisage;
@@ -209,8 +210,8 @@ public class formulaire_entree_page1bis extends Activity implements OnClickListe
 			// l'identifiant integer est moins gourmand en ressource que le string
 			case 2000:
 				Toast.makeText(this, "Recherche", 1000).show();
-				intentRecherche = new Intent(this, recherchetabsbuttons.class);
-				intentRecherche.putExtra("calledFrompage1", true);
+				intentRecherche = new Intent(this, Recherche.class);
+				intentRecherche.putExtra(ActivityParam.LaunchFromPage1, true);
 				// on demarre la nouvelle activité
 				startActivity(intentRecherche);
 				finish();
@@ -218,6 +219,7 @@ public class formulaire_entree_page1bis extends Activity implements OnClickListe
 			case 2001:
 				Toast.makeText(this, "Paramètres", 1000).show();
 				intentParametres = new Intent(this, tab_param.class);
+				intentParametres.putExtra(ActivityParam.LaunchFromPage1, true);
 				// on demarre la nouvelle activité
 				startActivity(intentParametres);
 				finish();
@@ -436,12 +438,12 @@ public class formulaire_entree_page1bis extends Activity implements OnClickListe
 
 			} else {
 				Intent intent = new Intent(formulaire_entree_page1bis.this, formulaire_entree_page3.class);
-				intent.putExtra("MarqueChoisie", MarqueChoisie.trim());
-				intent.putExtra("DurreeDeVie", DureeVie.trim());
-				intent.putExtra("DateAchat", DateChoisie.trim());
-				intent.putExtra("NumTeinte", numTeinte.trim());
-				intent.putExtra("NomProduit", nomProduitRecup.trim());
-				intent.putExtra("LaunchByPage1", true);
+				intent.putExtra(ActivityParam.Marque, MarqueChoisie.trim());
+				intent.putExtra(ActivityParam.DurreeDeVie, DureeVie.trim());
+				intent.putExtra(ActivityParam.DateAchat, DateChoisie.trim());
+				intent.putExtra(ActivityParam.NumeroDeTeinte, numTeinte.trim());
+				intent.putExtra(ActivityParam.NomProduit, nomProduitRecup.trim());
+				intent.putExtra(ActivityParam.LaunchFromPage1, true);
 				startActivity(intent);
 				finish();
 			}
@@ -484,21 +486,7 @@ public class formulaire_entree_page1bis extends Activity implements OnClickListe
 		System.out.println("Nombre de champ modifié : " + nbdechamp);
 		objBd.deleteTable("trousse_tempo", "1", null);
 		objBd.close();
-		// VerfieAuMoinsUneCategorieSelectionnée();
-		// NombreDeCategorieSelectionnée();
 
-		// //on créer une nouvelle activité avec comme point de depart "Main" et comme destination "FicheClient"
-		// Intent intent = new Intent(formulaire_entree_page1bis.this, formulaire_entree_page2.class);
-		// //on demarre la nouvelle activité
-		//
-		// intent.putExtra("MarqueChoisie",MarqueChoisie.trim());
-		// intent.putExtra("DurreeDeVie", DureeVie.trim());
-		// intent.putExtra("DateAchat", DateChoisie.trim());
-		// intent.putExtra("NumTeinte", numTeinte.trim());
-		// intent.putExtra("NomProduit", nomProduitRecup.trim());
-		// intent.putExtra("LaunchByPage1", true);
-		// startActivity(intent);
-		// finish();
 	}
 
 	/**
@@ -634,15 +622,14 @@ public class formulaire_entree_page1bis extends Activity implements OnClickListe
 	protected void onResume() {
 		super.onResume();
 
-		boolean isCalledFromMain = getIntent().getBooleanExtra("calledFromMain", false);
-		boolean isCalledFromPageRecap = getIntent().getBooleanExtra("calledFromRecap", false);
-		boolean isCalledFromDetail = getIntent().getBooleanExtra("LaunchByDetail", false);
-		boolean isCalledFromDupplique = getIntent().getBooleanExtra("LaunchByDupplique", false);
-		boolean isCalledFromPage3 = getIntent().getBooleanExtra("LaunchByPage3", false);
+		boolean isCalledFromMain = getIntent().getBooleanExtra(ActivityParam.LaunchFromMain, false);
+		boolean isCalledFromPageRecap = getIntent().getBooleanExtra(ActivityParam.LaunchFromPageRecap, false);
+		boolean isCalledFromDetail = getIntent().getBooleanExtra(ActivityParam.LaunchFromAfficheDetail, false);
+		boolean isCalledFromDupplique = getIntent().getBooleanExtra(ActivityParam.LaunchFromDuppliquer, false);
 
 		if (isCalledFromMain || isCalledFromPageRecap) {
-			popUp("IscreatFormRecap: " + isCalledFromPageRecap);
-			popUp("IscreatFormMain: " + isCalledFromMain);
+			// popUp("IscreatFormRecap: " + isCalledFromPageRecap);
+			// popUp("IscreatFormMain: " + isCalledFromMain);
 			Animlineaire anim = new Animlineaire();
 			anim.setDroiteversGauche(500);
 			Animlineaire anim1 = new Animlineaire();
@@ -671,33 +658,12 @@ public class formulaire_entree_page1bis extends Activity implements OnClickListe
 
 		}
 
-		if (isCalledFromPage3) {
-			MarqueChoisie = getIntent().getStringExtra("MarqueChoisie").trim();
-			DureeVie = getIntent().getStringExtra("DurreeDeVie").trim();
-			DateChoisie = getIntent().getStringExtra("DateAchat").trim();
-			numTeinte = getIntent().getStringExtra("NumTeinte").trim();
-			nomProduitRecup = getIntent().getStringExtra("NomProduit").trim();
-			textView.setText(MarqueChoisie);
-			Animlineaire anim = new Animlineaire();
-			anim.setDroiteversGauche(250);
-			Animlineaire anim1 = new Animlineaire();
-			anim1.setDroiteversGauche(300);
-			Animlineaire anim2 = new Animlineaire();
-			anim2.setDroiteversGauche(350);
-			Animlineaire anim3 = new Animlineaire();
-			anim3.setDroiteversGauche(400);
-
-			BtVisage.startAnimation(anim);
-			BtYeux.startAnimation(anim1);
-			BtLevres.startAnimation(anim2);
-			BtAutres.startAnimation(anim3);
-		}
 		if (isCalledFromDetail) {
-			MarqueChoisie = getIntent().getStringExtra("MarqueChoisie").trim();
-			DureeVie = getIntent().getStringExtra("DurreeDeVie").trim();
-			DateChoisie = getIntent().getStringExtra("DateAchat").trim();
-			numTeinte = getIntent().getStringExtra("NumTeinte").trim();
-			nomProduitRecup = getIntent().getStringExtra("NomProduit").trim();
+			MarqueChoisie = getIntent().getStringExtra(ActivityParam.Marque).trim();
+			DureeVie = getIntent().getStringExtra(ActivityParam.DurreeDeVie).trim();
+			DateChoisie = getIntent().getStringExtra(ActivityParam.DateAchat).trim();
+			numTeinte = getIntent().getStringExtra(ActivityParam.NumeroDeTeinte).trim();
+			nomProduitRecup = getIntent().getStringExtra(ActivityParam.NomProduit).trim();
 			Animlineaire anim = new Animlineaire();
 			anim.setDroiteversGauche(250);
 			Animlineaire anim1 = new Animlineaire();
@@ -713,11 +679,11 @@ public class formulaire_entree_page1bis extends Activity implements OnClickListe
 			BtAutres.startAnimation(anim3);
 		}
 		if (isCalledFromDupplique) {
-			MarqueChoisie = getIntent().getStringExtra("MarqueChoisie").trim();
-			DureeVie = getIntent().getStringExtra("DurreeDeVie").trim();
-			DateChoisie = getIntent().getStringExtra("DateAchat").trim();
-			numTeinte = getIntent().getStringExtra("NumTeinte").trim();
-			nomProduitRecup = getIntent().getStringExtra("NomProduit").trim();
+			MarqueChoisie = getIntent().getStringExtra(ActivityParam.Marque).trim();
+			DureeVie = getIntent().getStringExtra(ActivityParam.DurreeDeVie).trim();
+			DateChoisie = getIntent().getStringExtra(ActivityParam.DateAchat).trim();
+			numTeinte = getIntent().getStringExtra(ActivityParam.NumeroDeTeinte).trim();
+			nomProduitRecup = getIntent().getStringExtra(ActivityParam.NomProduit).trim();
 			Animlineaire anim = new Animlineaire();
 			anim.setDroiteversGauche(250);
 			Animlineaire anim1 = new Animlineaire();
@@ -762,13 +728,13 @@ public class formulaire_entree_page1bis extends Activity implements OnClickListe
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
 
 			Intent Main = new Intent(this, Main.class);
-			Main.putExtra("calledFromPage1", true);
+			Main.putExtra(ActivityParam.LaunchFromPage1, true);
 			startActivity(Main);
 			finish();
 			return true;
 		}
 		if (keyCode == KeyEvent.KEYCODE_SEARCH) {
-			Intent intentRecherche = new Intent(this, recherchetabsbuttons.class);
+			Intent intentRecherche = new Intent(this, Recherche.class);
 			// on demarre la nouvelle activité
 			startActivity(intentRecherche);
 			finish();

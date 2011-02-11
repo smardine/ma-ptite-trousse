@@ -17,7 +17,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import fr.smardine.matroussedemaquillage.R;
 import fr.smardine.matroussedemaquillage.base.BDAcces;
-import fr.smardine.matroussedemaquillage.recherche.recherchetabsbuttons;
+import fr.smardine.matroussedemaquillage.recherche.Recherche;
+import fr.smardine.matroussedemaquillage.variableglobale.ActivityParam;
 import fr.smardine.matroussedemaquillage.variableglobale.EnTheme;
 
 public class note_saisie extends Activity implements OnClickListener {
@@ -46,7 +47,7 @@ public class note_saisie extends Activity implements OnClickListener {
 		ChangerTitre.setOnClickListener(this);
 		ChangerMessage.setOnClickListener(this);
 
-		IdNote = getIntent().getStringExtra("IdNote").trim();
+		IdNote = getIntent().getStringExtra(ActivityParam.IdNote).trim();
 		objBd = new BDAcces(this);
 		objBd.open();
 		String[] Colonnes = { "id_note", "Titre", "Message" };
@@ -176,23 +177,6 @@ public class note_saisie extends Activity implements OnClickListener {
 		super.onResume();
 		popUp("onResume()-Page2");
 
-		boolean IsCalledFromPage1 = getIntent().getBooleanExtra("LaunchByPage1", false);
-		boolean IsCalledFromPage3 = getIntent().getBooleanExtra("LaunchByPage3", false);
-		popUp("IscreatFormPage3: " + IsCalledFromPage3);
-		popUp("IscreatFormPage1: " + IsCalledFromPage1);
-		/*
-		 * if (IsCalledFromPage1){ MarqueChoisie=getIntent().getStringExtra ("MarqueChoisie").trim(); int taille=MarqueChoisie.length(); if
-		 * (taille!=0){ if (!MarqueChoisie.equals("")){ textView.setText(MarqueChoisie); } }
-		 * DateChoisie=getIntent().getStringExtra("DateAchat").trim(); nomProduitRecup=getIntent().getStringExtra("NomProduit").trim();
-		 * numTeinte=getIntent().getStringExtra("NumTeinte").trim(); DureeVie=getIntent().getStringExtra("DurreeDeVie").trim(); }
-		 */
-
-		/*
-		 * if (IsCalledFromPage3){ MarqueChoisie=getIntent().getStringExtra ("MarqueChoisie").trim(); int taille=MarqueChoisie.length(); if
-		 * (taille!=0){ if (!MarqueChoisie.equals("")){ textView.setText(MarqueChoisie); } }
-		 * DateChoisie=getIntent().getStringExtra("DateAchat").trim(); nomProduitRecup=getIntent().getStringExtra("NomProduit").trim();
-		 * numTeinte=getIntent().getStringExtra("NumTeinte").trim(); DureeVie=getIntent().getStringExtra("DurreeDeVie").trim(); }
-		 */
 	}
 
 	/**
@@ -233,13 +217,13 @@ public class note_saisie extends Activity implements OnClickListener {
 			Log.d("Modif note", ">>nb de champ modifié: " + nbCHampModif);
 
 			Intent note_page1 = new Intent(this, note_page1.class);
-			note_page1.putExtra("LaunchBynote_saisie", true);
+			note_page1.putExtra(ActivityParam.LaunchFromNoteSaisie, true);
 			startActivity(note_page1);
 			finish();
 			return true;
 		}
 		if (keyCode == KeyEvent.KEYCODE_SEARCH) {
-			Intent intentRecherche = new Intent(this, recherchetabsbuttons.class);
+			Intent intentRecherche = new Intent(this, Recherche.class);
 			// on demarre la nouvelle activité
 			startActivity(intentRecherche);
 			finish();

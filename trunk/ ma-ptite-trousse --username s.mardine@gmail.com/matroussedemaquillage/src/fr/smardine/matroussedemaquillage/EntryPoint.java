@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.widget.ProgressBar;
 import fr.smardine.matroussedemaquillage.base.BDAcces;
+import fr.smardine.matroussedemaquillage.variableglobale.ActivityParam;
 
 public class EntryPoint extends Activity {
 
@@ -69,8 +70,8 @@ public class EntryPoint extends Activity {
 		// objBd.close();
 		if ("true".equals(Param[0].get(0))) {
 			Intent intentRecherche = new Intent(EntryPoint.this, Main.class);
-			intentRecherche.putExtra("calledFromEntryPoint", true);
-			intentRecherche.putExtra("AfficheProduitPerimé", true);
+			intentRecherche.putExtra(ActivityParam.LaunchFromEntryPoint, true);
+			intentRecherche.putExtra(ActivityParam.AfficheProduitPerime, true);
 			// on demarre la nouvelle activité
 			startActivity(intentRecherche);
 			finish();
@@ -79,8 +80,8 @@ public class EntryPoint extends Activity {
 			remplissageBase();
 			Intent intentMain = new Intent(EntryPoint.this, Main.class);
 			// on demarre la nouvelle activité
-			intentMain.putExtra("calledFromEntryPoint", true);
-			intentMain.putExtra("AfficheProduitPerimé", false);
+			intentMain.putExtra(ActivityParam.LaunchFromEntryPoint, true);
+			intentMain.putExtra(ActivityParam.AfficheProduitPerime, false);
 			startActivity(intentMain);
 			finish();
 		}
@@ -90,8 +91,8 @@ public class EntryPoint extends Activity {
 
 		remplissageBase();
 		Intent Main = new Intent(EntryPoint.this, Main.class);
-		Main.putExtra("calledFromEntryPoint", true);
-		Main.putExtra("AfficheProduitPerimé", false);
+		Main.putExtra(ActivityParam.LaunchFromEntryPoint, true);
+		Main.putExtra(ActivityParam.AfficheProduitPerime, false);
 		startActivity(Main);
 		finish();
 

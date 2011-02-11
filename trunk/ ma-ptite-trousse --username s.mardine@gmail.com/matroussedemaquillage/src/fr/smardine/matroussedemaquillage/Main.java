@@ -22,10 +22,11 @@ import com.example.android.apis.animation.Animlineaire;
 import fr.smardine.matroussedemaquillage.base.BDAcces;
 import fr.smardine.matroussedemaquillage.note.note_page1;
 import fr.smardine.matroussedemaquillage.param.tab_param;
+import fr.smardine.matroussedemaquillage.recherche.Recherche;
 import fr.smardine.matroussedemaquillage.recherche.recherche_produit_perime;
-import fr.smardine.matroussedemaquillage.recherche.recherchetabsbuttons;
 import fr.smardine.matroussedemaquillage.remplir.choix_produit_a_duppliquer;
 import fr.smardine.matroussedemaquillage.remplir.formulaire_entree_page1bis;
+import fr.smardine.matroussedemaquillage.variableglobale.ActivityParam;
 import fr.smardine.matroussedemaquillage.variableglobale.EnTheme;
 
 public class Main extends Activity implements OnClickListener {
@@ -53,7 +54,7 @@ public class Main extends Activity implements OnClickListener {
 			public void onClick(DialogInterface dialog, int id) {
 
 				Intent intentRecherche = new Intent(Main.this, recherche_produit_perime.class);
-				intentRecherche.putExtra("calledFromMain", true);
+				intentRecherche.putExtra(ActivityParam.LaunchFromMain, true);
 				// on demarre la nouvelle activité
 				startActivity(intentRecherche);
 				finish();
@@ -117,8 +118,8 @@ public class Main extends Activity implements OnClickListener {
 			// l'identifiant integer est moins gourmand en ressource que le string
 			case 2000:
 				// Toast.makeText(this, "Recherche", 1000).show();
-				intentRecherche = new Intent(Main.this, recherchetabsbuttons.class);
-				intentRecherche.putExtra("calledFromMain", true);
+				intentRecherche = new Intent(Main.this, Recherche.class);
+				intentRecherche.putExtra(ActivityParam.LaunchFromMain, true);
 				// on demarre la nouvelle activité
 				startActivity(intentRecherche);
 				// finish();
@@ -126,6 +127,7 @@ public class Main extends Activity implements OnClickListener {
 			case 2001:
 				// Toast.makeText(this, "Paramètres", 1000).show();
 				intentParametres = new Intent(Main.this, tab_param.class);
+				intentParametres.putExtra(ActivityParam.LaunchFromMain, true);
 				// on demarre la nouvelle activité
 				startActivity(intentParametres);
 				finish();
@@ -188,14 +190,14 @@ public class Main extends Activity implements OnClickListener {
 
 						if (nouveau) {// on rentre un nouveau produit
 							intentFormPage1 = new Intent(Main.this, formulaire_entree_page1bis.class);
-							intentFormPage1.putExtra("calledFromMain", true);
+							intentFormPage1.putExtra(ActivityParam.LaunchFromMain, true);
 							// on demarre la nouvelle activité
 							startActivity(intentFormPage1);
 							finish();
 						}
 						if (dupplique) {// on dupplique un produit existant
 							intentDupplique = new Intent(Main.this, choix_produit_a_duppliquer.class);
-							intentDupplique.putExtra("calledFromMain", true);
+							intentDupplique.putExtra(ActivityParam.LaunchFromMain, true);
 							// on demarre la nouvelle activité
 							startActivity(intentDupplique);
 							finish();
@@ -205,7 +207,7 @@ public class Main extends Activity implements OnClickListener {
 				adChoixDupplique.show();
 			} else {
 				intentFormPage1 = new Intent(Main.this, formulaire_entree_page1bis.class);
-				intentFormPage1.putExtra("calledFromMain", true);
+				intentFormPage1.putExtra(ActivityParam.LaunchFromMain, true);
 				// on demarre la nouvelle activité
 				startActivity(intentFormPage1);
 				finish();
@@ -230,7 +232,7 @@ public class Main extends Activity implements OnClickListener {
 
 			} else {
 				intentDupplique = new Intent(Main.this, choix_produit_a_duppliquer.class);
-				intentDupplique.putExtra("calledFromMain", true);
+				intentDupplique.putExtra(ActivityParam.LaunchFromMain, true);
 				// on demarre la nouvelle activité
 				startActivity(intentDupplique);
 				finish();
@@ -240,7 +242,7 @@ public class Main extends Activity implements OnClickListener {
 		}
 		if (v == BtNotes) {
 			intentNote = new Intent(Main.this, note_page1.class);
-			intentNote.putExtra("calledFromMain", true);
+			intentNote.putExtra(ActivityParam.LaunchFromMain, true);
 			startActivity(intentNote);
 			finish();
 
@@ -256,8 +258,8 @@ public class Main extends Activity implements OnClickListener {
 			int nbdobjet = ListeProduits[0].size();
 			if (nbdobjet != 0) {
 				intentRecherche = new Intent(Main.this, recherche_produit_perime.class);
-				intentRecherche.putExtra("calledFromMain", true);
-				intentRecherche.putExtra("AfficheProduitPerimé", true);
+				intentRecherche.putExtra(ActivityParam.LaunchFromMain, true);
+				intentRecherche.putExtra(ActivityParam.AfficheProduitPerime, true);
 				// on demarre la nouvelle activité
 				startActivity(intentRecherche);
 				finish();
@@ -290,8 +292,8 @@ public class Main extends Activity implements OnClickListener {
 			return true;
 		}
 		if (keyCode == KeyEvent.KEYCODE_SEARCH) {
-			intentRecherche = new Intent(Main.this, recherchetabsbuttons.class);
-			intentRecherche.putExtra("calledFromMain", true);
+			intentRecherche = new Intent(Main.this, Recherche.class);
+			intentRecherche.putExtra(ActivityParam.LaunchFromMain, true);
 			// on demarre la nouvelle activité
 			startActivity(intentRecherche);
 			finish();
@@ -323,9 +325,9 @@ public class Main extends Activity implements OnClickListener {
 
 		ChoisiLeTheme();
 
-		boolean isLaunchFromEntrypoint = getIntent().getBooleanExtra("calledFromEntryPoint", false);
+		boolean isLaunchFromEntrypoint = getIntent().getBooleanExtra(ActivityParam.LaunchFromEntryPoint, false);
 		if (isLaunchFromEntrypoint) {
-			boolean isMessageAlerteAAfficher = getIntent().getBooleanExtra("AfficheProduitPerimé", false);
+			boolean isMessageAlerteAAfficher = getIntent().getBooleanExtra(ActivityParam.AfficheProduitPerime, false);
 			if (isMessageAlerteAAfficher) {
 				adInfoProduitPerimé.show();
 			}

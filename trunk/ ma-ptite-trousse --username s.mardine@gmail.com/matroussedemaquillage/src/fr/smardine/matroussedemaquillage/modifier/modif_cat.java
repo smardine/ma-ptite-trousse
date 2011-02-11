@@ -14,8 +14,9 @@ import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import fr.smardine.matroussedemaquillage.R;
 import fr.smardine.matroussedemaquillage.base.BDAcces;
+import fr.smardine.matroussedemaquillage.recherche.Recherche;
 import fr.smardine.matroussedemaquillage.recherche.affiche_detail;
-import fr.smardine.matroussedemaquillage.recherche.recherchetabsbuttons;
+import fr.smardine.matroussedemaquillage.variableglobale.ActivityParam;
 import fr.smardine.matroussedemaquillage.variableglobale.EnCategorieAutres;
 import fr.smardine.matroussedemaquillage.variableglobale.EnCategorieLevre;
 import fr.smardine.matroussedemaquillage.variableglobale.EnCategorieVisage;
@@ -330,8 +331,8 @@ public class modif_cat extends Activity implements OnClickListener {
 		String SousCat = Categorie_Cochée[0].toString().replace("[", "").replace("]", "");
 		String Cat = Categorie_Cochée[1].toString().replace("[", "").replace("]", "");
 
-		intent.putExtra("IDProduit", Id_Produit);
-		intent.putExtra("LaunchByModifCat", true);
+		intent.putExtra(ActivityParam.IdProduit, Id_Produit);
+		intent.putExtra(ActivityParam.LaunchFromModfiCat, true);
 
 		majTableProduit(Integer.parseInt(Id_Produit), SousCat, Cat);
 		remetAZeroLaTableCat();
@@ -474,10 +475,10 @@ public class modif_cat extends Activity implements OnClickListener {
 	protected void onResume() {
 		super.onResume();
 
-		boolean IsCalledFromDetail = getIntent().getBooleanExtra("LaunchByDetail", false);
+		boolean IsCalledFromDetail = getIntent().getBooleanExtra(ActivityParam.LaunchFromAfficheDetail, false);
 
 		if (IsCalledFromDetail) {
-			Id_Produit = getIntent().getStringExtra("ID_Produit").trim();
+			Id_Produit = getIntent().getStringExtra(ActivityParam.IdProduit).trim();
 		}
 
 	}
@@ -509,14 +510,14 @@ public class modif_cat extends Activity implements OnClickListener {
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
 
 			Intent affiche_detail = new Intent(this, affiche_detail.class);
-			affiche_detail.putExtra("IDProduit", Id_Produit);
+			affiche_detail.putExtra(ActivityParam.IdProduit, Id_Produit);
 			startActivity(affiche_detail);
 			finish();
 
 			return true;
 		}
 		if (keyCode == KeyEvent.KEYCODE_SEARCH) {
-			Intent intentRecherche = new Intent(this, recherchetabsbuttons.class);
+			Intent intentRecherche = new Intent(this, Recherche.class);
 			// on demarre la nouvelle activité
 			startActivity(intentRecherche);
 			finish();
