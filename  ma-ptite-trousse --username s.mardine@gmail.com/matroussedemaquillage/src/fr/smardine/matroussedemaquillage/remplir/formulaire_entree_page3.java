@@ -34,7 +34,8 @@ import fr.smardine.matroussedemaquillage.R;
 import fr.smardine.matroussedemaquillage.base.BDAcces;
 import fr.smardine.matroussedemaquillage.note.note_page1;
 import fr.smardine.matroussedemaquillage.param.tab_param;
-import fr.smardine.matroussedemaquillage.recherche.recherchetabsbuttons;
+import fr.smardine.matroussedemaquillage.recherche.Recherche;
+import fr.smardine.matroussedemaquillage.variableglobale.ActivityParam;
 import fr.smardine.matroussedemaquillage.variableglobale.EnTheme;
 
 public class formulaire_entree_page3 extends Activity implements OnClickListener {
@@ -137,21 +138,21 @@ public class formulaire_entree_page3 extends Activity implements OnClickListener
 				if (NouveauProduit) {// on retourne a la 1° fenetre du formulaire
 					Intent intent = new Intent(formulaire_entree_page3.this, formulaire_entree_page1bis.class);
 					// on demarre la nouvelle activité
-					intent.putExtra("calledFromRecap", true);
+					intent.putExtra(ActivityParam.LaunchFromPageRecap, true);
 					startActivity(intent);
 					finish();
 				}
 				if (Duppliquer) {// on revient a la page d'acceuil
 					Intent intent = new Intent(formulaire_entree_page3.this, choix_produit_a_duppliquer.class);
 					// on demarre la nouvelle activité
-					intent.putExtra("calledFromRecap", true);
+					intent.putExtra(ActivityParam.LaunchFromPageRecap, true);
 					startActivity(intent);
 					finish();
 				}
 				if (acceuil) {
 					Intent intent = new Intent(formulaire_entree_page3.this, Main.class);
 					// on demarre la nouvelle activité
-					intent.putExtra("calledFromRecap", true);
+					intent.putExtra(ActivityParam.LaunchFromPageRecap, true);
 					startActivity(intent);
 					finish();
 				}
@@ -319,8 +320,8 @@ public class formulaire_entree_page3 extends Activity implements OnClickListener
 			// l'identifiant integer est moins gourmand en ressource que le string
 			case 2000:
 				Toast.makeText(this, "Recherche", 1000).show();
-				Intent intentRecherche = new Intent(this, recherchetabsbuttons.class);
-				intentRecherche.putExtra("calledFrompage1", true);
+				Intent intentRecherche = new Intent(this, Recherche.class);
+				intentRecherche.putExtra(ActivityParam.LaunchFromPage1, true);
 				// on demarre la nouvelle activité
 				startActivity(intentRecherche);
 				finish();
@@ -328,6 +329,7 @@ public class formulaire_entree_page3 extends Activity implements OnClickListener
 			case 2001:
 				Toast.makeText(this, "Paramètres", 1000).show();
 				Intent intentParametres = new Intent(this, tab_param.class);
+				intentParametres.putExtra(ActivityParam.LaunchFromPageRecap, true);
 				// on demarre la nouvelle activité
 				startActivity(intentParametres);
 				finish();
@@ -545,17 +547,17 @@ public class formulaire_entree_page3 extends Activity implements OnClickListener
 	@Override
 	protected void onResume() {
 		super.onResume();
-		// boolean IsCalledFromPageRecap = getIntent().getBooleanExtra("LaunchByrecap", false);
-		boolean IsCalledFromPage1 = getIntent().getBooleanExtra("LaunchByPage1", false);
-		boolean IsCalledFromDupplique = getIntent().getBooleanExtra("LaunchByDupplique", false);
+
+		boolean IsCalledFromPage1 = getIntent().getBooleanExtra(ActivityParam.LaunchFromPage1, false);
+		boolean IsCalledFromDupplique = getIntent().getBooleanExtra(ActivityParam.LaunchFromDuppliquer, false);
 
 		if (IsCalledFromPage1 || IsCalledFromDupplique) {
 
-			MarqueChoisie = getIntent().getStringExtra("MarqueChoisie").trim();
-			DateAchat = getIntent().getStringExtra("DateAchat").trim();
-			nomDuProduit = getIntent().getStringExtra("NomProduit").trim();
-			numeroDeTeinte = getIntent().getStringExtra("NumTeinte").trim();
-			DureeVie = getIntent().getStringExtra("DurreeDeVie").trim();
+			MarqueChoisie = getIntent().getStringExtra(ActivityParam.Marque).trim();
+			DureeVie = getIntent().getStringExtra(ActivityParam.DurreeDeVie).trim();
+			DateAchat = getIntent().getStringExtra(ActivityParam.DateAchat).trim();
+			numeroDeTeinte = getIntent().getStringExtra(ActivityParam.NumeroDeTeinte).trim();
+			nomDuProduit = getIntent().getStringExtra(ActivityParam.NomProduit).trim();
 			if (DateAchat.equals("")) {
 				updateDisplay();
 			} else {
@@ -622,18 +624,18 @@ public class formulaire_entree_page3 extends Activity implements OnClickListener
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
 			Intent page2 = new Intent(this, formulaire_entree_page1bis.class);
-			page2.putExtra("MarqueChoisie", MarqueChoisie.trim());
-			page2.putExtra("DurreeDeVie", DureeVie.trim());
-			page2.putExtra("DateAchat", DateAchat.trim());
-			page2.putExtra("NumTeinte", numeroDeTeinte.trim());
-			page2.putExtra("NomProduit", nomDuProduit.trim());
-			page2.putExtra("LaunchByPage3", true);
+			page2.putExtra(ActivityParam.Marque, MarqueChoisie.trim());
+			page2.putExtra(ActivityParam.DurreeDeVie, DureeVie.trim());
+			page2.putExtra(ActivityParam.DateAchat, DateAchat.trim());
+			page2.putExtra(ActivityParam.NumeroDeTeinte, numeroDeTeinte.trim());
+			page2.putExtra(ActivityParam.NomProduit, nomDuProduit.trim());
+			page2.putExtra(ActivityParam.LaunchFromPageRecap, true);
 			startActivity(page2);
 			finish();
 			return true;
 		}
 		if (keyCode == KeyEvent.KEYCODE_SEARCH) {
-			Intent intentRecherche = new Intent(this, recherchetabsbuttons.class);
+			Intent intentRecherche = new Intent(this, Recherche.class);
 			// on demarre la nouvelle activité
 			startActivity(intentRecherche);
 			finish();

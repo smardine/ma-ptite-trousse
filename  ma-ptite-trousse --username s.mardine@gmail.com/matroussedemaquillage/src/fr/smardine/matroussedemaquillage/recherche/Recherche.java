@@ -36,9 +36,10 @@ import fr.smardine.matroussedemaquillage.base.BDAcces;
 import fr.smardine.matroussedemaquillage.note.note_page1;
 import fr.smardine.matroussedemaquillage.param.tab_param;
 import fr.smardine.matroussedemaquillage.recherche.produitRechercheListAdapter.ViewHolder;
+import fr.smardine.matroussedemaquillage.variableglobale.ActivityParam;
 import fr.smardine.matroussedemaquillage.variableglobale.EnTheme;
 
-public class recherchetabsbuttons extends Activity implements OnClickListener, OnItemClickListener, OnItemLongClickListener {
+public class Recherche extends Activity implements OnClickListener, OnItemClickListener, OnItemLongClickListener {
 	ToggleButton Cat, Marque, Tout;
 	EditText EtFiltrage;
 	ArrayList<produitRecherche> produitRecherche = new ArrayList<produitRecherche>();
@@ -48,7 +49,7 @@ public class recherchetabsbuttons extends Activity implements OnClickListener, O
 	produitRechercheListAdapter adpt;
 	BDAcces objBd;
 	AlertDialog.Builder adAucunProduit;
-	Context ctx = recherchetabsbuttons.this;
+	Context ctx = Recherche.this;
 	// TextView RechercheTxt1;
 	String MarqueChoisie;
 	String DureeVie;
@@ -67,7 +68,7 @@ public class recherchetabsbuttons extends Activity implements OnClickListener, O
 		super.onCreate(savedInstanceState);
 		// ExceptionHandler.register(this, "http://simon.mardine.free.fr/trousse_maquillage/test/server.php");
 
-		IsCalledFromMain = getIntent().getBooleanExtra("calledFromMain", false);
+		IsCalledFromMain = getIntent().getBooleanExtra(ActivityParam.LaunchFromMain, false);
 
 		objBd = new BDAcces(this);
 
@@ -212,6 +213,7 @@ public class recherchetabsbuttons extends Activity implements OnClickListener, O
 			case 2001:
 				Toast.makeText(this, "Paramètres", 1000).show();
 				Intent intentParametres = new Intent(this, tab_param.class);
+				intentParametres.putExtra(ActivityParam.LaunchFromRecherche, true);
 				// on demarre la nouvelle activité
 				startActivity(intentParametres);
 				finish();
@@ -382,9 +384,9 @@ public class recherchetabsbuttons extends Activity implements OnClickListener, O
 		// TODO Auto-generated method stub
 		Intent intentDetail = new Intent(this, affiche_detail.class);
 		// on demarre la nouvelle activité
-		intentDetail.putExtra("IDProduit", IdProduit);
-		intentDetail.putExtra("calledFromMain", IsCalledFromMain);
-		intentDetail.putExtra("AfficheProduitPerimé", false);
+		intentDetail.putExtra(ActivityParam.IdProduit, IdProduit);
+		intentDetail.putExtra(ActivityParam.LaunchFromMain, IsCalledFromMain);
+		intentDetail.putExtra(ActivityParam.AfficheProduitPerime, false);
 		startActivity(intentDetail);
 		finish();
 
@@ -615,16 +617,17 @@ public class recherchetabsbuttons extends Activity implements OnClickListener, O
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
 
 			Intent Main = new Intent(this, Main.class);
-			Main.putExtra("calledFromRecherche", true);
+			Main.putExtra(ActivityParam.LaunchFromRecherche, true);
 			startActivity(Main);
 			finish();
 			return true;
 		}
 		if (keyCode == KeyEvent.KEYCODE_SEARCH) {
-			Intent intentRecherche = new Intent(this, recherchetabsbuttons.class);
-			// on demarre la nouvelle activité
-			startActivity(intentRecherche);
-			finish();
+			// on ne fait rien, on est deja dans cette activity
+			// Intent intentRecherche = new Intent(this, recherche.class);
+			// // on demarre la nouvelle activité
+			// startActivity(intentRecherche);
+			// finish();
 		}
 		return super.onKeyDown(keyCode, event);
 	}

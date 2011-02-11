@@ -36,6 +36,7 @@ import fr.smardine.matroussedemaquillage.base.BDAcces;
 import fr.smardine.matroussedemaquillage.note.note_page1;
 import fr.smardine.matroussedemaquillage.param.tab_param;
 import fr.smardine.matroussedemaquillage.recherche.produitRechercheListAdapter.ViewHolder;
+import fr.smardine.matroussedemaquillage.variableglobale.ActivityParam;
 import fr.smardine.matroussedemaquillage.variableglobale.EnTheme;
 
 public class recherche_produit_perime extends Activity implements OnClickListener, OnItemClickListener, OnItemLongClickListener {
@@ -67,7 +68,7 @@ public class recherche_produit_perime extends Activity implements OnClickListene
 		super.onCreate(savedInstanceState);
 		// ExceptionHandler.register(this, "http://simon.mardine.free.fr/trousse_maquillage/test/server.php");
 
-		IsCalledFromMain = getIntent().getBooleanExtra("calledFromMain", false);
+		IsCalledFromMain = getIntent().getBooleanExtra(ActivityParam.LaunchFromMain, false);
 
 		objBd = new BDAcces(this);
 
@@ -213,6 +214,7 @@ public class recherche_produit_perime extends Activity implements OnClickListene
 			case 2001:
 				Toast.makeText(this, "Paramètres", 1000).show();
 				Intent intentParametres = new Intent(this, tab_param.class);
+				intentParametres.putExtra(ActivityParam.LaunchFromRechercheProduitPerime, true);
 				// on demarre la nouvelle activité
 				startActivity(intentParametres);
 				finish();
@@ -383,9 +385,9 @@ public class recherche_produit_perime extends Activity implements OnClickListene
 		// TODO Auto-generated method stub
 		Intent intentDetail = new Intent(this, affiche_detail.class);
 		// on demarre la nouvelle activité
-		intentDetail.putExtra("IDProduit", IdProduit);
-		intentDetail.putExtra("calledFromMain", IsCalledFromMain);
-		intentDetail.putExtra("AfficheProduitPerimé", true);
+		intentDetail.putExtra(ActivityParam.IdProduit, IdProduit);
+		intentDetail.putExtra(ActivityParam.LaunchFromMain, IsCalledFromMain);
+		intentDetail.putExtra(ActivityParam.AfficheProduitPerime, true);
 		startActivity(intentDetail);
 		finish();
 
@@ -617,13 +619,13 @@ public class recherche_produit_perime extends Activity implements OnClickListene
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
 
 			Intent Main = new Intent(this, Main.class);
-			Main.putExtra("calledFromRecherche", true);
+			Main.putExtra(ActivityParam.LaunchFromRechercheProduitPerime, true);
 			startActivity(Main);
 			finish();
 			return true;
 		}
 		if (keyCode == KeyEvent.KEYCODE_SEARCH) {
-			Intent intentRecherche = new Intent(this, recherchetabsbuttons.class);
+			Intent intentRecherche = new Intent(this, Recherche.class);
 			// on demarre la nouvelle activité
 			startActivity(intentRecherche);
 			finish();

@@ -36,6 +36,7 @@ import fr.smardine.matroussedemaquillage.base.BDAcces;
 import fr.smardine.matroussedemaquillage.modifier.modif_cat;
 import fr.smardine.matroussedemaquillage.note.note_page1;
 import fr.smardine.matroussedemaquillage.param.tab_param;
+import fr.smardine.matroussedemaquillage.variableglobale.ActivityParam;
 import fr.smardine.matroussedemaquillage.variableglobale.EnTheme;
 
 public class affiche_detail extends Activity implements OnClickListener {
@@ -100,8 +101,8 @@ public class affiche_detail extends Activity implements OnClickListener {
 		BTChangerDateAchat.setOnClickListener(this);
 		BTChangerDatePermeption.setOnClickListener(this);
 
-		IsCalledFromMain = getIntent().getBooleanExtra("calledFromMain", false);
-		IsAffichageProduitPerimé = getIntent().getBooleanExtra("AfficheProduitPerimé", false);
+		IsCalledFromMain = getIntent().getBooleanExtra(ActivityParam.LaunchFromMain, false);
+		IsAffichageProduitPerimé = getIntent().getBooleanExtra(ActivityParam.LaunchFromRechercheProduitPerime, false);
 
 		popUp("OnCreate-pageDetail");
 
@@ -170,6 +171,7 @@ public class affiche_detail extends Activity implements OnClickListener {
 			case 2001:
 				Toast.makeText(this, "Paramètres", 1000).show();
 				Intent intentParametres = new Intent(this, tab_param.class);
+				intentParametres.putExtra(ActivityParam.LaunchFromAfficheDetail, true);
 				// on demarre la nouvelle activité
 				startActivity(intentParametres);
 				finish();
@@ -219,7 +221,7 @@ public class affiche_detail extends Activity implements OnClickListener {
 
 	private void updateDisplay() {
 		objBd.open();
-		IdProduit = getIntent().getStringExtra("IDProduit").trim();
+		IdProduit = getIntent().getStringExtra(ActivityParam.IdProduit).trim();
 		String[] Colonnes = { "nom_produit", "nom_souscatergorie", "nom_categorie", "numero_Teinte", "Duree_Vie", "Date_Peremption",
 				"DateAchat", "nom_marque" };
 
@@ -358,10 +360,10 @@ public class affiche_detail extends Activity implements OnClickListener {
 			Intent recherche;
 			if (IsCalledFromMain && IsAffichageProduitPerimé) {
 				recherche = new Intent(this, recherche_produit_perime.class);
-				recherche.putExtra("calledFromMain", true);
-				recherche.putExtra("AfficheProduitPerimé", true);
+				recherche.putExtra(ActivityParam.LaunchFromMain, true);
+				recherche.putExtra(ActivityParam.AfficheProduitPerime, true);
 			} else {
-				recherche = new Intent(this, recherchetabsbuttons.class);
+				recherche = new Intent(this, Recherche.class);
 			}
 			majTableProduit();
 			startActivity(recherche);
@@ -369,7 +371,7 @@ public class affiche_detail extends Activity implements OnClickListener {
 			return true;
 		}
 		if (keyCode == KeyEvent.KEYCODE_SEARCH) {
-			Intent intentRecherche = new Intent(this, recherchetabsbuttons.class);
+			Intent intentRecherche = new Intent(this, Recherche.class);
 			// on demarre la nouvelle activité
 			startActivity(intentRecherche);
 			finish();
@@ -388,8 +390,8 @@ public class affiche_detail extends Activity implements OnClickListener {
 		// TODO Auto-generated method stub
 		if (v == BTChangerCat) {
 			Intent modifcat = new Intent(this, modif_cat.class);
-			modifcat.putExtra("ID_Produit", IdProduit);
-			modifcat.putExtra("LaunchByDetail", true);
+			modifcat.putExtra(ActivityParam.IdProduit, IdProduit);
+			modifcat.putExtra(ActivityParam.LaunchFromAfficheDetail, true);
 
 			startActivity(modifcat);
 			finish();

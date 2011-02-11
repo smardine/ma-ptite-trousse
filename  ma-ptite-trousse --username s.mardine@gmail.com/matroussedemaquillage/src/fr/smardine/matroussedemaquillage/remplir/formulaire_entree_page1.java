@@ -27,6 +27,7 @@ import fr.smardine.matroussedemaquillage.base.BDAcces;
 import fr.smardine.matroussedemaquillage.note.note_page1;
 import fr.smardine.matroussedemaquillage.param.tab_param;
 import fr.smardine.matroussedemaquillage.recherche.recherchetabsbuttons;
+import fr.smardine.matroussedemaquillage.variableglobale.ActivityParam;
 import fr.smardine.matroussedemaquillage.variableglobale.EnCategorieAutres;
 import fr.smardine.matroussedemaquillage.variableglobale.EnCategorieLevre;
 import fr.smardine.matroussedemaquillage.variableglobale.EnCategorieVisage;
@@ -159,7 +160,7 @@ public class formulaire_entree_page1 extends Activity implements OnClickListener
     	case 2000: 
     		Toast.makeText(this, "Recherche", 1000).show();
     		intentRecherche = new Intent(this, recherchetabsbuttons.class);
-    		intentRecherche.putExtra("calledFrompage1",true);
+    		intentRecherche.putExtra(ActivityParam.LaunchFromPage1",true);
     		//on demarre la nouvelle activité
     		startActivity(intentRecherche);
     		finish();
@@ -167,6 +168,8 @@ public class formulaire_entree_page1 extends Activity implements OnClickListener
     	case 2001:
     		Toast.makeText(this, "Paramètres", 1000).show();
     		intentParametres = new Intent(this, tab_param.class);
+    		intentParametres.putExtra(ActivityParam.LaunchFromPage1, true);
+    		
     		//on demarre la nouvelle activité
     		startActivity(intentParametres);
     		finish();
