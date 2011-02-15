@@ -17,7 +17,7 @@
 
 
 
-<activity android:name=".remplir.choix_produit_a_duppliquer" android:screenOrientation="portrait"></activity><activity android:name=".recherche.recherchetabsbuttons" android:screenOrientation="portrait" android:windowSoftInputMode="stateHidden"></activity>
+<activity android:name=".remplir.choix_produit_a_duppliquer" android:screenOrientation="portrait"></activity><activity android:screenOrientation="portrait" android:windowSoftInputMode="stateHidden" android:name=".recherche.Recherche"></activity>
 
 <activity android:name=".recherche.affiche_detail" android:screenOrientation="portrait"></activity>
 
