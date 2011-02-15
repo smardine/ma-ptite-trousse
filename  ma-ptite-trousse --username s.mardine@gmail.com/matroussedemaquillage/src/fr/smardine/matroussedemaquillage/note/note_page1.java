@@ -107,8 +107,6 @@ public class note_page1 extends Activity implements OnItemClickListener, OnClick
 	private void onCreateMenu(Menu menu) {
 		SubMenu recherche = menu.addSubMenu(1, 2000, 1, "Recherche");
 		recherche.setIcon(R.drawable.menu_recherche);
-		SubMenu note = menu.addSubMenu(2, 2002, 2, "Notes");
-		note.setIcon(R.drawable.menu_note);
 		SubMenu parametre = menu.addSubMenu(3, 2001, 3, "Parametres");
 		parametre.setIcon(R.drawable.menu_param); // icone systeme
 		SubMenu help = menu.addSubMenu(4, 2003, 4, "Aide");
@@ -143,7 +141,7 @@ public class note_page1 extends Activity implements OnItemClickListener, OnClick
 				intentRecherche.putExtra(ActivityParam.LaunchFromNotePage1, true);
 				// on demarre la nouvelle activité
 				startActivity(intentRecherche);
-				finish();
+				termineActivity();
 				break;
 			case 2001:
 				Toast.makeText(this, "Paramètres", 1000).show();
@@ -151,15 +149,9 @@ public class note_page1 extends Activity implements OnItemClickListener, OnClick
 				intentParametres.putExtra(ActivityParam.LaunchFromNotePage1, true);
 				// on demarre la nouvelle activité
 				startActivity(intentParametres);
-				finish();
+				termineActivity();
 				break;
-			case 2002:
-				Toast.makeText(this, "Notes", 1000).show();
-				Intent intentNote = new Intent(this, note_page1.class);
-				// on demarre la nouvelle activité
-				startActivity(intentNote);
-				finish();
-				break;
+
 			case 2003:
 				AlertDialog.Builder adHelp = new AlertDialog.Builder(this);
 				adHelp.setTitle("Aide");
@@ -174,6 +166,13 @@ public class note_page1 extends Activity implements OnItemClickListener, OnClick
 		}
 		Log.i("", "" + item.getTitle());
 		return super.onOptionsItemSelected(item);
+	}
+
+	/**
+	 * 
+	 */
+	private void termineActivity() {
+		finish();
 	}
 
 	@SuppressWarnings("rawtypes")
@@ -284,14 +283,14 @@ public class note_page1 extends Activity implements OnItemClickListener, OnClick
 			Intent Main = new Intent(this, Main.class);
 			Main.putExtra(ActivityParam.LaunchFromNotePage1, true);
 			startActivity(Main);
-			finish();
+			termineActivity();
 			return true;
 		}
 		if (keyCode == KeyEvent.KEYCODE_SEARCH) {
 			Intent intentRecherche = new Intent(this, Recherche.class);
 			// on demarre la nouvelle activité
 			startActivity(intentRecherche);
-			finish();
+			termineActivity();
 		}
 		return super.onKeyDown(keyCode, event);
 	}
@@ -318,7 +317,7 @@ public class note_page1 extends Activity implements OnItemClickListener, OnClick
 		intentSaisieNote = new Intent(note_page1.this, note_saisie.class);
 		intentSaisieNote.putExtra(ActivityParam.IdNote, Txt01);
 		startActivity(intentSaisieNote);
-		finish();
+		termineActivity();
 
 	}
 

@@ -74,7 +74,7 @@ public class EntryPoint extends Activity {
 			intentRecherche.putExtra(ActivityParam.AfficheProduitPerime, true);
 			// on demarre la nouvelle activité
 			startActivity(intentRecherche);
-			finish();
+			termineActivity();
 
 		} else {
 			remplissageBase();
@@ -83,8 +83,15 @@ public class EntryPoint extends Activity {
 			intentMain.putExtra(ActivityParam.LaunchFromEntryPoint, true);
 			intentMain.putExtra(ActivityParam.AfficheProduitPerime, false);
 			startActivity(intentMain);
-			finish();
+			termineActivity();
 		}
+	}
+
+	/**
+	 * 
+	 */
+	private void termineActivity() {
+		finish();
 	}
 
 	public void gotoLancePageMain() {
@@ -94,7 +101,7 @@ public class EntryPoint extends Activity {
 		Main.putExtra(ActivityParam.LaunchFromEntryPoint, true);
 		Main.putExtra(ActivityParam.AfficheProduitPerime, false);
 		startActivity(Main);
-		finish();
+		termineActivity();
 
 	}
 

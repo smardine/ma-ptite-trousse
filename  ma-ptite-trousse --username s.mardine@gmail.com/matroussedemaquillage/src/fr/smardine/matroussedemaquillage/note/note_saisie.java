@@ -10,13 +10,18 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.SubMenu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import fr.smardine.matroussedemaquillage.R;
 import fr.smardine.matroussedemaquillage.base.BDAcces;
+import fr.smardine.matroussedemaquillage.param.tab_param;
 import fr.smardine.matroussedemaquillage.recherche.Recherche;
 import fr.smardine.matroussedemaquillage.variableglobale.ActivityParam;
 import fr.smardine.matroussedemaquillage.variableglobale.EnTheme;
@@ -201,6 +206,57 @@ public class note_saisie extends Activity implements OnClickListener {
 
 	}
 
+	private void onCreateMenu(Menu menu) {
+		SubMenu recherche = menu.addSubMenu(0, 2000, 1, "Recherche");
+		recherche.setIcon(R.drawable.menu_recherche);
+		SubMenu parametre = menu.addSubMenu(0, 2001, 3, "Parametres");
+		parametre.setIcon(R.drawable.menu_param); // icone systeme
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		onCreateMenu(menu);
+		return super.onCreateOptionsMenu(menu);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		Intent intentRecherche;
+		Intent intentParametres;
+
+		// évènement appelé lorsqu'un menu est choisi
+		switch (item.getItemId()) {
+			// l'identifiant integer est moins gourmand en ressource que le string
+			case 2000:
+				Toast.makeText(this, "Recherche", 1000).show();
+				intentRecherche = new Intent(this, Recherche.class);
+				intentRecherche.putExtra(ActivityParam.LaunchFromNoteSaisie, true);
+				// on demarre la nouvelle activité
+				startActivity(intentRecherche);
+				termineActivity();
+				break;
+			case 2001:
+				Toast.makeText(this, "Paramètres", 1000).show();
+				intentParametres = new Intent(this, tab_param.class);
+				intentParametres.putExtra(ActivityParam.LaunchFromNoteSaisie, true);
+				intentParametres.putExtra(ActivityParam.IdNote, IdNote);
+				// on demarre la nouvelle activité
+				startActivity(intentParametres);
+				termineActivity();
+				break;
+
+		}
+		Log.i("", "" + item.getTitle());
+		return super.onOptionsItemSelected(item);
+	}
+
+	/**
+	 * 
+	 */
+	private void termineActivity() {
+		finish();
+	}
+
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
@@ -219,14 +275,14 @@ public class note_saisie extends Activity implements OnClickListener {
 			Intent note_page1 = new Intent(this, note_page1.class);
 			note_page1.putExtra(ActivityParam.LaunchFromNoteSaisie, true);
 			startActivity(note_page1);
-			finish();
+			termineActivity();
 			return true;
 		}
 		if (keyCode == KeyEvent.KEYCODE_SEARCH) {
 			Intent intentRecherche = new Intent(this, Recherche.class);
 			// on demarre la nouvelle activité
 			startActivity(intentRecherche);
-			finish();
+			termineActivity();
 		}
 		return super.onKeyDown(keyCode, event);
 	}

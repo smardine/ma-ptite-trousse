@@ -142,7 +142,7 @@ public class choix_produit_a_duppliquer extends Activity implements OnItemClickL
 				intentRecherche.putExtra(ActivityParam.LaunchFromMain, true);
 				// on demarre la nouvelle activité
 				startActivity(intentRecherche);
-				finish();
+				termineActivity();
 				break;
 			case 2001:
 				Toast.makeText(this, "Paramètres", 1000).show();
@@ -150,14 +150,14 @@ public class choix_produit_a_duppliquer extends Activity implements OnItemClickL
 				intentParametres.putExtra(ActivityParam.LaunchFromDuppliquer, true);
 				// on demarre la nouvelle activité
 				startActivity(intentParametres);
-				finish();
+				termineActivity();
 				break;
 			case 2002:
 				Toast.makeText(this, "Notes", 1000).show();
 				Intent intentNote = new Intent(this, note_page1.class);
 				// on demarre la nouvelle activité
 				startActivity(intentNote);
-				finish();
+				termineActivity();
 				break;
 			case 2003:
 				AlertDialog.Builder adHelp = new AlertDialog.Builder(this);
@@ -174,6 +174,13 @@ public class choix_produit_a_duppliquer extends Activity implements OnItemClickL
 		}
 		Log.i("", "" + item.getTitle());
 		return super.onOptionsItemSelected(item);
+	}
+
+	/**
+	 * 
+	 */
+	private void termineActivity() {
+		finish();
 	}
 
 	@SuppressWarnings("rawtypes")
@@ -249,25 +256,25 @@ public class choix_produit_a_duppliquer extends Activity implements OnItemClickL
 	protected void onResume() {
 		super.onResume();
 
-		boolean IsCalledFromMain = getIntent().getBooleanExtra(ActivityParam.LaunchFromMain, false);
-		boolean IsCalledFromPageRecap = getIntent().getBooleanExtra(ActivityParam.LaunchFromPageRecap, false);
-		boolean IsCalledFromDetail = getIntent().getBooleanExtra(ActivityParam.LaunchFromAfficheDetail, false);
+		// boolean IsCalledFromMain = getIntent().getBooleanExtra(ActivityParam.LaunchFromMain, false);
+		// boolean IsCalledFromPageRecap = getIntent().getBooleanExtra(ActivityParam.LaunchFromPageRecap, false);
+		// boolean IsCalledFromDetail = getIntent().getBooleanExtra(ActivityParam.LaunchFromAfficheDetail, false);
 
-		if (IsCalledFromMain || IsCalledFromPageRecap) {
-			popUp("IscreatFormRecap: " + IsCalledFromPageRecap);
-			popUp("IscreatFormMain: " + IsCalledFromMain);
-			String Table = "trousse_produits";
-			ContentValues modifiedValues = new ContentValues();
-			modifiedValues.put("ischecked", "false");
-			String whereClause = "ischecked=?";
-			String[] whereArgs = new String[] { "true" };
-			objBd = new BDAcces(this);
-			objBd.open();
-			int nbdechamp = objBd.majTable(Table, modifiedValues, whereClause, whereArgs);
-			objBd.deleteTable("trousse_tempo", "1", null);
-			System.out.println("Nombre de champ modifié : " + nbdechamp);
-			objBd.close();
-		}
+		// if (IsCalledFromMain || IsCalledFromPageRecap) {
+		// popUp("IscreatFormRecap: " + IsCalledFromPageRecap);
+		// popUp("IscreatFormMain: " + IsCalledFromMain);
+		String Table = "trousse_produits";
+		ContentValues modifiedValues = new ContentValues();
+		modifiedValues.put("ischecked", "false");
+		String whereClause = "ischecked=?";
+		String[] whereArgs = new String[] { "true" };
+		objBd = new BDAcces(this);
+		objBd.open();
+		int nbdechamp = objBd.majTable(Table, modifiedValues, whereClause, whereArgs);
+		objBd.deleteTable("trousse_tempo", "1", null);
+		System.out.println("Nombre de champ modifié : " + nbdechamp);
+		objBd.close();
+		// }
 		// boolean IsCalledFromPage2 = getIntent().getBooleanExtra("LaunchByPage2", false);
 		// if (IsCalledFromPage2) {
 		// MarqueChoisie = getIntent().getStringExtra("MarqueChoisie").trim();
@@ -276,13 +283,13 @@ public class choix_produit_a_duppliquer extends Activity implements OnItemClickL
 		// numTeinte = getIntent().getStringExtra("NumTeinte").trim();
 		// nomProduitRecup = getIntent().getStringExtra("NomProduit").trim();
 		// }
-		if (IsCalledFromDetail) {
-			MarqueChoisie = getIntent().getStringExtra(ActivityParam.Marque).trim();
-			DureeVie = getIntent().getStringExtra(ActivityParam.DurreeDeVie).trim();
-			DateChoisie = getIntent().getStringExtra(ActivityParam.DateAchat).trim();
-			numTeinte = getIntent().getStringExtra(ActivityParam.NumeroDeTeinte).trim();
-			nomProduitRecup = getIntent().getStringExtra(ActivityParam.NomProduit).trim();
-		}
+		// if (IsCalledFromDetail) {
+		// MarqueChoisie = getIntent().getStringExtra(ActivityParam.Marque).trim();
+		// DureeVie = getIntent().getStringExtra(ActivityParam.DurreeDeVie).trim();
+		// DateChoisie = getIntent().getStringExtra(ActivityParam.DateAchat).trim();
+		// numTeinte = getIntent().getStringExtra(ActivityParam.NumeroDeTeinte).trim();
+		// nomProduitRecup = getIntent().getStringExtra(ActivityParam.NomProduit).trim();
+		// }
 
 	}
 
@@ -315,14 +322,14 @@ public class choix_produit_a_duppliquer extends Activity implements OnItemClickL
 			Intent Main = new Intent(this, Main.class);
 			Main.putExtra(ActivityParam.LaunchFromDuppliquer, true);
 			startActivity(Main);
-			finish();
+			termineActivity();
 			return true;
 		}
 		if (keyCode == KeyEvent.KEYCODE_SEARCH) {
 			Intent intentRecherche = new Intent(this, Recherche.class);
 			// on demarre la nouvelle activité
 			startActivity(intentRecherche);
-			finish();
+			termineActivity();
 		}
 		return super.onKeyDown(keyCode, event);
 	}
@@ -420,7 +427,7 @@ public class choix_produit_a_duppliquer extends Activity implements OnItemClickL
 		intentPage3Dupplique.putExtra(ActivityParam.LaunchFromDuppliquer, true);
 
 		startActivity(intentPage3Dupplique);
-		finish();
+		termineActivity();
 
 	}
 

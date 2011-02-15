@@ -140,24 +140,25 @@ public class formulaire_entree_page3 extends Activity implements OnClickListener
 					// on demarre la nouvelle activité
 					intent.putExtra(ActivityParam.LaunchFromPageRecap, true);
 					startActivity(intent);
-					finish();
+					termineActivity();
 				}
 				if (Duppliquer) {// on revient a la page d'acceuil
 					Intent intent = new Intent(formulaire_entree_page3.this, choix_produit_a_duppliquer.class);
 					// on demarre la nouvelle activité
 					intent.putExtra(ActivityParam.LaunchFromPageRecap, true);
 					startActivity(intent);
-					finish();
+					termineActivity();
 				}
 				if (acceuil) {
 					Intent intent = new Intent(formulaire_entree_page3.this, Main.class);
 					// on demarre la nouvelle activité
 					intent.putExtra(ActivityParam.LaunchFromPageRecap, true);
 					startActivity(intent);
-					finish();
+					termineActivity();
 				}
 
 			}
+
 		});
 		dureeVie.addTextChangedListener(new TextWatcher() {
 			@SuppressWarnings("unused")
@@ -275,6 +276,13 @@ public class formulaire_entree_page3 extends Activity implements OnClickListener
 	/**
 	 * 
 	 */
+	private void termineActivity() {
+		finish();
+	}
+
+	/**
+	 * 
+	 */
 	private void choisiLeTheme() {
 		objBd = new BDAcces(this);
 		objBd.open();
@@ -324,22 +332,27 @@ public class formulaire_entree_page3 extends Activity implements OnClickListener
 				intentRecherche.putExtra(ActivityParam.LaunchFromPage1, true);
 				// on demarre la nouvelle activité
 				startActivity(intentRecherche);
-				finish();
+				termineActivity();
 				break;
 			case 2001:
 				Toast.makeText(this, "Paramètres", 1000).show();
 				Intent intentParametres = new Intent(this, tab_param.class);
 				intentParametres.putExtra(ActivityParam.LaunchFromPageRecap, true);
+				intentParametres.putExtra(ActivityParam.Marque, MarqueChoisie.trim());
+				intentParametres.putExtra(ActivityParam.DurreeDeVie, dureeVie.getText().toString().trim());
+				intentParametres.putExtra(ActivityParam.DateAchat, mDateDisplay.getText().toString().trim());
+				intentParametres.putExtra(ActivityParam.NumeroDeTeinte, numeroTeinte.getText().toString().trim());
+				intentParametres.putExtra(ActivityParam.NomProduit, nomProduit.getText().toString().trim());
 				// on demarre la nouvelle activité
 				startActivity(intentParametres);
-				finish();
+				termineActivity();
 				break;
 			case 2002:
 				Toast.makeText(this, "Notes", 1000).show();
 				Intent intentNote = new Intent(this, note_page1.class);
 				// on demarre la nouvelle activité
 				startActivity(intentNote);
-				finish();
+				termineActivity();
 				break;
 
 		}
@@ -548,31 +561,31 @@ public class formulaire_entree_page3 extends Activity implements OnClickListener
 	protected void onResume() {
 		super.onResume();
 
-		boolean IsCalledFromPage1 = getIntent().getBooleanExtra(ActivityParam.LaunchFromPage1, false);
-		boolean IsCalledFromDupplique = getIntent().getBooleanExtra(ActivityParam.LaunchFromDuppliquer, false);
+		// boolean IsCalledFromPage1 = getIntent().getBooleanExtra(ActivityParam.LaunchFromPage1, false);
+		// boolean IsCalledFromDupplique = getIntent().getBooleanExtra(ActivityParam.LaunchFromDuppliquer, false);
+		//
+		// if (IsCalledFromPage1 || IsCalledFromDupplique) {
 
-		if (IsCalledFromPage1 || IsCalledFromDupplique) {
-
-			MarqueChoisie = getIntent().getStringExtra(ActivityParam.Marque).trim();
-			DureeVie = getIntent().getStringExtra(ActivityParam.DurreeDeVie).trim();
-			DateAchat = getIntent().getStringExtra(ActivityParam.DateAchat).trim();
-			numeroDeTeinte = getIntent().getStringExtra(ActivityParam.NumeroDeTeinte).trim();
-			nomDuProduit = getIntent().getStringExtra(ActivityParam.NomProduit).trim();
-			if (DateAchat.equals("")) {
-				updateDisplay();
-			} else {
-				mDateDisplay.setText(new StringBuilder().append(DateAchat.replaceAll("-", "/")));
-			}
-			if (!nomDuProduit.equals("")) {
-				nomProduit.setText(nomDuProduit);
-			}
-			if (!numeroDeTeinte.equals("")) {
-				numeroTeinte.setText(numeroDeTeinte);
-			}
-			if (!DureeVie.equals("")) {
-				dureeVie.setText(DureeVie);
-			}
+		MarqueChoisie = getIntent().getStringExtra(ActivityParam.Marque).trim();
+		DureeVie = getIntent().getStringExtra(ActivityParam.DurreeDeVie).trim();
+		DateAchat = getIntent().getStringExtra(ActivityParam.DateAchat).trim();
+		numeroDeTeinte = getIntent().getStringExtra(ActivityParam.NumeroDeTeinte).trim();
+		nomDuProduit = getIntent().getStringExtra(ActivityParam.NomProduit).trim();
+		if (DateAchat.equals("")) {
+			updateDisplay();
+		} else {
+			mDateDisplay.setText(new StringBuilder().append(DateAchat.replaceAll("-", "/")));
 		}
+		if (!nomDuProduit.equals("")) {
+			nomProduit.setText(nomDuProduit);
+		}
+		if (!numeroDeTeinte.equals("")) {
+			numeroTeinte.setText(numeroDeTeinte);
+		}
+		if (!DureeVie.equals("")) {
+			dureeVie.setText(DureeVie);
+		}
+		// }
 
 		// if (IsCalledFromPageRecap) {
 		// MarqueChoisie = getIntent().getStringExtra("MarqueChoisie").trim();
@@ -629,16 +642,16 @@ public class formulaire_entree_page3 extends Activity implements OnClickListener
 			page2.putExtra(ActivityParam.DateAchat, DateAchat.trim());
 			page2.putExtra(ActivityParam.NumeroDeTeinte, numeroDeTeinte.trim());
 			page2.putExtra(ActivityParam.NomProduit, nomDuProduit.trim());
-			page2.putExtra(ActivityParam.LaunchFromPageRecap, true);
+			page2.putExtra(ActivityParam.LaunchFromPageRecapBack, true);
 			startActivity(page2);
-			finish();
+			termineActivity();
 			return true;
 		}
 		if (keyCode == KeyEvent.KEYCODE_SEARCH) {
 			Intent intentRecherche = new Intent(this, Recherche.class);
 			// on demarre la nouvelle activité
 			startActivity(intentRecherche);
-			finish();
+			termineActivity();
 		}
 		return super.onKeyDown(keyCode, event);
 	}

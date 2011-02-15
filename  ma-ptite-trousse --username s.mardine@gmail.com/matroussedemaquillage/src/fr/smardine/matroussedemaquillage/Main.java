@@ -57,7 +57,7 @@ public class Main extends Activity implements OnClickListener {
 				intentRecherche.putExtra(ActivityParam.LaunchFromMain, true);
 				// on demarre la nouvelle activité
 				startActivity(intentRecherche);
-				finish();
+				termineActivity();
 
 			}
 		});
@@ -71,9 +71,7 @@ public class Main extends Activity implements OnClickListener {
 
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
-				// TODO Auto-generated method stub
-				// popUp("Ok, c'est bon, k'utilisateur confirme");
-				finish();
+				termineActivity();
 				onStop();
 				onDestroy();
 				// a faire avant System.exit pour supprimer correctement toute les données presentes en memoire
@@ -122,7 +120,7 @@ public class Main extends Activity implements OnClickListener {
 				intentRecherche.putExtra(ActivityParam.LaunchFromMain, true);
 				// on demarre la nouvelle activité
 				startActivity(intentRecherche);
-				// finish();
+				termineActivity();
 				break;
 			case 2001:
 				// Toast.makeText(this, "Paramètres", 1000).show();
@@ -130,14 +128,14 @@ public class Main extends Activity implements OnClickListener {
 				intentParametres.putExtra(ActivityParam.LaunchFromMain, true);
 				// on demarre la nouvelle activité
 				startActivity(intentParametres);
-				finish();
+				termineActivity();
 				break;
 			case 2002:
 				// Toast.makeText(this, "Notes", 1000).show();
 				intentNote = new Intent(Main.this, note_page1.class);
 				// on demarre la nouvelle activité
 				startActivity(intentNote);
-				finish();
+				termineActivity();
 				break;
 			case 2003:
 				adHelp = new AlertDialog.Builder(this);
@@ -193,14 +191,14 @@ public class Main extends Activity implements OnClickListener {
 							intentFormPage1.putExtra(ActivityParam.LaunchFromMain, true);
 							// on demarre la nouvelle activité
 							startActivity(intentFormPage1);
-							finish();
+							termineActivity();
 						}
 						if (dupplique) {// on dupplique un produit existant
 							intentDupplique = new Intent(Main.this, choix_produit_a_duppliquer.class);
 							intentDupplique.putExtra(ActivityParam.LaunchFromMain, true);
 							// on demarre la nouvelle activité
 							startActivity(intentDupplique);
-							finish();
+							termineActivity();
 						}
 					}
 				});
@@ -210,7 +208,7 @@ public class Main extends Activity implements OnClickListener {
 				intentFormPage1.putExtra(ActivityParam.LaunchFromMain, true);
 				// on demarre la nouvelle activité
 				startActivity(intentFormPage1);
-				finish();
+				termineActivity();
 			}
 
 		}
@@ -235,7 +233,7 @@ public class Main extends Activity implements OnClickListener {
 				intentDupplique.putExtra(ActivityParam.LaunchFromMain, true);
 				// on demarre la nouvelle activité
 				startActivity(intentDupplique);
-				finish();
+				termineActivity();
 			}
 			objBd.close();
 
@@ -244,7 +242,7 @@ public class Main extends Activity implements OnClickListener {
 			intentNote = new Intent(Main.this, note_page1.class);
 			intentNote.putExtra(ActivityParam.LaunchFromMain, true);
 			startActivity(intentNote);
-			finish();
+			termineActivity();
 
 		}
 		if (v == BtPerimé) {
@@ -262,7 +260,7 @@ public class Main extends Activity implements OnClickListener {
 				intentRecherche.putExtra(ActivityParam.AfficheProduitPerime, true);
 				// on demarre la nouvelle activité
 				startActivity(intentRecherche);
-				finish();
+				termineActivity();
 			} else {
 				AlertDialog.Builder adAucunProduit = new AlertDialog.Builder(this);
 				adAucunProduit = new AlertDialog.Builder(this);
@@ -296,7 +294,7 @@ public class Main extends Activity implements OnClickListener {
 			intentRecherche.putExtra(ActivityParam.LaunchFromMain, true);
 			// on demarre la nouvelle activité
 			startActivity(intentRecherche);
-			finish();
+			termineActivity();
 		}
 		return super.onKeyDown(keyCode, event);
 	}
@@ -454,8 +452,8 @@ public class Main extends Activity implements OnClickListener {
 
 		if (isFinishing()) {// si le SYSTEME detecte que l'on sort de l'application
 			popUp("onPause, l'utilisateur à demandé la fermeture via un finish()");
-
 			finish();
+
 			onStop();
 			onDestroy();
 			// a faire avant System.exit pour supprimer correctement toute les données presentes en memoire
@@ -476,6 +474,13 @@ public class Main extends Activity implements OnClickListener {
 
 	public void popUp(String message) {
 		// Toast.makeText(this, message, 1).show();
+	}
+
+	/**
+	 * 
+	 */
+	private void termineActivity() {
+		finish();
 	}
 
 }

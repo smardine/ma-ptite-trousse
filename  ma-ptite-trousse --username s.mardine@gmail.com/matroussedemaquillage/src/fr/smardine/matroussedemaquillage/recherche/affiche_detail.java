@@ -171,17 +171,22 @@ public class affiche_detail extends Activity implements OnClickListener {
 			case 2001:
 				Toast.makeText(this, "Paramètres", 1000).show();
 				Intent intentParametres = new Intent(this, tab_param.class);
+				intentParametres.putExtra(ActivityParam.IdProduit, IdProduit);
 				intentParametres.putExtra(ActivityParam.LaunchFromAfficheDetail, true);
+				intentParametres.putExtra(ActivityParam.LaunchFromRecherche,
+						getIntent().getBooleanExtra(ActivityParam.LaunchFromRecherche, false));
+				intentParametres.putExtra(ActivityParam.LaunchFromRechercheProduitPerime,
+						getIntent().getBooleanExtra(ActivityParam.LaunchFromRechercheProduitPerime, false));
 				// on demarre la nouvelle activité
 				startActivity(intentParametres);
-				finish();
+				termineActivity();
 				break;
 			case 2002:
 				Toast.makeText(this, "Notes", 1000).show();
 				Intent intentNote = new Intent(this, note_page1.class);
 				// on demarre la nouvelle activité
 				startActivity(intentNote);
-				finish();
+				termineActivity();
 				break;
 			case 2003:
 				AlertDialog.Builder adHelp = new AlertDialog.Builder(this);
@@ -193,6 +198,13 @@ public class affiche_detail extends Activity implements OnClickListener {
 		}
 		Log.i("", "" + item.getTitle());
 		return super.onOptionsItemSelected(item);
+	}
+
+	/**
+	 * 
+	 */
+	private void termineActivity() {
+		finish();
 	}
 
 	@Override
@@ -367,14 +379,14 @@ public class affiche_detail extends Activity implements OnClickListener {
 			}
 			majTableProduit();
 			startActivity(recherche);
-			finish();
+			termineActivity();
 			return true;
 		}
 		if (keyCode == KeyEvent.KEYCODE_SEARCH) {
 			Intent intentRecherche = new Intent(this, Recherche.class);
 			// on demarre la nouvelle activité
 			startActivity(intentRecherche);
-			finish();
+			termineActivity();
 		}
 		return super.onKeyDown(keyCode, event);
 	}
@@ -394,7 +406,7 @@ public class affiche_detail extends Activity implements OnClickListener {
 			modifcat.putExtra(ActivityParam.LaunchFromAfficheDetail, true);
 
 			startActivity(modifcat);
-			finish();
+			termineActivity();
 
 		}
 		if (v == BTChangerDateAchat) {

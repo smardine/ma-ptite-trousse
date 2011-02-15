@@ -34,6 +34,8 @@ public class ActivityParam {
 
 	public static String LaunchFromPage1 = "LaunchFromPage1";
 	public static String LaunchFromPageRecap = "LaunchFromrecap";
+	public static String LaunchFromPageRecapBack = "LaunchFromRecapBack";
+
 	public static String LaunchFromDuppliquer = "LaunchFromDupplique";
 	public static String LaunchFromAfficheDetail = "LaunchFromDetail";
 	public static String LaunchFromRecherche = "LaunchFromRecherche";
