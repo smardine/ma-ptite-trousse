@@ -2,7 +2,8 @@ package fr.smardine.matroussedemaquillage.variableglobale;
 
 public class G_changeLog {
 
-	public static String Changement = "Version 1.89: \n"
+	public static String Changement = "Version 2.00: \n"
+			+ "Quand on va dans les parametres depuis n'importe qu'elle fenetre, on revient sur cette meme fenetre a la sortie des parametres (avant, on revenait a la page d'accceuil)"
 			+ "Ajout de la possibilité d'un filtrage sur la fenetre des produits périmés, par Marque, par Catégorie ou par Date de Péremtion."
 			+ "Ajout d'un filtrage sur les resultats d'une recherche, par Marque, par Catégorie, ou par Nom de produit."
 			+ "Ajout d'une animation au lancement de l'appli"

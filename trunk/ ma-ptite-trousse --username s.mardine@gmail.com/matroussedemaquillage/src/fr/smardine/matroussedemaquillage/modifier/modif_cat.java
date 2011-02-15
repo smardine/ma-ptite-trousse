@@ -338,8 +338,15 @@ public class modif_cat extends Activity implements OnClickListener {
 		remetAZeroLaTableCat();
 		objBd.close();
 		startActivity(intent);
-		finish();
+		termineActivity();
 
+	}
+
+	/**
+	 * 
+	 */
+	private void termineActivity() {
+		finish();
 	}
 
 	private void majTableProduit(int Id_Produits, String souscat, String cat) {
@@ -512,7 +519,7 @@ public class modif_cat extends Activity implements OnClickListener {
 			Intent affiche_detail = new Intent(this, affiche_detail.class);
 			affiche_detail.putExtra(ActivityParam.IdProduit, Id_Produit);
 			startActivity(affiche_detail);
-			finish();
+			termineActivity();
 
 			return true;
 		}
@@ -520,7 +527,7 @@ public class modif_cat extends Activity implements OnClickListener {
 			Intent intentRecherche = new Intent(this, Recherche.class);
 			// on demarre la nouvelle activité
 			startActivity(intentRecherche);
-			finish();
+			termineActivity();
 		}
 		return super.onKeyDown(keyCode, event);
 	}

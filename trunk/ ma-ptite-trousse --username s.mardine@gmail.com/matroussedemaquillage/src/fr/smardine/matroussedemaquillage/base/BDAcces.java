@@ -938,6 +938,7 @@ public class BDAcces {
 		}
 	}
 
+	@SuppressWarnings("rawtypes")
 	public ArrayList[] renvoi_liste_TrousseFinalAvecFiltrage(String ScriptSQL, String[] p_colonnes) {
 		// String SQL = "SELECT " + p_colonnes + " FROM produit_Enregistre where nom_souscatergorie LIKE '%?%'";
 
@@ -954,6 +955,7 @@ public class BDAcces {
 		ArrayList<String> aTableRetourDateAchat1 = new ArrayList<String>();
 
 		objCursor.moveToFirst();
+
 		ArrayList[] aTableRetour = new ArrayList[4];
 
 		/* Check if our result was valid. */

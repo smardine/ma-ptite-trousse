@@ -216,14 +216,14 @@ public class Recherche extends Activity implements OnClickListener, OnItemClickL
 				intentParametres.putExtra(ActivityParam.LaunchFromRecherche, true);
 				// on demarre la nouvelle activité
 				startActivity(intentParametres);
-				finish();
+				termineActivity();
 				break;
 			case 2002:
 				Toast.makeText(this, "Notes", 1000).show();
 				Intent intentNote = new Intent(this, note_page1.class);
 				// on demarre la nouvelle activité
 				startActivity(intentNote);
-				finish();
+				termineActivity();
 				break;
 			case 2003:
 				AlertDialog.Builder adHelp = new AlertDialog.Builder(this);
@@ -236,6 +236,13 @@ public class Recherche extends Activity implements OnClickListener, OnItemClickL
 		}
 		Log.i("", "" + item.getTitle());
 		return super.onOptionsItemSelected(item);
+	}
+
+	/**
+	 * 
+	 */
+	private void termineActivity() {
+		finish();
 	}
 
 	@SuppressWarnings("unused")
@@ -388,7 +395,7 @@ public class Recherche extends Activity implements OnClickListener, OnItemClickL
 		intentDetail.putExtra(ActivityParam.LaunchFromMain, IsCalledFromMain);
 		intentDetail.putExtra(ActivityParam.AfficheProduitPerime, false);
 		startActivity(intentDetail);
-		finish();
+		termineActivity();
 
 	}
 
@@ -619,15 +626,12 @@ public class Recherche extends Activity implements OnClickListener, OnItemClickL
 			Intent Main = new Intent(this, Main.class);
 			Main.putExtra(ActivityParam.LaunchFromRecherche, true);
 			startActivity(Main);
-			finish();
+			termineActivity();
 			return true;
 		}
 		if (keyCode == KeyEvent.KEYCODE_SEARCH) {
 			// on ne fait rien, on est deja dans cette activity
-			// Intent intentRecherche = new Intent(this, recherche.class);
-			// // on demarre la nouvelle activité
-			// startActivity(intentRecherche);
-			// finish();
+
 		}
 		return super.onKeyDown(keyCode, event);
 	}

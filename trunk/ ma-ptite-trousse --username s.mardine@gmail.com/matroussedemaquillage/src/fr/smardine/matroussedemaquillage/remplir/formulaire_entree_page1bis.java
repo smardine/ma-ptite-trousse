@@ -214,22 +214,27 @@ public class formulaire_entree_page1bis extends Activity implements OnClickListe
 				intentRecherche.putExtra(ActivityParam.LaunchFromPage1, true);
 				// on demarre la nouvelle activité
 				startActivity(intentRecherche);
-				finish();
+				termineActivity();
 				break;
 			case 2001:
 				Toast.makeText(this, "Paramètres", 1000).show();
 				intentParametres = new Intent(this, tab_param.class);
+				intentParametres.putExtra(ActivityParam.Marque, textView.getText().toString().trim());
+				intentParametres.putExtra(ActivityParam.DurreeDeVie, DureeVie.trim());
+				intentParametres.putExtra(ActivityParam.DateAchat, DateChoisie.trim());
+				intentParametres.putExtra(ActivityParam.NumeroDeTeinte, numTeinte.trim());
+				intentParametres.putExtra(ActivityParam.NomProduit, nomProduitRecup.trim());
 				intentParametres.putExtra(ActivityParam.LaunchFromPage1, true);
 				// on demarre la nouvelle activité
 				startActivity(intentParametres);
-				finish();
+				termineActivity();
 				break;
 			case 2002:
 				Toast.makeText(this, "Notes", 1000).show();
 				intentNote = new Intent(this, note_page1.class);
 				// on demarre la nouvelle activité
 				startActivity(intentNote);
-				finish();
+				termineActivity();
 				break;
 
 		}
@@ -445,11 +450,18 @@ public class formulaire_entree_page1bis extends Activity implements OnClickListe
 				intent.putExtra(ActivityParam.NomProduit, nomProduitRecup.trim());
 				intent.putExtra(ActivityParam.LaunchFromPage1, true);
 				startActivity(intent);
-				finish();
+				termineActivity();
 			}
 
 		}
 
+	}
+
+	/**
+	 * 
+	 */
+	private void termineActivity() {
+		finish();
 	}
 
 	/**
@@ -624,8 +636,10 @@ public class formulaire_entree_page1bis extends Activity implements OnClickListe
 
 		boolean isCalledFromMain = getIntent().getBooleanExtra(ActivityParam.LaunchFromMain, false);
 		boolean isCalledFromPageRecap = getIntent().getBooleanExtra(ActivityParam.LaunchFromPageRecap, false);
-		boolean isCalledFromDetail = getIntent().getBooleanExtra(ActivityParam.LaunchFromAfficheDetail, false);
-		boolean isCalledFromDupplique = getIntent().getBooleanExtra(ActivityParam.LaunchFromDuppliquer, false);
+		boolean isCalledFromPageRecapBack = getIntent().getBooleanExtra(ActivityParam.LaunchFromPageRecapBack, false);
+		// boolean isCalledFromDetail = getIntent().getBooleanExtra(ActivityParam.LaunchFromAfficheDetail, false);
+		// boolean isCalledFromDupplique = getIntent().getBooleanExtra(ActivityParam.LaunchFromDuppliquer, false);
+		boolean isCalledFromParam = getIntent().getBooleanExtra(ActivityParam.LaunchFromParam, false);
 
 		if (isCalledFromMain || isCalledFromPageRecap) {
 			// popUp("IscreatFormRecap: " + isCalledFromPageRecap);
@@ -658,32 +672,14 @@ public class formulaire_entree_page1bis extends Activity implements OnClickListe
 
 		}
 
-		if (isCalledFromDetail) {
+		if (isCalledFromParam || isCalledFromPageRecapBack) {
 			MarqueChoisie = getIntent().getStringExtra(ActivityParam.Marque).trim();
 			DureeVie = getIntent().getStringExtra(ActivityParam.DurreeDeVie).trim();
 			DateChoisie = getIntent().getStringExtra(ActivityParam.DateAchat).trim();
 			numTeinte = getIntent().getStringExtra(ActivityParam.NumeroDeTeinte).trim();
 			nomProduitRecup = getIntent().getStringExtra(ActivityParam.NomProduit).trim();
-			Animlineaire anim = new Animlineaire();
-			anim.setDroiteversGauche(250);
-			Animlineaire anim1 = new Animlineaire();
-			anim1.setDroiteversGauche(300);
-			Animlineaire anim2 = new Animlineaire();
-			anim2.setDroiteversGauche(350);
-			Animlineaire anim3 = new Animlineaire();
-			anim3.setDroiteversGauche(400);
 
-			BtVisage.startAnimation(anim);
-			BtYeux.startAnimation(anim1);
-			BtLevres.startAnimation(anim2);
-			BtAutres.startAnimation(anim3);
-		}
-		if (isCalledFromDupplique) {
-			MarqueChoisie = getIntent().getStringExtra(ActivityParam.Marque).trim();
-			DureeVie = getIntent().getStringExtra(ActivityParam.DurreeDeVie).trim();
-			DateChoisie = getIntent().getStringExtra(ActivityParam.DateAchat).trim();
-			numTeinte = getIntent().getStringExtra(ActivityParam.NumeroDeTeinte).trim();
-			nomProduitRecup = getIntent().getStringExtra(ActivityParam.NomProduit).trim();
+			textView.setText(MarqueChoisie);
 			Animlineaire anim = new Animlineaire();
 			anim.setDroiteversGauche(250);
 			Animlineaire anim1 = new Animlineaire();
@@ -730,14 +726,14 @@ public class formulaire_entree_page1bis extends Activity implements OnClickListe
 			Intent Main = new Intent(this, Main.class);
 			Main.putExtra(ActivityParam.LaunchFromPage1, true);
 			startActivity(Main);
-			finish();
+			termineActivity();
 			return true;
 		}
 		if (keyCode == KeyEvent.KEYCODE_SEARCH) {
 			Intent intentRecherche = new Intent(this, Recherche.class);
 			// on demarre la nouvelle activité
 			startActivity(intentRecherche);
-			finish();
+			termineActivity();
 		}
 		return super.onKeyDown(keyCode, event);
 	}

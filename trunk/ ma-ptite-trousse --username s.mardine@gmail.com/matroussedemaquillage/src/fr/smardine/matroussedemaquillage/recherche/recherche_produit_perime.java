@@ -217,14 +217,14 @@ public class recherche_produit_perime extends Activity implements OnClickListene
 				intentParametres.putExtra(ActivityParam.LaunchFromRechercheProduitPerime, true);
 				// on demarre la nouvelle activité
 				startActivity(intentParametres);
-				finish();
+				termineActivity();
 				break;
 			case 2002:
 				Toast.makeText(this, "Notes", 1000).show();
 				Intent intentNote = new Intent(this, note_page1.class);
 				// on demarre la nouvelle activité
 				startActivity(intentNote);
-				finish();
+				termineActivity();
 				break;
 			case 2003:
 				AlertDialog.Builder adHelp = new AlertDialog.Builder(this);
@@ -237,6 +237,13 @@ public class recherche_produit_perime extends Activity implements OnClickListene
 		}
 		Log.i("", "" + item.getTitle());
 		return super.onOptionsItemSelected(item);
+	}
+
+	/**
+	 * 
+	 */
+	private void termineActivity() {
+		finish();
 	}
 
 	@SuppressWarnings("unused")
@@ -387,9 +394,9 @@ public class recherche_produit_perime extends Activity implements OnClickListene
 		// on demarre la nouvelle activité
 		intentDetail.putExtra(ActivityParam.IdProduit, IdProduit);
 		intentDetail.putExtra(ActivityParam.LaunchFromMain, IsCalledFromMain);
-		intentDetail.putExtra(ActivityParam.AfficheProduitPerime, true);
+		intentDetail.putExtra(ActivityParam.LaunchFromRechercheProduitPerime, true);
 		startActivity(intentDetail);
-		finish();
+		termineActivity();
 
 	}
 
@@ -621,14 +628,14 @@ public class recherche_produit_perime extends Activity implements OnClickListene
 			Intent Main = new Intent(this, Main.class);
 			Main.putExtra(ActivityParam.LaunchFromRechercheProduitPerime, true);
 			startActivity(Main);
-			finish();
+			termineActivity();
 			return true;
 		}
 		if (keyCode == KeyEvent.KEYCODE_SEARCH) {
 			Intent intentRecherche = new Intent(this, Recherche.class);
 			// on demarre la nouvelle activité
 			startActivity(intentRecherche);
-			finish();
+			termineActivity();
 		}
 		return super.onKeyDown(keyCode, event);
 	}
