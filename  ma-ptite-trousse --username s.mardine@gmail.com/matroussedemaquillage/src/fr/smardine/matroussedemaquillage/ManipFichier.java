@@ -44,8 +44,14 @@ public class ManipFichier {
 		java.io.FileOutputStream destinationFile = null;
 
 		try {
-			// Création du fichier :
-			destination.createNewFile();
+			// Création du fichier destination (si le fichier existe deja, on le supprime):
+			if (destination.exists()) {
+				destination.delete();
+			}
+			boolean isFileCreated = destination.createNewFile();
+			if (!isFileCreated) {
+				return false;
+			}
 
 			// Ouverture des flux
 			sourceFile = new java.io.FileInputStream(source);
@@ -62,18 +68,20 @@ public class ManipFichier {
 			// Copie réussie
 			resultat = true;
 		} catch (java.io.FileNotFoundException f) {
-
+			resultat = false;
 		} catch (java.io.IOException e) {
-
+			resultat = false;
 		} finally {
 			// Quoi qu'il arrive, on ferme les flux
 			try {
 				sourceFile.close();
 			} catch (Exception e) {
+				resultat = false;
 			}
 			try {
 				destinationFile.close();
 			} catch (Exception e) {
+				resultat = false;
 			}
 		}
 		return (resultat);

@@ -72,7 +72,20 @@ public class Main extends Activity implements OnClickListener {
 
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
-				termineActivity();
+				// on sauvegarde la base sur la carte SD
+				objBd = new BDAcces(ctx);
+				objBd.close();
+				String cheminBase = objBd.getPath();
+				File baseDansTel = new File(cheminBase);
+				String PATH = "/sdcard/ma_trousse/";
+				File path = new File(PATH);
+				if (!path.exists()) {
+					path.mkdirs();
+				}
+				File fichierSurCarteSD = new File(PATH + "trousse_base");
+				boolean result = ManipFichier.copier(baseDansTel, fichierSurCarteSD);
+				// fin de la sauvegarde sur la carte SD.
+				finish();
 				onStop();
 				onDestroy();
 				// a faire avant System.exit pour supprimer correctement toute les données presentes en memoire
@@ -453,26 +466,7 @@ public class Main extends Activity implements OnClickListener {
 
 		if (isFinishing()) {// si le SYSTEME detecte que l'on sort de l'application
 			popUp("onPause, l'utilisateur à demandé la fermeture via un finish()");
-			// on sauvegarde la base sur la carte SD
-			objBd = new BDAcces(this);
-			objBd.close();
-			String cheminBase = objBd.getPath();
-			File baseDansTel = new File(cheminBase);
-			String PATH = "/sdcard/ma_trousse/";
-			File path = new File(PATH);
-			if (!path.exists()) {
-				path.mkdirs();
-			}
-			File fichierSurCarteSD = new File(PATH + "trousse_base");
-			ManipFichier.copier(baseDansTel, fichierSurCarteSD);
-			// fin de la sauvegarde sur la carte SD.
-			finish();
 
-			onStop();
-			onDestroy();
-			// a faire avant System.exit pour supprimer correctement toute les données presentes en memoire
-			System.runFinalizersOnExit(true);
-			System.exit(0);
 		} else {// sinon, on pert juste le "focus sur l'appli (lors d'un appel telephonique entrant par exemple)
 
 		}
