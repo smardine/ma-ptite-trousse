@@ -1,5 +1,6 @@
 package fr.smardine.matroussedemaquillage;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import android.app.Activity;
@@ -452,6 +453,19 @@ public class Main extends Activity implements OnClickListener {
 
 		if (isFinishing()) {// si le SYSTEME detecte que l'on sort de l'application
 			popUp("onPause, l'utilisateur à demandé la fermeture via un finish()");
+			// on sauvegarde la base sur la carte SD
+			objBd = new BDAcces(this);
+			objBd.close();
+			String cheminBase = objBd.getPath();
+			File baseDansTel = new File(cheminBase);
+			String PATH = "/sdcard/ma_trousse/";
+			File path = new File(PATH);
+			if (!path.exists()) {
+				path.mkdirs();
+			}
+			File fichierSurCarteSD = new File(PATH + "trousse_base");
+			ManipFichier.copier(baseDansTel, fichierSurCarteSD);
+			// fin de la sauvegarde sur la carte SD.
 			finish();
 
 			onStop();
