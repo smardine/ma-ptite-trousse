@@ -863,6 +863,10 @@ public class BDAcces {
 		int version = mDb.getVersion();
 	}
 
+	public String getPath() {
+		return mDb.getPath();
+	}
+
 	// ---closes the database---
 	public void close() throws SQLException {
 		// si il reste des transaction active, on les ferme.
@@ -875,14 +879,6 @@ public class BDAcces {
 		// on ferme le helper.
 		mDbHelper.close();
 
-	}
-
-	/*
-	 * public String renvoi_requete(){ return CREATE_PRODUITS_TABLE; }
-	 */
-	public String Liste_table() {
-
-		return mDb.getPath();
 	}
 
 	@SuppressWarnings("rawtypes")
