@@ -1,9 +1,11 @@
 package fr.smardine.matroussedemaquillage.param;
 
 import java.io.File;
+import java.util.Calendar;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -24,10 +26,16 @@ import fr.smardine.matroussedemaquillage.remplir.formulaire_entree_page1bis;
 import fr.smardine.matroussedemaquillage.remplir.formulaire_entree_page3;
 import fr.smardine.matroussedemaquillage.variableglobale.ActivityParam;
 
+/**
+ * @author smardine
+ */
 public class tab4 extends Activity implements OnClickListener {
 	BDAcces objBd;
 	Button videBase, sauvegardeBase, importeBase;
-	AlertDialog.Builder adSauvegarde, adImport;
+	AlertDialog.Builder adSauvegarde, adImport, adImportResult;
+	private int itemChoisi;
+	private final String PATH = "/sdcard/ma_trousse/";
+	private File baseDansTel;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -43,8 +51,10 @@ public class tab4 extends Activity implements OnClickListener {
 		adSauvegarde.setTitle("Resultat de la copie sur la carte SD");
 		adSauvegarde.setPositiveButton("Ok", null);
 		adImport = new AlertDialog.Builder(this);
-		adImport.setTitle("Resultat de la recuperation depuis la carte SD");
-		adImport.setPositiveButton("Ok", null);
+		adImport.setTitle("Quelle base voulez vous recuperer?");
+		adImportResult = new AlertDialog.Builder(this);
+		adImportResult.setTitle("Resultat de la recuperation depuis la carte SD");
+		adImportResult.setPositiveButton("Ok", null);
 
 	}
 
@@ -189,6 +199,9 @@ public class tab4 extends Activity implements OnClickListener {
 		finish();
 	}
 
+	/**
+	 * 
+	 */
 	public void OnDestroy() {
 		super.onDestroy();
 		// popUp("OnDestroy-Page2");
@@ -214,7 +227,30 @@ public class tab4 extends Activity implements OnClickListener {
 			if (!path.exists()) {
 				path.mkdirs();
 			}
-			File fichierSurCarteSD = new File(PATH + "trousse_base");
+			int mYear;
+			int mMonth;
+			int mDay;
+			final Calendar c = Calendar.getInstance();
+			mYear = c.get(Calendar.YEAR);
+			mMonth = c.get(Calendar.MONTH);
+			mDay = c.get(Calendar.DAY_OF_MONTH);
+
+			String sYear = "" + mYear;
+			String sMonth;
+			if (mMonth < 10) {
+				sMonth = "0" + mMonth;
+			} else {
+				sMonth = "" + mMonth;
+			}
+			String sDay;
+			if (mDay < 10) {
+				sDay = "0" + mDay;
+			} else {
+				sDay = "" + mDay;
+			}
+
+			File fichierSurCarteSD = new File(PATH + "trousse_base" + sYear + sMonth + sDay);
+
 			boolean result = ManipFichier.copier(baseDansTel, fichierSurCarteSD);
 			if (result) {
 				adSauvegarde.setMessage("Operation reussie");
@@ -229,28 +265,80 @@ public class tab4 extends Activity implements OnClickListener {
 			objBd = new BDAcces(this);
 			objBd.close();
 			String cheminBase = objBd.getPath();
-			File baseDansTel = new File(cheminBase);
-			String PATH = "/sdcard/ma_trousse/";
+			baseDansTel = new File(cheminBase);
+
 			File path = new File(PATH);
 			if (!path.exists()) {
 				path.mkdirs();
 			}
-			File fichierSurCarteSD = new File(PATH + "trousse_base");
-			if (!fichierSurCarteSD.exists()) {
-				adImport.setMessage("Impossible de recuperer la base, le fichier n'existe pas");
-				adImport.show();
-				return;
-			}
-			boolean result = ManipFichier.copier(fichierSurCarteSD, baseDansTel);
-			if (result) {
-				adImport.setMessage("Operation reussie");
-			} else {
-				adImport.setMessage("Opération echouée");
-			}
+
+			final String[] NomFichier = recupereListeFichier(PATH);
+
+			adImport.setSingleChoiceItems(NomFichier, 0, new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int item) {
+					/* User clicked on a radio button do some stuff */
+
+					itemChoisi = item;
+
+				}
+			});
+			adImport.setPositiveButton("Celui la", new DialogInterface.OnClickListener() {
+
+				@Override
+				public void onClick(DialogInterface p_dialog, int p_which) {
+					// TODO Auto-generated method stub
+					String nomChoisi = NomFichier[itemChoisi].toString();
+					File fichierSurCarteSD = new File(PATH + "trousse_base" + nomChoisi);
+					if (!fichierSurCarteSD.exists()) {
+						adImportResult.setMessage("Impossible de recuperer la base, le fichier n'existe pas");
+						adImportResult.show();
+						return;
+					}
+					boolean result = ManipFichier.copier(fichierSurCarteSD, baseDansTel);
+					if (result) {
+						adImportResult.setMessage("Operation reussie");
+					} else {
+						adImportResult.setMessage("Opération echouée");
+					}
+					adImportResult.show();
+
+				}
+			});
+
 			adImport.show();
 
 		}
 
+	}
+
+	private String[] recupereListeFichier(String directoryPath) {
+		String[] liste = null;
+		File directory = new File(directoryPath);
+
+		if (!directory.exists()) {
+			// System.out.println("Le fichier/répertoire '"+directoryPath+"' n'existe pas");
+		} else if (directory.isFile()) {
+
+			// nbDossier--;
+			// nbFichier++;
+
+		} else {
+			if (directory.isDirectory()) {
+				File[] subfiles = directory.listFiles();
+
+				if (subfiles != null) {// si subfiles=null, c'est que le dossier a des restriction d'acces
+					liste = new String[subfiles.length];
+					for (int i = 0; i < subfiles.length; i++) {
+						// LanceComptage(subfiles[i].toString());
+						liste[i] = subfiles[i].toString().substring(subfiles[i].toString().lastIndexOf("trousse_base") + 12);
+					}
+					return liste;
+				}
+
+			}
+		}
+		return liste;
 	}
 
 }
