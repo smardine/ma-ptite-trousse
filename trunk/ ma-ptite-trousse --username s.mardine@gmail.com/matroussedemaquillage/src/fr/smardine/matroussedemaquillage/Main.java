@@ -2,6 +2,7 @@ package fr.smardine.matroussedemaquillage;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -73,17 +74,9 @@ public class Main extends Activity implements OnClickListener {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				// on sauvegarde la base sur la carte SD
-				objBd = new BDAcces(ctx);
-				objBd.close();
-				String cheminBase = objBd.getPath();
-				File baseDansTel = new File(cheminBase);
-				String PATH = "/sdcard/ma_trousse/";
-				File path = new File(PATH);
-				if (!path.exists()) {
-					path.mkdirs();
-				}
-				File fichierSurCarteSD = new File(PATH + "trousse_base");
-				boolean result = ManipFichier.copier(baseDansTel, fichierSurCarteSD);
+				@SuppressWarnings("unused")
+				boolean resultatSauvegarde = lanceSauvegarde(ctx);
+
 				// fin de la sauvegarde sur la carte SD.
 				finish();
 				onStop();
@@ -98,6 +91,57 @@ public class Main extends Activity implements OnClickListener {
 
 		this.setTitle("Ma p'tite trousse");
 
+	}
+
+	protected boolean lanceSauvegarde(Context p_ctx) {
+		boolean result = false;
+		objBd = new BDAcces(p_ctx);
+		objBd.close();
+		String cheminBase = objBd.getPath();
+		File baseDansTel = new File(cheminBase);
+		String PATH = "/sdcard/ma_trousse/";
+		File path = new File(PATH);
+		if (!path.exists()) {
+			path.mkdirs();
+		}
+		int mYear;
+		int mMonth;
+		int mDay;
+		final Calendar c = Calendar.getInstance();
+		mYear = c.get(Calendar.YEAR);
+		mMonth = c.get(Calendar.MONTH);
+		mDay = c.get(Calendar.DAY_OF_MONTH);
+
+		String sYear = "" + mYear;
+		String sMonth;
+		if (mMonth < 10) {
+			sMonth = "0" + mMonth;
+		} else {
+			sMonth = "" + mMonth;
+		}
+		String sDay;
+		if (mDay < 10) {
+			sDay = "0" + mDay;
+		} else {
+			sDay = "" + mDay;
+		}
+
+		File fichierSurCarteSD = new File(PATH + "trousse_base" + sYear + sMonth + sDay);
+
+		result = ManipFichier.copier(baseDansTel, fichierSurCarteSD);
+		// si la sauvegarde s'est bien passée, on verifie que l'on a pas + de 10 sauvegarde, sinon, on suppr la + ancienne.
+		if (result) {
+			Comptage compte = new Comptage(PATH);
+			int nbFichier = compte.getNbFichier();
+			if (nbFichier > 10) {
+				if (compte.supprFichierPlusAncien(PATH)) {
+					return result;
+				}
+			}
+			return result;
+
+		}
+		return result;
 	}
 
 	private void onCreateMenu(Menu menu) {
