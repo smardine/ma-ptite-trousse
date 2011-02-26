@@ -1,5 +1,7 @@
 package fr.smardine.matroussedemaquillage;
 
+import helper.DateHelper;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -193,41 +195,60 @@ public class EntryPoint extends Activity {
 
 	}
 
-	@SuppressWarnings("rawtypes")
+	@SuppressWarnings({ "rawtypes", "unused" })
 	private void CalculDatePeremtionEtMajDansBase(String dateAchat1, String dureeVie, String idProduit) throws Exception {
 		dureeVie = dureeVie.replace("[", "").replace("]", "");
 
 		try {
-			int DureeVie = 0;
-			DureeVie = Integer.valueOf(dureeVie);
-
-			String tabAchat[] = dateAchat1.split("-");
-			int jourAchat = Integer.parseInt(tabAchat[0]);
-			int mois = Integer.parseInt(tabAchat[1]) - 1;// les mois commence à 0 (janvier) et se termine à 11 (decembre)
-			int annee = Integer.parseInt(tabAchat[2]) - 1900;// les années commence à 0(1900), pour avoir l'année exacte a partir d'une
-																// velur contenu dans un string, il faut retrancher 1900 a la valeur de
-																// l'année.
-			// exemple, l'année 2010 est considérée comme 2010-1900 = 110
-
-			Date DateAchatAuformatDate = new Date(annee, mois, jourAchat);
-			long DateAchatEnMilli = DateAchatAuformatDate.getTime();// on recupere la date d'achat au format milliseconde
+//			int DureeVie = 0;
+//			DureeVie = Integer.valueOf(dureeVie);
+//
+//			String tabAchat[] = dateAchat1.split("-");
+//			int jourAchat = Integer.parseInt(tabAchat[0]);
+//			int mois = Integer.parseInt(tabAchat[1]) - 1;// les mois commence à 0 (janvier) et se termine à 11 (decembre)
+//			int annee = Integer.parseInt(tabAchat[2]) - 1900;// les années commence à 0(1900), pour avoir l'année exacte a partir d'une
+//																// velur contenu dans un string, il faut retrancher 1900 a la valeur de
+//																// l'année.
+//			// exemple, l'année 2010 est considérée comme 2010-1900 = 110
+//
+//			Date DateAchatAuformatDate = new Date(annee, mois, jourAchat);
+//			long DateAchatEnMilli = DateAchatAuformatDate.getTime();// on recupere la date d'achat au format milliseconde
 			objBd.open();
 			String[] champ = { "AfficheAlerte", "DureeViePeremp", "Theme" };
 			ArrayList[] Param = objBd.renvoi_param(champ);
 			objBd.close();
-
 			int NbDeJourAvantPeremp = Integer.parseInt(Param[1].get(0).toString().replace("[", "").replace("]", ""));
-			int nbJours = DureeVie * NbDeJourAvantPeremp;
-			Date DatePeremption1 = getDateAfterDays(DateAchatEnMilli, nbJours);// on calcule la date de permetpion en fonction de la date
-																				// d'achat+nb de jour donné par l'utilisateur
+			
+			boolean isPerime = DateHelper.isProduitPerime(dateAchat1, dureeVie);
+			String perime;
+			if (isPerime){
+				perime="true";
+				auMoinsUnProduitPermié=true;
+			}else{
+				perime="false";
+			}
+			Date datePeremp = DateHelper.getDatePeremption(dateAchat1,dureeVie);
+			boolean isPresquePerime = DateHelper.isProduitPresquePerime(dateAchat1, dureeVie, NbDeJourAvantPeremp);
+			String presqueperime;
+			if (isPresquePerime){
+				presqueperime="true";
+				auMoinsUnProduitPresquePermié=true;
+			}else{
+				presqueperime="false";
+			}
+//			int nbJours = DureeVie * NbDeJourAvantPeremp;
+//			Date DatePeremption1 = getDateAfterDays(DateAchatEnMilli, nbJours);// on calcule la date de permetpion en fonction de la date
+//																				// d'achat+nb de jour donné par l'utilisateur
 			DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-			String Date_Peremption = dateFormat.format(DatePeremption1);// date de peremtion au format jj/mm/aaaa
+			String Date_Peremption = dateFormat.format(datePeremp);// date de peremtion au format jj/mm/aaaa
 
-			long DatePeremtInMilli = DatePeremption1.getTime(); // on converti la date de permeption en milliseconde
+			long DatePeremtInMilli = datePeremp.getTime(); // on converti la date de permeption en milliseconde
 			String Table11 = "produit_Enregistre";
 			ContentValues modifiedValues11 = new ContentValues();
 			modifiedValues11.put("Date_Peremption", Date_Peremption);
 			modifiedValues11.put("Date_Peremption_milli", DatePeremtInMilli);
+			modifiedValues11.put("IS_PERIME", perime);
+			modifiedValues11.put("IS_PRESQUE_PERIME", presqueperime);
 			String whereClause11 = "id_produits=?";
 			String[] whereArgs11 = new String[] { "" + idProduit + "" };
 			objBd.open();
@@ -397,7 +418,7 @@ public class EntryPoint extends Activity {
 				for (int j = 0; j < nbDenregistrement; j++) {
 					if (j > 0) {
 						total = (100 * j) / nbDenregistrement;
-						total = total / 2;
+//						total = total / 2;
 
 					}
 					String s_idProduit = datePerem[1].get(j).toString().replace("[", "").replace("]", "");
@@ -428,76 +449,76 @@ public class EntryPoint extends Activity {
 
 				}
 
-				for (int i = 0; i < nbdeDateEnregistré; i++) {
-					if (i > 0) {
-						total = (100 * i) / nbDenregistrement;
-						total = (total / 2) + 49;
-
-					}
-
-					if (datePerem[0].get(i) != null) {
-						DateAVerif = Long.parseLong((String) datePerem[0].get(i));
-						int idProduit = Integer.parseInt((String) datePerem[1].get(i));
-						long intervalleEnMilliseconde = verifDatePeremAtteinte(DateAVerif);
-						int nbJour = (int) (intervalleEnMilliseconde / (24 * 60 * 60 * 1000));
-						if (nbJour <= 0) {// on a deja depassé la date limite
-							/*
-							 * String Message = "DateDepassée sur l'id produit n° "+datePerem[1].get(i); popUp(Message);
-							 */
-							String Table1 = "produit_Enregistre";
-							ContentValues modifiedValues1 = new ContentValues();
-							modifiedValues1.put("IS_PERIME", "true");
-							modifiedValues1.put("IS_PRESQUE_PERIME", "false");
-							modifiedValues1.put("NB_JOUR_AVANT_PEREMP", "" + nbJour + "");
-							String whereClause1 = "id_produits=?";
-							String[] whereArgs1 = new String[] { "" + idProduit + "" };
-							objBd.open();
-							/* int nbLigneModifiée1 = */objBd.majTable(Table1, modifiedValues1, whereClause1, whereArgs1);
-							// objBd.close();
-							// String Message211="nb de ligne modifiée:"+nbLigneModifiée1;
-							auMoinsUnProduitPermié = true;
-						}
-
-						// on convertir la valeur en milliseconde en nb de jour
-						if (nbJour <= 30 && nbJour > 0) {// on previens l'utilisateur
-							/*
-							 * String Message = "On va atteindre une date de permeption sur l'id produit n° "+datePerem[1].get(i);
-							 * popUp(Message);
-							 */
-							String Table1 = "produit_Enregistre";
-							ContentValues modifiedValues1 = new ContentValues();
-							modifiedValues1.put("IS_PERIME", "false");
-							modifiedValues1.put("IS_PRESQUE_PERIME", "true");
-							modifiedValues1.put("NB_JOUR_AVANT_PEREMP", "" + nbJour + "");
-							String whereClause1 = "id_produits=?";
-							String[] whereArgs1 = new String[] { "" + idProduit + "" };
-							objBd.open();
-							/* int nbLigneModifiée1 = */objBd.majTable(Table1, modifiedValues1, whereClause1, whereArgs1);
-							objBd.close();
-							// String Message211="nb de ligne modifiée:"+nbLigneModifiée1;
-							auMoinsUnProduitPresquePermié = true;
-						}
-						if (nbJour > 30) {
-							/*
-							 * String Message = "le produit suivant n'est pas périmé et ne va pas etre perimé: n° "+datePerem[1].get(i);
-							 * popUp(Message);
-							 */
-							String Table1 = "produit_Enregistre";
-							ContentValues modifiedValues1 = new ContentValues();
-							modifiedValues1.put("IS_PERIME", "false");
-							modifiedValues1.put("IS_PRESQUE_PERIME", "false");
-							modifiedValues1.put("NB_JOUR_AVANT_PEREMP", "" + nbJour + "");
-							String whereClause1 = "id_produits=?";
-							String[] whereArgs1 = new String[] { "" + idProduit + "" };
-							objBd.open();
-							/* int nbLigneModifiée1 = */objBd.majTable(Table1, modifiedValues1, whereClause1, whereArgs1);
-							objBd.close();
-							// String Message211="nb de ligne modifiée:"+nbLigneModifiée1;
-
-						}
-					}
-
-				}
+//				for (int i = 0; i < nbdeDateEnregistré; i++) {
+//					if (i > 0) {
+//						total = (100 * i) / nbDenregistrement;
+//						total = (total / 2) + 49;
+//
+//					}
+//
+//					if (datePerem[0].get(i) != null) {
+//						DateAVerif = Long.parseLong((String) datePerem[0].get(i));
+//						int idProduit = Integer.parseInt((String) datePerem[1].get(i));
+//						long intervalleEnMilliseconde = verifDatePeremAtteinte(DateAVerif);
+//						int nbJour = (int) (intervalleEnMilliseconde / (24 * 60 * 60 * 1000));
+//						if (nbJour <= 0) {// on a deja depassé la date limite
+//							/*
+//							 * String Message = "DateDepassée sur l'id produit n° "+datePerem[1].get(i); popUp(Message);
+//							 */
+//							String Table1 = "produit_Enregistre";
+//							ContentValues modifiedValues1 = new ContentValues();
+//							modifiedValues1.put("IS_PERIME", "true");
+//							modifiedValues1.put("IS_PRESQUE_PERIME", "false");
+//							modifiedValues1.put("NB_JOUR_AVANT_PEREMP", "" + nbJour + "");
+//							String whereClause1 = "id_produits=?";
+//							String[] whereArgs1 = new String[] { "" + idProduit + "" };
+//							objBd.open();
+//							/* int nbLigneModifiée1 = */objBd.majTable(Table1, modifiedValues1, whereClause1, whereArgs1);
+//							// objBd.close();
+//							// String Message211="nb de ligne modifiée:"+nbLigneModifiée1;
+//							auMoinsUnProduitPermié = true;
+//						}
+//
+//						// on convertir la valeur en milliseconde en nb de jour
+//						if (nbJour <= 30 && nbJour > 0) {// on previens l'utilisateur
+//							/*
+//							 * String Message = "On va atteindre une date de permeption sur l'id produit n° "+datePerem[1].get(i);
+//							 * popUp(Message);
+//							 */
+//							String Table1 = "produit_Enregistre";
+//							ContentValues modifiedValues1 = new ContentValues();
+//							modifiedValues1.put("IS_PERIME", "false");
+//							modifiedValues1.put("IS_PRESQUE_PERIME", "true");
+//							modifiedValues1.put("NB_JOUR_AVANT_PEREMP", "" + nbJour + "");
+//							String whereClause1 = "id_produits=?";
+//							String[] whereArgs1 = new String[] { "" + idProduit + "" };
+//							objBd.open();
+//							/* int nbLigneModifiée1 = */objBd.majTable(Table1, modifiedValues1, whereClause1, whereArgs1);
+//							objBd.close();
+//							// String Message211="nb de ligne modifiée:"+nbLigneModifiée1;
+//							auMoinsUnProduitPresquePermié = true;
+//						}
+//						if (nbJour > 30) {
+//							/*
+//							 * String Message = "le produit suivant n'est pas périmé et ne va pas etre perimé: n° "+datePerem[1].get(i);
+//							 * popUp(Message);
+//							 */
+//							String Table1 = "produit_Enregistre";
+//							ContentValues modifiedValues1 = new ContentValues();
+//							modifiedValues1.put("IS_PERIME", "false");
+//							modifiedValues1.put("IS_PRESQUE_PERIME", "false");
+//							modifiedValues1.put("NB_JOUR_AVANT_PEREMP", "" + nbJour + "");
+//							String whereClause1 = "id_produits=?";
+//							String[] whereArgs1 = new String[] { "" + idProduit + "" };
+//							objBd.open();
+//							/* int nbLigneModifiée1 = */objBd.majTable(Table1, modifiedValues1, whereClause1, whereArgs1);
+//							objBd.close();
+//							// String Message211="nb de ligne modifiée:"+nbLigneModifiée1;
+//
+//						}
+//					}
+//
+//				}
 
 			}
 
