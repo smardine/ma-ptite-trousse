@@ -15,7 +15,11 @@ import android.os.Handler;
 import android.widget.ProgressBar;
 import fr.smardine.matroussedemaquillage.base.BDAcces;
 import fr.smardine.matroussedemaquillage.variableglobale.ActivityParam;
-
+/**
+ * point d'entrée de l'application, lance les calculs de date de peremption
+ * @author sims
+ *
+ */
 public class EntryPoint extends Activity {
 
 	String Date = "";
@@ -60,6 +64,11 @@ public class EntryPoint extends Activity {
 
 	}
 
+	/**
+	 * permet d'afficher une alerte a l'utilisateur si un des produits est perimé ou sur le point de l'etre
+	 * @param AuMoinsUnProduitPerimé - boolean
+	 * @param AuMoinsUnProduitPresquePermié - boolean
+	 */
 	@SuppressWarnings("rawtypes")
 	public void gotoPrevienUtilisateur(boolean AuMoinsUnProduitPerimé, boolean AuMoinsUnProduitPresquePermié) {
 		// TODO Auto-generated method stub
@@ -94,6 +103,9 @@ public class EntryPoint extends Activity {
 		finish();
 	}
 
+	/**
+	 * affiche la page principale de l'appli,sans l'alerte "produit perimé"
+	 */
 	public void gotoLancePageMain() {
 
 		remplissageBase();
@@ -105,6 +117,12 @@ public class EntryPoint extends Activity {
 
 	}
 
+	/**
+	 * permet de determiner une date a partir d'un dateTime (Long) ainsi qu'un nb de jour (int) 
+	 * @param dateEnMilli Long
+	 * @param days int
+	 * @return la nouvelle date
+	 */
 	public static Date getDateAfterDays(long dateEnMilli, int days) {
 		long backDateMS = dateEnMilli + ((long) days) * 24 * 60 * 60 * 1000;
 		Date backDate = new Date();
@@ -112,6 +130,11 @@ public class EntryPoint extends Activity {
 		return backDate;
 	}
 
+	/**
+	 * determine au format Long le nb de milliseconde avant la permenption d'un produit
+	 * @param dateAVerif Long
+	 * @return la difference entre la date du jour et la valeur passée en param.
+	 */
 	public long verifDatePeremAtteinte(long dateAVerif) {
 		// TODO Auto-generated method stub
 		long dateDuJour = System.currentTimeMillis();
@@ -120,6 +143,11 @@ public class EntryPoint extends Activity {
 		return differenceEntredateAVerifetDateDuJour;
 	}
 
+	/**
+	 * permet de determiner une date a partir d'un dateTime (Long) ainsi qu'un nb de jour (int) 
+	 * @param days int
+	 * @return la nouvelle date
+	 */
 	public static Date getDateBeforeDays(int days) {
 		long backDateMS = System.currentTimeMillis() - ((long) days) * 24 * 60 * 60 * 1000;
 		Date backDate = new Date();
@@ -214,12 +242,14 @@ public class EntryPoint extends Activity {
 
 	}
 
-	@SuppressWarnings("rawtypes")
 	/**
-	 * suite a un bug => correction des champs en base pour enlever les caractere "[" et "]"
-	 * @param String IdProduit => necessaire a la mise a jour de la table
+	 *  suite a un bug => correction des champs en base pour enlever les caractere "[" et "]"
+	 * @param IdProduit String  => necessaire a la mise a jour de la table
 	 * @return 1 si la ligne a été modifiée, 0 si rien n'a été fait.
+	 * @throws Exception
 	 */
+	@SuppressWarnings("rawtypes")
+	
 	public int verifErreurEnregistrementDsBase(String IdProduit) throws Exception {
 
 		String[] Colonnes = { "nom_produit", "nom_souscatergorie", "nom_categorie", "numero_Teinte", "Duree_Vie", "Date_Peremption",
@@ -325,11 +355,17 @@ public class EntryPoint extends Activity {
 
 	}
 
+	/**
+	 * destruction de l'instance de l'activity
+	 */
 	public void OnDestroy() {
 		super.onDestroy();
 
 	}
-
+/**
+ * permetd'afficher un message a l'utilisateur sous forme de popup
+ * @param message String le message a afficher
+ */
 	public void popUp(String message) {
 		// Toast.makeText(this, message, 1).show();
 	}

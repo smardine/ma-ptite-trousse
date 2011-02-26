@@ -31,6 +31,11 @@ import fr.smardine.matroussedemaquillage.remplir.formulaire_entree_page1bis;
 import fr.smardine.matroussedemaquillage.variableglobale.ActivityParam;
 import fr.smardine.matroussedemaquillage.variableglobale.EnTheme;
 
+/**
+ * premiere fenetre de l'appli
+ * @author sims
+ *
+ */
 public class Main extends Activity implements OnClickListener {
 	ImageView BtRemplir, BtPerimé, BtDuppliquer, BtNotes;
 	Intent intentFormPage1, intentRecherche, intentDupplique, intentParametres, intentNote;
@@ -109,7 +114,7 @@ public class Main extends Activity implements OnClickListener {
 		int mDay;
 		final Calendar c = Calendar.getInstance();
 		mYear = c.get(Calendar.YEAR);
-		mMonth = c.get(Calendar.MONTH);
+		mMonth = c.get(Calendar.MONTH)+1;
 		mDay = c.get(Calendar.DAY_OF_MONTH);
 
 		String sYear = "" + mYear;
@@ -516,6 +521,9 @@ public class Main extends Activity implements OnClickListener {
 		}
 	}
 
+	/**
+	 * destruction de l'instance de l'activity
+	 */
 	public void OnDestroy() {
 		super.onDestroy();
 		/*
@@ -524,6 +532,10 @@ public class Main extends Activity implements OnClickListener {
 
 	}
 
+	/**
+	 * permet d'afficher un popup a l'utilisateur
+	 * @param message String le message a afficher.
+	 */
 	public void popUp(String message) {
 		// Toast.makeText(this, message, 1).show();
 	}
