@@ -15,7 +15,7 @@ android:indeterminate="false"
 android:visibility="visible" android:layout_alignParentBottom="true"></ProgressBar>
 
 <ImageSwitcher android:id="@+id/ImageSwitcher01"
-android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_alignParentTop="true"></ImageSwitcher>
+android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_centerHorizontal="true" android:layout_centerVertical="true"></ImageSwitcher>
 
 
 </RelativeLayout>
