@@ -7,13 +7,15 @@ android:layout_height="fill_parent"
 android:layout_width="fill_parent" 
 android:layout_gravity="bottom">
 
+<ProgressBar android:id="@+id/ProgressBar01" 
+android:layout_height="wrap_content" 
+style="?android:attr/progressBarStyleHorizontal" 
+android:layout_width="fill_parent" 
+android:indeterminate="false" 
+android:visibility="visible" android:layout_alignParentBottom="true"></ProgressBar>
+
+<ImageSwitcher android:id="@+id/ImageSwitcher01"
+android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_alignParentTop="true"></ImageSwitcher>
 
 
-
-
-
-
-
-
-<ProgressBar android:id="@+id/ProgressBar01" android:layout_height="wrap_content" android:layout_centerVertical="true" android:layout_centerHorizontal="true" style="?android:attr/progressBarStyleHorizontal" android:layout_width="fill_parent" android:indeterminate="false" android:visibility="visible"></ProgressBar>
 </RelativeLayout>

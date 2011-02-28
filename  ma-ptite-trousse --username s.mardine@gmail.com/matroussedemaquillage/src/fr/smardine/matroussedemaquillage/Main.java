@@ -109,6 +109,16 @@ public class Main extends Activity implements OnClickListener {
 		if (!path.exists()) {
 			path.mkdirs();
 		}
+
+		// si une base appellée "trousse_baseé existe, la supprimer, ca correspond a l'ancien format de sauvegarde
+
+		File f = new File(PATH + "trousse_base");
+		if (f.exists()) {
+			boolean delete = f.delete();
+			if (!delete) {
+				f.deleteOnExit();
+			}
+		}
 		int mYear;
 		int mMonth;
 		int mDay;
@@ -138,9 +148,9 @@ public class Main extends Activity implements OnClickListener {
 		if (result) {
 			Comptage compte = new Comptage(PATH);
 			int nbFichier = compte.getNbFichier();
-			if (nbFichier > 10) {
+			if (nbFichier > 5) {
 				if (compte.supprFichierPlusAncien(PATH)) {
-					return result;
+					return true;
 				}
 			}
 			return result;
