@@ -1,8 +1,18 @@
 package fr.smardine.matroussedemaquillage.variableglobale;
 
+/**
+ * @author smardine
+ */
 public class G_changeLog {
+	/**
+	 * repertorie tout les changements apporté a l'appli
+	 */
+	public static String Changement = "Version 2.01:\n"
+			+ "Possibilité de desactiver la fenetre alerte directement au demarrage (aller dans les parametres pour la reactiver)\n"
+			+ "On conserve maintenant les 5 dernieres sauvegardes, on peut choisir quelle sauvegarde on veut recuperer si on a besoin de faire une restauration de la base.\n"
 
-	public static String Changement = "Version 2.00: \n"
+			+ "888888888888888888\n"
+			+ "Version 2.00: \n"
 			+ "Ajout d'une sauvegarde automatique de la base de données à la fermeture de l'application\n"
 			+ "Ajout d'un nouvel onglet dans les parametres:\n"
 			+ "celui-ci permet de vider tout les produit de la trousse, de sauvegarder la base de données sur la carte SD ou de recuperer une base sauvegardée depuis cette meme carte SD\n"

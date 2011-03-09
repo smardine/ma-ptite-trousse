@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_height="wrap_content" android:layout_width="wrap_content">
+    <CheckBox
+        android:id="@+id/checkbox"
+        android:layout_width="wrap_content"
+        android:text="ne plus afficher ce message (vous pourrez le réactiver dans les parametres)" android:layout_below="@+id/text_view" android:layout_height="wrap_content"/>
+    <TextView
+        android:id="@+id/text_view"
+        android:textSize="20dip"
+        android:textStyle="bold"
+        
+        android:layout_height="wrap_content" 
+        android:text='Un ou plusieur(s) produit(s) sont perimé(s) ou arrivent a leur date de permeption, voulez vous afficher ces produits?' 
+        android:layout_width="wrap_content"/>
+   
+</RelativeLayout>
