@@ -2,9 +2,11 @@ package fr.smardine.matroussedemaquillage;
 
 import helper.DateHelper;
 
+import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 import android.app.Activity;
@@ -18,7 +20,6 @@ import android.view.View;
 import android.widget.Gallery.LayoutParams;
 import android.widget.ImageSwitcher;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.ViewSwitcher.ViewFactory;
 import fr.smardine.matroussedemaquillage.base.BDAcces;
 import fr.smardine.matroussedemaquillage.variableglobale.ActivityParam;
@@ -32,6 +33,7 @@ public class EntryPoint extends Activity implements ViewFactory {
 	String Date = "";
 	ImageSwitcher mSwitcher;
 	int total;
+	private boolean isLaunchFromMain = false;
 
 	BDAcces objBd;
 	Context ctx = null;
@@ -48,12 +50,19 @@ public class EntryPoint extends Activity implements ViewFactory {
 		// creation du thread qui va rafraichir les valeur de progression et de vitesse
 		mSwitcher = (ImageSwitcher) findViewById(R.id.ImageSwitcher01);
 		mSwitcher.setFactory(this);
-		// mSwitcher.setInAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_in));
-		// mSwitcher.setOutAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_out));
-		updateUI();
-		handler.removeCallbacks(updateTimeTask);
-		handler.postDelayed(updateTimeTask, 50);
 		ctx = this;
+		isLaunchFromMain = getIntent().getBooleanExtra(ActivityParam.LaunchFromMain, false);
+		if (isLaunchFromMain) {
+			updateUIFermeture();
+			handler.removeCallbacks(updateTimeTaskFermeture);
+			handler.postDelayed(updateTimeTaskFermeture, 50);
+
+		} else {
+			updateUI();
+			handler.removeCallbacks(updateTimeTask);
+			handler.postDelayed(updateTimeTask, 50);
+
+		}
 
 	}
 
@@ -65,13 +74,20 @@ public class EntryPoint extends Activity implements ViewFactory {
 			handler.postDelayed(this, 500);
 		}
 	};
+	private final Runnable updateTimeTaskFermeture = new Runnable() {
+		@Override
+		public void run() {
+			updateUIFermeture();
+			handler.postDelayed(this, 50);
+		}
+	};
 
 	private void updateUI() {
 
-		final ProgressBar Progress = (ProgressBar) findViewById(R.id.ProgressBar01);
-
-		// on affecte des valeurs aux composant
-		Progress.setProgress(total);
+		// final ProgressBar Progress = (ProgressBar) findViewById(R.id.ProgressBar01);
+		//
+		// // on affecte des valeurs aux composant
+		// Progress.setProgress(total);
 		System.out.println("Progression: " + total);
 
 		if (total < 10) {
@@ -101,6 +117,55 @@ public class EntryPoint extends Activity implements ViewFactory {
 		}
 		if (total >= 90 && total < 100) {
 			mSwitcher.setImageResource(mImageIds[8]);
+		}
+
+	}
+
+	private void updateUIFermeture() {
+
+		// final ProgressBar Progress = (ProgressBar) findViewById(R.id.ProgressBar01);
+
+		// on affecte des valeurs aux composant
+		// Progress.setProgress(total);
+		System.out.println("Progression: " + total);
+
+		if (total < 10) {
+			mSwitcher.setImageResource(mImageIds[8]);
+		}
+
+		if (total >= 10 && total < 20) {
+			mSwitcher.setImageResource(mImageIds[7]);
+		}
+		if (total >= 20 && total < 30) {
+			mSwitcher.setImageResource(mImageIds[9]);
+		}
+		if (total >= 30 && total < 40) {
+			mSwitcher.setImageResource(mImageIds[5]);
+		}
+		if (total >= 40 && total < 50) {
+			mSwitcher.setImageResource(mImageIds[4]);
+		}
+		if (total >= 50 && total < 60) {
+			mSwitcher.setImageResource(mImageIds[3]);
+		}
+		if (total >= 60 && total < 70) {
+			mSwitcher.setImageResource(mImageIds[2]);
+		}
+		if (total >= 80 && total < 90) {
+			mSwitcher.setImageResource(mImageIds[1]);
+		}
+		if (total >= 90 && total < 100) {
+			mSwitcher.setImageResource(mImageIds[0]);
+		}
+
+		if (total >= 100) {
+			// on a fini tt les traitement avant fermeture => on quitte completement l'appli
+			finish();
+			onStop();
+			onDestroy();
+			// a faire avant System.exit pour supprimer correctement toute les données presentes en memoire
+			System.runFinalizersOnExit(true);
+			System.exit(0);
 		}
 
 	}
@@ -222,19 +287,24 @@ public class EntryPoint extends Activity implements ViewFactory {
 	 * était passé en premier plan entre temps). La fonction onResume() est suivie de l'exécution de l'activité.
 	 */
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "unused" })
 	@Override
 	protected void onResume() {
 		super.onResume();
-		handler.removeCallbacks(updateTimeTask);
-		handler.postDelayed(updateTimeTask, 1000);
+		if (isLaunchFromMain) {
+			handler.removeCallbacks(updateTimeTaskFermeture);
+			handler.postDelayed(updateTimeTaskFermeture, 1000);
+			AsyncTask<?, ?, ?> execute = new FermetureTask().execute("");
 
-		@SuppressWarnings("unused")
-		AsyncTask<?, ?, ?> execute = new CheckTask().execute("");
+		} else {
+			handler.removeCallbacks(updateTimeTask);
+			handler.postDelayed(updateTimeTask, 1000);
+			AsyncTask<?, ?, ?> execute = new CheckTask().execute("");
+		}
 
 	}
 
-	@SuppressWarnings({ "rawtypes", "unused" })
+	@SuppressWarnings({ "rawtypes" })
 	private void CalculDatePeremtionEtMajDansBase(String dateAchat1, String dureeVie, String idProduit) throws Exception {
 		dureeVie = dureeVie.replace("[", "").replace("]", "");
 
@@ -398,7 +468,12 @@ public class EntryPoint extends Activity implements ViewFactory {
 	@Override
 	protected void onStop() {
 		super.onStop();
-		handler.removeCallbacks(updateTimeTask);
+		if (isLaunchFromMain) {
+			handler.removeCallbacks(updateTimeTaskFermeture);
+		} else {
+			handler.removeCallbacks(updateTimeTask);
+		}
+
 		objBd.close();
 
 	}
@@ -431,6 +506,21 @@ public class EntryPoint extends Activity implements ViewFactory {
 	}
 
 	@SuppressWarnings("rawtypes")
+	private class FermetureTask extends AsyncTask {
+		@Override
+		protected Object doInBackground(Object... p_arg0) {
+			// on sauvegarde la base sur la carte SD
+			total = 25;
+			@SuppressWarnings("unused")
+			boolean resultatSauvegarde = lanceSauvegarde(ctx);
+			total = 100;
+			// fin de la sauvegarde sur la carte SD.
+
+			return true;
+		}
+	}
+
+	@SuppressWarnings("rawtypes")
 	private class CheckTask extends AsyncTask {
 
 		@Override
@@ -451,8 +541,8 @@ public class EntryPoint extends Activity implements ViewFactory {
 				// objBd.close();
 				// / dans le cas ou il y a des caracteres bizarre dans un des champs => correction
 
-				int nbdeDateEnregistré = datePerem[0].size();
-				long DateAVerif;
+				// int nbdeDateEnregistré = datePerem[0].size();
+				// long DateAVerif;
 				// on commence par recalculer la date de permeption suite au bug de calcul lors de l'entrée du produit:
 				for (int j = 0; j < nbDenregistrement; j++) {
 					if (j > 0) {
@@ -488,77 +578,6 @@ public class EntryPoint extends Activity implements ViewFactory {
 
 				}
 
-				// for (int i = 0; i < nbdeDateEnregistré; i++) {
-				// if (i > 0) {
-				// total = (100 * i) / nbDenregistrement;
-				// total = (total / 2) + 49;
-				//
-				// }
-				//
-				// if (datePerem[0].get(i) != null) {
-				// DateAVerif = Long.parseLong((String) datePerem[0].get(i));
-				// int idProduit = Integer.parseInt((String) datePerem[1].get(i));
-				// long intervalleEnMilliseconde = verifDatePeremAtteinte(DateAVerif);
-				// int nbJour = (int) (intervalleEnMilliseconde / (24 * 60 * 60 * 1000));
-				// if (nbJour <= 0) {// on a deja depassé la date limite
-				// /*
-				// * String Message = "DateDepassée sur l'id produit n° "+datePerem[1].get(i); popUp(Message);
-				// */
-				// String Table1 = "produit_Enregistre";
-				// ContentValues modifiedValues1 = new ContentValues();
-				// modifiedValues1.put("IS_PERIME", "true");
-				// modifiedValues1.put("IS_PRESQUE_PERIME", "false");
-				// modifiedValues1.put("NB_JOUR_AVANT_PEREMP", "" + nbJour + "");
-				// String whereClause1 = "id_produits=?";
-				// String[] whereArgs1 = new String[] { "" + idProduit + "" };
-				// objBd.open();
-				// /* int nbLigneModifiée1 = */objBd.majTable(Table1, modifiedValues1, whereClause1, whereArgs1);
-				// // objBd.close();
-				// // String Message211="nb de ligne modifiée:"+nbLigneModifiée1;
-				// auMoinsUnProduitPermié = true;
-				// }
-				//
-				// // on convertir la valeur en milliseconde en nb de jour
-				// if (nbJour <= 30 && nbJour > 0) {// on previens l'utilisateur
-				// /*
-				// * String Message = "On va atteindre une date de permeption sur l'id produit n° "+datePerem[1].get(i);
-				// * popUp(Message);
-				// */
-				// String Table1 = "produit_Enregistre";
-				// ContentValues modifiedValues1 = new ContentValues();
-				// modifiedValues1.put("IS_PERIME", "false");
-				// modifiedValues1.put("IS_PRESQUE_PERIME", "true");
-				// modifiedValues1.put("NB_JOUR_AVANT_PEREMP", "" + nbJour + "");
-				// String whereClause1 = "id_produits=?";
-				// String[] whereArgs1 = new String[] { "" + idProduit + "" };
-				// objBd.open();
-				// /* int nbLigneModifiée1 = */objBd.majTable(Table1, modifiedValues1, whereClause1, whereArgs1);
-				// objBd.close();
-				// // String Message211="nb de ligne modifiée:"+nbLigneModifiée1;
-				// auMoinsUnProduitPresquePermié = true;
-				// }
-				// if (nbJour > 30) {
-				// /*
-				// * String Message = "le produit suivant n'est pas périmé et ne va pas etre perimé: n° "+datePerem[1].get(i);
-				// * popUp(Message);
-				// */
-				// String Table1 = "produit_Enregistre";
-				// ContentValues modifiedValues1 = new ContentValues();
-				// modifiedValues1.put("IS_PERIME", "false");
-				// modifiedValues1.put("IS_PRESQUE_PERIME", "false");
-				// modifiedValues1.put("NB_JOUR_AVANT_PEREMP", "" + nbJour + "");
-				// String whereClause1 = "id_produits=?";
-				// String[] whereArgs1 = new String[] { "" + idProduit + "" };
-				// objBd.open();
-				// /* int nbLigneModifiée1 = */objBd.majTable(Table1, modifiedValues1, whereClause1, whereArgs1);
-				// objBd.close();
-				// // String Message211="nb de ligne modifiée:"+nbLigneModifiée1;
-				//
-				// }
-				// }
-				//
-				// }
-
 			}
 
 			if (auMoinsUnProduitPermié == true || auMoinsUnProduitPresquePermié == true) {
@@ -585,4 +604,68 @@ public class EntryPoint extends Activity implements ViewFactory {
 		return i;
 	}
 
+	protected boolean lanceSauvegarde(Context p_ctx) {
+		boolean result = false;
+		total = 35;
+		objBd = new BDAcces(p_ctx);
+		objBd.close();
+		String cheminBase = objBd.getPath();
+		File baseDansTel = new File(cheminBase);
+		String PATH = "/sdcard/ma_trousse/";
+		File path = new File(PATH);
+		if (!path.exists()) {
+			path.mkdirs();
+		}
+		total = 45;
+		// si une base appellée "trousse_baseé existe, la supprimer, ca correspond a l'ancien format de sauvegarde
+
+		File f = new File(PATH + "trousse_base");
+		if (f.exists()) {
+			boolean delete = f.delete();
+			if (!delete) {
+				f.deleteOnExit();
+			}
+		}
+		total = 55;
+		int mYear;
+		int mMonth;
+		int mDay;
+		final Calendar c = Calendar.getInstance();
+		mYear = c.get(Calendar.YEAR);
+		mMonth = c.get(Calendar.MONTH) + 1;
+		mDay = c.get(Calendar.DAY_OF_MONTH);
+
+		String sYear = "" + mYear;
+		String sMonth;
+		if (mMonth < 10) {
+			sMonth = "0" + mMonth;
+		} else {
+			sMonth = "" + mMonth;
+		}
+		String sDay;
+		if (mDay < 10) {
+			sDay = "0" + mDay;
+		} else {
+			sDay = "" + mDay;
+		}
+		total = 65;
+		File fichierSurCarteSD = new File(PATH + "trousse_base" + sYear + sMonth + sDay);
+
+		result = ManipFichier.copier(baseDansTel, fichierSurCarteSD);
+
+		total = 85;
+		// si la sauvegarde s'est bien passée, on verifie que l'on a pas + de 10 sauvegarde, sinon, on suppr la + ancienne.
+		if (result) {
+			Comptage compte = new Comptage(PATH);
+			int nbFichier = compte.getNbFichier();
+			if (nbFichier > 5) {
+				if (compte.supprFichierPlusAncien(PATH)) {
+					return true;
+				}
+			}
+			return result;
+
+		}
+		return result;
+	}
 }

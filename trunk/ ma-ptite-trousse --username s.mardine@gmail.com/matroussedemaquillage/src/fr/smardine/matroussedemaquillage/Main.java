@@ -1,22 +1,23 @@
 package fr.smardine.matroussedemaquillage;
 
-import java.io.File;
 import java.util.ArrayList;
-import java.util.Calendar;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SubMenu;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 
 import com.example.android.apis.animation.Animlineaire;
@@ -34,7 +35,6 @@ import fr.smardine.matroussedemaquillage.variableglobale.EnTheme;
 /**
  * premiere fenetre de l'appli
  * @author sims
- *
  */
 public class Main extends Activity implements OnClickListener {
 	ImageView BtRemplir, BtPerimé, BtDuppliquer, BtNotes;
@@ -42,24 +42,42 @@ public class Main extends Activity implements OnClickListener {
 	AlertDialog.Builder adSortie, adHelp, adInfoProduitPerimé;
 	BDAcces objBd;
 	Context ctx = Main.this;
+	private CheckBox cb;
 	boolean nouveau = false, dupplique = false;
 
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		// ExceptionHandler.register(this, "http://simon.mardine.free.fr/trousse_maquillage/test/server.php","ma_ptite_trousse");
+		// ExceptionHandler.register(this, "http://simon.mardine.free.fr/trousse_maquillage/test/server.php", "ma_ptite_trousse");
 
 		adInfoProduitPerimé = new AlertDialog.Builder(this);
+
+		View v = LayoutInflater.from(this).inflate(R.layout.alerte_produit_perime, null);
+		cb = (CheckBox) v.findViewById(R.id.checkbox);
+
+		adInfoProduitPerimé.setView(v);
+
+		// adInfoProduitPerimé.setView(findViewById(R.layout.alerte_produit_perime));
+
 		adInfoProduitPerimé.setTitle("Alerte");
-		adInfoProduitPerimé
-				.setMessage("Un ou plusieur(s) produit(s) sont perimé(s) ou arrivent a leur date de permeption, voulez vous afficher ces produits?\n"
-						+ "Vous pouvez désactiver cette alerte en passant par le bouton \"menu\" puis \"parametre\"");
+		// adInfoProduitPerimé
+		// .setMessage("Un ou plusieur(s) produit(s) sont perimé(s) ou arrivent a leur date de permeption, voulez vous afficher ces produits?\n"
+		// + "Vous pouvez désactiver cette alerte en passant par le bouton \"menu\" puis \"parametre\"");
 		adInfoProduitPerimé.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
 
 			@Override
 			public void onClick(DialogInterface dialog, int id) {
-
+				System.out.println("etat de la coche " + cb.isChecked());
+				if (cb.isChecked()) {
+					// si la case est cochée par l'utilisateur , on met a jour la table "param"
+					ContentValues values = new ContentValues();
+					values.put("AfficheAlerte", "false");
+					objBd = new BDAcces(ctx);
+					objBd.open();
+					objBd.majTable("Param", values, "", null);
+					objBd.close();
+				}
 				Intent intentRecherche = new Intent(Main.this, recherche_produit_perime.class);
 				intentRecherche.putExtra(ActivityParam.LaunchFromMain, true);
 				// on demarre la nouvelle activité
@@ -68,7 +86,22 @@ public class Main extends Activity implements OnClickListener {
 
 			}
 		});
-		adInfoProduitPerimé.setNegativeButton("Non", null);
+		adInfoProduitPerimé.setNegativeButton("Non", new DialogInterface.OnClickListener() {
+
+			@Override
+			public void onClick(DialogInterface p_dialog, int p_which) {
+				if (cb.isChecked()) {
+					// si la case est cochée par l'utilisateur , on met a jour la table "param"
+					ContentValues values = new ContentValues();
+					values.put("AfficheAlerte", "false");
+					objBd = new BDAcces(ctx);
+					objBd.open();
+					objBd.majTable("Param", values, "", null);
+					objBd.close();
+				}
+
+			}
+		});
 
 		adSortie = new AlertDialog.Builder(ctx);
 		adSortie.setTitle("Petite vérification");
@@ -78,85 +111,17 @@ public class Main extends Activity implements OnClickListener {
 
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
-				// on sauvegarde la base sur la carte SD
-				@SuppressWarnings("unused")
-				boolean resultatSauvegarde = lanceSauvegarde(ctx);
-
-				// fin de la sauvegarde sur la carte SD.
-				finish();
-				onStop();
-				onDestroy();
-				// a faire avant System.exit pour supprimer correctement toute les données presentes en memoire
-				System.runFinalizersOnExit(true);
-				System.exit(0);
-
+				Intent intentEntry = new Intent(Main.this, EntryPoint.class);
+				intentEntry.putExtra(ActivityParam.LaunchFromMain, true);
+				// on demarre la nouvelle activité
+				startActivity(intentEntry);
+				termineActivity();
 			}
 		});
 		adSortie.setNegativeButton("Non", null);
 
 		this.setTitle("Ma p'tite trousse");
 
-	}
-
-	protected boolean lanceSauvegarde(Context p_ctx) {
-		boolean result = false;
-		objBd = new BDAcces(p_ctx);
-		objBd.close();
-		String cheminBase = objBd.getPath();
-		File baseDansTel = new File(cheminBase);
-		String PATH = "/sdcard/ma_trousse/";
-		File path = new File(PATH);
-		if (!path.exists()) {
-			path.mkdirs();
-		}
-
-		// si une base appellée "trousse_baseé existe, la supprimer, ca correspond a l'ancien format de sauvegarde
-
-		File f = new File(PATH + "trousse_base");
-		if (f.exists()) {
-			boolean delete = f.delete();
-			if (!delete) {
-				f.deleteOnExit();
-			}
-		}
-		int mYear;
-		int mMonth;
-		int mDay;
-		final Calendar c = Calendar.getInstance();
-		mYear = c.get(Calendar.YEAR);
-		mMonth = c.get(Calendar.MONTH)+1;
-		mDay = c.get(Calendar.DAY_OF_MONTH);
-
-		String sYear = "" + mYear;
-		String sMonth;
-		if (mMonth < 10) {
-			sMonth = "0" + mMonth;
-		} else {
-			sMonth = "" + mMonth;
-		}
-		String sDay;
-		if (mDay < 10) {
-			sDay = "0" + mDay;
-		} else {
-			sDay = "" + mDay;
-		}
-
-		File fichierSurCarteSD = new File(PATH + "trousse_base" + sYear + sMonth + sDay);
-
-		result = ManipFichier.copier(baseDansTel, fichierSurCarteSD);
-		// si la sauvegarde s'est bien passée, on verifie que l'on a pas + de 10 sauvegarde, sinon, on suppr la + ancienne.
-		if (result) {
-			Comptage compte = new Comptage(PATH);
-			int nbFichier = compte.getNbFichier();
-			if (nbFichier > 5) {
-				if (compte.supprFichierPlusAncien(PATH)) {
-					return true;
-				}
-			}
-			return result;
-
-		}
-		return result;
 	}
 
 	private void onCreateMenu(Menu menu) {
