@@ -34,6 +34,7 @@ public class EntryPoint extends Activity implements ViewFactory {
 	ImageSwitcher mSwitcher;
 	int total;
 	private boolean isLaunchFromMain = false;
+	long timeToSleep = 500L;
 
 	BDAcces objBd;
 	Context ctx = null;
@@ -177,7 +178,6 @@ public class EntryPoint extends Activity implements ViewFactory {
 	 */
 	@SuppressWarnings("rawtypes")
 	public void gotoPrevienUtilisateur(boolean AuMoinsUnProduitPerimé, boolean AuMoinsUnProduitPresquePermié) {
-		// TODO Auto-generated method stub
 
 		// objBd.open();
 		String[] champ = { "AfficheAlerte", "DureeViePeremp", "Theme" };
@@ -242,7 +242,7 @@ public class EntryPoint extends Activity implements ViewFactory {
 	 * @return la difference entre la date du jour et la valeur passée en param.
 	 */
 	public long verifDatePeremAtteinte(long dateAVerif) {
-		// TODO Auto-generated method stub
+
 		long dateDuJour = System.currentTimeMillis();
 		long differenceEntredateAVerifetDateDuJour = dateAVerif - dateDuJour;
 
@@ -416,7 +416,6 @@ public class EntryPoint extends Activity implements ViewFactory {
 		// objBd.close();
 
 		return nbdechamp;
-		// TODO Auto-generated method stub
 
 	}
 
@@ -425,7 +424,6 @@ public class EntryPoint extends Activity implements ViewFactory {
 	 * Maintenant si la valeur est superieure à 99 ou inferieur à 0 => on met 30 jours.
 	 */
 	public void CorrectionTableparam() {
-		// TODO Auto-generated method stub
 
 		String Table = "Param";
 		ContentValues modifiedValues = new ContentValues();
@@ -443,7 +441,7 @@ public class EntryPoint extends Activity implements ViewFactory {
 	 * 
 	 */
 	public void remplissageBase() {
-		// // // TODO Auto-generated method stub
+
 		// try {
 		//
 		// objBd.open();
@@ -511,12 +509,14 @@ public class EntryPoint extends Activity implements ViewFactory {
 		protected Object doInBackground(Object... p_arg0) {
 			// on sauvegarde la base sur la carte SD
 			total = 25;
-			@SuppressWarnings("unused")
-			boolean resultatSauvegarde = lanceSauvegarde(ctx);
+			boolean resultatSauvegarde = false;
+
+			resultatSauvegarde = lanceSauvegarde(ctx);
+
 			total = 100;
 			// fin de la sauvegarde sur la carte SD.
 
-			return true;
+			return resultatSauvegarde;
 		}
 	}
 
@@ -558,8 +558,7 @@ public class EntryPoint extends Activity implements ViewFactory {
 					try {
 						/* int nbEnregistrementCorrigé = */verifErreurEnregistrementDsBase(datePerem[1].get(j).toString());
 					} catch (Exception e1) {
-						// TODO Auto-generated catch block
-						// e1.printStackTrace();
+
 						System.out.println("erreur dans verifEnregistrement ds base " + e1.getMessage());
 					}
 
@@ -572,7 +571,7 @@ public class EntryPoint extends Activity implements ViewFactory {
 					try {
 						CalculDatePeremtionEtMajDansBase(DateAchat1, DureeVie, s_idProduit);
 					} catch (Exception e) {
-						// TODO Auto-generated catch block
+
 						System.out.println("erreur dans calculDatepermp " + e.getMessage());// e.printStackTrace();
 					}
 
@@ -607,6 +606,12 @@ public class EntryPoint extends Activity implements ViewFactory {
 	protected boolean lanceSauvegarde(Context p_ctx) {
 		boolean result = false;
 		total = 35;
+		try {
+			Thread.sleep(timeToSleep);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			System.out.println(e);
+		}
 		objBd = new BDAcces(p_ctx);
 		objBd.close();
 		String cheminBase = objBd.getPath();
@@ -617,6 +622,13 @@ public class EntryPoint extends Activity implements ViewFactory {
 			path.mkdirs();
 		}
 		total = 45;
+		try {
+			Thread.sleep(timeToSleep);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			System.out.println(e);
+		}
+
 		// si une base appellée "trousse_baseé existe, la supprimer, ca correspond a l'ancien format de sauvegarde
 
 		File f = new File(PATH + "trousse_base");
@@ -627,6 +639,13 @@ public class EntryPoint extends Activity implements ViewFactory {
 			}
 		}
 		total = 55;
+		try {
+			Thread.sleep(timeToSleep);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			System.out.println(e);
+		}
+
 		int mYear;
 		int mMonth;
 		int mDay;
@@ -649,11 +668,25 @@ public class EntryPoint extends Activity implements ViewFactory {
 			sDay = "" + mDay;
 		}
 		total = 65;
+		try {
+			Thread.sleep(timeToSleep);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			System.out.println(e);
+		}
+
 		File fichierSurCarteSD = new File(PATH + "trousse_base" + sYear + sMonth + sDay);
 
 		result = ManipFichier.copier(baseDansTel, fichierSurCarteSD);
 
 		total = 85;
+		try {
+			Thread.sleep(timeToSleep);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			System.out.println(e);
+		}
+
 		// si la sauvegarde s'est bien passée, on verifie que l'on a pas + de 10 sauvegarde, sinon, on suppr la + ancienne.
 		if (result) {
 			Comptage compte = new Comptage(PATH);
