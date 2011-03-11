@@ -423,31 +423,6 @@ public class Main extends Activity implements OnClickListener {
 			objBd.close();
 			ChoisiLeTheme();
 			
-//			
-//			setContentView(R.layout.main);
-//			BtRemplir = (ImageView) ((Activity) ctx).findViewById(R.id.IvRemplir);
-//			BtPerimé = (ImageView) ((Activity) ctx).findViewById(R.id.IvPerime);
-//			BtDuppliquer = (ImageView) ((Activity) ctx).findViewById(R.id.IvDuppliquer);
-//			BtNotes = (ImageView) ((Activity) ctx).findViewById(R.id.IvNote);
-//
-//			BtRemplir.setOnClickListener(this);
-//			BtPerimé.setOnClickListener(this);
-//			BtDuppliquer.setOnClickListener(this);
-//			BtNotes.setOnClickListener(this);
-//
-//			Animlineaire anim = new Animlineaire();
-//			anim.setDroiteversGauche(250);
-//			Animlineaire anim1 = new Animlineaire();
-//			anim1.setDroiteversGauche(750);
-//			Animlineaire anim2 = new Animlineaire();
-//			anim2.setDroiteversGauche(500);
-//			Animlineaire anim3 = new Animlineaire();
-//			anim3.setBasversHaut(400);
-//
-//			BtRemplir.startAnimation(anim.getAnim());
-//			BtPerimé.startAnimation(anim1.getAnim());
-//			BtDuppliquer.startAnimation(anim2.getAnim());
-//			BtNotes.startAnimation(anim3.getAnim());
 
 		}
 		if (EnTheme.Fleur.getLib().equals(nomThemeChoisi)) {
@@ -476,8 +451,7 @@ public class Main extends Activity implements OnClickListener {
 			BtNotes.startAnimation(anim3.getAnim());
 		}
 
-		// si l'utilisateur a mis n'imlporte quoi comme valeur pour ce champs (>99)
-		// on refixe arbitrairement la valeur à 30.
+		
 	}
 
 	/**
