@@ -58,7 +58,7 @@ public class note_page1 extends Activity implements OnItemClickListener, OnClick
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		// ExceptionHandler.register(this, "http://simon.mardine.free.fr/trousse_maquillage/test/server.php","ma_ptite_trousse");
-		choisiLeTheme();
+		ChoisiLeTheme();
 
 		NoteListView = (ListView) this.findViewById(R.id.produitListViewNote);
 		BtAddNote = (ImageView) this.findViewById(R.id.IvAddNote);
@@ -81,7 +81,7 @@ public class note_page1 extends Activity implements OnItemClickListener, OnClick
 	/**
 	 * 
 	 */
-	private void choisiLeTheme() {
+	private void ChoisiLeTheme() {
 		objBd = new BDAcces(this);
 		objBd.open();
 		String[] champ = { "AfficheAlerte", "DureeViePeremp", "Theme" };
@@ -94,7 +94,14 @@ public class note_page1 extends Activity implements OnItemClickListener, OnClick
 
 		}
 		if (EnTheme.Classique.getLib().equals(nomThemeChoisi)) {
-			setContentView(R.layout.note_page1);
+//			setContentView(R.layout.note_page1);
+			ContentValues values = new ContentValues();
+			values.put("Theme", EnTheme.Fleur.getLib());
+
+			objBd.open();
+			objBd.majTable("Param", values, "", null);
+			objBd.close();
+			ChoisiLeTheme();
 
 		}
 		if (EnTheme.Fleur.getLib().equals(nomThemeChoisi)) {

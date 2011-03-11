@@ -917,6 +917,7 @@ public class BDAcces {
 		aTableRetour[1] = aTableRetourisChecked;
 		return aTableRetour;
 	}
+	
 
 	public Cursor recupererLaListeDesBenefs(String[] colonne, String OrderBy, String GroupBy) {
 		try {

@@ -73,10 +73,10 @@ public class tab2 extends Activity implements OnItemSelectedListener, ViewFactor
 
 			s1.setSelection(EnTheme.Bisounours.getCode());
 		}
-		if (EnTheme.Classique.getLib().equals(nomThemeChoisi)) {
-
-			s1.setSelection(EnTheme.Classique.getCode());
-		}
+//		if (EnTheme.Classique.getLib().equals(nomThemeChoisi)) {
+//
+//			s1.setSelection(EnTheme.Classique.getCode());
+//		}
 		if (EnTheme.Fleur.getLib().equals(nomThemeChoisi)) {
 
 			s1.setSelection(EnTheme.Fleur.getCode());
@@ -84,7 +84,7 @@ public class tab2 extends Activity implements OnItemSelectedListener, ViewFactor
 		objBd.close();
 	}
 
-	private static final String[] mStrings = { EnTheme.Classique.getLib(), EnTheme.Fleur.getLib(), EnTheme.Bisounours.getLib() };
+	private static final String[] mStrings = { EnTheme.Fleur.getLib(), EnTheme.Bisounours.getLib() };
 
 	@Override
 	protected void onRestart() {
@@ -227,6 +227,9 @@ public class tab2 extends Activity implements OnItemSelectedListener, ViewFactor
 		finish();
 	}
 
+	/**
+	 * 
+	 */
 	public void OnDestroy() {
 		super.onDestroy();
 		// popUp("OnDestroy-Page2");
@@ -266,7 +269,7 @@ public class tab2 extends Activity implements OnItemSelectedListener, ViewFactor
 		}
 	}
 
-	private final Integer[] mImageIds = { R.drawable.acceuil, R.drawable.acceuil_fleur, R.drawable.acceuil_bisounours };
+	private final Integer[] mImageIds = { R.drawable.acceuil_fleur, R.drawable.acceuil_bisounours };
 
 	@Override
 	public void onNothingSelected(AdapterView<?> p_arg0) {

@@ -73,7 +73,7 @@ public class formulaire_entree_page3 extends Activity implements OnClickListener
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		// ExceptionHandler.register(this, "http://simon.mardine.free.fr/trousse_maquillage/test/server.php","ma_ptite_trousse");
-		choisiLeTheme();
+		ChoisiLeTheme();
 
 		// capture our View elements
 		mDateDisplay = (TextView) findViewById(R.id.dateDisplay_page3);
@@ -283,7 +283,7 @@ public class formulaire_entree_page3 extends Activity implements OnClickListener
 	/**
 	 * 
 	 */
-	private void choisiLeTheme() {
+	private void ChoisiLeTheme() {
 		objBd = new BDAcces(this);
 		objBd.open();
 		String[] champ = { "AfficheAlerte", "DureeViePeremp", "Theme" };
@@ -296,7 +296,14 @@ public class formulaire_entree_page3 extends Activity implements OnClickListener
 
 		}
 		if (EnTheme.Classique.getLib().equals(nomThemeChoisi)) {
-			setContentView(R.layout.formulaire_entree_page3);
+//			setContentView(R.layout.formulaire_entree_page3);
+			ContentValues values = new ContentValues();
+			values.put("Theme", EnTheme.Fleur.getLib());
+
+			objBd.open();
+			objBd.majTable("Param", values, "", null);
+			objBd.close();
+			ChoisiLeTheme();
 
 		}
 		if (EnTheme.Fleur.getLib().equals(nomThemeChoisi)) {

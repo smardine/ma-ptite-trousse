@@ -59,7 +59,7 @@ public class choix_produit_a_duppliquer extends Activity implements OnItemClickL
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		// ExceptionHandler.register(this, "http://simon.mardine.free.fr/trousse_maquillage/test/server.php","ma_ptite_trousse");
-		choisiLeTheme();
+		ChoisiLeTheme();
 
 		ProduitListView1 = (ListView) this.findViewById(R.id.produitListViewDupplic);
 		ProduitListViewTitre = (ListView) this.findViewById(R.id.produitListViewDupplicTitre);
@@ -78,7 +78,7 @@ public class choix_produit_a_duppliquer extends Activity implements OnItemClickL
 	/**
 	 * 
 	 */
-	private void choisiLeTheme() {
+	private void ChoisiLeTheme() {
 		objBd = new BDAcces(this);
 		objBd.open();
 		String[] champ = { "AfficheAlerte", "DureeViePeremp", "Theme" };
@@ -91,7 +91,14 @@ public class choix_produit_a_duppliquer extends Activity implements OnItemClickL
 
 		}
 		if (EnTheme.Classique.getLib().equals(nomThemeChoisi)) {
-			setContentView(R.layout.affiche_liste_produit_a_duppliquer);
+//			setContentView(R.layout.affiche_liste_produit_a_duppliquer);
+			ContentValues values = new ContentValues();
+			values.put("Theme", EnTheme.Fleur.getLib());
+
+			objBd.open();
+			objBd.majTable("Param", values, "", null);
+			objBd.close();
+			ChoisiLeTheme();
 
 		}
 		if (EnTheme.Fleur.getLib().equals(nomThemeChoisi)) {

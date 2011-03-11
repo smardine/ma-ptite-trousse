@@ -23,18 +23,15 @@ import fr.smardine.matroussedemaquillage.variableglobale.EnCategorieVisage;
 import fr.smardine.matroussedemaquillage.variableglobale.EnCategorieYeux;
 import fr.smardine.matroussedemaquillage.variableglobale.EnTheme;
 
+/**
+ * @author sims
+ *
+ */
 public class modif_cat extends Activity implements OnClickListener {
-	// Button BoutonValider;
+	
 	ImageView BtVisage, BtYeux, BtLevres, BtAutres;
-	// boolean dejacliquéVisage=false,dejacliquéYeux=false,dejacliquéLevres=false,dejacliquéAutres=false;
-	// ArrayList<produit> produitsCat1 = new ArrayList<produit>();
-	// ArrayList<produit> produitsCat2 = new ArrayList<produit>();
-	// ArrayList<produit> produitsCat3 = new ArrayList<produit>();
-	// ArrayList<produit> produitsCat4 = new ArrayList<produit>();
-	// ListView ProduitListView1,ProduitListView2,ProduitListView3,ProduitListView4;
-	// produitListAdapter adpt;
 	private BDAcces objBd;
-	// AlertDialog.Builder adPlusieurCat,adAucuneCat;
+	
 	String MarqueChoisie = "";
 	String DureeVie = "";
 	String DateChoisie = "";
@@ -51,7 +48,7 @@ public class modif_cat extends Activity implements OnClickListener {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		// ExceptionHandler.register(this, "http://simon.mardine.free.fr/trousse_maquillage/test/server.php","ma_ptite_trousse");
-		choisiLeTheme();
+		ChoisiLeTheme();
 
 		// ProduitListView1 = (ListView)this.findViewById(R.id.produitListView01_page1);
 		// ProduitListView2 = (ListView) this.findViewById(R.id.produitListView02_page1);
@@ -94,7 +91,7 @@ public class modif_cat extends Activity implements OnClickListener {
 	/**
 	 * 
 	 */
-	private void choisiLeTheme() {
+	private void ChoisiLeTheme() {
 		objBd = new BDAcces(this);
 		objBd.open();
 		String[] champ = { "AfficheAlerte", "DureeViePeremp", "Theme" };
@@ -103,15 +100,22 @@ public class modif_cat extends Activity implements OnClickListener {
 
 		String nomThemeChoisi = Param[2].get(0).toString().trim();
 		if (EnTheme.Bisounours.getLib().equals(nomThemeChoisi)) {
-			setContentView(R.layout.theme_bisounours_formulaire_entree_page1bis);
+			setContentView(R.layout.theme_bisounours_modif_cat);
 
 		}
 		if (EnTheme.Classique.getLib().equals(nomThemeChoisi)) {
-			setContentView(R.layout.formulaire_entree_page1bis);
+//			setContentView(R.layout.formulaire_entree_page1bis);
+			ContentValues values = new ContentValues();
+			values.put("Theme", EnTheme.Fleur.getLib());
+
+			objBd.open();
+			objBd.majTable("Param", values, "", null);
+			objBd.close();
+			ChoisiLeTheme();
 
 		}
 		if (EnTheme.Fleur.getLib().equals(nomThemeChoisi)) {
-			setContentView(R.layout.theme_fleur_formulaire_entree_page1bis);
+			setContentView(R.layout.theme_fleur_modif_cat);
 		}
 
 		objBd.close();
@@ -120,21 +124,14 @@ public class modif_cat extends Activity implements OnClickListener {
 	@Override
 	public void onClick(View v) {
 
-		String Table = "trousse_produits";
-		modifiedValues = new ContentValues();
-		modifiedValues.put("ischecked", "false");
-		whereClause = "ischecked=?";
-		whereArgs = new String[] { "true" };
-
-		objBd.open();
-		objBd.majTable(Table, modifiedValues, whereClause, whereArgs);
-		objBd.close();
+		
 
 		if (v == BtVisage) {// si le bouton cliqué est le "BoutonVisage"
 			String[] NomProduits = recupereSousCategorie("Visage");
+			int idProdCoche = recupereIndiceSousCategorieCochee("Visage");
 			AlertDialog.Builder adChoixVisage = new AlertDialog.Builder(this);
 			adChoixVisage.setTitle("Visage");
-			adChoixVisage.setSingleChoiceItems(NomProduits, -1, new DialogInterface.OnClickListener() {
+			adChoixVisage.setSingleChoiceItems(NomProduits, idProdCoche, new DialogInterface.OnClickListener() {
 				@Override
 				public void onClick(DialogInterface dialog, int item) {
 					/* User clicked on a radio button do some stuff */
@@ -168,6 +165,7 @@ public class modif_cat extends Activity implements OnClickListener {
 			adChoixVisage.setPositiveButton("Choisir", new DialogInterface.OnClickListener() {
 				@Override
 				public void onClick(DialogInterface dialog, int id) {
+					
 					majTableEtLancePage2();
 				}
 			});
@@ -178,9 +176,10 @@ public class modif_cat extends Activity implements OnClickListener {
 		if (v == BtYeux) {
 
 			String[] NomProduits = recupereSousCategorie("Yeux");
+			int idProdCoche = recupereIndiceSousCategorieCochee("Yeux");
 			AlertDialog.Builder adChoixYeux = new AlertDialog.Builder(this);
 			adChoixYeux.setTitle("Yeux");
-			adChoixYeux.setSingleChoiceItems(NomProduits, -1, new DialogInterface.OnClickListener() {
+			adChoixYeux.setSingleChoiceItems(NomProduits, idProdCoche, new DialogInterface.OnClickListener() {
 				@Override
 				public void onClick(DialogInterface dialog, int item) {
 					/* User clicked on a radio button do some stuff */
@@ -223,9 +222,10 @@ public class modif_cat extends Activity implements OnClickListener {
 		}
 		if (v == BtLevres) {
 			String[] NomProduits = recupereSousCategorie("Levres");
+			int idProdCoche = recupereIndiceSousCategorieCochee("Levres");
 			AlertDialog.Builder adChoixLevre = new AlertDialog.Builder(this);
 			adChoixLevre.setTitle("Levres");
-			adChoixLevre.setSingleChoiceItems(NomProduits, -1, new DialogInterface.OnClickListener() {
+			adChoixLevre.setSingleChoiceItems(NomProduits, idProdCoche, new DialogInterface.OnClickListener() {
 				@Override
 				public void onClick(DialogInterface dialog, int item) {
 					/* User clicked on a radio button do some stuff */
@@ -257,9 +257,10 @@ public class modif_cat extends Activity implements OnClickListener {
 		}
 		if (v == BtAutres) {
 			String[] NomProduits = recupereSousCategorie("Autres");
+			int idProdCoche = recupereIndiceSousCategorieCochee("Autres");
 			AlertDialog.Builder adChoixAutres = new AlertDialog.Builder(this);
 			adChoixAutres.setTitle("Autres");
-			adChoixAutres.setSingleChoiceItems(NomProduits, -1, new DialogInterface.OnClickListener() {
+			adChoixAutres.setSingleChoiceItems(NomProduits, idProdCoche, new DialogInterface.OnClickListener() {
 				@Override
 				public void onClick(DialogInterface dialog, int item) {
 					/* User clicked on a radio button do some stuff */
@@ -292,6 +293,24 @@ public class modif_cat extends Activity implements OnClickListener {
 
 	}
 
+	private int recupereIndiceSousCategorieCochee(String p_categorie) {
+		int indiceProduitCoche = -1;
+		objBd.open();
+
+		@SuppressWarnings("rawtypes")
+		ArrayList[] ListeProduits = objBd.renvoi_liste_produits(p_categorie);
+		String[] NomProduits = new String[ListeProduits[0].size()];
+		for (int j = 0; j < ListeProduits[0].size(); j++) {
+			NomProduits[j] = ListeProduits[0].get(j).toString();
+			String isChecked = ListeProduits[1].get(j).toString();
+			if ("true".equals(isChecked)) {
+				indiceProduitCoche = j;
+			}
+		}
+		objBd.close();
+		return indiceProduitCoche;
+	}
+
 	/**
 	 * @param p_categorie TODO
 	 * @return
@@ -309,6 +328,18 @@ public class modif_cat extends Activity implements OnClickListener {
 	}
 
 	protected void majTableEtLancePage2() {
+		/**
+		 * pour eviter les doublons, on commence par remettre a false ttes les case qui etait à true
+		 */
+		String Table = "trousse_produits";
+		ContentValues modifiedValuesEfface = new ContentValues();
+		modifiedValuesEfface.put("ischecked", "false");
+		String whereClauseEfface = "ischecked=?";
+		String[]	whereArgsEfface = new String[] { "true" };
+
+		objBd.open();
+		objBd.majTable(Table, modifiedValuesEfface, whereClauseEfface, whereArgsEfface);
+		objBd.close();
 
 		/**
 		 * @throws SQLException
@@ -455,6 +486,9 @@ public class modif_cat extends Activity implements OnClickListener {
 	// produitListView.setAdapter(adpt);
 	//
 	// }
+	/**
+	 * affiche un message a l'utilisateur
+	 */
 	public void popUp(String message) {
 		// Toast.makeText(this, message, 1).show();
 	}
@@ -531,7 +565,9 @@ public class modif_cat extends Activity implements OnClickListener {
 		}
 		return super.onKeyDown(keyCode, event);
 	}
-
+/**
+ * detruit l'activity
+ */
 	public void OnDestroy() {
 		popUp("OnDestroy-Page1");
 		super.onDestroy();

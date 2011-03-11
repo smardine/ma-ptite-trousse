@@ -412,30 +412,42 @@ public class Main extends Activity implements OnClickListener {
 			BtNotes.startAnimation(anim3.getAnim());
 		}
 		if (EnTheme.Classique.getLib().equals(nomThemeChoisi)) {
-			setContentView(R.layout.main);
-			BtRemplir = (ImageView) ((Activity) ctx).findViewById(R.id.IvRemplir);
-			BtPerimé = (ImageView) ((Activity) ctx).findViewById(R.id.IvPerime);
-			BtDuppliquer = (ImageView) ((Activity) ctx).findViewById(R.id.IvDuppliquer);
-			BtNotes = (ImageView) ((Activity) ctx).findViewById(R.id.IvNote);
+			//on supprime le theme classique car trop buggué visuellement,
+			//dans le cas ou un utilisateur aurait gardé ce theme,
+			//on force l'application du theme "Fleur" et on relance la verification du theme
+			ContentValues values = new ContentValues();
+			values.put("Theme", EnTheme.Fleur.getLib());
 
-			BtRemplir.setOnClickListener(this);
-			BtPerimé.setOnClickListener(this);
-			BtDuppliquer.setOnClickListener(this);
-			BtNotes.setOnClickListener(this);
-
-			Animlineaire anim = new Animlineaire();
-			anim.setDroiteversGauche(250);
-			Animlineaire anim1 = new Animlineaire();
-			anim1.setDroiteversGauche(750);
-			Animlineaire anim2 = new Animlineaire();
-			anim2.setDroiteversGauche(500);
-			Animlineaire anim3 = new Animlineaire();
-			anim3.setBasversHaut(400);
-
-			BtRemplir.startAnimation(anim.getAnim());
-			BtPerimé.startAnimation(anim1.getAnim());
-			BtDuppliquer.startAnimation(anim2.getAnim());
-			BtNotes.startAnimation(anim3.getAnim());
+			objBd.open();
+			objBd.majTable("Param", values, "", null);
+			objBd.close();
+			ChoisiLeTheme();
+			
+//			
+//			setContentView(R.layout.main);
+//			BtRemplir = (ImageView) ((Activity) ctx).findViewById(R.id.IvRemplir);
+//			BtPerimé = (ImageView) ((Activity) ctx).findViewById(R.id.IvPerime);
+//			BtDuppliquer = (ImageView) ((Activity) ctx).findViewById(R.id.IvDuppliquer);
+//			BtNotes = (ImageView) ((Activity) ctx).findViewById(R.id.IvNote);
+//
+//			BtRemplir.setOnClickListener(this);
+//			BtPerimé.setOnClickListener(this);
+//			BtDuppliquer.setOnClickListener(this);
+//			BtNotes.setOnClickListener(this);
+//
+//			Animlineaire anim = new Animlineaire();
+//			anim.setDroiteversGauche(250);
+//			Animlineaire anim1 = new Animlineaire();
+//			anim1.setDroiteversGauche(750);
+//			Animlineaire anim2 = new Animlineaire();
+//			anim2.setDroiteversGauche(500);
+//			Animlineaire anim3 = new Animlineaire();
+//			anim3.setBasversHaut(400);
+//
+//			BtRemplir.startAnimation(anim.getAnim());
+//			BtPerimé.startAnimation(anim1.getAnim());
+//			BtDuppliquer.startAnimation(anim2.getAnim());
+//			BtNotes.startAnimation(anim3.getAnim());
 
 		}
 		if (EnTheme.Fleur.getLib().equals(nomThemeChoisi)) {
