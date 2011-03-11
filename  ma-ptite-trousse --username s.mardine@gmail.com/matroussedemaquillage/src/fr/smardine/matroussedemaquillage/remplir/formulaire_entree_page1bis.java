@@ -76,7 +76,7 @@ public class formulaire_entree_page1bis extends Activity implements OnClickListe
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		// ExceptionHandler.register(this, "http://simon.mardine.free.fr/trousse_maquillage/test/server.php","ma_ptite_trousse");
-		choisiLeTheme();
+		ChoisiLeTheme();
 
 		BtVisage = (ImageView) this.findViewById(R.id.ImageViewVisage_page1);
 		BtYeux = (ImageView) this.findViewById(R.id.ImageViewYeux_page1);
@@ -165,7 +165,7 @@ public class formulaire_entree_page1bis extends Activity implements OnClickListe
 	/**
 	 * 
 	 */
-	private void choisiLeTheme() {
+	private void ChoisiLeTheme() {
 		objBd = new BDAcces(this);
 		objBd.open();
 		String[] champ = { "AfficheAlerte", "DureeViePeremp", "Theme" };
@@ -178,7 +178,14 @@ public class formulaire_entree_page1bis extends Activity implements OnClickListe
 
 		}
 		if (EnTheme.Classique.getLib().equals(nomThemeChoisi)) {
-			setContentView(R.layout.formulaire_entree_page1bis);
+//			setContentView(R.layout.formulaire_entree_page1bis);
+			ContentValues values = new ContentValues();
+			values.put("Theme", EnTheme.Fleur.getLib());
+
+			objBd.open();
+			objBd.majTable("Param", values, "", null);
+			objBd.close();
+			ChoisiLeTheme();
 
 		}
 		if (EnTheme.Fleur.getLib().equals(nomThemeChoisi)) {

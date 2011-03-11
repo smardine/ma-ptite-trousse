@@ -59,6 +59,7 @@ public class affiche_detail extends Activity implements OnClickListener {
 	AlertDialog.Builder adChoixNbMois, adMarque, adProduit, adTeinte;
 	int nbMoisDurreeDeVie = 0;
 	int RequestCodePage1 = 1, RequestCodePage2 = 2, RequestCodePage3 = 3, mYear, mMonth, mDay;
+	private StringBuilder categorie;
 
 	// ///////////////////
 
@@ -72,7 +73,7 @@ public class affiche_detail extends Activity implements OnClickListener {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		// ExceptionHandler.register(this, "http://simon.mardine.free.fr/trousse_maquillage/test/server.php","ma_ptite_trousse");
-		choisiLeTheme();
+		ChoisiLeTheme();
 
 		// capture our View elements
 		CategorieDetail = (TextView) findViewById(R.id.Categorie2_detail);
@@ -118,7 +119,7 @@ public class affiche_detail extends Activity implements OnClickListener {
 	/**
 	 * 
 	 */
-	private void choisiLeTheme() {
+	private void ChoisiLeTheme() {
 		objBd = new BDAcces(this);
 		objBd.open();
 		String[] champ = { "AfficheAlerte", "DureeViePeremp", "Theme" };
@@ -131,7 +132,14 @@ public class affiche_detail extends Activity implements OnClickListener {
 
 		}
 		if (EnTheme.Classique.getLib().equals(nomThemeChoisi)) {
-			setContentView(R.layout.affiche_detail);
+//			setContentView(R.layout.affiche_detail);
+			ContentValues values = new ContentValues();
+			values.put("Theme", EnTheme.Fleur.getLib());
+
+			objBd.open();
+			objBd.majTable("Param", values, "", null);
+			objBd.close();
+			ChoisiLeTheme();
 
 		}
 		if (EnTheme.Fleur.getLib().equals(nomThemeChoisi)) {
@@ -238,8 +246,8 @@ public class affiche_detail extends Activity implements OnClickListener {
 				"DateAchat", "nom_marque" };
 
 		trousse_final = objBd.renvoi_liste_TrousseFinalComplete(Colonnes, IdProduit);
-
-		CategorieDetail.setText(new StringBuilder().append(trousse_final[1].toString().replace("[", "").replace("]", "")));
+		categorie = new StringBuilder().append(trousse_final[1].toString().replace("[", "").replace("]", ""));
+		CategorieDetail.setText(categorie);
 		MarqueDetail.setText(new StringBuilder().append(trousse_final[7].toString().replace("[", "").replace("]", "")));
 		nomProduitDetail.setText(new StringBuilder().append(trousse_final[0].toString().replace("[", "").replace("]", "")));
 		numeroTeinteDetail.setText(new StringBuilder().append(trousse_final[3].toString().replace("[", "").replace("]", "")));
@@ -401,6 +409,20 @@ public class affiche_detail extends Activity implements OnClickListener {
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
 		if (v == BTChangerCat) {
+			
+			ContentValues modifiedValues = new ContentValues();
+			
+			modifiedValues.put("ischecked", "true");
+			String whereClause = "nom_souscatergorie=?";
+						
+			//String whereClause = "nom_souscatergorie=? and nom_categorie=?";
+			String[] whereArgs = new String[] { "" + categorie + "" };
+			objBd.open();
+			int nbdechamp = objBd.majTable("trousse_produits", modifiedValues, whereClause, whereArgs);
+			System.out.println("Nombre de champ modifié : " + nbdechamp);
+			objBd.deleteTable("trousse_tempo", "1", null);
+			objBd.close();
+			
 			Intent modifcat = new Intent(this, modif_cat.class);
 			modifcat.putExtra(ActivityParam.IdProduit, IdProduit);
 			modifcat.putExtra(ActivityParam.LaunchFromAfficheDetail, true);

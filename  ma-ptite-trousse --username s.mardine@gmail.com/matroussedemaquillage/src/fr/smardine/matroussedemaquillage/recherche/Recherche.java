@@ -174,7 +174,14 @@ public class Recherche extends Activity implements OnClickListener, OnItemClickL
 			setContentView(R.layout.theme_bisounours_recherche);
 		}
 		if (EnTheme.Classique.getLib().equals(nomThemeChoisi)) {
-			setContentView(R.layout.recherche);
+//			setContentView(R.layout.recherche);
+			ContentValues values = new ContentValues();
+			values.put("Theme", EnTheme.Fleur.getLib());
+
+			objBd.open();
+			objBd.majTable("Param", values, "", null);
+			objBd.close();
+			ChoisiLeTheme();
 		}
 		if (EnTheme.Fleur.getLib().equals(nomThemeChoisi)) {
 			setContentView(R.layout.theme_fleur_recherche);

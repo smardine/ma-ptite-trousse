@@ -175,7 +175,14 @@ public class recherche_produit_perime extends Activity implements OnClickListene
 			setContentView(R.layout.theme_bisounours_affiche_liste_produit_perime);
 		}
 		if (EnTheme.Classique.getLib().equals(nomThemeChoisi)) {
-			setContentView(R.layout.affiche_liste_produit_perime);
+//			setContentView(R.layout.affiche_liste_produit_perime);
+			ContentValues values = new ContentValues();
+			values.put("Theme", EnTheme.Fleur.getLib());
+
+			objBd.open();
+			objBd.majTable("Param", values, "", null);
+			objBd.close();
+			ChoisiLeTheme();
 		}
 		if (EnTheme.Fleur.getLib().equals(nomThemeChoisi)) {
 			setContentView(R.layout.theme_fleur_affiche_liste_produit_perime);
