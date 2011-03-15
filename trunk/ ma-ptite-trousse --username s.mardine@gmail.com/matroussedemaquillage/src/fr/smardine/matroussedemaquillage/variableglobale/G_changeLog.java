@@ -8,7 +8,6 @@ public class G_changeLog {
 	 * repertorie tout les changements apporté a l'appli
 	 */
 	public static String Changement = "Version 2.01:\n"
-		+"coucou"
 			+ "Possibilité de desactiver la fenetre alerte directement au demarrage (aller dans les parametres pour la reactiver)\n"
 			+ "On conserve maintenant les 5 dernieres sauvegardes, on peut choisir quelle sauvegarde on veut recuperer si on a besoin de faire une restauration de la base.\n"
 			+"La modification des catégories a été revue et corrigées."
