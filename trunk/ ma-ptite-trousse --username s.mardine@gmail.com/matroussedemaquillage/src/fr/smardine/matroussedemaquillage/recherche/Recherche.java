@@ -26,10 +26,10 @@ import android.view.animation.TranslateAnimation;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
-import android.widget.ToggleButton;
 import fr.smardine.matroussedemaquillage.Main;
 import fr.smardine.matroussedemaquillage.R;
 import fr.smardine.matroussedemaquillage.base.BDAcces;
@@ -37,18 +37,23 @@ import fr.smardine.matroussedemaquillage.note.note_page1;
 import fr.smardine.matroussedemaquillage.param.tab_param;
 import fr.smardine.matroussedemaquillage.recherche.produitRechercheListAdapter.ViewHolder;
 import fr.smardine.matroussedemaquillage.variableglobale.ActivityParam;
+import fr.smardine.matroussedemaquillage.variableglobale.EnCategorieFiltrage;
 import fr.smardine.matroussedemaquillage.variableglobale.EnTheme;
 
+/**
+ * @author smardine
+ */
 public class Recherche extends Activity implements OnClickListener, OnItemClickListener, OnItemLongClickListener {
-	ToggleButton Cat, Marque, Tout;
+	// ToggleButton Cat, Marque, Tout;
 	EditText EtFiltrage;
+	Button BtFiltrerPar;
 	ArrayList<produitRecherche> produitRecherche = new ArrayList<produitRecherche>();
 	ArrayList<produitRecherche> produitRechercheTitre = new ArrayList<produitRecherche>();
 	int VISIBLE = 1, INVISIBLE = 4, GONE = 8;
 	ListView ProduitListView1, ProduitListViewTitre;
 	produitRechercheListAdapter adpt;
 	BDAcces objBd;
-	AlertDialog.Builder adAucunProduit;
+	AlertDialog.Builder adAucunProduit, adChoixFiltrage;
 	Context ctx = Recherche.this;
 	// TextView RechercheTxt1;
 	String MarqueChoisie;
@@ -61,6 +66,7 @@ public class Recherche extends Activity implements OnClickListener, OnItemClickL
 	protected boolean detail;
 	protected boolean newNote;
 	boolean IsCalledFromMain;
+	String filtrageChoisi;
 
 	@Override
 	/** Called when the activity is first created. */
@@ -73,10 +79,11 @@ public class Recherche extends Activity implements OnClickListener, OnItemClickL
 		objBd = new BDAcces(this);
 
 		ChoisiLeTheme();
-
-		Cat = (ToggleButton) findViewById(R.id.BTcat);
-		Marque = (ToggleButton) findViewById(R.id.BTmarque);
-		Tout = (ToggleButton) findViewById(R.id.BTtout);
+		BtFiltrerPar = (Button) findViewById(R.id.BtFiltrerPar);
+		BtFiltrerPar.setOnClickListener(this);
+		// Cat = (ToggleButton) findViewById(R.id.BTcat);
+		// Marque = (ToggleButton) findViewById(R.id.BTmarque);
+		// Tout = (ToggleButton) findViewById(R.id.BTtout);
 		EtFiltrage = (EditText) findViewById(R.id.EtFiltrage);
 
 		EtFiltrage.addTextChangedListener(new TextWatcher() {
@@ -86,18 +93,16 @@ public class Recherche extends Activity implements OnClickListener, OnItemClickL
 			@Override
 			public void afterTextChanged(Editable s) {
 				String str = EtFiltrage.getText().toString();
-				filtreSelonSaisieEtBtActive(str, Cat.isChecked(), Marque.isChecked(), Tout.isChecked());
+				filtreSelonSaisieEtBtActive(str, filtrageChoisi);
 			}
 
 			@Override
 			public void beforeTextChanged(CharSequence p_arg0, int p_arg1, int p_arg2, int p_arg3) {
-				// TODO Auto-generated method stub
 
 			}
 
 			@Override
 			public void onTextChanged(CharSequence p_s, int p_start, int p_before, int p_count) {
-				// TODO Auto-generated method stub
 
 			}
 		});
@@ -107,9 +112,9 @@ public class Recherche extends Activity implements OnClickListener, OnItemClickL
 
 		ProduitListView1.setOnItemClickListener(this);
 		ProduitListView1.setOnItemLongClickListener(this);
-		Cat.setOnClickListener(this);
-		Marque.setOnClickListener(this);
-		Tout.setOnClickListener(this);
+		// Cat.setOnClickListener(this);
+		// Marque.setOnClickListener(this);
+		// Tout.setOnClickListener(this);
 
 		/*
 		 * int largeurBtCat = Marque.getWidth(); Cat.setWidth(largeurBtCat); Tout.setWidth(largeurBtCat);
@@ -120,7 +125,44 @@ public class Recherche extends Activity implements OnClickListener, OnItemClickL
 		adAucunProduit.setMessage("Aucun produit n'est actuellement enregistré dans Ma p'tite trousse");
 		adAucunProduit.setPositiveButton("Ok", null);
 
-		filtreSelonSaisieEtBtActive("", Cat.isChecked(), Marque.isChecked(), Tout.isChecked());
+		adChoixFiltrage = new AlertDialog.Builder(this);
+		adChoixFiltrage.setTitle("Merci de choisir un filtre pour votre recherche?");
+		adChoixFiltrage.setIcon(R.drawable.ad_question);
+		CharSequence[] items = { EnCategorieFiltrage.Tout.getLib(), EnCategorieFiltrage.Marque.getLib(),
+				EnCategorieFiltrage.Categorie.getLib() };
+		adChoixFiltrage.setSingleChoiceItems(items, -1, new DialogInterface.OnClickListener() {
+
+			@Override
+			public void onClick(DialogInterface dialog, int item) {
+				/* User clicked on a radio button do some stuff */
+
+				switch (item) {
+					case 0:
+						filtrageChoisi = EnCategorieFiltrage.Tout.getLib();
+
+						break;
+					case 1:
+						filtrageChoisi = EnCategorieFiltrage.Marque.getLib();
+						break;
+					case 2:
+						filtrageChoisi = EnCategorieFiltrage.Categorie.getLib();
+						break;
+				}
+
+			}
+		});
+		adChoixFiltrage.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+
+			@Override
+			public void onClick(DialogInterface p_dialog, int p_which) {
+				BtFiltrerPar.setText("Filtrer par: " + filtrageChoisi);
+				String filtrage = EtFiltrage.getText().toString();
+				filtreSelonSaisieEtBtActive(filtrage, filtrageChoisi);
+			}
+		});
+		adChoixFiltrage.setNegativeButton("Annuler", null);
+
+		filtreSelonSaisieEtBtActive("", EnCategorieFiltrage.Tout.getLib());
 		this.setTitle("Recherche d'un produit");
 
 	}
@@ -133,23 +175,22 @@ public class Recherche extends Activity implements OnClickListener, OnItemClickL
 	 * @param p_isMarqueChecked boolean Le BtMarque est activé
 	 * @param p_isToutChecked boolean Le BtTout est activé.
 	 */
-	protected void filtreSelonSaisieEtBtActive(String p_txtFiltrage, boolean p_isCatChecked, boolean p_isMarqueChecked,
-			boolean p_isToutChecked) {
-		if (p_isCatChecked) {
+	protected void filtreSelonSaisieEtBtActive(String p_txtFiltrage, String p_filtrageChoisi) {
+		if (EnCategorieFiltrage.Categorie.getLib().equals(p_filtrageChoisi)) {
 			produitRecherche.removeAll(produitRecherche);
 			produitRechercheTitre.removeAll(produitRechercheTitre);
 			AfficheLeContenu("TitreCat", produitRechercheTitre, ProduitListViewTitre, null);
 			AfficheLeContenu("CatégorieAvecFiltrage", produitRecherche, ProduitListView1, p_txtFiltrage);
 
 		}
-		if (p_isMarqueChecked) {
+		if (EnCategorieFiltrage.Marque.getLib().equals(p_filtrageChoisi)) {
 			produitRecherche.removeAll(produitRecherche);
 			produitRechercheTitre.removeAll(produitRechercheTitre);
 			AfficheLeContenu("TitreMarque", produitRechercheTitre, ProduitListViewTitre, null);
 			AfficheLeContenu("MarqueAvecFiltrage", produitRecherche, ProduitListView1, p_txtFiltrage);
 
 		}
-		if (p_isToutChecked) {
+		if (EnCategorieFiltrage.Tout.getLib().equals(p_filtrageChoisi)) {
 			produitRecherche.removeAll(produitRecherche);
 			produitRechercheTitre.removeAll(produitRechercheTitre);
 			AfficheLeContenu("TitreTout", produitRechercheTitre, ProduitListViewTitre, null);
@@ -161,8 +202,6 @@ public class Recherche extends Activity implements OnClickListener, OnItemClickL
 
 	@SuppressWarnings("rawtypes")
 	private void ChoisiLeTheme() {
-		// TODO Auto-generated method stub
-
 		objBd.open();
 		String[] champ = { "AfficheAlerte", "DureeViePeremp", "Theme" };
 		ArrayList[] Param = objBd.renvoi_param(champ);
@@ -174,7 +213,7 @@ public class Recherche extends Activity implements OnClickListener, OnItemClickL
 			setContentView(R.layout.theme_bisounours_recherche);
 		}
 		if (EnTheme.Classique.getLib().equals(nomThemeChoisi)) {
-//			setContentView(R.layout.recherche);
+			// setContentView(R.layout.recherche);
 			ContentValues values = new ContentValues();
 			values.put("Theme", EnTheme.Fleur.getLib());
 
@@ -255,7 +294,7 @@ public class Recherche extends Activity implements OnClickListener, OnItemClickL
 	@SuppressWarnings("unused")
 	@Override
 	public void onItemClick(AdapterView<?> Parent, View view, int position, long id) {
-		// TODO Auto-generated method stub
+
 		int Itemposition = Parent.getSelectedItemPosition();
 
 		int ChildCount = Parent.getChildCount();
@@ -304,7 +343,7 @@ public class Recherche extends Activity implements OnClickListener, OnItemClickL
 
 	@SuppressWarnings("rawtypes")
 	protected void gotoCreateNewNote(String idProduit) {
-		// TODO Auto-generated method stub
+
 		objBd.open();
 		String[] colonne = { "nom_produit",// 0
 				"nom_souscatergorie",// 1
@@ -364,7 +403,7 @@ public class Recherche extends Activity implements OnClickListener, OnItemClickL
 	}
 
 	protected void gotoSupprProduit(final String IdProduit, String NomProduit) {
-		// TODO Auto-generated method stub
+
 		AlertDialog.Builder adSuppr = new AlertDialog.Builder(this);
 		final AlertDialog.Builder ProduitSuppr = new AlertDialog.Builder(this);
 		ProduitSuppr.setTitle("Resultat");
@@ -385,7 +424,7 @@ public class Recherche extends Activity implements OnClickListener, OnItemClickL
 					ProduitSuppr.setMessage("Erreur lors de la suppression");
 					ProduitSuppr.show();
 				}
-				filtreSelonSaisieEtBtActive(EtFiltrage.getText().toString(), Cat.isChecked(), Marque.isChecked(), Tout.isChecked());
+				filtreSelonSaisieEtBtActive(EtFiltrage.getText().toString(), filtrageChoisi);
 				objBd.close();
 
 			}
@@ -395,7 +434,7 @@ public class Recherche extends Activity implements OnClickListener, OnItemClickL
 	}
 
 	protected void gotoAffDetail(String IdProduit) {
-		// TODO Auto-generated method stub
+
 		Intent intentDetail = new Intent(this, affiche_detail.class);
 		// on demarre la nouvelle activité
 		intentDetail.putExtra(ActivityParam.IdProduit, IdProduit);
@@ -409,30 +448,34 @@ public class Recherche extends Activity implements OnClickListener, OnItemClickL
 	@Override
 	public void onClick(View v) {
 
-		if (v == Cat) {
-			Cat.setChecked(true);
-			Marque.setChecked(false);
-			Tout.setChecked(false);
-			String filtrage = EtFiltrage.getText().toString();
-			filtreSelonSaisieEtBtActive(filtrage, Cat.isChecked(), Marque.isChecked(), Tout.isChecked());
-
+		if (v == BtFiltrerPar) {
+			adChoixFiltrage.show();
 		}
-		if (v == Marque) {
-			Cat.setChecked(false);
-			Marque.setChecked(true);
-			Tout.setChecked(false);
-			String filtrage = EtFiltrage.getText().toString();
-			filtreSelonSaisieEtBtActive(filtrage, Cat.isChecked(), Marque.isChecked(), Tout.isChecked());
 
-		}
-		if (v == Tout) {
-			Cat.setChecked(false);
-			Marque.setChecked(false);
-			Tout.setChecked(true);
-			String filtrage = EtFiltrage.getText().toString();
-			filtreSelonSaisieEtBtActive(filtrage, Cat.isChecked(), Marque.isChecked(), Tout.isChecked());
-
-		}
+		// if (v == Cat) {
+		// Cat.setChecked(true);
+		// Marque.setChecked(false);
+		// Tout.setChecked(false);
+		// String filtrage = EtFiltrage.getText().toString();
+		// filtreSelonSaisieEtBtActive(filtrage, Cat.isChecked(), Marque.isChecked(), Tout.isChecked());
+		//
+		// }
+		// if (v == Marque) {
+		// Cat.setChecked(false);
+		// Marque.setChecked(true);
+		// Tout.setChecked(false);
+		// String filtrage = EtFiltrage.getText().toString();
+		// filtreSelonSaisieEtBtActive(filtrage, Cat.isChecked(), Marque.isChecked(), Tout.isChecked());
+		//
+		// }
+		// if (v == Tout) {
+		// Cat.setChecked(false);
+		// Marque.setChecked(false);
+		// Tout.setChecked(true);
+		// String filtrage = EtFiltrage.getText().toString();
+		// filtreSelonSaisieEtBtActive(filtrage, Cat.isChecked(), Marque.isChecked(), Tout.isChecked());
+		//
+		// }
 
 	}
 
@@ -575,6 +618,9 @@ public class Recherche extends Activity implements OnClickListener, OnItemClickL
 
 	}
 
+	/**
+	 * @param message
+	 */
 	public void popUp(String message) {
 		// Toast.makeText(this, message, 1).show();
 	}
@@ -643,6 +689,9 @@ public class Recherche extends Activity implements OnClickListener, OnItemClickL
 		return super.onKeyDown(keyCode, event);
 	}
 
+	/**
+ * 
+ */
 	public void OnDestroy() {
 		popUp("OnDestroy-Page1");
 		super.onDestroy();

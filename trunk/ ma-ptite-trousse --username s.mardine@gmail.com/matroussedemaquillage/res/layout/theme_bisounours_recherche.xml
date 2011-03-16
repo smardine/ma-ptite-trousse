@@ -7,17 +7,39 @@
 	 <ImageView android:id="@+id/ImageView04_rech" android:layout_alignParentRight="true" android:background="@drawable/theme_bisounours_background_bande_droite" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
 	 <ImageView android:id="@+id/ImageView01_rech" android:layout_alignParentTop="true" android:layout_alignParentBottom="false" android:layout_height="140dip" android:visibility="visible" android:background="@drawable/theme_bisounours_background_bande_haut" android:layout_width="fill_parent" />
 	 <ImageView android:id="@+id/ImageView04_rech" android:layout_alignParentRight="true" android:background="@drawable/theme_bisounours_background_bande_droite" android:layout_width="wrap_content" android:layout_height="wrap_content"/><ImageView android:id="@+id/ImageView01_rech" android:layout_alignParentTop="true" android:layout_alignParentBottom="false" android:layout_height="140dip" android:visibility="visible" android:background="@drawable/theme_bisounours_background_bande_haut" android:layout_width="fill_parent" />   	
-			 <EditText android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/EtFiltrage" android:textColor="@color/text_color" android:visibility="visible" android:layout_centerHorizontal="true" android:drawableRight="@drawable/menu_recherche" android:hint="Filtrage" android:layout_alignLeft="@+id/BTcat" android:layout_alignRight="@+id/BTtout" android:layout_below="@+id/ImageView01_rech" android:inputType="none"></EditText>
+	 <EditText android:layout_height="wrap_content" 
+	 android:layout_width="wrap_content" 
+	 android:id="@+id/EtFiltrage" 
+	 android:textColor="@color/text_color" 
+	 android:visibility="visible" 
+	 android:drawableRight="@drawable/menu_recherche" 
+	 android:hint="Filtrage" 
+	 android:layout_marginLeft="40dip" 
+	 android:layout_below="@+id/ImageView01_rech" 
+	 android:inputType="none"></EditText>
 			
-			<ToggleButton android:id="@+id/BTcat" android:layout_width="wrap_content" android:layout_height="wrap_content" android:clickable="true" android:checked="false" android:textOn="Catégorie" android:visibility="visible" android:layout_toLeftOf="@+id/BTmarque" android:layout_marginRight="15dip" android:textOff="Catégorie" android:layout_below="@+id/EtFiltrage"></ToggleButton>
-     		<ToggleButton android:text="Marque" android:id="@+id/BTmarque"  android:layout_width="wrap_content" android:layout_height="wrap_content" android:textOn="Marque" android:textOff="Marque" android:visibility="visible" android:checked="false" android:clickable="true" android:layout_centerHorizontal="true" android:layout_below="@+id/EtFiltrage"></ToggleButton>
-     		<ToggleButton android:text="Tout" android:id="@+id/BTtout" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textOff="Tout" android:textOn="Tout" android:visibility="visible" android:checked="true" android:clickable="true" android:layout_toRightOf="@+id/BTmarque" android:layout_marginLeft="15dip" android:layout_below="@+id/EtFiltrage"></ToggleButton>
+			<Button android:layout_toRightOf="@+id/EtFiltrage" 
+			android:layout_marginRight="41dip"
+			android:layout_height="wrap_content" 
+			android:layout_width="wrap_content" 
+			android:layout_alignTop="@+id/EtFiltrage" 
+			android:layout_alignBottom="@+id/EtFiltrage" 
+			android:text="Filtrer par..." 
+			android:id="@+id/BtFiltrerPar"></Button>
      	
 			<ListView android:layout_width="fill_parent" 
 			android:layout_height="wrap_content"  
 			android:id="@+id/produitListViewRechercheTitre" 
 			android:layout_marginLeft="40dip" 
-			android:layout_below="@+id/BTcat" android:scrollbars="none" android:scrollbarAlwaysDrawVerticalTrack="false" android:scrollbarAlwaysDrawHorizontalTrack="false" android:visibility="visible" android:choiceMode="none" android:clickable="false" android:layout_marginTop="15dip" android:layout_marginRight="41dip"> </ListView>
+			android:layout_below="@+id/BtFiltrerPar" 
+			android:scrollbars="none" 
+			android:scrollbarAlwaysDrawVerticalTrack="false" 
+			android:scrollbarAlwaysDrawHorizontalTrack="false"
+			android:visibility="visible" 
+			android:choiceMode="none" 
+			android:clickable="false" 
+			android:layout_marginTop="15dip" 
+			android:layout_marginRight="41dip"> </ListView>
 			<ListView android:layout_width="fill_parent" 
 			android:layout_height="wrap_content"  
 			android:id="@+id/produitListViewRecherche" 
@@ -26,6 +48,7 @@
 			android:layout_below="@+id/produitListViewRechercheTitre" android:dividerHeight="1dip" android:layout_marginTop="15dip" android:layout_marginRight="41dip" android:divider="@drawable/separateur_bleu"> </ListView>
 				
      
+
 
 
 
