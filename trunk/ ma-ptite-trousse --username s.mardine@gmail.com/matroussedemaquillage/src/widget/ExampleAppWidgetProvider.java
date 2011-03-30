@@ -16,6 +16,7 @@ import android.content.pm.PackageManager;
 import android.os.SystemClock;
 import android.util.Log;
 import android.widget.RemoteViews;
+import android.widget.Toast;
 import fr.smardine.matroussedemaquillage.R;
 
 // Need the following import to get access to the app resources, since this
@@ -40,6 +41,7 @@ public class ExampleAppWidgetProvider extends AppWidgetProvider {
 
 	@Override
 	public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
+		popUp (context,"On Update");
 		Log.d(TAG, "onUpdate");
 		// For each widget that needs an update, get the text that we should display:
 		// - Create a RemoteViews object for it
@@ -52,9 +54,14 @@ public class ExampleAppWidgetProvider extends AppWidgetProvider {
 			updateAppWidget(context, appWidgetManager, appWidgetId, titlePrefix);
 		}
 	}
+	
+	private static void popUp (Context context,String txt){
+		Toast.makeText(context, txt, 2000);
+	}
 
 	@Override
 	public void onDeleted(Context context, int[] appWidgetIds) {
+		popUp (context,"On Deleted");
 		Log.d(TAG, "onDeleted");
 		// When the user deletes the widget, delete the preference associated with it.
 		final int N = appWidgetIds.length;
@@ -65,6 +72,7 @@ public class ExampleAppWidgetProvider extends AppWidgetProvider {
 
 	@Override
 	public void onEnabled(Context context) {
+		popUp (context,"On Enabled");
 		Log.d(TAG, "onEnabled");
 		// When the first widget is created, register for the TIMEZONE_CHANGED and TIME_CHANGED
 		// broadcasts. We don't want to be listening for these if nobody has our widget active.
@@ -79,6 +87,7 @@ public class ExampleAppWidgetProvider extends AppWidgetProvider {
 	public void onDisabled(Context context) {
 		// When the first widget is created, stop listening for the TIMEZONE_CHANGED and
 		// TIME_CHANGED broadcasts.
+		popUp (context,"On Disabled");
 		Log.d(TAG, "onDisabled");
 		PackageManager pm = context.getPackageManager();
 		pm.setComponentEnabledSetting(new ComponentName("com.example.android.apis", ".appwidget.ExampleBroadcastReceiver"),
@@ -86,6 +95,7 @@ public class ExampleAppWidgetProvider extends AppWidgetProvider {
 	}
 
 	static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId, String titlePrefix) {
+		popUp (context,"On updateAppWidget");
 		Log.d(TAG, "updateAppWidget appWidgetId=" + appWidgetId + " titlePrefix=" + titlePrefix);
 		// Getting the string this way allows the string to be localized. The format
 		// string is filled in using java.util.Formatter-style format strings.
