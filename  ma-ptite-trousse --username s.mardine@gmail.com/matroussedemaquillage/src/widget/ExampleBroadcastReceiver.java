@@ -38,6 +38,7 @@ public class ExampleBroadcastReceiver extends BroadcastReceiver {
         // For our example, we'll also update all of the widgets when the timezone
         // changes, or the user or network sets the time.
         String action = intent.getAction();
+       
         if (action.equals(Intent.ACTION_TIMEZONE_CHANGED)
                 || action.equals(Intent.ACTION_TIME_CHANGED)) {
             AppWidgetManager gm = AppWidgetManager.getInstance(context);
