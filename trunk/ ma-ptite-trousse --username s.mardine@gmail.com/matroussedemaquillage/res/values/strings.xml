@@ -5,6 +5,12 @@
     <color name="app_color">#FFFFFF</color>
     <color name="text_color">#000000</color>
     
-  
+     <!-- ============================ -->
+    <!--  AppWidget examples strings     -->
+    <!-- ============================ -->
 
+   
+     <string name="appwidget_configure_instructions">This text will be shown before the date in our example widget.</string>
+    <string name="appwidget_prefix_default">Oh hai</string>
+   <string name="appwidget_text_format">Balbalbalbalbalbalba</string>
 </resources>

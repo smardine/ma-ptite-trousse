@@ -40,6 +40,31 @@
 
 
 <activity android:name=".param.tab4"></activity>
+   <!-- ************************************* -->
+        <!--      APPWIDGET PACKAGE SAMPLES           -->
+        <!-- ************************************* -->
+ <receiver android:name="widget.ExampleAppWidgetProvider">
+            <meta-data android:name="android.appwidget.provider"
+                    android:resource="@xml/appwidget_provider" />
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+        </receiver>
+
+        <activity android:name="widget.ExampleAppWidgetConfigure">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
+            </intent-filter>
+        </activity>
+
+        <receiver android:enabled="false" android:name="widget.ExampleBroadcastReceiver">
+            <intent-filter>
+                <action android:name="android.intent.ACTION_TIMEZONE_CHANGED" />
+                <action android:name="android.intent.ACTION_TIME" />
+            </intent-filter>
+        </receiver>
+        
+        
 </application>
     <uses-sdk android:minSdkVersion="7" />
 
