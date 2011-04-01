@@ -6,9 +6,9 @@
   android:layout_width="wrap_content"
   android:layout_height="wrap_content" android:orientation="vertical">
 
-	<TextView android:id="@+id/TextView01"
+	<Button android:id="@+id/WidgetTextView"
 	android:layout_width="wrap_content" 
 	android:layout_height="wrap_content" 
-	android:text="Hello!"></TextView>
+	android:text="Hello!" android:clickable="true"></Button>
 
 </LinearLayout>

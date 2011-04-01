@@ -17,10 +17,7 @@
         android:id="@+id/DatePicker">
 
         </DatePicker>
-
-       
-
-        <LinearLayout
+       <LinearLayout
 
         android:id="@+id/LinearLayout01"
 
