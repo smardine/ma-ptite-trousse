@@ -8,9 +8,7 @@
  
               android:updatePeriodMillis="86400000"
   
-              android:initialLayout="@layout/countdownwidget"
-  
-              android:configure="com.helloandroid.countdownexample.countdownConfigure" >
+              android:initialLayout="@layout/countdownwidget" android:configure="widget.CountdownConfiguration">
   
       </appwidget-provider>
 

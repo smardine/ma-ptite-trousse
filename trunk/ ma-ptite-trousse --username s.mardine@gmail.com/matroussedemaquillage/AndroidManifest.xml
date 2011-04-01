@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
       package="fr.smardine.matroussedemaquillage"
       android:versionCode="55" android:versionName="2.01">
-    <application android:label="@string/app_name" android:icon="@drawable/icone_bisounours">
+    <application android:label="@string/app_name" android:icon="@drawable/icone_bisounours" android:debuggable="true">
         <activity android:name="EntryPoint" android:screenOrientation="portrait"><intent-filter><action android:name="android.intent.action.MAIN"></action>
 <category android:name="android.intent.category.LAUNCHER"></category>
 </intent-filter>
@@ -52,17 +52,16 @@
       </receiver>
       
      
-      <activity
-      android:label="@string/app_name" android:name="widget.CountdownConfiguration">
-      <intent-filter>
-          <action
-              android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
-          </intent-filter>
-      </activity>
+      
       
 
         
         
+<activity android:name="widget.CountdownConfiguration">
+<intent-filter><action android:name="android.intent.action.MAIN"></action>
+<category android:name="android.intent.category.LAUNCHER"></category>
+</intent-filter>
+</activity>
 </application>
     <uses-sdk android:minSdkVersion="7" />
 
