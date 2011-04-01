@@ -6,7 +6,7 @@
   android:layout_width="wrap_content"
   android:layout_height="wrap_content" android:orientation="vertical">
 
-	<TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/WidgetTextView" android:text="bla" android:layout_gravity="right" android:textColor="#FF0000" android:textSize="32px"></TextView><Button android:text="Hello!" 
+	<TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/WidgetTextView" android:text="bla" android:layout_gravity="right" android:textColor="#FF0000" android:background="@drawable/oval_button" android:textSize="32px"></TextView><Button android:text="Hello!" 
 	android:clickable="true" android:id="@+id/WidgetButton" android:layout_width="wrap_content" android:layout_height="wrap_content" android:background="@drawable/yellow_gradient_filled_box"></Button>
 
 

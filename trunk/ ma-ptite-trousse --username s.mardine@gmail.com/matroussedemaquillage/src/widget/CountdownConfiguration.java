@@ -1,24 +1,24 @@
 package widget;
 
-import java.util.GregorianCalendar;
-
 import android.app.Activity;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.DatePicker;
+import android.widget.Spinner;
 import fr.smardine.matroussedemaquillage.R;
+import fr.smardine.matroussedemaquillage.variableglobale.EnPeriodicite;
 
 public class CountdownConfiguration extends Activity {
 
 	private final Context self = this;
 
 	private int appWidgetId;
+	private Spinner sp;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -50,42 +50,30 @@ public class CountdownConfiguration extends Activity {
 
 		setContentView(R.layout.configuration);
 
+		// le spinner qui permet de choisir la periodicité
+		sp = (Spinner) findViewById(R.id.SpinnerConfWidget);
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, mStrings);
+		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		sp.setAdapter(adapter);
+
 		// the OK button
 
-		Button ok = (Button) findViewById(R.id.okbutton);
+		Button ok = (Button) findViewById(R.id.BtOkConfWidget);
 
 		ok.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View arg0) {
 
-				// get the date from DatePicker
-
-				DatePicker dp = (DatePicker) findViewById(R.id.DatePicker);
-
-				GregorianCalendar date = new GregorianCalendar(dp.getYear(), dp
-
-				.getMonth(), dp.getDayOfMonth());
-
-				// save the goal date in SharedPreferences
-
-				// we can only store simple types only like long
-
-				// if multiple widget instances are placed
-
-				// each can have own goal date
-
-				// so store it under a name that contains appWidgetId
-
-				SharedPreferences prefs = self.getSharedPreferences("prefs", 0);
-
-				SharedPreferences.Editor edit = prefs.edit();
-
-				edit.putLong("goal" + appWidgetId, date.getTimeInMillis());
-
-				edit.commit();
-
 				// change the result to OK
+				int positionSpinner = sp.getSelectedItemPosition();
+
+				if (positionSpinner == EnPeriodicite.HEURE.getCode()) {
+
+				}
+				if (positionSpinner == EnPeriodicite.JOUR.getCode()) {
+
+				}
 
 				Intent resultValue = new Intent();
 
@@ -109,7 +97,7 @@ public class CountdownConfiguration extends Activity {
 
 		// cancel button
 
-		Button cancel = (Button) findViewById(R.id.cancelbutton);
+		Button cancel = (Button) findViewById(R.id.BtCancelConfWidget);
 
 		cancel.setOnClickListener(new OnClickListener() {
 
@@ -127,5 +115,7 @@ public class CountdownConfiguration extends Activity {
 		});
 
 	}
+
+	private static final String[] mStrings = { EnPeriodicite.HEURE.getLib(), EnPeriodicite.JOUR.getLib() };
 
 }

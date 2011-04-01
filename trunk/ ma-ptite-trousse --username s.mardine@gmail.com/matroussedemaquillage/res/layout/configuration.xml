@@ -1,50 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout
 
-  xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout android:id="@+id/LinearLayout01" android:layout_width="fill_parent" android:layout_height="fill_parent" xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical"><TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Verifier les dates de peremption tout les " android:layout_alignParentTop="true" android:id="@+id/TvConfWidget"></TextView>
 
-  android:layout_width="wrap_content"
+<Spinner android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/SpinnerConfWidget" android:layout_below="@+id/TvConfWidget"></Spinner>
 
-  android:layout_height="wrap_content"
+<Button android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/BtOkConfWidget" android:layout_below="@+id/SpinnerConfWidget" android:text="Créer le widget"></Button><Button android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/BtCancelConfWidget" android:layout_below="@+id/SpinnerConfWidget" android:layout_toRightOf="@+id/BtOkConfWidget" android:text="Annuler"></Button>
 
-  android:orientation="vertical">
 
-        <DatePicker android:layout_width="wrap_content"
 
-        android:layout_height="wrap_content"
 
-        android:id="@+id/DatePicker">
 
-        </DatePicker>
-       <LinearLayout
 
-        android:id="@+id/LinearLayout01"
-
-        android:layout_width="wrap_content"
-
-        android:layout_height="wrap_content"
-
-        android:orientation="horizontal">
-
-       
-
-                <Button android:layout_width="wrap_content"
-
-                android:layout_height="wrap_content"
-
-                android:id="@+id/okbutton"
-
-                android:text="OK"></Button>
-
-                <Button android:layout_width="wrap_content"
-
-                android:layout_height="wrap_content"
-
-                android:text="Cancel"
-
-                android:id="@+id/cancelbutton"></Button>
-
-        </LinearLayout>
-
-</LinearLayout>
+</RelativeLayout>
