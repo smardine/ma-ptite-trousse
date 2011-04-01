@@ -30,10 +30,9 @@ public class CountdownConfiguration extends Activity {
 		Intent launchIntent = getIntent();
 
 		Bundle extras = launchIntent.getExtras();
-
-		appWidgetId = extras.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID,
-
-		AppWidgetManager.INVALID_APPWIDGET_ID);
+		if (extras != null) {
+			appWidgetId = extras.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
+		}
 
 		// set the result for cancel first
 
@@ -43,9 +42,7 @@ public class CountdownConfiguration extends Activity {
 
 		Intent cancelResultValue = new Intent();
 
-		cancelResultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
-
-		appWidgetId);
+		cancelResultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
 
 		setResult(RESULT_CANCELED, cancelResultValue);
 
