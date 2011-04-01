@@ -113,7 +113,8 @@ public class CountdownWidget extends AppWidgetProvider {
 
 			// Get the layout for the App Widget and attach an on-click listener to the button
 			RemoteViews remoteView = new RemoteViews(context.getPackageName(), R.layout.countdownwidget);
-			remoteView.setOnClickPendingIntent(R.id.WidgetTextView, pendingIntent);
+			remoteView.setOnClickPendingIntent(R.id.WidgetButton, pendingIntent);
+			remoteView.setTextViewText(R.id.WidgetTextView, "10");
 
 			appWidgetManager.updateAppWidget(appWidgetId, remoteView);
 		}
