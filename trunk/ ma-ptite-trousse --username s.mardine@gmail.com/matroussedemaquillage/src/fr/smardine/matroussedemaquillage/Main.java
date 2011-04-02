@@ -2,8 +2,12 @@ package fr.smardine.matroussedemaquillage;
 
 import java.util.ArrayList;
 
+import widget.CountdownWidget;
+
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -19,6 +23,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.RemoteViews;
 
 import com.example.android.apis.animation.Animlineaire;
 
@@ -121,8 +126,14 @@ public class Main extends Activity implements OnClickListener {
 		adSortie.setNegativeButton("Non", null);
 
 		this.setTitle("Ma p'tite trousse");
+		
+		
+		
+
 
 	}
+
+	
 
 	private void onCreateMenu(Menu menu) {
 		SubMenu recherche = menu.addSubMenu(1, 2000, 1, "Recherche");

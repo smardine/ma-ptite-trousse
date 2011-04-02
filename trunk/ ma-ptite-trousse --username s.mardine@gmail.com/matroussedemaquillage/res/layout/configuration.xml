@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
-<RelativeLayout android:id="@+id/LinearLayout01" android:layout_width="fill_parent" android:layout_height="fill_parent" xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical"><TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Verifier les dates de peremption tout les " android:layout_alignParentTop="true" android:id="@+id/TvConfWidget"></TextView>
-
-<Spinner android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/SpinnerConfWidget" android:layout_below="@+id/TvConfWidget"></Spinner>
-
-<Button android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/BtOkConfWidget" android:layout_below="@+id/SpinnerConfWidget" android:text="Créer le widget"></Button><Button android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/BtCancelConfWidget" android:layout_below="@+id/SpinnerConfWidget" android:layout_toRightOf="@+id/BtOkConfWidget" android:text="Annuler"></Button>
+<RelativeLayout android:id="@+id/LinearLayout01" android:layout_width="fill_parent" android:layout_height="fill_parent" xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical">
+    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/TvConfWidget" android:text="Action par defaut lors du clic sur le widget"></TextView>
+    <Spinner android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/SpWidget" android:layout_below="@+id/TvConfWidget"></Spinner>
+<Button android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/BtCancelConfWidget" android:layout_toRightOf="@+id/BtOkConfWidget" android:text="Annuler" android:layout_below="@+id/SpWidget"></Button>
+<Button android:layout_width="wrap_content" android:id="@+id/BtOkConfWidget" android:layout_height="wrap_content" android:text="Créer le widget" android:layout_below="@+id/SpWidget"></Button>
 
 
 

@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import fr.smardine.matroussedemaquillage.R;
+import fr.smardine.matroussedemaquillage.variableglobale.EnActionParDefaut;
 import fr.smardine.matroussedemaquillage.variableglobale.EnPeriodicite;
 
 public class CountdownConfiguration extends Activity {
@@ -51,7 +52,7 @@ public class CountdownConfiguration extends Activity {
 		setContentView(R.layout.configuration);
 
 		// le spinner qui permet de choisir la periodicité
-		sp = (Spinner) findViewById(R.id.SpinnerConfWidget);
+		sp = (Spinner) findViewById(R.id.SpWidget);
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, mStrings);
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		sp.setAdapter(adapter);
@@ -68,11 +69,14 @@ public class CountdownConfiguration extends Activity {
 				// change the result to OK
 				int positionSpinner = sp.getSelectedItemPosition();
 
-				if (positionSpinner == EnPeriodicite.HEURE.getCode()) {
+				if (positionSpinner == EnActionParDefaut.RECHERCHE.getCode()) {
 
 				}
-				if (positionSpinner == EnPeriodicite.JOUR.getCode()) {
+				if (positionSpinner == EnActionParDefaut.PAGE_PRINC.getCode()) {
 
+				}
+				if (positionSpinner == EnActionParDefaut.PERIME.getCode()){
+					
 				}
 
 				Intent resultValue = new Intent();
@@ -116,6 +120,6 @@ public class CountdownConfiguration extends Activity {
 
 	}
 
-	private static final String[] mStrings = { EnPeriodicite.HEURE.getLib(), EnPeriodicite.JOUR.getLib() };
+	private static final String[] mStrings = { EnActionParDefaut.RECHERCHE.getLib(), EnActionParDefaut.PAGE_PRINC.getLib(),EnActionParDefaut.PERIME.getLib() };
 
 }
