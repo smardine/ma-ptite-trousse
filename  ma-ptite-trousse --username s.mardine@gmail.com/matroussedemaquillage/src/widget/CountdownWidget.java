@@ -1,14 +1,9 @@
 package widget;
 
-import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
-import android.widget.RemoteViews;
-import android.widget.Toast;
-import fr.smardine.matroussedemaquillage.R;
-import fr.smardine.matroussedemaquillage.recherche.recherche_produit_perime;
 
 public class CountdownWidget extends AppWidgetProvider {
 
@@ -73,12 +68,9 @@ public class CountdownWidget extends AppWidgetProvider {
 		// flow of intent handling
 
 		super.onReceive(context, intent);
-		String action = intent.getAction();
+		//String action = intent.getAction();
 
-		if (action.equals("blablabla")) {
-			Toast.makeText(context, "J'ai cliqué!!!!!!!!!!!!!", 2000).show();
-		}
-
+		
 	}
 
 	@Override
@@ -103,22 +95,19 @@ public class CountdownWidget extends AppWidgetProvider {
 		// so here you want likely update all of them in an iteration
 
 		// we will use only the first creation run
-
-		super.onUpdate(context, appWidgetManager, appWidgetIds);
-
-		for (int appWidgetId : appWidgetIds) {
-			// Create an Intent to launch ExampleActivity
-			Intent intent = new Intent(context, recherche_produit_perime.class);
-			PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
-
-			// Get the layout for the App Widget and attach an on-click listener to the button
-			RemoteViews remoteView = new RemoteViews(context.getPackageName(), R.layout.countdownwidget);
-			remoteView.setOnClickPendingIntent(R.id.WidgetButton, pendingIntent);
-			remoteView.setTextViewText(R.id.WidgetTextView, "10");
-
-			appWidgetManager.updateAppWidget(appWidgetId, remoteView);
-		}
+		
+		
+		
+		//mise a jour des produits perime dans la base:
+		majWidget.updateWidget(context);
+		
+		
+		
 
 	}
+	
+	
+
+	
 
 }

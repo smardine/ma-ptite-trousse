@@ -4,10 +4,9 @@
 
   xmlns:android="http://schemas.android.com/apk/res/android"
   android:layout_width="wrap_content"
-  android:layout_height="wrap_content" android:orientation="vertical">
-
-	<TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/WidgetTextView" android:text="bla" android:textColor="#FF0000" android:background="@drawable/oval_button" android:textSize="32px" android:layout_alignRight="@+id/WidgetButton"></TextView><Button android:text="Hello!" 
-	android:clickable="true" android:id="@+id/WidgetButton" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_below="@+id/WidgetTextView"></Button>
+  android:layout_height="wrap_content">
+	<ImageButton android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/imageButton1" android:layout_below="@+id/WidgetTextView" android:src="@drawable/widget_icone_bisounours" android:layout_alignParentTop="true"></ImageButton>
+	<TextView android:layout_width="wrap_content" android:textSize="32px" android:layout_height="wrap_content" android:textColor="#FF0000" android:id="@+id/WidgetTextView" android:text="10" android:layout_alignRight="@+id/imageButton1"></TextView>
 
 
 

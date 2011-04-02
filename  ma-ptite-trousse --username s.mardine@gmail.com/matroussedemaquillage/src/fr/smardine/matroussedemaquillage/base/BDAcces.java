@@ -935,6 +935,13 @@ public class BDAcces {
 		}
 	}
 
+	public int revoiNbProdPerimeOuPresquePerime (String ScriptSQL){
+		Cursor objCursor = mDb.rawQuery(ScriptSQL, null);
+		
+		int itotal = objCursor.getCount();
+		objCursor.close();
+		return itotal;
+	}
 	@SuppressWarnings("rawtypes")
 	public ArrayList[] renvoi_liste_TrousseFinalAvecFiltrage(String ScriptSQL, String[] p_colonnes) {
 		// String SQL = "SELECT " + p_colonnes + " FROM produit_Enregistre where nom_souscatergorie LIKE '%?%'";
@@ -1252,6 +1259,8 @@ public class BDAcces {
 		return iNbChamp;
 
 	}
+	
+	
 
 	@SuppressWarnings("rawtypes")
 	public ArrayList[] renvoi_liste_TrousseFinalComplete(String[] colonne, String id) {
@@ -1526,6 +1535,7 @@ public class BDAcces {
 
 	}
 
+	
 	@SuppressWarnings("rawtypes")
 	public ArrayList[] renvoiCategorieCochée() {
 		String[] colonne = new String[] { "nom_souscatergorie" };
