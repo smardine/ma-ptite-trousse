@@ -917,7 +917,6 @@ public class BDAcces {
 		aTableRetour[1] = aTableRetourisChecked;
 		return aTableRetour;
 	}
-	
 
 	public Cursor recupererLaListeDesBenefs(String[] colonne, String OrderBy, String GroupBy) {
 		try {
@@ -935,13 +934,14 @@ public class BDAcces {
 		}
 	}
 
-	public int revoiNbProdPerimeOuPresquePerime (String ScriptSQL){
+	public int revoiNbProdPerimeOuPresquePerime(String ScriptSQL) {
 		Cursor objCursor = mDb.rawQuery(ScriptSQL, null);
-		
+
 		int itotal = objCursor.getCount();
 		objCursor.close();
 		return itotal;
 	}
+
 	@SuppressWarnings("rawtypes")
 	public ArrayList[] renvoi_liste_TrousseFinalAvecFiltrage(String ScriptSQL, String[] p_colonnes) {
 		// String SQL = "SELECT " + p_colonnes + " FROM produit_Enregistre where nom_souscatergorie LIKE '%?%'";
@@ -1184,7 +1184,7 @@ public class BDAcces {
 
 	@SuppressWarnings("rawtypes")
 	public ArrayList[] VerifAuDemarrage(String[] colonne, String OrderBy, String GroupBy) {
-		open();
+		// open();
 		// String[] colonne= new String[]{"nom_produit","DateAchat","Date_Peremption"};
 		// String condition = "nom_categorie='"+Catégorie+"'";
 		String condition = "";
@@ -1259,8 +1259,6 @@ public class BDAcces {
 		return iNbChamp;
 
 	}
-	
-	
 
 	@SuppressWarnings("rawtypes")
 	public ArrayList[] renvoi_liste_TrousseFinalComplete(String[] colonne, String id) {
@@ -1535,7 +1533,6 @@ public class BDAcces {
 
 	}
 
-	
 	@SuppressWarnings("rawtypes")
 	public ArrayList[] renvoiCategorieCochée() {
 		String[] colonne = new String[] { "nom_souscatergorie" };
@@ -1688,7 +1685,7 @@ public class BDAcces {
 
 	@SuppressWarnings("rawtypes")
 	public ArrayList[] renvoi_param(String[] colonne) {
-		open();
+		// open();
 
 		// String[] colonne= new String[]{"nom_produit","DateAchat","Date_Peremption"};
 		// String condition = "id_produits='"+id+"'";

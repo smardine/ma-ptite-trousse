@@ -68,9 +68,8 @@ public class CountdownWidget extends AppWidgetProvider {
 		// flow of intent handling
 
 		super.onReceive(context, intent);
-		//String action = intent.getAction();
+		// String action = intent.getAction();
 
-		
 	}
 
 	@Override
@@ -95,19 +94,10 @@ public class CountdownWidget extends AppWidgetProvider {
 		// so here you want likely update all of them in an iteration
 
 		// we will use only the first creation run
-		
-		
-		
-		//mise a jour des produits perime dans la base:
-		majWidget.updateWidget(context);
-		
-		
-		
+
+		// mise a jour des produits perime dans la base:
+		majWidget maj = new majWidget(context);
 
 	}
-	
-	
-
-	
 
 }
