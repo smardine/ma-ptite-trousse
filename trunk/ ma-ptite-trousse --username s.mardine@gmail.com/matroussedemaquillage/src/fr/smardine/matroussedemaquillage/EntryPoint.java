@@ -9,12 +9,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-import widget.CountdownWidget;
 import widget.majWidget;
-
 import android.app.Activity;
-import android.appwidget.AppWidgetManager;
-import android.content.ComponentName;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -25,7 +21,6 @@ import android.view.View;
 import android.widget.Gallery.LayoutParams;
 import android.widget.ImageSwitcher;
 import android.widget.ImageView;
-import android.widget.RemoteViews;
 import android.widget.ViewSwitcher.ViewFactory;
 import fr.smardine.matroussedemaquillage.base.BDAcces;
 import fr.smardine.matroussedemaquillage.variableglobale.ActivityParam;
@@ -213,13 +208,14 @@ public class EntryPoint extends Activity implements ViewFactory {
 	 * 
 	 */
 	private void termineActivity() {
-		majwidget();
+		//
 		finish();
 	}
 
 	private void majwidget() {
 		Context context = this;
-		majWidget.updateWidget(context);
+		majWidget maj = new majWidget(context);
+
 	}
 
 	/**

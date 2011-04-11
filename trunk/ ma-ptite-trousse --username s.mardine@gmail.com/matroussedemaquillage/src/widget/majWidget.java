@@ -20,45 +20,42 @@ import fr.smardine.matroussedemaquillage.recherche.recherche_produit_perime;
 import fr.smardine.matroussedemaquillage.variableglobale.EnTheme;
 
 public class majWidget {
-	static BDAcces objBd;
-	public static void updateWidget (Context context ){
-		objBd = new BDAcces (context);
-		
+	BDAcces objBd;
+
+	public majWidget(Context context) {
+		objBd = new BDAcces(context);
+
 		majBddProduitPerime();
-		
-		//contaire le nb de produit perimé dans la trousse:
+
+		// contaire le nb de produit perimé dans la trousse:
 		String SQL = "SELECT " + "id_produits "//
-		+ "FROM produit_Enregistre "//
-		+ "where " //
-		+ "(IS_PERIME='true' or IS_PRESQUE_PERIME='true') ";
-		
-		
-		
+				+ "FROM produit_Enregistre "//
+				+ "where " //
+				+ "(IS_PERIME='true' or IS_PRESQUE_PERIME='true') ";
+
 		objBd.open();
 		int nbProds = objBd.revoiNbProdPerimeOuPresquePerime(SQL);
 		objBd.close();
 
-			// Get the layout for the App Widget and attach an on-click listener to the button
-			
-						
+		// Get the layout for the App Widget and attach an on-click listener to the button
+
 		Intent intent = new Intent(context, recherche_produit_perime.class);
 		PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
-			AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-			ComponentName appWidgetId = new ComponentName(context, CountdownWidget.class);
-			RemoteViews remoteView = new RemoteViews(context.getPackageName(), R.layout.countdownwidget);
-			VerifLeTheme (remoteView);
-			remoteView.setOnClickPendingIntent(R.id.imageButton1, pendingIntent);
-			if (nbProds>0){
-				remoteView.setTextViewText(R.id.WidgetTextView, ""+nbProds);	
-			}else{
-				remoteView.setTextViewText(R.id.WidgetTextView, "");	
-			}
-		appWidgetManager.updateAppWidget(appWidgetId, remoteView);
+		AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+		ComponentName appWidgetId = new ComponentName(context, CountdownWidget.class);
+		RemoteViews remoteView = new RemoteViews(context.getPackageName(), R.layout.countdownwidget);
+		VerifLeTheme(remoteView);
+		remoteView.setOnClickPendingIntent(R.id.imageButton1, pendingIntent);
+		if (nbProds > 0) {
+			remoteView.setTextViewText(R.id.WidgetTextView, "" + nbProds);
+		} else {
+			remoteView.setTextViewText(R.id.WidgetTextView, "");
 		}
-	
-	
-	private static void majBddProduitPerime() {
-		
+		appWidgetManager.updateAppWidget(appWidgetId, remoteView);
+	}
+
+	private void majBddProduitPerime() {
+
 		objBd.open();
 		int nbDenregistrement = objBd.renvoi_nbChamp("produit_Enregistre");
 		objBd.close();
@@ -68,10 +65,10 @@ public class majWidget {
 			objBd.open();
 
 			ArrayList[] datePerem = objBd.VerifAuDemarrage(colonne, "", "");
-			
+
 			// on commence par recalculer la date de permeption suite au bug de calcul lors de l'entrée du produit:
 			for (int j = 0; j < nbDenregistrement; j++) {
-				
+
 				String s_idProduit = datePerem[1].get(j).toString().replace("[", "").replace("]", "");
 
 				// //////////////////////////////////
@@ -100,17 +97,17 @@ public class majWidget {
 			}
 			objBd.close();
 		}
-		
+
 	}
 
-	public static int verifErreurEnregistrementDsBase(String IdProduit) throws Exception {
+	public int verifErreurEnregistrementDsBase(String IdProduit) throws Exception {
 
 		String[] Colonnes = { "nom_produit", "nom_souscatergorie", "nom_categorie", "numero_Teinte", "Duree_Vie", "Date_Peremption",
 				"DateAchat", "nom_marque" };
 
 		objBd.open();
 		ArrayList[] trousse_final = objBd.renvoi_liste_TrousseFinalComplete(Colonnes, IdProduit);
-		
+
 		String Table = "produit_Enregistre";
 		String Nom_Produit = trousse_final[0].toString().trim();
 		String SousCat = trousse_final[1].toString();
@@ -130,24 +127,22 @@ public class majWidget {
 		modifiedValues.put("Date_Peremption", DatePeremption.trim().replace("[", "").replace("]", ""));
 		modifiedValues.put("DateAchat", DateAchat.trim().replace("[", "").replace("]", ""));
 		modifiedValues.put("nom_marque", NomMarque.trim().replace("[", "").replace("]", ""));
-		
 
 		String whereClause = "id_produits=?";
 		String[] whereArgs = new String[] { "" + IdProduit + "" };
-		
-		
+
 		int nbdechamp = objBd.majTable(Table, modifiedValues, whereClause, whereArgs);
 		objBd.close();
 
 		return nbdechamp;
 
 	}
-	
-	private static void CalculDatePeremtionEtMajDansBase(String dateAchat1, String dureeVie, String idProduit) throws Exception {
+
+	private void CalculDatePeremtionEtMajDansBase(String dateAchat1, String dureeVie, String idProduit) throws Exception {
 		dureeVie = dureeVie.replace("[", "").replace("]", "");
 
 		try {
-			
+
 			objBd.open();
 			String[] champ = { "AfficheAlerte", "DureeViePeremp", "Theme" };
 			ArrayList[] Param = objBd.renvoi_param(champ);
@@ -157,7 +152,7 @@ public class majWidget {
 			boolean isPerime = DateHelper.isProduitPerime(dateAchat1, dureeVie);
 			String perime;
 			if (isPerime) {
-				perime = "true";				
+				perime = "true";
 			} else {
 				perime = "false";
 			}
@@ -185,10 +180,10 @@ public class majWidget {
 			String whereClause11 = "id_produits=?";
 			String[] whereArgs11 = new String[] { "" + idProduit + "" };
 			objBd.open();
-			
+
 			objBd.majTable(Table11, modifiedValues11, whereClause11, whereArgs11);
-			 objBd.close();
-			
+			objBd.close();
+
 		} catch (Exception e) {
 			System.out.println("erreur calcul date peremp " + e.getMessage());
 			return;
@@ -196,8 +191,7 @@ public class majWidget {
 
 	}
 
-
-	private static void VerifLeTheme(RemoteViews remoteView) {
+	private void VerifLeTheme(RemoteViews remoteView) {
 		objBd.open();
 		String[] champ = { "AfficheAlerte", "DureeViePeremp", "Theme" };
 		ArrayList[] Param = objBd.renvoi_param(champ);
@@ -209,9 +203,9 @@ public class majWidget {
 			remoteView.setImageViewResource(R.id.imageButton1, R.drawable.widget_icone_bisounours);
 		}
 		if (EnTheme.Classique.getLib().equals(nomThemeChoisi)) {
-			//on supprime le theme classique car trop buggué visuellement,
-			//dans le cas ou un utilisateur aurait gardé ce theme,
-			//on force l'application du theme "Fleur" et on relance la verification du theme
+			// on supprime le theme classique car trop buggué visuellement,
+			// dans le cas ou un utilisateur aurait gardé ce theme,
+			// on force l'application du theme "Fleur" et on relance la verification du theme
 			ContentValues values = new ContentValues();
 			values.put("Theme", EnTheme.Fleur.getLib());
 
@@ -223,10 +217,7 @@ public class majWidget {
 		if (EnTheme.Fleur.getLib().equals(nomThemeChoisi)) {
 			remoteView.setImageViewResource(R.id.imageButton1, R.drawable.widget_icone_fleur);
 		}
-		
-	}
-	
-	
+
 	}
 
-
+}
