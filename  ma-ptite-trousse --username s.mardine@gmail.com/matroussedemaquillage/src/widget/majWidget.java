@@ -22,6 +22,13 @@ import fr.smardine.matroussedemaquillage.variableglobale.EnTheme;
 public class majWidget {
 	BDAcces objBd;
 
+	/**
+	 * constructeur, met a jour le widget:
+	 * <ul>
+	 * <li>affiche le nb de produits perime</li>
+	 * <li>met en accord le logo du widget avec le theme choisi dans l'appli.
+	 * @param context
+	 */
 	public majWidget(Context context) {
 		objBd = new BDAcces(context);
 
@@ -200,7 +207,7 @@ public class majWidget {
 		String nomThemeChoisi = Param[2].get(0).toString().trim();
 
 		if (EnTheme.Bisounours.getLib().equals(nomThemeChoisi)) {
-			remoteView.setImageViewResource(R.id.imageButton1, R.drawable.widget_icone_bisounours);
+			remoteView.setImageViewResource(R.id.imageButton1, R.drawable.icone_bisounours);
 		}
 		if (EnTheme.Classique.getLib().equals(nomThemeChoisi)) {
 			// on supprime le theme classique car trop buggué visuellement,
@@ -212,10 +219,10 @@ public class majWidget {
 			objBd.open();
 			objBd.majTable("Param", values, "", null);
 			objBd.close();
-			remoteView.setImageViewResource(R.id.imageButton1, R.drawable.widget_icone_fleur);
+			remoteView.setImageViewResource(R.id.imageButton1, R.drawable.icone1);
 		}
 		if (EnTheme.Fleur.getLib().equals(nomThemeChoisi)) {
-			remoteView.setImageViewResource(R.id.imageButton1, R.drawable.widget_icone_fleur);
+			remoteView.setImageViewResource(R.id.imageButton1, R.drawable.icone1);
 		}
 
 	}
