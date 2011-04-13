@@ -10,8 +10,12 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 import fr.smardine.matroussedemaquillage.Main;
 import fr.smardine.matroussedemaquillage.R;
 import fr.smardine.matroussedemaquillage.base.BDAcces;
@@ -25,10 +29,12 @@ import fr.smardine.matroussedemaquillage.remplir.formulaire_entree_page1bis;
 import fr.smardine.matroussedemaquillage.remplir.formulaire_entree_page3;
 import fr.smardine.matroussedemaquillage.variableglobale.ActivityParam;
 
-public class tab1 extends Activity {
+public class tab1 extends Activity implements OnClickListener, ColorPickerDialog.OnColorChangedListener {
 	EditText textView;
 	CheckBox CbAfficheAlerte;
 	BDAcces objBd;
+	Button BtColorPicker;
+	TextView ApercuCouleur;
 
 	@SuppressWarnings("rawtypes")
 	@Override
@@ -38,6 +44,10 @@ public class tab1 extends Activity {
 		setContentView(R.layout.parametres_tab1);
 		textView = (EditText) findViewById(R.id.Param_DureeVie);
 		CbAfficheAlerte = (CheckBox) findViewById(R.id.CbAfficheAlerte);
+		BtColorPicker = (Button) findViewById(R.id.BtColorPicker);
+		BtColorPicker.setOnClickListener(this);
+		ApercuCouleur = (TextView) findViewById(R.id.TvPreviewColor);
+
 		objBd = new BDAcces(this);
 		objBd.open();
 		String[] colonnes = { "AfficheAlerte", "DureeViePeremp", "Theme" };
@@ -254,6 +264,20 @@ public class tab1 extends Activity {
 	public void OnDestroy() {
 		super.onDestroy();
 		// popUp("OnDestroy-Page2");
+
+	}
+
+	@Override
+	public void onClick(View p_v) {
+		if (p_v == BtColorPicker) {
+			new ColorPickerDialog(this, this, 0).show();
+		}
+
+	}
+
+	@Override
+	public void colorChanged(int p_color) {
+		ApercuCouleur.setBackgroundColor(p_color);
 
 	}
 
