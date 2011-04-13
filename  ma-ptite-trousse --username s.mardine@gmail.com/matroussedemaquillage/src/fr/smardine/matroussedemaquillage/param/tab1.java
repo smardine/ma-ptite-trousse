@@ -12,9 +12,13 @@ import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import fr.smardine.matroussedemaquillage.Main;
 import fr.smardine.matroussedemaquillage.R;
@@ -28,14 +32,17 @@ import fr.smardine.matroussedemaquillage.remplir.choix_produit_a_duppliquer;
 import fr.smardine.matroussedemaquillage.remplir.formulaire_entree_page1bis;
 import fr.smardine.matroussedemaquillage.remplir.formulaire_entree_page3;
 import fr.smardine.matroussedemaquillage.variableglobale.ActivityParam;
+import fr.smardine.matroussedemaquillage.variableglobale.EnActionParDefaut;
 
-public class tab1 extends Activity implements OnClickListener, ColorPickerDialog.OnColorChangedListener {
+public class tab1 extends Activity implements OnClickListener, ColorPickerDialog.OnColorChangedListener, OnItemSelectedListener {
 	EditText textView;
 	CheckBox CbAfficheAlerte;
 	BDAcces objBd;
 	Button BtColorPicker;
 	TextView ApercuCouleur;
+	Spinner sp;
 
+	private static final String[] mStrings = { EnActionParDefaut.RECHERCHE.getLib(), EnActionParDefaut.PAGE_PRINC.getLib(),EnActionParDefaut.PERIME.getLib() };
 	@SuppressWarnings("rawtypes")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +54,13 @@ public class tab1 extends Activity implements OnClickListener, ColorPickerDialog
 		BtColorPicker = (Button) findViewById(R.id.BtColorPicker);
 		BtColorPicker.setOnClickListener(this);
 		ApercuCouleur = (TextView) findViewById(R.id.TvPreviewColor);
+		
+		// le spinner qui permet de choisir la periodicité
+		sp = (Spinner) findViewById(R.id.SpWidget);
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, mStrings);
+		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		sp.setAdapter(adapter);
+		sp.setOnItemSelectedListener(this);
 
 		objBd = new BDAcces(this);
 		objBd.open();
@@ -279,6 +293,18 @@ public class tab1 extends Activity implements OnClickListener, ColorPickerDialog
 	public void colorChanged(int p_color) {
 		ApercuCouleur.setBackgroundColor(p_color);
 
+	}
+
+	@Override
+	public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onNothingSelected(AdapterView<?> arg0) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
