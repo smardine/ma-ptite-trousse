@@ -1,9 +1,7 @@
 package fr.smardine.matroussedemaquillage.variableglobale;
 
 public enum EnActionParDefaut {
-	RECHERCHE (0,"Affiche recherche"),
-	PAGE_PRINC (1,"Affiche page principale"),
-	PERIME (2,"Affiche produit périmé");
+	RECHERCHE(0, "Affiche recherche"), PAGE_PRINC(1, "Affiche page principale"), PERIME(2, "Affiche produit(s) périmé(s)");
 	private int code;
 	private String lib;
 
