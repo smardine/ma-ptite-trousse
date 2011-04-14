@@ -42,7 +42,9 @@ public class tab1 extends Activity implements OnClickListener, ColorPickerDialog
 	TextView ApercuCouleur;
 	Spinner sp;
 
-	private static final String[] mStrings = { EnActionParDefaut.RECHERCHE.getLib(), EnActionParDefaut.PAGE_PRINC.getLib(),EnActionParDefaut.PERIME.getLib() };
+	private static final String[] mStrings = { EnActionParDefaut.RECHERCHE.getLib(), EnActionParDefaut.PAGE_PRINC.getLib(),
+			EnActionParDefaut.PERIME.getLib() };
+
 	@SuppressWarnings("rawtypes")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +56,7 @@ public class tab1 extends Activity implements OnClickListener, ColorPickerDialog
 		BtColorPicker = (Button) findViewById(R.id.BtColorPicker);
 		BtColorPicker.setOnClickListener(this);
 		ApercuCouleur = (TextView) findViewById(R.id.TvPreviewColor);
-		
+
 		// le spinner qui permet de choisir la periodicité
 		sp = (Spinner) findViewById(R.id.SpWidget);
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, mStrings);
@@ -298,13 +300,13 @@ public class tab1 extends Activity implements OnClickListener, ColorPickerDialog
 	@Override
 	public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void onNothingSelected(AdapterView<?> arg0) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

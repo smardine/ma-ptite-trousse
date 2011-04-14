@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+  xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceCategory android:title="Configuration utilisateur">
+<EditTextPreference 
+android:key="default_action" 
+android:title="Action par defaut lors du clic sur le widget" 
+android:summary="" android:defaultValue="@string/default_action">
+</EditTextPreference>
+<EditTextPreference 
+android:key="pastille_color" 
+android:title="couleur de la pastille du widget" 
+android:summary="" android:defaultValue="@array/pastilleColor">
+</EditTextPreference>
+
+
+
+</PreferenceCategory>
+</PreferenceScreen>
