@@ -17,7 +17,9 @@ import android.widget.RemoteViews;
 import fr.smardine.matroussedemaquillage.R;
 import fr.smardine.matroussedemaquillage.base.BDAcces;
 import fr.smardine.matroussedemaquillage.recherche.recherche_produit_perime;
+import fr.smardine.matroussedemaquillage.variableglobale.EnActionParDefaut;
 import fr.smardine.matroussedemaquillage.variableglobale.EnTheme;
+import fr.smardine.matroussedemaquillage.variableglobale.ValeurParDefaut;
 
 public class majWidget {
 	BDAcces objBd;
@@ -31,9 +33,6 @@ public class majWidget {
 	 */
 	public majWidget(Context context) {
 		objBd = new BDAcces(context);
-
-		majBddProduitPerime();
-
 		// contaire le nb de produit perimé dans la trousse:
 		String SQL = "SELECT " + "id_produits "//
 				+ "FROM produit_Enregistre "//
@@ -44,24 +43,42 @@ public class majWidget {
 		int nbProds = objBd.revoiNbProdPerimeOuPresquePerime(SQL);
 		objBd.close();
 
+		ValeurParDefaut val = new ValeurParDefaut(context);
+		String action = val.getActionParDefaut();
+		
+		Intent intent=  new Intent(context, recherche_produit_perime.class);
+		if (action.equals(EnActionParDefaut.PERIME.getLib())&&nbProds==0){
+			intent = new Intent(context,EnActionParDefaut.PAGE_PRINC.getClasses());
+		}else{
+			for (EnActionParDefaut act : EnActionParDefaut.values()){
+				if (act.getLib().equals(action)){
+					intent = new Intent(context,act.getClasses());
+				}
+			}	
+		}
+		
 		// Get the layout for the App Widget and attach an on-click listener to the button
 
-		Intent intent = new Intent(context, recherche_produit_perime.class);
+		
 		PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
 		AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
 		ComponentName appWidgetId = new ComponentName(context, CountdownWidget.class);
 		RemoteViews remoteView = new RemoteViews(context.getPackageName(), R.layout.countdownwidget);
 		VerifLeTheme(remoteView);
-		remoteView.setOnClickPendingIntent(R.id.imageButton1, pendingIntent);
+		remoteView.setTextColor(R.id.WidgetTextView, val.getCouleurPastille());
+		remoteView.setOnClickPendingIntent(R.id.WidgetImageView, pendingIntent);
 		if (nbProds > 0) {
 			remoteView.setTextViewText(R.id.WidgetTextView, "" + nbProds);
 		} else {
 			remoteView.setTextViewText(R.id.WidgetTextView, "");
 		}
+		
+		
+		
 		appWidgetManager.updateAppWidget(appWidgetId, remoteView);
 	}
 
-	private void majBddProduitPerime() {
+	public void majBddProduitPerime() {
 
 		objBd.open();
 		int nbDenregistrement = objBd.renvoi_nbChamp("produit_Enregistre");
@@ -207,7 +224,7 @@ public class majWidget {
 		String nomThemeChoisi = Param[2].get(0).toString().trim();
 
 		if (EnTheme.Bisounours.getLib().equals(nomThemeChoisi)) {
-			remoteView.setImageViewResource(R.id.imageButton1, R.drawable.icone_bisounours);
+			remoteView.setImageViewResource(R.id.WidgetImageView, R.drawable.icone_bisounours);
 		}
 		if (EnTheme.Classique.getLib().equals(nomThemeChoisi)) {
 			// on supprime le theme classique car trop buggué visuellement,
@@ -219,11 +236,13 @@ public class majWidget {
 			objBd.open();
 			objBd.majTable("Param", values, "", null);
 			objBd.close();
-			remoteView.setImageViewResource(R.id.imageButton1, R.drawable.icone1);
+			remoteView.setImageViewResource(R.id.WidgetImageView, R.drawable.icone1);
 		}
 		if (EnTheme.Fleur.getLib().equals(nomThemeChoisi)) {
-			remoteView.setImageViewResource(R.id.imageButton1, R.drawable.icone1);
+			remoteView.setImageViewResource(R.id.WidgetImageView, R.drawable.icone1);
 		}
+		
+		
 
 	}
 

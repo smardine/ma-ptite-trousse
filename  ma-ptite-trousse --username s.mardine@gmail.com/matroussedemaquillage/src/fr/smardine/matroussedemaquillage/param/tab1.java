@@ -2,6 +2,8 @@ package fr.smardine.matroussedemaquillage.param;
 
 import java.util.ArrayList;
 
+import widget.majWidget;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ContentValues;
@@ -18,6 +20,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import fr.smardine.matroussedemaquillage.Main;
@@ -33,6 +36,8 @@ import fr.smardine.matroussedemaquillage.remplir.formulaire_entree_page1bis;
 import fr.smardine.matroussedemaquillage.remplir.formulaire_entree_page3;
 import fr.smardine.matroussedemaquillage.variableglobale.ActivityParam;
 import fr.smardine.matroussedemaquillage.variableglobale.EnActionParDefaut;
+import fr.smardine.matroussedemaquillage.variableglobale.EnTheme;
+import fr.smardine.matroussedemaquillage.variableglobale.ValeurParDefaut;
 
 public class tab1 extends Activity implements OnClickListener, ColorPickerDialog.OnColorChangedListener, OnItemSelectedListener {
 	EditText textView;
@@ -41,6 +46,7 @@ public class tab1 extends Activity implements OnClickListener, ColorPickerDialog
 	Button BtColorPicker;
 	TextView ApercuCouleur;
 	Spinner sp;
+	ImageView IvPreviewWidget;
 
 	private static final String[] mStrings = { EnActionParDefaut.RECHERCHE.getLib(), EnActionParDefaut.PAGE_PRINC.getLib(),
 			EnActionParDefaut.PERIME.getLib() };
@@ -56,6 +62,14 @@ public class tab1 extends Activity implements OnClickListener, ColorPickerDialog
 		BtColorPicker = (Button) findViewById(R.id.BtColorPicker);
 		BtColorPicker.setOnClickListener(this);
 		ApercuCouleur = (TextView) findViewById(R.id.TvPreviewColor);
+		IvPreviewWidget = (ImageView) findViewById(R.id.IvPreviewWidget);
+		
+		/**
+		 * on met la couleur du fond dès la creation de la fenetre
+		 */
+		ValeurParDefaut val = new ValeurParDefaut(this);
+		ApercuCouleur.setTextColor(val.getCouleurPastille());
+		verifieLeThemeChoisi();
 
 		// le spinner qui permet de choisir la periodicité
 		sp = (Spinner) findViewById(R.id.SpWidget);
@@ -63,7 +77,12 @@ public class tab1 extends Activity implements OnClickListener, ColorPickerDialog
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		sp.setAdapter(adapter);
 		sp.setOnItemSelectedListener(this);
-
+		String action = val.getActionParDefaut();
+		for (EnActionParDefaut act : EnActionParDefaut.values()){
+			if (act.getLib().equals(action)){
+				sp.setSelection(act.getCode());	
+			}
+		}
 		objBd = new BDAcces(this);
 		objBd.open();
 		String[] colonnes = { "AfficheAlerte", "DureeViePeremp", "Theme" };
@@ -115,6 +134,28 @@ public class tab1 extends Activity implements OnClickListener, ColorPickerDialog
 	protected void onRestart() {
 		super.onRestart();
 		// popUp("onRestart()-Page2");
+	}
+	
+	/**
+	 * permet de changer l'icone du widget sur l'objet ImageView
+	 */
+	private void verifieLeThemeChoisi() {
+		objBd = new BDAcces(this);
+		objBd.open();
+		String[] colonnes = { "AfficheAlerte", "DureeViePeremp", "Theme" };
+		@SuppressWarnings("rawtypes")
+		ArrayList[] Param = objBd.renvoi_param(colonnes);
+
+		String nomThemeChoisi = Param[2].get(0).toString().trim();
+		if (EnTheme.Bisounours.getLib().equals(nomThemeChoisi)) {
+			IvPreviewWidget.setImageResource(R.drawable.icone_bisounours);
+			
+		}
+		if (EnTheme.Fleur.getLib().equals(nomThemeChoisi)) {
+
+			IvPreviewWidget.setImageResource(R.drawable.icone1);
+		}
+		objBd.close();
 	}
 
 	/**
@@ -188,6 +229,7 @@ public class tab1 extends Activity implements OnClickListener, ColorPickerDialog
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			new majWidget(this);
 			Intent intent = null;
 			boolean isLaunchByNotePage1 = getIntent().getBooleanExtra(ActivityParam.LaunchFromNotePage1, false);
 			boolean isLaunchByNoteSaisie = getIntent().getBooleanExtra(ActivityParam.LaunchFromNoteSaisie, false);
@@ -262,6 +304,7 @@ public class tab1 extends Activity implements OnClickListener, ColorPickerDialog
 			return true;
 		}
 		if (keyCode == KeyEvent.KEYCODE_SEARCH) {
+			new majWidget(this);
 			Intent intentRecherche = new Intent(this, Recherche.class);
 			// on demarre la nouvelle activité
 			startActivity(intentRecherche);
@@ -286,20 +329,37 @@ public class tab1 extends Activity implements OnClickListener, ColorPickerDialog
 	@Override
 	public void onClick(View p_v) {
 		if (p_v == BtColorPicker) {
-			new ColorPickerDialog(this, this, 0).show();
+			ValeurParDefaut val = new ValeurParDefaut(this);
+			new ColorPickerDialog(this, this,val.getCouleurPastille()).show();
 		}
 
 	}
 
 	@Override
 	public void colorChanged(int p_color) {
-		ApercuCouleur.setBackgroundColor(p_color);
+		ApercuCouleur.setTextColor(p_color);
+		ValeurParDefaut val = new ValeurParDefaut(this);
+		val.setCouleurPastille(p_color);
+		new majWidget(this);
 
 	}
 
 	@Override
-	public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-		// TODO Auto-generated method stub
+	public void onItemSelected(AdapterView<?> Parent, View view, int position, long id) {
+		if (id == EnActionParDefaut.RECHERCHE.getCode()) {
+			ValeurParDefaut val = new ValeurParDefaut(this);
+			val.setActionParDefaut(EnActionParDefaut.RECHERCHE.getLib());
+			
+		}
+		if (id == EnActionParDefaut.PAGE_PRINC.getCode()) {
+			ValeurParDefaut val = new ValeurParDefaut(this);
+			val.setActionParDefaut(EnActionParDefaut.PAGE_PRINC.getLib());
+		}
+		if (id ==  EnActionParDefaut.PERIME.getCode()) {
+			ValeurParDefaut val = new ValeurParDefaut(this);
+			val.setActionParDefaut(EnActionParDefaut.PERIME.getLib());
+		}
+		new majWidget(this);
 
 	}
 

@@ -379,6 +379,8 @@ public class Main extends Activity implements OnClickListener {
 				adInfoProduitPerimé.show();
 			}
 		}
+		
+		
 
 		/*
 		 * AlphaAnimation anim11 = new AlphaAnimation(1, 0.2f); anim11.setDuration (5000); BtRemplir.startAnimation (anim11);
