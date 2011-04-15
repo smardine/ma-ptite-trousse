@@ -1,5 +1,6 @@
 package fr.smardine.matroussedemaquillage.param;
 
+import widget.majWidget;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -83,6 +84,7 @@ public class tab3 extends Activity {
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			new majWidget(this);
 			Intent intent = null;
 			boolean isLaunchByNotePage1 = getIntent().getBooleanExtra(ActivityParam.LaunchFromNotePage1, false);
 			boolean isLaunchByNoteSaisie = getIntent().getBooleanExtra(ActivityParam.LaunchFromNoteSaisie, false);
@@ -158,6 +160,7 @@ public class tab3 extends Activity {
 			return true;
 		}
 		if (keyCode == KeyEvent.KEYCODE_SEARCH) {
+			new majWidget(this);
 			Intent intentRecherche = new Intent(this, Recherche.class);
 			// on demarre la nouvelle activité
 			startActivity(intentRecherche);

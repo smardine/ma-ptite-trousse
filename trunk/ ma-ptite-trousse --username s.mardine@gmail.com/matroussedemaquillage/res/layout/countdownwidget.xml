@@ -3,21 +3,20 @@
 <RelativeLayout
 
   xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_width="wrap_content"
-  android:layout_height="wrap_content">
-	<ImageButton android:layout_width="wrap_content" 
-	android:layout_height="wrap_content" 
-	android:id="@+id/imageButton1" 
-	android:layout_below="@+id/WidgetTextView" 
-	android:layout_alignParentTop="true" 
-	android:src="@drawable/icone1" android:adjustViewBounds="true"></ImageButton>
+  android:layout_height="92dip" android:layout_width="92dip">
+	<ImageView android:layout_width="72dip" 
+	android:layout_height="72dip" 
+	
+	android:adjustViewBounds="true" 
+	android:id="@+id/WidgetImageView" 
+	android:layout_alignParentTop="true"></ImageView>
 	<TextView android:layout_width="wrap_content" 
 	android:textSize="32px" 
 	android:layout_height="wrap_content" 
 	android:textColor="#FF0000" 
 	android:id="@+id/WidgetTextView" 
-	android:text="10" 
-	android:layout_alignRight="@+id/imageButton1"></TextView>
+	android:layout_alignTop="@+id/WidgetImageView"
+	android:layout_alignLeft="@+id/WidgetImageView" android:layout_marginLeft="5dip" android:layout_marginTop="5dip" android:text="Veuillez patientez"></TextView>
 
 
 

@@ -17,7 +17,7 @@
 	
 	<RelativeLayout android:id="@+id/RelativeLayout01" 
 	android:layout_width="wrap_content" 
-	android:layout_height="wrap_content">
+	android:layout_height="wrap_content" android:gravity="top">
 	
 	
 	
@@ -70,8 +70,21 @@
 		android:id="@+id/BtColorPicker" 
 		android:text="Choix couleur" 
 		android:layout_below="@+id/TvPreviewColor"></Button>
+		<ImageView android:layout_toRightOf="@+id/BtColorPicker"
+		android:layout_alignTop="@+id/BtColorPicker" 
+		android:layout_alignBottom="@+id/BtColorPicker" 
+		android:id="@+id/IvPreviewWidget" 
+		android:src="@drawable/icone1"
+		android:adjustViewBounds="true"
+		android:layout_width="92dip"
+		android:layout_height="92dip"></ImageView>
 		<TextView android:layout_width="wrap_content"
-		 android:text="@+id/TextView01" android:id="@+id/TvPreviewColor" android:layout_height="wrap_content" android:layout_toRightOf="@+id/imageView1" android:layout_below="@+id/TvConfWidgetColor"></TextView>
+		 android:id="@+id/TvPreviewColor" 
+		 android:layout_height="wrap_content"
+		 android:layout_toRightOf="@+id/IvPreviewWidget" 
+		 android:layout_below="@+id/TvConfWidgetColor"
+		 android:text="10" 
+		 android:textColor="@color/text_color"></TextView>
 		
 
 </RelativeLayout>
