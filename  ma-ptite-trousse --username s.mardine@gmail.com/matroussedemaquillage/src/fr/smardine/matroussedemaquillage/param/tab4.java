@@ -111,7 +111,7 @@ public class tab4 extends Activity implements OnClickListener {
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
-			new majWidget(this);
+			new majWidget(this,false);
 			Intent intent = null;
 			boolean isLaunchByNotePage1 = getIntent().getBooleanExtra(ActivityParam.LaunchFromNotePage1, false);
 			boolean isLaunchByNoteSaisie = getIntent().getBooleanExtra(ActivityParam.LaunchFromNoteSaisie, false);
@@ -187,7 +187,7 @@ public class tab4 extends Activity implements OnClickListener {
 			return true;
 		}
 		if (keyCode == KeyEvent.KEYCODE_SEARCH) {
-			new majWidget(this);
+			new majWidget(this,false);
 			Intent intentRecherche = new Intent(this, Recherche.class);
 			// on demarre la nouvelle activité
 			startActivity(intentRecherche);

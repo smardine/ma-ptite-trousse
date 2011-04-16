@@ -229,7 +229,7 @@ public class tab1 extends Activity implements OnClickListener, ColorPickerDialog
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
-			new majWidget(this);
+			new majWidget(this,false);
 			Intent intent = null;
 			boolean isLaunchByNotePage1 = getIntent().getBooleanExtra(ActivityParam.LaunchFromNotePage1, false);
 			boolean isLaunchByNoteSaisie = getIntent().getBooleanExtra(ActivityParam.LaunchFromNoteSaisie, false);
@@ -304,7 +304,7 @@ public class tab1 extends Activity implements OnClickListener, ColorPickerDialog
 			return true;
 		}
 		if (keyCode == KeyEvent.KEYCODE_SEARCH) {
-			new majWidget(this);
+			new majWidget(this,false);
 			Intent intentRecherche = new Intent(this, Recherche.class);
 			// on demarre la nouvelle activité
 			startActivity(intentRecherche);
@@ -340,7 +340,7 @@ public class tab1 extends Activity implements OnClickListener, ColorPickerDialog
 		ApercuCouleur.setTextColor(p_color);
 		ValeurParDefaut val = new ValeurParDefaut(this);
 		val.setCouleurPastille(p_color);
-		new majWidget(this);
+		new majWidget(this,false);
 
 	}
 
@@ -359,7 +359,7 @@ public class tab1 extends Activity implements OnClickListener, ColorPickerDialog
 			ValeurParDefaut val = new ValeurParDefaut(this);
 			val.setActionParDefaut(EnActionParDefaut.PERIME.getLib());
 		}
-		new majWidget(this);
+		new majWidget(this,false);
 
 	}
 
