@@ -31,7 +31,7 @@ public class majWidget {
 	 * <li>met en accord le logo du widget avec le theme choisi dans l'appli.
 	 * @param context
 	 */
-	public majWidget(Context context) {
+	public majWidget(Context context, boolean majAussiBdd) {
 		objBd = new BDAcces(context);
 		// contaire le nb de produit perimé dans la trousse:
 		String SQL = "SELECT " + "id_produits "//
@@ -73,13 +73,17 @@ public class majWidget {
 			remoteView.setTextViewText(R.id.WidgetTextView, "");
 		}
 		
+		if (majAussiBdd){
+			majBddProduitPerime();	
+		}
+		
 		
 		
 		appWidgetManager.updateAppWidget(appWidgetId, remoteView);
 	}
 
-	public void majBddProduitPerime() {
-
+	private void majBddProduitPerime() {
+		System.out.println("maj bdd produit perime dans maj Widget");
 		objBd.open();
 		int nbDenregistrement = objBd.renvoi_nbChamp("produit_Enregistre");
 		objBd.close();
@@ -92,7 +96,8 @@ public class majWidget {
 
 			// on commence par recalculer la date de permeption suite au bug de calcul lors de l'entrée du produit:
 			for (int j = 0; j < nbDenregistrement; j++) {
-
+				int total = (100 * j) / nbDenregistrement;
+				System.out.println("Pourcentage: "+total+" maj bdd produit perime dans maj Widget");
 				String s_idProduit = datePerem[1].get(j).toString().replace("[", "").replace("]", "");
 
 				// //////////////////////////////////

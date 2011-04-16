@@ -96,8 +96,8 @@ public class CountdownWidget extends AppWidgetProvider {
 		// we will use only the first creation run
 
 		// mise a jour des produits perime dans la base:
-		majWidget maj = new majWidget(context);
-		maj.majBddProduitPerime();
+		majWidget maj = new majWidget(context,true);
+		
 
 	}
 

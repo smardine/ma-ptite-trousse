@@ -139,7 +139,7 @@ public class tab2 extends Activity implements OnItemSelectedListener, ViewFactor
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
-			new majWidget(this);
+			new majWidget(this,false);
 			Intent intent = null;
 			boolean isLaunchByNotePage1 = getIntent().getBooleanExtra(ActivityParam.LaunchFromNotePage1, false);
 			boolean isLaunchByNoteSaisie = getIntent().getBooleanExtra(ActivityParam.LaunchFromNoteSaisie, false);
@@ -215,7 +215,7 @@ public class tab2 extends Activity implements OnItemSelectedListener, ViewFactor
 			return true;
 		}
 		if (keyCode == KeyEvent.KEYCODE_SEARCH) {
-			new majWidget(this);
+			new majWidget(this,false);
 			Intent intentRecherche = new Intent(this, Recherche.class);
 			// on demarre la nouvelle activité
 			startActivity(intentRecherche);
@@ -272,7 +272,7 @@ public class tab2 extends Activity implements OnItemSelectedListener, ViewFactor
 			mSwitcher.setImageResource(mImageIds[EnTheme.Bisounours.getCode()]);
 		}
 		
-		new majWidget(this);
+		new majWidget(this,false);
 	}
 
 	private final Integer[] mImageIds = { R.drawable.acceuil_fleur, R.drawable.acceuil_bisounours };

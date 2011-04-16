@@ -214,7 +214,7 @@ public class EntryPoint extends Activity implements ViewFactory {
 
 	private void majwidget() {
 		Context context = this;
-		majWidget maj = new majWidget(context);
+		new majWidget(context,false);
 
 	}
 
