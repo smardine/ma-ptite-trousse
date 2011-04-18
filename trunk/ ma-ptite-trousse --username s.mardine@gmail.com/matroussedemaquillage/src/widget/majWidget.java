@@ -33,7 +33,12 @@ public class majWidget {
 	 */
 	public majWidget(Context context, boolean majAussiBdd) {
 		objBd = new BDAcces(context);
-		// contaire le nb de produit perimé dans la trousse:
+
+		if (majAussiBdd) {
+			majBddProduitPerime();
+		}
+
+		// conaitre le nb de produit perimé dans la trousse:
 		String SQL = "SELECT " + "id_produits "//
 				+ "FROM produit_Enregistre "//
 				+ "where " //
@@ -45,21 +50,20 @@ public class majWidget {
 
 		ValeurParDefaut val = new ValeurParDefaut(context);
 		String action = val.getActionParDefaut();
-		
-		Intent intent=  new Intent(context, recherche_produit_perime.class);
-		if (action.equals(EnActionParDefaut.PERIME.getLib())&&nbProds==0){
-			intent = new Intent(context,EnActionParDefaut.PAGE_PRINC.getClasses());
-		}else{
-			for (EnActionParDefaut act : EnActionParDefaut.values()){
-				if (act.getLib().equals(action)){
-					intent = new Intent(context,act.getClasses());
+
+		Intent intent = new Intent(context, recherche_produit_perime.class);
+		if (action.equals(EnActionParDefaut.PERIME.getLib()) && nbProds == 0) {
+			intent = new Intent(context, EnActionParDefaut.PAGE_PRINC.getClasses());
+		} else {
+			for (EnActionParDefaut act : EnActionParDefaut.values()) {
+				if (act.getLib().equals(action)) {
+					intent = new Intent(context, act.getClasses());
 				}
-			}	
+			}
 		}
-		
+
 		// Get the layout for the App Widget and attach an on-click listener to the button
 
-		
 		PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
 		AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
 		ComponentName appWidgetId = new ComponentName(context, CountdownWidget.class);
@@ -72,13 +76,7 @@ public class majWidget {
 		} else {
 			remoteView.setTextViewText(R.id.WidgetTextView, "");
 		}
-		
-		if (majAussiBdd){
-			majBddProduitPerime();	
-		}
-		
-		
-		
+
 		appWidgetManager.updateAppWidget(appWidgetId, remoteView);
 	}
 
@@ -97,7 +95,7 @@ public class majWidget {
 			// on commence par recalculer la date de permeption suite au bug de calcul lors de l'entrée du produit:
 			for (int j = 0; j < nbDenregistrement; j++) {
 				int total = (100 * j) / nbDenregistrement;
-				System.out.println("Pourcentage: "+total+" maj bdd produit perime dans maj Widget");
+				System.out.println("Pourcentage: " + total + " maj bdd produit perime dans maj Widget");
 				String s_idProduit = datePerem[1].get(j).toString().replace("[", "").replace("]", "");
 
 				// //////////////////////////////////
@@ -246,8 +244,6 @@ public class majWidget {
 		if (EnTheme.Fleur.getLib().equals(nomThemeChoisi)) {
 			remoteView.setImageViewResource(R.id.WidgetImageView, R.drawable.icone1);
 		}
-		
-		
 
 	}
 
