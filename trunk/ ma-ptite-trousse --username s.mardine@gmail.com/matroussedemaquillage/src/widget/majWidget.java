@@ -21,6 +21,9 @@ import fr.smardine.matroussedemaquillage.variableglobale.EnActionParDefaut;
 import fr.smardine.matroussedemaquillage.variableglobale.EnTheme;
 import fr.smardine.matroussedemaquillage.variableglobale.ValeurParDefaut;
 
+/**
+ * @author smardine
+ */
 public class majWidget {
 	BDAcces objBd;
 
@@ -73,6 +76,7 @@ public class majWidget {
 		remoteView.setOnClickPendingIntent(R.id.WidgetImageView, pendingIntent);
 		if (nbProds > 0) {
 			remoteView.setTextViewText(R.id.WidgetTextView, "" + nbProds);
+
 		} else {
 			remoteView.setTextViewText(R.id.WidgetTextView, "");
 		}

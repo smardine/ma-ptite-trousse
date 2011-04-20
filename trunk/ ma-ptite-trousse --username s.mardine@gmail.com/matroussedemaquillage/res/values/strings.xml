@@ -5,13 +5,8 @@
     <string name="default_action">Affiche produit(s) périmé(s)</string>
     <color name="app_color">#FFFFFF</color>
     <color name="text_color">#000000</color>
+    <string name="pastille_color">-65536</string>
     
-     <!-- ============================ -->
-    <!--  AppWidget examples strings     -->
-    <!-- ============================ -->
-    <integer-array name="pastilleColor">
-        <item>-65536</item>
-    </integer-array>
     
 
    

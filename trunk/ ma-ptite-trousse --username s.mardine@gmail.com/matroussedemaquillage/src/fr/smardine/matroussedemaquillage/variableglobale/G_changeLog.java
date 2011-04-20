@@ -7,11 +7,20 @@ public class G_changeLog {
 	/**
 	 * repertorie tout les changements apporté a l'appli
 	 */
-	public static String Changement = "Version 2.01:\n"
+	public static String Changement = "Version 2.02:\n"
+			+ "Ajout du widget:\n"
+			+ "Celui ci calcule de manière cyclique (1 fois par jour) le nombre de produits périmé et l'affiche (si aucun produit n'est périmé, aucun chiffre ne sera affiché sur le Widget).\n"
+			+ "Possibilité de changer la couleur de la pastille du Widget.\n"
+			+ "L'icône du Widget change en fonction du thème choisi dans l'application.\n"
+			+ "Possibilité de choisir quelle fenêtre sera ouverte quand on clique sur le Widget.\n"
+			+ "Tous ces réglages se font depuis l'application, dans les paramètres.\n"
+			+ "Pour ajouter le Widget,\n"
+			+ " depuis l'écran d'accueil du téléphone,faire 'menu' puis 'ajouter' puis 'Widget'\n"
+			+ "8888888888888888888888\n"
+			+ "Version 2.01:\n"
 			+ "Possibilité de desactiver la fenetre alerte directement au demarrage (aller dans les parametres pour la reactiver)\n"
 			+ "On conserve maintenant les 5 dernieres sauvegardes, on peut choisir quelle sauvegarde on veut recuperer si on a besoin de faire une restauration de la base.\n"
-			+"La modification des catégories a été revue et corrigées."
-
+			+ "La modification des catégories a été revue et corrigées.\n"
 			+ "888888888888888888\n"
 			+ "Version 2.00: \n"
 			+ "Ajout d'une sauvegarde automatique de la base de données à la fermeture de l'application\n"

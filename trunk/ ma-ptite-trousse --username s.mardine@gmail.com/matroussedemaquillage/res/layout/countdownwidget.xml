@@ -11,13 +11,16 @@
 	android:id="@+id/WidgetImageView" 
 	android:layout_alignParentTop="true"></ImageView>
 	<TextView android:layout_width="wrap_content" 
-	android:textSize="32px" 
 	android:layout_height="wrap_content" 
 	android:textColor="#FF0000" 
 	android:id="@+id/WidgetTextView" 
 	android:layout_alignTop="@+id/WidgetImageView"
-	android:layout_alignLeft="@+id/WidgetImageView" android:layout_marginLeft="5dip" android:layout_marginTop="5dip" android:text="Veuillez patientez"></TextView>
-
+	android:layout_alignLeft="@+id/WidgetImageView" 
+	android:layout_marginLeft="5dip" 
+	android:layout_marginTop="5dip" 
+	android:text="Veuillez patientez"
+	android:textSize="32px"></TextView>
+ 
 
 
 
