@@ -39,7 +39,7 @@
 
 
 
-<activity android:name=".param.tab4"></activity>
+<activity android:name=".param.tab4" android:screenOrientation="portrait"></activity>
   		 <!-- ************************************* -->
         <!--      	APPWIDGET PACKAGE           	-->
         <!-- ************************************* -->
@@ -50,18 +50,6 @@
               <meta-data android:name="android.appwidget.provider"              
               android:resource="@xml/countwidget_info" />
       </receiver>
-      
-     
-      
-      
-
-        
-        
-<activity android:name="widget.CountdownConfiguration">
-<intent-filter><action android:name="android.intent.action.MAIN"></action>
-<category android:name="android.intent.category.LAUNCHER"></category>
-</intent-filter>
-</activity>
 </application>
     <uses-sdk android:minSdkVersion="7" />
 
