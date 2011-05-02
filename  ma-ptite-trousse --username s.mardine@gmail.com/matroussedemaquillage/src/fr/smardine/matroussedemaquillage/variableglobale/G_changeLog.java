@@ -7,7 +7,9 @@ public class G_changeLog {
 	/**
 	 * repertorie tout les changements apporté a l'appli
 	 */
-	public static String Changement = "Version 2.02:\n"
+	public static String Changement = "Version 2.03:\n"
+			+ "Correction apportée au widget."
+			+ "Version 2.02:\n"
 			+ "Ajout du widget:\n"
 			+ "Celui ci calcule de manière cyclique (1 fois par jour) le nombre de produits périmé et l'affiche (si aucun produit n'est périmé, aucun chiffre ne sera affiché sur le Widget).\n"
 			+ "Possibilité de changer la couleur de la pastille du Widget.\n"
