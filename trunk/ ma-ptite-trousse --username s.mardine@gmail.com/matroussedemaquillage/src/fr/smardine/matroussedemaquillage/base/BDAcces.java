@@ -1683,8 +1683,12 @@ public class BDAcces {
 		return aTableRetour;
 	}
 
+	/**
+	 * @param colonne
+	 * @return
+	 */
 	@SuppressWarnings("rawtypes")
-	public ArrayList[] renvoi_param(String[] colonne) {
+	public ArrayList<String>[] renvoi_param(String[] colonne) {
 		// open();
 
 		// String[] colonne= new String[]{"nom_produit","DateAchat","Date_Peremption"};

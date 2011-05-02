@@ -69,19 +69,25 @@ public class majWidget {
 
 		PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
 		AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-		ComponentName appWidgetId = new ComponentName(context, CountdownWidget.class);
-		RemoteViews remoteView = new RemoteViews(context.getPackageName(), R.layout.countdownwidget);
-		VerifLeTheme(remoteView);
-		remoteView.setTextColor(R.id.WidgetTextView, val.getCouleurPastille());
-		remoteView.setOnClickPendingIntent(R.id.WidgetImageView, pendingIntent);
-		if (nbProds > 0) {
-			remoteView.setTextViewText(R.id.WidgetTextView, "" + nbProds);
 
-		} else {
-			remoteView.setTextViewText(R.id.WidgetTextView, "");
+		ComponentName provider = new ComponentName(context, CountdownWidget.class);
+		int[] widgetIDs = appWidgetManager.getAppWidgetIds(provider);
+
+		for (int widgetId : widgetIDs) {
+			RemoteViews remoteView = new RemoteViews(context.getPackageName(), R.layout.countdownwidget);
+			VerifLeTheme(remoteView);
+			remoteView.setTextColor(R.id.WidgetTextView, val.getCouleurPastille());
+			remoteView.setOnClickPendingIntent(R.id.WidgetImageView, pendingIntent);
+			if (nbProds > 0) {
+				remoteView.setTextViewText(R.id.WidgetTextView, "" + nbProds);
+
+			} else {
+				remoteView.setTextViewText(R.id.WidgetTextView, "");
+			}
+
+			appWidgetManager.updateAppWidget(widgetId, remoteView);
 		}
 
-		appWidgetManager.updateAppWidget(appWidgetId, remoteView);
 	}
 
 	private void majBddProduitPerime() {
@@ -222,10 +228,11 @@ public class majWidget {
 
 	}
 
+	@SuppressWarnings("rawtypes")
 	private void VerifLeTheme(RemoteViews remoteView) {
 		objBd.open();
 		String[] champ = { "AfficheAlerte", "DureeViePeremp", "Theme" };
-		ArrayList[] Param = objBd.renvoi_param(champ);
+		ArrayList<String>[] Param = objBd.renvoi_param(champ);
 		objBd.close();
 
 		String nomThemeChoisi = Param[2].get(0).toString().trim();

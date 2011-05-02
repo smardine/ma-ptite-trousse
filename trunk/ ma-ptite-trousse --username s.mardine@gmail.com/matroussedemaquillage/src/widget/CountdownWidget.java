@@ -96,8 +96,10 @@ public class CountdownWidget extends AppWidgetProvider {
 		// we will use only the first creation run
 
 		// mise a jour des produits perime dans la base:
-		majWidget maj = new majWidget(context,true);
-		
+		// for (int appWidgetid : appWidgetIds) {
+		@SuppressWarnings("unused")
+		majWidget maj = new majWidget(context, true);
+		// }
 
 	}
 
