@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+
+ android:background="@color/app_color" 
+  android:orientation="horizontal" 
+  android:layout_height="wrap_content" android:layout_width="fill_parent">
+	
+	
+	
+			
+	
+	        
+	
+<TextView android:text="@+id/TvIdNote" 
+android:id="@+id/TvIdNote" 
+android:layout_width="0dp" 
+android:layout_gravity="center_vertical" 
+android:layout_weight="0.01"
+android:textSize="16sp" 
+android:textStyle="bold"
+android:layout_height="wrap_content" 
+android:textColor="@color/text_color" >
+</TextView>
+<TextView android:text="@+id/TvTitreNote" 
+android:id="@+id/TvTitreNote" 
+android:textSize="16sp" 
+android:textStyle="bold"
+android:layout_height="wrap_content" 
+android:textColor="@color/text_color" 
+android:layout_width="0dp" 
+android:layout_gravity="center_vertical" 
+android:layout_weight="3">
+</TextView>
+<ImageView android:id="@+id/IvModifNote" 
+android:layout_height="wrap_content" 
+android:src="@drawable/button_ecrire"
+android:layout_width="0dp" 
+android:layout_gravity="center_vertical" 
+android:layout_weight="1">
+</ImageView>
+
+</LinearLayout>
