@@ -1,0 +1,456 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="http://findbugs.sourceforge.net/xsl/default.xsl"?>
+
+<BugCollection version="1.3.9" sequence="0" timestamp="1304337637258" analysisTimestamp="1306838375215" release="">
+  <Project>
+    <Jar>E:\recup\ecplispe-android et autre\special android\java\workspace\matroussedemaquillage\bin</Jar>
+    <AuxClasspathEntry>E:\TEMP\findbugs509511826644375815.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>E:\TEMP\findbugs8427404513445431.jar</AuxClasspathEntry>
+    <SrcDir>E:\recup\ecplispe-android et autre\special android\java\workspace\matroussedemaquillage\src</SrcDir>
+    <WrkDir>E:\recup\ecplispe-android et autre\special android\java\workspace\matroussedemaquillage\target</WrkDir>
+  </Project>
+  <Errors errors="0" missingClasses="93">
+    <MissingClass>android.app.Activity</MissingClass>
+    <MissingClass>android.app.AlertDialog</MissingClass>
+    <MissingClass>android.app.AlertDialog$Builder</MissingClass>
+    <MissingClass>android.app.DatePickerDialog</MissingClass>
+    <MissingClass>android.app.DatePickerDialog$OnDateSetListener</MissingClass>
+    <MissingClass>android.app.Dialog</MissingClass>
+    <MissingClass>android.app.PendingIntent</MissingClass>
+    <MissingClass>android.app.TabActivity</MissingClass>
+    <MissingClass>android.appwidget.AppWidgetManager</MissingClass>
+    <MissingClass>android.appwidget.AppWidgetProvider</MissingClass>
+    <MissingClass>android.content.ComponentName</MissingClass>
+    <MissingClass>android.content.ContentValues</MissingClass>
+    <MissingClass>android.content.Context</MissingClass>
+    <MissingClass>android.content.DialogInterface</MissingClass>
+    <MissingClass>android.content.DialogInterface$OnClickListener</MissingClass>
+    <MissingClass>android.content.Intent</MissingClass>
+    <MissingClass>android.content.SharedPreferences</MissingClass>
+    <MissingClass>android.content.SharedPreferences$Editor</MissingClass>
+    <MissingClass>android.database.Cursor</MissingClass>
+    <MissingClass>android.database.SQLException</MissingClass>
+    <MissingClass>android.database.sqlite.SQLiteDatabase</MissingClass>
+    <MissingClass>android.database.sqlite.SQLiteDatabase$CursorFactory</MissingClass>
+    <MissingClass>android.database.sqlite.SQLiteOpenHelper</MissingClass>
+    <MissingClass>android.graphics.Camera</MissingClass>
+    <MissingClass>android.graphics.Canvas</MissingClass>
+    <MissingClass>android.graphics.Color</MissingClass>
+    <MissingClass>android.graphics.ColorMatrix</MissingClass>
+    <MissingClass>android.graphics.Matrix</MissingClass>
+    <MissingClass>android.graphics.Paint</MissingClass>
+    <MissingClass>android.graphics.Paint$Style</MissingClass>
+    <MissingClass>android.graphics.RectF</MissingClass>
+    <MissingClass>android.graphics.Shader</MissingClass>
+    <MissingClass>android.graphics.SweepGradient</MissingClass>
+    <MissingClass>android.os.AsyncTask</MissingClass>
+    <MissingClass>android.os.Bundle</MissingClass>
+    <MissingClass>android.os.Handler</MissingClass>
+    <MissingClass>android.preference.PreferenceManager</MissingClass>
+    <MissingClass>android.text.Editable</MissingClass>
+    <MissingClass>android.text.TextWatcher</MissingClass>
+    <MissingClass>android.util.Log</MissingClass>
+    <MissingClass>android.view.KeyEvent</MissingClass>
+    <MissingClass>android.view.LayoutInflater</MissingClass>
+    <MissingClass>android.view.Menu</MissingClass>
+    <MissingClass>android.view.MenuItem</MissingClass>
+    <MissingClass>android.view.MotionEvent</MissingClass>
+    <MissingClass>android.view.SubMenu</MissingClass>
+    <MissingClass>android.view.View</MissingClass>
+    <MissingClass>android.view.View$OnClickListener</MissingClass>
+    <MissingClass>android.view.ViewGroup</MissingClass>
+    <MissingClass>android.view.ViewGroup$LayoutParams</MissingClass>
+    <MissingClass>android.view.animation.AlphaAnimation</MissingClass>
+    <MissingClass>android.view.animation.Animation</MissingClass>
+    <MissingClass>android.view.animation.AnimationSet</MissingClass>
+    <MissingClass>android.view.animation.AnimationUtils</MissingClass>
+    <MissingClass>android.view.animation.LayoutAnimationController</MissingClass>
+    <MissingClass>android.view.animation.Transformation</MissingClass>
+    <MissingClass>android.view.animation.TranslateAnimation</MissingClass>
+    <MissingClass>android.widget.AdapterView</MissingClass>
+    <MissingClass>android.widget.AdapterView$OnItemClickListener</MissingClass>
+    <MissingClass>android.widget.AdapterView$OnItemLongClickListener</MissingClass>
+    <MissingClass>android.widget.AdapterView$OnItemSelectedListener</MissingClass>
+    <MissingClass>android.widget.ArrayAdapter</MissingClass>
+    <MissingClass>android.widget.AutoCompleteTextView</MissingClass>
+    <MissingClass>android.widget.BaseAdapter</MissingClass>
+    <MissingClass>android.widget.Button</MissingClass>
+    <MissingClass>android.widget.CheckBox</MissingClass>
+    <MissingClass>android.widget.EditText</MissingClass>
+    <MissingClass>android.widget.FrameLayout</MissingClass>
+    <MissingClass>android.widget.FrameLayout$LayoutParams</MissingClass>
+    <MissingClass>android.widget.ImageSwitcher</MissingClass>
+    <MissingClass>android.widget.ImageView</MissingClass>
+    <MissingClass>android.widget.ImageView$ScaleType</MissingClass>
+    <MissingClass>android.widget.ListAdapter</MissingClass>
+    <MissingClass>android.widget.ListView</MissingClass>
+    <MissingClass>android.widget.RemoteViews</MissingClass>
+    <MissingClass>android.widget.Spinner</MissingClass>
+    <MissingClass>android.widget.SpinnerAdapter</MissingClass>
+    <MissingClass>android.widget.TabHost</MissingClass>
+    <MissingClass>android.widget.TabHost$OnTabChangeListener</MissingClass>
+    <MissingClass>android.widget.TabHost$TabSpec</MissingClass>
+    <MissingClass>android.widget.TextView</MissingClass>
+    <MissingClass>android.widget.Toast</MissingClass>
+    <MissingClass>android.widget.ToggleButton</MissingClass>
+    <MissingClass>android.widget.ViewSwitcher</MissingClass>
+    <MissingClass>android.widget.ViewSwitcher$ViewFactory</MissingClass>
+    <MissingClass>org.apache.http.HttpEntity</MissingClass>
+    <MissingClass>org.apache.http.HttpResponse</MissingClass>
+    <MissingClass>org.apache.http.client.ClientProtocolException</MissingClass>
+    <MissingClass>org.apache.http.client.entity.UrlEncodedFormEntity</MissingClass>
+    <MissingClass>org.apache.http.client.methods.HttpPost</MissingClass>
+    <MissingClass>org.apache.http.client.methods.HttpUriRequest</MissingClass>
+    <MissingClass>org.apache.http.impl.client.DefaultHttpClient</MissingClass>
+    <MissingClass>org.apache.http.message.BasicNameValuePair</MissingClass>
+  </Errors>
+  <FindBugsSummary timestamp="Mon, 2 May 2011 14:00:37 +0200" total_classes="130" referenced_classes="187" total_bugs="0" total_size="7191" num_packages="11" vm_version="11.2-b01" cpu_seconds="41.45" clock_seconds="130.47" peak_mbytes="171.14" alloc_mbytes="508.06" gc_seconds="6.38">
+    <FileStats path="com/example/android/apis/animation/Animlineaire.java" bugCount="0" size="19"/>
+    <FileStats path="com/example/android/apis/animation/Rotate3dAnimation.java" bugCount="0" size="38"/>
+    <FileStats path="fr/smardine/matroussedemaquillage/Comptage.java" bugCount="0" size="67"/>
+    <FileStats path="fr/smardine/matroussedemaquillage/EntryPoint.java" bugCount="0" size="371"/>
+    <FileStats path="fr/smardine/matroussedemaquillage/Main.java" bugCount="0" size="309"/>
+    <FileStats path="fr/smardine/matroussedemaquillage/ManipFichier.java" bugCount="0" size="57"/>
+    <FileStats path="fr/smardine/matroussedemaquillage/R.java" bugCount="0" size="274"/>
+    <FileStats path="fr/smardine/matroussedemaquillage/WriteFile.java" bugCount="0" size="37"/>
+    <FileStats path="fr/smardine/matroussedemaquillage/base/BDAcces.java" bugCount="0" size="888"/>
+    <FileStats path="fr/smardine/matroussedemaquillage/base/G_creation_base.java" bugCount="0" size="186"/>
+    <FileStats path="fr/smardine/matroussedemaquillage/base/G_maj_base.java" bugCount="0" size="50"/>
+    <FileStats path="fr/smardine/matroussedemaquillage/base/G_remplirBase.java" bugCount="0" size="13"/>
+    <FileStats path="fr/smardine/matroussedemaquillage/modifier/modif_cat.java" bugCount="0" size="336"/>
+    <FileStats path="fr/smardine/matroussedemaquillage/note/noteListAdapter.java" bugCount="0" size="32"/>
+    <FileStats path="fr/smardine/matroussedemaquillage/note/note_page1.java" bugCount="0" size="270"/>
+    <FileStats path="fr/smardine/matroussedemaquillage/note/note_saisie.java" bugCount="0" size="188"/>
+    <FileStats path="fr/smardine/matroussedemaquillage/note/produitNote.java" bugCount="0" size="8"/>
+    <FileStats path="fr/smardine/matroussedemaquillage/param/ColorPickerDialog.java" bugCount="0" size="139"/>
+    <FileStats path="fr/smardine/matroussedemaquillage/param/tab1.java" bugCount="0" size="207"/>
+    <FileStats path="fr/smardine/matroussedemaquillage/param/tab2.java" bugCount="0" size="158"/>
+    <FileStats path="fr/smardine/matroussedemaquillage/param/tab3.java" bugCount="0" size="101"/>
+    <FileStats path="fr/smardine/matroussedemaquillage/param/tab4.java" bugCount="0" size="212"/>
+    <FileStats path="fr/smardine/matroussedemaquillage/param/tab_param.java" bugCount="0" size="275"/>
+    <FileStats path="fr/smardine/matroussedemaquillage/recherche/Recherche.java" bugCount="0" size="406"/>
+    <FileStats path="fr/smardine/matroussedemaquillage/recherche/affiche_detail.java" bugCount="0" size="419"/>
+    <FileStats path="fr/smardine/matroussedemaquillage/recherche/produitRecherche.java" bugCount="0" size="12"/>
+    <FileStats path="fr/smardine/matroussedemaquillage/recherche/produitRechercheListAdapter.java" bugCount="0" size="36"/>
+    <FileStats path="fr/smardine/matroussedemaquillage/recherche/recherche_produit_perime.java" bugCount="0" size="385"/>
+    <FileStats path="fr/smardine/matroussedemaquillage/remplir/choix_produit_a_duppliquer.java" bugCount="0" size="246"/>
+    <FileStats path="fr/smardine/matroussedemaquillage/remplir/formulaire_entree_page1bis.java" bugCount="0" size="528"/>
+    <FileStats path="fr/smardine/matroussedemaquillage/remplir/formulaire_entree_page3.java" bugCount="0" size="395"/>
+    <FileStats path="fr/smardine/matroussedemaquillage/variableglobale/ActivityParam.java" bugCount="0" size="46"/>
+    <FileStats path="fr/smardine/matroussedemaquillage/variableglobale/EnActionParDefaut.java" bugCount="0" size="30"/>
+    <FileStats path="fr/smardine/matroussedemaquillage/variableglobale/EnCategorieAutres.java" bugCount="0" size="30"/>
+    <FileStats path="fr/smardine/matroussedemaquillage/variableglobale/EnCategorieFiltrage.java" bugCount="0" size="32"/>
+    <FileStats path="fr/smardine/matroussedemaquillage/variableglobale/EnCategorieLevre.java" bugCount="0" size="29"/>
+    <FileStats path="fr/smardine/matroussedemaquillage/variableglobale/EnCategorieVisage.java" bugCount="0" size="34"/>
+    <FileStats path="fr/smardine/matroussedemaquillage/variableglobale/EnCategorieYeux.java" bugCount="0" size="34"/>
+    <FileStats path="fr/smardine/matroussedemaquillage/variableglobale/EnPeriodicite.java" bugCount="0" size="24"/>
+    <FileStats path="fr/smardine/matroussedemaquillage/variableglobale/EnTheme.java" bugCount="0" size="30"/>
+    <FileStats path="fr/smardine/matroussedemaquillage/variableglobale/G_changeLog.java" bugCount="0" size="6"/>
+    <FileStats path="fr/smardine/matroussedemaquillage/variableglobale/ValeurParDefaut.java" bugCount="0" size="26"/>
+    <FileStats path="helper/DateHelper.java" bugCount="0" size="54"/>
+    <FileStats path="widget/CountdownWidget.java" bugCount="0" size="18"/>
+    <FileStats path="widget/majWidget.java" bugCount="0" size="136"/>
+    <PackageStats package="com.example.android.apis.animation" total_bugs="0" total_types="2" total_size="57">
+      <ClassStats class="com.example.android.apis.animation.Animlineaire" sourceFile="Animlineaire.java" interface="false" size="19" bugs="0"/>
+      <ClassStats class="com.example.android.apis.animation.Rotate3dAnimation" sourceFile="Rotate3dAnimation.java" interface="false" size="38" bugs="0"/>
+    </PackageStats>
+    <PackageStats package="fr.smardine.matroussedemaquillage" total_bugs="0" total_types="24" total_size="1115">
+      <ClassStats class="fr.smardine.matroussedemaquillage.Comptage" sourceFile="Comptage.java" interface="false" size="67" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.EntryPoint" sourceFile="EntryPoint.java" interface="false" size="311" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.EntryPoint$1" sourceFile="EntryPoint.java" interface="false" size="9" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.EntryPoint$2" sourceFile="EntryPoint.java" interface="false" size="9" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.EntryPoint$CheckTask" sourceFile="EntryPoint.java" interface="false" size="31" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.EntryPoint$FermetureTask" sourceFile="EntryPoint.java" interface="false" size="11" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.Main" sourceFile="Main.java" interface="false" size="237" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.Main$1" sourceFile="Main.java" interface="false" size="19" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.Main$2" sourceFile="Main.java" interface="false" size="14" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.Main$3" sourceFile="Main.java" interface="false" size="11" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.Main$4" sourceFile="Main.java" interface="false" size="11" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.Main$5" sourceFile="Main.java" interface="false" size="17" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.ManipFichier" sourceFile="ManipFichier.java" interface="false" size="50" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.ManipFichier$1" sourceFile="ManipFichier.java" interface="false" size="7" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.R" sourceFile="R.java" interface="false" size="3" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.R$anim" sourceFile="R.java" interface="false" size="10" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.R$attr" sourceFile="R.java" interface="false" size="3" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.R$color" sourceFile="R.java" interface="false" size="5" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.R$drawable" sourceFile="R.java" interface="false" size="64" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.R$id" sourceFile="R.java" interface="false" size="140" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.R$layout" sourceFile="R.java" interface="false" size="37" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.R$string" sourceFile="R.java" interface="false" size="7" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.R$xml" sourceFile="R.java" interface="false" size="5" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.WriteFile" sourceFile="WriteFile.java" interface="false" size="37" bugs="0"/>
+    </PackageStats>
+    <PackageStats package="fr.smardine.matroussedemaquillage.base" total_bugs="0" total_types="5" total_size="1137">
+      <ClassStats class="fr.smardine.matroussedemaquillage.base.BDAcces" sourceFile="BDAcces.java" interface="false" size="589" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.base.BDAcces$DatabaseHelper" sourceFile="BDAcces.java" interface="false" size="299" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.base.G_creation_base" sourceFile="G_creation_base.java" interface="false" size="186" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.base.G_maj_base" sourceFile="G_maj_base.java" interface="false" size="50" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.base.G_remplirBase" sourceFile="G_remplirBase.java" interface="false" size="13" bugs="0"/>
+    </PackageStats>
+    <PackageStats package="fr.smardine.matroussedemaquillage.modifier" total_bugs="0" total_types="9" total_size="336">
+      <ClassStats class="fr.smardine.matroussedemaquillage.modifier.modif_cat" sourceFile="modif_cat.java" interface="false" size="216" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.modifier.modif_cat$1" sourceFile="modif_cat.java" interface="false" size="27" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.modifier.modif_cat$2" sourceFile="modif_cat.java" interface="false" size="8" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.modifier.modif_cat$3" sourceFile="modif_cat.java" interface="false" size="27" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.modifier.modif_cat$4" sourceFile="modif_cat.java" interface="false" size="8" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.modifier.modif_cat$5" sourceFile="modif_cat.java" interface="false" size="17" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.modifier.modif_cat$6" sourceFile="modif_cat.java" interface="false" size="8" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.modifier.modif_cat$7" sourceFile="modif_cat.java" interface="false" size="17" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.modifier.modif_cat$8" sourceFile="modif_cat.java" interface="false" size="8" bugs="0"/>
+    </PackageStats>
+    <PackageStats package="fr.smardine.matroussedemaquillage.note" total_bugs="0" total_types="14" total_size="498">
+      <ClassStats class="fr.smardine.matroussedemaquillage.note.noteListAdapter" sourceFile="noteListAdapter.java" interface="false" size="26" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.note.noteListAdapter$ViewHolder" sourceFile="noteListAdapter.java" interface="false" size="6" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.note.note_page1" sourceFile="note_page1.java" interface="false" size="217" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.note.note_page1$1" sourceFile="note_page1.java" interface="false" size="18" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.note.note_page1$2" sourceFile="note_page1.java" interface="false" size="7" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.note.note_page1$3" sourceFile="note_page1.java" interface="false" size="13" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.note.note_page1$4" sourceFile="note_page1.java" interface="false" size="7" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.note.note_page1$5" sourceFile="note_page1.java" interface="false" size="8" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.note.note_saisie" sourceFile="note_saisie.java" interface="false" size="154" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.note.note_saisie$1" sourceFile="note_saisie.java" interface="false" size="10" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.note.note_saisie$2" sourceFile="note_saisie.java" interface="false" size="7" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.note.note_saisie$3" sourceFile="note_saisie.java" interface="false" size="10" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.note.note_saisie$4" sourceFile="note_saisie.java" interface="false" size="7" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.note.produitNote" sourceFile="produitNote.java" interface="false" size="8" bugs="0"/>
+    </PackageStats>
+    <PackageStats package="fr.smardine.matroussedemaquillage.param" total_bugs="0" total_types="12" total_size="1092">
+      <ClassStats class="fr.smardine.matroussedemaquillage.param.ColorPickerDialog" sourceFile="ColorPickerDialog.java" interface="false" size="16" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.param.ColorPickerDialog$1" sourceFile="ColorPickerDialog.java" interface="false" size="9" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.param.ColorPickerDialog$ColorPickerView" sourceFile="ColorPickerDialog.java" interface="false" size="112" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.param.ColorPickerDialog$OnColorChangedListener" sourceFile="ColorPickerDialog.java" interface="true" size="2" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.param.tab1" sourceFile="tab1.java" interface="false" size="189" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.param.tab1$1" sourceFile="tab1.java" interface="false" size="18" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.param.tab2" sourceFile="tab2.java" interface="false" size="158" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.param.tab3" sourceFile="tab3.java" interface="false" size="101" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.param.tab4" sourceFile="tab4.java" interface="false" size="185" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.param.tab4$1" sourceFile="tab4.java" interface="false" size="8" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.param.tab4$2" sourceFile="tab4.java" interface="false" size="19" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.param.tab_param" sourceFile="tab_param.java" interface="false" size="275" bugs="0"/>
+    </PackageStats>
+    <PackageStats package="fr.smardine.matroussedemaquillage.recherche" total_bugs="0" total_types="28" total_size="1258">
+      <ClassStats class="fr.smardine.matroussedemaquillage.recherche.Recherche" sourceFile="Recherche.java" interface="false" size="320" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.recherche.Recherche$1" sourceFile="Recherche.java" interface="false" size="15" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.recherche.Recherche$2" sourceFile="Recherche.java" interface="false" size="13" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.recherche.Recherche$3" sourceFile="Recherche.java" interface="false" size="10" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.recherche.Recherche$4" sourceFile="Recherche.java" interface="false" size="11" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.recherche.Recherche$5" sourceFile="Recherche.java" interface="false" size="11" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.recherche.Recherche$6" sourceFile="Recherche.java" interface="false" size="8" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.recherche.Recherche$7" sourceFile="Recherche.java" interface="false" size="18" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.recherche.affiche_detail" sourceFile="affiche_detail.java" interface="false" size="300" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.recherche.affiche_detail$1" sourceFile="affiche_detail.java" interface="false" size="12" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.recherche.affiche_detail$10" sourceFile="affiche_detail.java" interface="false" size="7" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.recherche.affiche_detail$2" sourceFile="affiche_detail.java" interface="false" size="24" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.recherche.affiche_detail$3" sourceFile="affiche_detail.java" interface="false" size="25" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.recherche.affiche_detail$4" sourceFile="affiche_detail.java" interface="false" size="7" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.recherche.affiche_detail$5" sourceFile="affiche_detail.java" interface="false" size="10" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.recherche.affiche_detail$6" sourceFile="affiche_detail.java" interface="false" size="7" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.recherche.affiche_detail$7" sourceFile="affiche_detail.java" interface="false" size="10" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.recherche.affiche_detail$8" sourceFile="affiche_detail.java" interface="false" size="7" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.recherche.affiche_detail$9" sourceFile="affiche_detail.java" interface="false" size="10" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.recherche.produitRecherche" sourceFile="produitRecherche.java" interface="false" size="12" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.recherche.produitRechercheListAdapter" sourceFile="produitRechercheListAdapter.java" interface="false" size="29" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.recherche.produitRechercheListAdapter$ViewHolder" sourceFile="produitRechercheListAdapter.java" interface="false" size="7" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.recherche.recherche_produit_perime" sourceFile="recherche_produit_perime.java" interface="false" size="322" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.recherche.recherche_produit_perime$1" sourceFile="recherche_produit_perime.java" interface="false" size="15" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.recherche.recherche_produit_perime$2" sourceFile="recherche_produit_perime.java" interface="false" size="11" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.recherche.recherche_produit_perime$3" sourceFile="recherche_produit_perime.java" interface="false" size="11" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.recherche.recherche_produit_perime$4" sourceFile="recherche_produit_perime.java" interface="false" size="8" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.recherche.recherche_produit_perime$5" sourceFile="recherche_produit_perime.java" interface="false" size="18" bugs="0"/>
+    </PackageStats>
+    <PackageStats package="fr.smardine.matroussedemaquillage.remplir" total_bugs="0" total_types="22" total_size="1169">
+      <ClassStats class="fr.smardine.matroussedemaquillage.remplir.choix_produit_a_duppliquer" sourceFile="choix_produit_a_duppliquer.java" interface="false" size="238" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.remplir.choix_produit_a_duppliquer$1" sourceFile="choix_produit_a_duppliquer.java" interface="false" size="8" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.remplir.formulaire_entree_page1bis" sourceFile="formulaire_entree_page1bis.java" interface="false" size="378" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.remplir.formulaire_entree_page1bis$1" sourceFile="formulaire_entree_page1bis.java" interface="false" size="15" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.remplir.formulaire_entree_page1bis$10" sourceFile="formulaire_entree_page1bis.java" interface="false" size="17" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.remplir.formulaire_entree_page1bis$11" sourceFile="formulaire_entree_page1bis.java" interface="false" size="8" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.remplir.formulaire_entree_page1bis$2" sourceFile="formulaire_entree_page1bis.java" interface="false" size="8" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.remplir.formulaire_entree_page1bis$3" sourceFile="formulaire_entree_page1bis.java" interface="false" size="7" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.remplir.formulaire_entree_page1bis$4" sourceFile="formulaire_entree_page1bis.java" interface="false" size="27" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.remplir.formulaire_entree_page1bis$5" sourceFile="formulaire_entree_page1bis.java" interface="false" size="8" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.remplir.formulaire_entree_page1bis$6" sourceFile="formulaire_entree_page1bis.java" interface="false" size="27" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.remplir.formulaire_entree_page1bis$7" sourceFile="formulaire_entree_page1bis.java" interface="false" size="8" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.remplir.formulaire_entree_page1bis$8" sourceFile="formulaire_entree_page1bis.java" interface="false" size="17" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.remplir.formulaire_entree_page1bis$9" sourceFile="formulaire_entree_page1bis.java" interface="false" size="8" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.remplir.formulaire_entree_page3" sourceFile="formulaire_entree_page3.java" interface="false" size="293" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.remplir.formulaire_entree_page3$1" sourceFile="formulaire_entree_page3.java" interface="false" size="11" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.remplir.formulaire_entree_page3$2" sourceFile="formulaire_entree_page3.java" interface="false" size="13" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.remplir.formulaire_entree_page3$3" sourceFile="formulaire_entree_page3.java" interface="false" size="32" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.remplir.formulaire_entree_page3$4" sourceFile="formulaire_entree_page3.java" interface="false" size="23" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.remplir.formulaire_entree_page3$5" sourceFile="formulaire_entree_page3.java" interface="false" size="7" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.remplir.formulaire_entree_page3$6" sourceFile="formulaire_entree_page3.java" interface="false" size="8" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.remplir.formulaire_entree_page3$7" sourceFile="formulaire_entree_page3.java" interface="false" size="8" bugs="0"/>
+    </PackageStats>
+    <PackageStats package="fr.smardine.matroussedemaquillage.variableglobale" total_bugs="0" total_types="11" total_size="321">
+      <ClassStats class="fr.smardine.matroussedemaquillage.variableglobale.ActivityParam" sourceFile="ActivityParam.java" interface="false" size="46" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.variableglobale.EnActionParDefaut" sourceFile="EnActionParDefaut.java" interface="false" size="30" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.variableglobale.EnCategorieAutres" sourceFile="EnCategorieAutres.java" interface="false" size="30" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.variableglobale.EnCategorieFiltrage" sourceFile="EnCategorieFiltrage.java" interface="false" size="32" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.variableglobale.EnCategorieLevre" sourceFile="EnCategorieLevre.java" interface="false" size="29" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.variableglobale.EnCategorieVisage" sourceFile="EnCategorieVisage.java" interface="false" size="34" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.variableglobale.EnCategorieYeux" sourceFile="EnCategorieYeux.java" interface="false" size="34" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.variableglobale.EnPeriodicite" sourceFile="EnPeriodicite.java" interface="false" size="24" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.variableglobale.EnTheme" sourceFile="EnTheme.java" interface="false" size="30" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.variableglobale.G_changeLog" sourceFile="G_changeLog.java" interface="false" size="6" bugs="0"/>
+      <ClassStats class="fr.smardine.matroussedemaquillage.variableglobale.ValeurParDefaut" sourceFile="ValeurParDefaut.java" interface="false" size="26" bugs="0"/>
+    </PackageStats>
+    <PackageStats package="helper" total_bugs="0" total_types="1" total_size="54">
+      <ClassStats class="helper.DateHelper" sourceFile="DateHelper.java" interface="false" size="54" bugs="0"/>
+    </PackageStats>
+    <PackageStats package="widget" total_bugs="0" total_types="2" total_size="154">
+      <ClassStats class="widget.CountdownWidget" sourceFile="CountdownWidget.java" interface="false" size="18" bugs="0"/>
+      <ClassStats class="widget.majWidget" sourceFile="majWidget.java" interface="false" size="136" bugs="0"/>
+    </PackageStats>
+    <FindBugsProfile>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.NoteAnnotationRetention" totalMilliseconds="11" invocations="187" avgMicrosecondsPerInvocation="60" maxMicrosecondsPerInvocation="397" standardDeviationMircosecondsPerInvocation="66"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.NoteCheckReturnValue" totalMilliseconds="11" invocations="187" avgMicrosecondsPerInvocation="61" maxMicrosecondsPerInvocation="708" standardDeviationMircosecondsPerInvocation="81"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.NoteNonNullAnnotations" totalMilliseconds="11" invocations="187" avgMicrosecondsPerInvocation="61" maxMicrosecondsPerInvocation="384" standardDeviationMircosecondsPerInvocation="68"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.FindMismatchedWaitOrNotify" totalMilliseconds="12" invocations="130" avgMicrosecondsPerInvocation="97" maxMicrosecondsPerInvocation="3805" standardDeviationMircosecondsPerInvocation="336"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.PreferZeroLengthArrays" totalMilliseconds="12" invocations="130" avgMicrosecondsPerInvocation="98" maxMicrosecondsPerInvocation="7376" standardDeviationMircosecondsPerInvocation="642"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.NoteCheckReturnValueAnnotations" totalMilliseconds="12" invocations="187" avgMicrosecondsPerInvocation="68" maxMicrosecondsPerInvocation="2885" standardDeviationMircosecondsPerInvocation="235"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.ConfusionBetweenInheritedAndOuterMethod" totalMilliseconds="13" invocations="130" avgMicrosecondsPerInvocation="101" maxMicrosecondsPerInvocation="4227" standardDeviationMircosecondsPerInvocation="381"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.LockCheckerFactory" totalMilliseconds="13" invocations="622" avgMicrosecondsPerInvocation="21" maxMicrosecondsPerInvocation="481" standardDeviationMircosecondsPerInvocation="22"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.FindTwoLockWait" totalMilliseconds="13" invocations="130" avgMicrosecondsPerInvocation="103" maxMicrosecondsPerInvocation="2288" standardDeviationMircosecondsPerInvocation="238"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.CloneIdiom" totalMilliseconds="14" invocations="130" avgMicrosecondsPerInvocation="108" maxMicrosecondsPerInvocation="1497" standardDeviationMircosecondsPerInvocation="139"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.InitializationChain" totalMilliseconds="16" invocations="130" avgMicrosecondsPerInvocation="125" maxMicrosecondsPerInvocation="5272" standardDeviationMircosecondsPerInvocation="464"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.MethodFactory" totalMilliseconds="18" invocations="304" avgMicrosecondsPerInvocation="59" maxMicrosecondsPerInvocation="736" standardDeviationMircosecondsPerInvocation="97"/>
+      <ClassProfile name="edu.umd.cs.findbugs.util.TopologicalSort" totalMilliseconds="18" invocations="131" avgMicrosecondsPerInvocation="144" maxMicrosecondsPerInvocation="4772" standardDeviationMircosecondsPerInvocation="426"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.UncallableMethodOfAnonymousClass" totalMilliseconds="21" invocations="130" avgMicrosecondsPerInvocation="166" maxMicrosecondsPerInvocation="3187" standardDeviationMircosecondsPerInvocation="305"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.asm.ClassReaderAnalysisEngine" totalMilliseconds="24" invocations="505" avgMicrosecondsPerInvocation="49" maxMicrosecondsPerInvocation="17247" standardDeviationMircosecondsPerInvocation="766"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.DontCatchIllegalMonitorStateException" totalMilliseconds="28" invocations="130" avgMicrosecondsPerInvocation="218" maxMicrosecondsPerInvocation="23116" standardDeviationMircosecondsPerInvocation="2016"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.FindNonSerializableValuePassedToWriteObject" totalMilliseconds="30" invocations="130" avgMicrosecondsPerInvocation="232" maxMicrosecondsPerInvocation="1849" standardDeviationMircosecondsPerInvocation="347"/>
+      <ClassProfile name="edu.umd.cs.findbugs.NonReportingDetectorToDetector2Adapter" totalMilliseconds="30" invocations="2691" avgMicrosecondsPerInvocation="11" maxMicrosecondsPerInvocation="261" standardDeviationMircosecondsPerInvocation="9"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.DominatorsAnalysisFactory" totalMilliseconds="37" invocations="12" avgMicrosecondsPerInvocation="3156" maxMicrosecondsPerInvocation="33410" standardDeviationMircosecondsPerInvocation="9122"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.BooleanReturnNull" totalMilliseconds="42" invocations="130" avgMicrosecondsPerInvocation="328" maxMicrosecondsPerInvocation="16694" standardDeviationMircosecondsPerInvocation="1465"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.NoteJCIPAnnotation" totalMilliseconds="45" invocations="187" avgMicrosecondsPerInvocation="242" maxMicrosecondsPerInvocation="30759" standardDeviationMircosecondsPerInvocation="2244"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.HugeSharedStringConstants" totalMilliseconds="45" invocations="130" avgMicrosecondsPerInvocation="353" maxMicrosecondsPerInvocation="3646" standardDeviationMircosecondsPerInvocation="699"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.SuperfluousInstanceOf" totalMilliseconds="51" invocations="130" avgMicrosecondsPerInvocation="395" maxMicrosecondsPerInvocation="4984" standardDeviationMircosecondsPerInvocation="804"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.FindMaskedFields" totalMilliseconds="51" invocations="130" avgMicrosecondsPerInvocation="399" maxMicrosecondsPerInvocation="4950" standardDeviationMircosecondsPerInvocation="810"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.SuspiciousThreadInterrupted" totalMilliseconds="53" invocations="130" avgMicrosecondsPerInvocation="408" maxMicrosecondsPerInvocation="5352" standardDeviationMircosecondsPerInvocation="853"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.WrongMapIterator" totalMilliseconds="56" invocations="130" avgMicrosecondsPerInvocation="433" maxMicrosecondsPerInvocation="3464" standardDeviationMircosecondsPerInvocation="758"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.BadUseOfReturnValue" totalMilliseconds="57" invocations="130" avgMicrosecondsPerInvocation="445" maxMicrosecondsPerInvocation="11894" standardDeviationMircosecondsPerInvocation="1208"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.IncompatMask" totalMilliseconds="59" invocations="130" avgMicrosecondsPerInvocation="461" maxMicrosecondsPerInvocation="11633" standardDeviationMircosecondsPerInvocation="1262"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.FindBugsSummaryStats" totalMilliseconds="60" invocations="187" avgMicrosecondsPerInvocation="325" maxMicrosecondsPerInvocation="43885" standardDeviationMircosecondsPerInvocation="3203"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.VarArgsProblems" totalMilliseconds="61" invocations="130" avgMicrosecondsPerInvocation="473" maxMicrosecondsPerInvocation="14277" standardDeviationMircosecondsPerInvocation="1467"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.MutableStaticFields" totalMilliseconds="65" invocations="130" avgMicrosecondsPerInvocation="506" maxMicrosecondsPerInvocation="10136" standardDeviationMircosecondsPerInvocation="1205"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.ReverseDepthFirstSearchFactory" totalMilliseconds="68" invocations="653" avgMicrosecondsPerInvocation="104" maxMicrosecondsPerInvocation="26856" standardDeviationMircosecondsPerInvocation="1059"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.NoteUnconditionalParamDerefs" totalMilliseconds="68" invocations="130" avgMicrosecondsPerInvocation="526" maxMicrosecondsPerInvocation="11484" standardDeviationMircosecondsPerInvocation="1128"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.FindDoubleCheck" totalMilliseconds="68" invocations="130" avgMicrosecondsPerInvocation="529" maxMicrosecondsPerInvocation="6631" standardDeviationMircosecondsPerInvocation="1042"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.FindUnsyncGet" totalMilliseconds="69" invocations="130" avgMicrosecondsPerInvocation="532" maxMicrosecondsPerInvocation="19473" standardDeviationMircosecondsPerInvocation="1799"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.Naming" totalMilliseconds="70" invocations="130" avgMicrosecondsPerInvocation="542" maxMicrosecondsPerInvocation="11749" standardDeviationMircosecondsPerInvocation="1224"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.FindSpinLoop" totalMilliseconds="78" invocations="130" avgMicrosecondsPerInvocation="600" maxMicrosecondsPerInvocation="19955" standardDeviationMircosecondsPerInvocation="1886"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.DepthFirstSearchFactory" totalMilliseconds="78" invocations="879" avgMicrosecondsPerInvocation="89" maxMicrosecondsPerInvocation="32821" standardDeviationMircosecondsPerInvocation="1107"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.InstantiateStaticClass" totalMilliseconds="79" invocations="130" avgMicrosecondsPerInvocation="612" maxMicrosecondsPerInvocation="29836" standardDeviationMircosecondsPerInvocation="2711"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.EqualsOperandShouldHaveClassCompatibleWithThis" totalMilliseconds="80" invocations="187" avgMicrosecondsPerInvocation="432" maxMicrosecondsPerInvocation="7631" standardDeviationMircosecondsPerInvocation="898"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.DumbMethodInvocations" totalMilliseconds="81" invocations="130" avgMicrosecondsPerInvocation="625" maxMicrosecondsPerInvocation="21932" standardDeviationMircosecondsPerInvocation="2037"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.FindNonSerializableStoreIntoSession" totalMilliseconds="82" invocations="130" avgMicrosecondsPerInvocation="633" maxMicrosecondsPerInvocation="49584" standardDeviationMircosecondsPerInvocation="4337"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.QuestionableBooleanAssignment" totalMilliseconds="82" invocations="130" avgMicrosecondsPerInvocation="634" maxMicrosecondsPerInvocation="38324" standardDeviationMircosecondsPerInvocation="3383"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.NoteSuppressedWarnings" totalMilliseconds="89" invocations="187" avgMicrosecondsPerInvocation="479" maxMicrosecondsPerInvocation="73941" standardDeviationMircosecondsPerInvocation="5387"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.FindUnsatisfiedObligation" totalMilliseconds="90" invocations="130" avgMicrosecondsPerInvocation="697" maxMicrosecondsPerInvocation="67616" standardDeviationMircosecondsPerInvocation="5956"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.FindUnconditionalWait" totalMilliseconds="93" invocations="130" avgMicrosecondsPerInvocation="715" maxMicrosecondsPerInvocation="31715" standardDeviationMircosecondsPerInvocation="3248"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.ClassContextClassAnalysisEngine" totalMilliseconds="95" invocations="797" avgMicrosecondsPerInvocation="120" maxMicrosecondsPerInvocation="82853" standardDeviationMircosecondsPerInvocation="2932"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.EmptyZipFileEntry" totalMilliseconds="104" invocations="130" avgMicrosecondsPerInvocation="800" maxMicrosecondsPerInvocation="34510" standardDeviationMircosecondsPerInvocation="3904"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.LazyInit" totalMilliseconds="104" invocations="130" avgMicrosecondsPerInvocation="801" maxMicrosecondsPerInvocation="86759" standardDeviationMircosecondsPerInvocation="7584"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.VolatileUsage" totalMilliseconds="107" invocations="130" avgMicrosecondsPerInvocation="825" maxMicrosecondsPerInvocation="52825" standardDeviationMircosecondsPerInvocation="4763"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.FindFinalizeInvocations" totalMilliseconds="107" invocations="130" avgMicrosecondsPerInvocation="830" maxMicrosecondsPerInvocation="65131" standardDeviationMircosecondsPerInvocation="5697"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.ReflectiveClasses" totalMilliseconds="109" invocations="187" avgMicrosecondsPerInvocation="587" maxMicrosecondsPerInvocation="14244" standardDeviationMircosecondsPerInvocation="1512"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.MutableLock" totalMilliseconds="109" invocations="130" avgMicrosecondsPerInvocation="845" maxMicrosecondsPerInvocation="54486" standardDeviationMircosecondsPerInvocation="4888"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.SerializableIdiom" totalMilliseconds="111" invocations="130" avgMicrosecondsPerInvocation="857" maxMicrosecondsPerInvocation="17735" standardDeviationMircosecondsPerInvocation="2303"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.AssertionMethodsFactory" totalMilliseconds="115" invocations="129" avgMicrosecondsPerInvocation="895" maxMicrosecondsPerInvocation="94172" standardDeviationMircosecondsPerInvocation="8261"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.UnnecessaryMath" totalMilliseconds="115" invocations="130" avgMicrosecondsPerInvocation="890" maxMicrosecondsPerInvocation="55023" standardDeviationMircosecondsPerInvocation="4964"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.ConstantPoolGenFactory" totalMilliseconds="116" invocations="130" avgMicrosecondsPerInvocation="896" maxMicrosecondsPerInvocation="78552" standardDeviationMircosecondsPerInvocation="6863"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.DoInsideDoPrivileged" totalMilliseconds="118" invocations="130" avgMicrosecondsPerInvocation="912" maxMicrosecondsPerInvocation="49766" standardDeviationMircosecondsPerInvocation="4448"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.BadlyOverriddenAdapter" totalMilliseconds="120" invocations="130" avgMicrosecondsPerInvocation="925" maxMicrosecondsPerInvocation="51393" standardDeviationMircosecondsPerInvocation="4885"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.FindNakedNotify" totalMilliseconds="120" invocations="130" avgMicrosecondsPerInvocation="926" maxMicrosecondsPerInvocation="54882" standardDeviationMircosecondsPerInvocation="5156"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.IDivResultCastToDouble" totalMilliseconds="121" invocations="130" avgMicrosecondsPerInvocation="931" maxMicrosecondsPerInvocation="75578" standardDeviationMircosecondsPerInvocation="6605"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.FindSelfComparison2" totalMilliseconds="123" invocations="130" avgMicrosecondsPerInvocation="951" maxMicrosecondsPerInvocation="55359" standardDeviationMircosecondsPerInvocation="5695"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.ReturnPathTypeDataflowFactory" totalMilliseconds="138" invocations="3" avgMicrosecondsPerInvocation="46239" maxMicrosecondsPerInvocation="132248" standardDeviationMircosecondsPerInvocation="60820"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.NoteNonnullReturnValues" totalMilliseconds="139" invocations="130" avgMicrosecondsPerInvocation="1076" maxMicrosecondsPerInvocation="90165" standardDeviationMircosecondsPerInvocation="7873"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.FindRunInvocations" totalMilliseconds="142" invocations="130" avgMicrosecondsPerInvocation="1093" maxMicrosecondsPerInvocation="50234" standardDeviationMircosecondsPerInvocation="5194"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.FindUselessControlFlow" totalMilliseconds="146" invocations="130" avgMicrosecondsPerInvocation="1124" maxMicrosecondsPerInvocation="97992" standardDeviationMircosecondsPerInvocation="8555"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.FindEmptySynchronizedBlock" totalMilliseconds="148" invocations="130" avgMicrosecondsPerInvocation="1141" maxMicrosecondsPerInvocation="66630" standardDeviationMircosecondsPerInvocation="6353"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.FindUncalledPrivateMethods" totalMilliseconds="149" invocations="130" avgMicrosecondsPerInvocation="1148" maxMicrosecondsPerInvocation="51877" standardDeviationMircosecondsPerInvocation="5292"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.StringConcatenation" totalMilliseconds="153" invocations="130" avgMicrosecondsPerInvocation="1177" maxMicrosecondsPerInvocation="60861" standardDeviationMircosecondsPerInvocation="6363"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.LoadedFieldSetFactory" totalMilliseconds="153" invocations="653" avgMicrosecondsPerInvocation="234" maxMicrosecondsPerInvocation="78625" standardDeviationMircosecondsPerInvocation="3239"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.FindLocalSelfAssignment2" totalMilliseconds="161" invocations="130" avgMicrosecondsPerInvocation="1241" maxMicrosecondsPerInvocation="65158" standardDeviationMircosecondsPerInvocation="7139"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.FindBadCast2" totalMilliseconds="166" invocations="130" avgMicrosecondsPerInvocation="1277" maxMicrosecondsPerInvocation="59520" standardDeviationMircosecondsPerInvocation="6931"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.WaitInLoop" totalMilliseconds="167" invocations="130" avgMicrosecondsPerInvocation="1292" maxMicrosecondsPerInvocation="81480" standardDeviationMircosecondsPerInvocation="7669"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.InheritanceUnsafeGetResource" totalMilliseconds="169" invocations="130" avgMicrosecondsPerInvocation="1304" maxMicrosecondsPerInvocation="126901" standardDeviationMircosecondsPerInvocation="11076"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.LockDataflowFactory" totalMilliseconds="174" invocations="114" avgMicrosecondsPerInvocation="1532" maxMicrosecondsPerInvocation="49314" standardDeviationMircosecondsPerInvocation="5446"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.FindReturnRef" totalMilliseconds="174" invocations="130" avgMicrosecondsPerInvocation="1344" maxMicrosecondsPerInvocation="46877" standardDeviationMircosecondsPerInvocation="5068"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.SynchronizeAndNullCheckField" totalMilliseconds="174" invocations="130" avgMicrosecondsPerInvocation="1345" maxMicrosecondsPerInvocation="84512" standardDeviationMircosecondsPerInvocation="7565"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.FindNullDerefsInvolvingNonShortCircuitEvaluation" totalMilliseconds="175" invocations="130" avgMicrosecondsPerInvocation="1352" maxMicrosecondsPerInvocation="14809" standardDeviationMircosecondsPerInvocation="2646"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.FindUninitializedGet" totalMilliseconds="178" invocations="130" avgMicrosecondsPerInvocation="1371" maxMicrosecondsPerInvocation="128832" standardDeviationMircosecondsPerInvocation="11499"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.ReadReturnShouldBeChecked" totalMilliseconds="180" invocations="130" avgMicrosecondsPerInvocation="1391" maxMicrosecondsPerInvocation="63233" standardDeviationMircosecondsPerInvocation="6473"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.SynchronizeOnClassLiteralNotGetClass" totalMilliseconds="198" invocations="130" avgMicrosecondsPerInvocation="1529" maxMicrosecondsPerInvocation="28829" standardDeviationMircosecondsPerInvocation="3766"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.FindNullDeref" totalMilliseconds="206" invocations="130" avgMicrosecondsPerInvocation="1590" maxMicrosecondsPerInvocation="42461" standardDeviationMircosecondsPerInvocation="5873"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.StaticCalendarDetector" totalMilliseconds="209" invocations="130" avgMicrosecondsPerInvocation="1613" maxMicrosecondsPerInvocation="52669" standardDeviationMircosecondsPerInvocation="6886"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.InefficientToArray" totalMilliseconds="214" invocations="130" avgMicrosecondsPerInvocation="1648" maxMicrosecondsPerInvocation="86266" standardDeviationMircosecondsPerInvocation="10177"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.ObligationDataflowFactory" totalMilliseconds="225" invocations="59" avgMicrosecondsPerInvocation="3827" maxMicrosecondsPerInvocation="102847" standardDeviationMircosecondsPerInvocation="17944"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.FormatStringChecker" totalMilliseconds="226" invocations="130" avgMicrosecondsPerInvocation="1745" maxMicrosecondsPerInvocation="44703" standardDeviationMircosecondsPerInvocation="4835"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.SynchronizationOnSharedBuiltinConstant" totalMilliseconds="231" invocations="130" avgMicrosecondsPerInvocation="1783" maxMicrosecondsPerInvocation="56742" standardDeviationMircosecondsPerInvocation="5529"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.UsagesRequiringNonNullValuesFactory" totalMilliseconds="238" invocations="2" avgMicrosecondsPerInvocation="119338" maxMicrosecondsPerInvocation="233444" standardDeviationMircosecondsPerInvocation="114105"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.FindUnrelatedTypesInGenericContainer" totalMilliseconds="240" invocations="130" avgMicrosecondsPerInvocation="1850" maxMicrosecondsPerInvocation="95459" standardDeviationMircosecondsPerInvocation="10359"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.XMLFactoryBypass" totalMilliseconds="241" invocations="130" avgMicrosecondsPerInvocation="1858" maxMicrosecondsPerInvocation="177020" standardDeviationMircosecondsPerInvocation="15489"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.FindSqlInjection" totalMilliseconds="242" invocations="130" avgMicrosecondsPerInvocation="1867" maxMicrosecondsPerInvocation="79264" standardDeviationMircosecondsPerInvocation="8776"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.FindHEmismatch" totalMilliseconds="265" invocations="130" avgMicrosecondsPerInvocation="2040" maxMicrosecondsPerInvocation="35793" standardDeviationMircosecondsPerInvocation="5245"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.InfiniteLoop" totalMilliseconds="278" invocations="130" avgMicrosecondsPerInvocation="2139" maxMicrosecondsPerInvocation="36381" standardDeviationMircosecondsPerInvocation="5174"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.BadResultSetAccess" totalMilliseconds="278" invocations="130" avgMicrosecondsPerInvocation="2141" maxMicrosecondsPerInvocation="34893" standardDeviationMircosecondsPerInvocation="5688"/>
+      <ClassProfile name="edu.umd.cs.findbugs.ba.obl.ObligationAnalysis" totalMilliseconds="281" invocations="59" avgMicrosecondsPerInvocation="4776" maxMicrosecondsPerInvocation="82380" standardDeviationMircosecondsPerInvocation="11172"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.InfiniteRecursiveLoop" totalMilliseconds="286" invocations="130" avgMicrosecondsPerInvocation="2205" maxMicrosecondsPerInvocation="77753" standardDeviationMircosecondsPerInvocation="7900"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.LostLoggerDueToWeakReference" totalMilliseconds="288" invocations="130" avgMicrosecondsPerInvocation="2218" maxMicrosecondsPerInvocation="105440" standardDeviationMircosecondsPerInvocation="9568"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.NumberConstructor" totalMilliseconds="291" invocations="130" avgMicrosecondsPerInvocation="2244" maxMicrosecondsPerInvocation="87695" standardDeviationMircosecondsPerInvocation="8887"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.BuildObligationPolicyDatabase" totalMilliseconds="298" invocations="187" avgMicrosecondsPerInvocation="1598" maxMicrosecondsPerInvocation="212626" standardDeviationMircosecondsPerInvocation="15487"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.RepeatedConditionals" totalMilliseconds="307" invocations="130" avgMicrosecondsPerInvocation="2361" maxMicrosecondsPerInvocation="93345" standardDeviationMircosecondsPerInvocation="9216"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.DuplicateBranches" totalMilliseconds="318" invocations="130" avgMicrosecondsPerInvocation="2446" maxMicrosecondsPerInvocation="208015" standardDeviationMircosecondsPerInvocation="18376"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.MethodReturnCheck" totalMilliseconds="327" invocations="130" avgMicrosecondsPerInvocation="2522" maxMicrosecondsPerInvocation="73203" standardDeviationMircosecondsPerInvocation="7504"/>
+      <ClassProfile name="edu.umd.cs.findbugs.ba.npe.TypeQualifierNullnessAnnotationDatabase" totalMilliseconds="328" invocations="16528" avgMicrosecondsPerInvocation="19" maxMicrosecondsPerInvocation="48059" standardDeviationMircosecondsPerInvocation="549"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.CrossSiteScripting" totalMilliseconds="336" invocations="130" avgMicrosecondsPerInvocation="2586" maxMicrosecondsPerInvocation="86655" standardDeviationMircosecondsPerInvocation="8827"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.SwitchFallthrough" totalMilliseconds="352" invocations="130" avgMicrosecondsPerInvocation="2713" maxMicrosecondsPerInvocation="60165" standardDeviationMircosecondsPerInvocation="7936"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.FindFloatEquality" totalMilliseconds="377" invocations="130" avgMicrosecondsPerInvocation="2902" maxMicrosecondsPerInvocation="86800" standardDeviationMircosecondsPerInvocation="10455"/>
+      <ClassProfile name="edu.umd.cs.findbugs.DetectorToDetector2Adapter" totalMilliseconds="379" invocations="14357" avgMicrosecondsPerInvocation="26" maxMicrosecondsPerInvocation="93274" standardDeviationMircosecondsPerInvocation="974"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.FindPuzzlers" totalMilliseconds="382" invocations="130" avgMicrosecondsPerInvocation="2942" maxMicrosecondsPerInvocation="90893" standardDeviationMircosecondsPerInvocation="9802"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.BadSyntaxForRegularExpression" totalMilliseconds="386" invocations="130" avgMicrosecondsPerInvocation="2972" maxMicrosecondsPerInvocation="95760" standardDeviationMircosecondsPerInvocation="11057"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.FindDeadLocalStores" totalMilliseconds="388" invocations="130" avgMicrosecondsPerInvocation="2990" maxMicrosecondsPerInvocation="64256" standardDeviationMircosecondsPerInvocation="10435"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.SynchronizingOnContentsOfFieldToProtectField" totalMilliseconds="398" invocations="130" avgMicrosecondsPerInvocation="3065" maxMicrosecondsPerInvocation="125206" standardDeviationMircosecondsPerInvocation="13367"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.ReadOfInstanceFieldInMethodInvokedByConstructorInSuperclass" totalMilliseconds="402" invocations="130" avgMicrosecondsPerInvocation="3099" maxMicrosecondsPerInvocation="101173" standardDeviationMircosecondsPerInvocation="12612"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.DumbMethods" totalMilliseconds="414" invocations="130" avgMicrosecondsPerInvocation="3188" maxMicrosecondsPerInvocation="116879" standardDeviationMircosecondsPerInvocation="11103"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.AppendingToAnObjectOutputStream" totalMilliseconds="420" invocations="130" avgMicrosecondsPerInvocation="3238" maxMicrosecondsPerInvocation="91193" standardDeviationMircosecondsPerInvocation="12303"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.FindBadForLoop" totalMilliseconds="448" invocations="130" avgMicrosecondsPerInvocation="3451" maxMicrosecondsPerInvocation="101333" standardDeviationMircosecondsPerInvocation="13822"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.FindSelfComparison" totalMilliseconds="450" invocations="130" avgMicrosecondsPerInvocation="3468" maxMicrosecondsPerInvocation="96260" standardDeviationMircosecondsPerInvocation="12017"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.OverridingEqualsNotSymmetrical" totalMilliseconds="456" invocations="187" avgMicrosecondsPerInvocation="2442" maxMicrosecondsPerInvocation="147636" standardDeviationMircosecondsPerInvocation="12540"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.FindNonShortCircuit" totalMilliseconds="457" invocations="130" avgMicrosecondsPerInvocation="3518" maxMicrosecondsPerInvocation="67333" standardDeviationMircosecondsPerInvocation="10634"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.FindRefComparison" totalMilliseconds="474" invocations="130" avgMicrosecondsPerInvocation="3652" maxMicrosecondsPerInvocation="130016" standardDeviationMircosecondsPerInvocation="14064"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.URLProblems" totalMilliseconds="505" invocations="130" avgMicrosecondsPerInvocation="3885" maxMicrosecondsPerInvocation="88046" standardDeviationMircosecondsPerInvocation="12452"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.CalledMethods" totalMilliseconds="508" invocations="187" avgMicrosecondsPerInvocation="2718" maxMicrosecondsPerInvocation="67826" standardDeviationMircosecondsPerInvocation="7536"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.JavaClassAnalysisEngine" totalMilliseconds="514" invocations="263" avgMicrosecondsPerInvocation="1956" maxMicrosecondsPerInvocation="291244" standardDeviationMircosecondsPerInvocation="18219"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.NoteDirectlyRelevantTypeQualifiers" totalMilliseconds="526" invocations="187" avgMicrosecondsPerInvocation="2816" maxMicrosecondsPerInvocation="137383" standardDeviationMircosecondsPerInvocation="11166"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.FindInconsistentSync2" totalMilliseconds="531" invocations="130" avgMicrosecondsPerInvocation="4086" maxMicrosecondsPerInvocation="126529" standardDeviationMircosecondsPerInvocation="13750"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.FindFieldSelfAssignment" totalMilliseconds="549" invocations="130" avgMicrosecondsPerInvocation="4225" maxMicrosecondsPerInvocation="92148" standardDeviationMircosecondsPerInvocation="14285"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.UnreadFields" totalMilliseconds="568" invocations="130" avgMicrosecondsPerInvocation="4372" maxMicrosecondsPerInvocation="90490" standardDeviationMircosecondsPerInvocation="11395"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.FieldItemSummary" totalMilliseconds="588" invocations="187" avgMicrosecondsPerInvocation="3146" maxMicrosecondsPerInvocation="65050" standardDeviationMircosecondsPerInvocation="7252"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.StreamResourceTracker" totalMilliseconds="642" invocations="39" avgMicrosecondsPerInvocation="16474" maxMicrosecondsPerInvocation="127474" standardDeviationMircosecondsPerInvocation="27995"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.LoadOfKnownNullValue" totalMilliseconds="657" invocations="130" avgMicrosecondsPerInvocation="5059" maxMicrosecondsPerInvocation="109067" standardDeviationMircosecondsPerInvocation="16639"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.FindOpenStream" totalMilliseconds="759" invocations="130" avgMicrosecondsPerInvocation="5842" maxMicrosecondsPerInvocation="266674" standardDeviationMircosecondsPerInvocation="29035"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.LiveLocalStoreDataflowFactory" totalMilliseconds="836" invocations="615" avgMicrosecondsPerInvocation="1360" maxMicrosecondsPerInvocation="80276" standardDeviationMircosecondsPerInvocation="6716"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.RuntimeExceptionCapture" totalMilliseconds="1129" invocations="130" avgMicrosecondsPerInvocation="8690" maxMicrosecondsPerInvocation="756494" standardDeviationMircosecondsPerInvocation="66438"/>
+      <ClassProfile name="edu.umd.cs.findbugs.OpcodeStack$JumpInfoFactory" totalMilliseconds="1404" invocations="2419" avgMicrosecondsPerInvocation="580" maxMicrosecondsPerInvocation="142627" standardDeviationMircosecondsPerInvocation="4712"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.ConstantDataflowFactory" totalMilliseconds="1733" invocations="653" avgMicrosecondsPerInvocation="2654" maxMicrosecondsPerInvocation="149086" standardDeviationMircosecondsPerInvocation="10876"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.MethodGenFactory" totalMilliseconds="1828" invocations="657" avgMicrosecondsPerInvocation="2783" maxMicrosecondsPerInvocation="732362" standardDeviationMircosecondsPerInvocation="29474"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.FindNullDeref$CheckCallSitesAndReturnInstructions" totalMilliseconds="1922" invocations="653" avgMicrosecondsPerInvocation="2943" maxMicrosecondsPerInvocation="920420" standardDeviationMircosecondsPerInvocation="37090"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.impl.ZipCodeBaseFactory" totalMilliseconds="1983" invocations="14" avgMicrosecondsPerInvocation="141662" maxMicrosecondsPerInvocation="1693097" standardDeviationMircosecondsPerInvocation="432260"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.ClassInfoAnalysisEngine" totalMilliseconds="2142" invocations="645" avgMicrosecondsPerInvocation="3321" maxMicrosecondsPerInvocation="1060565" standardDeviationMircosecondsPerInvocation="48099"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.CFGFactory" totalMilliseconds="2222" invocations="656" avgMicrosecondsPerInvocation="3388" maxMicrosecondsPerInvocation="514057" standardDeviationMircosecondsPerInvocation="23747"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.FindRefComparison$SpecialTypeAnalysis" totalMilliseconds="3552" invocations="521" avgMicrosecondsPerInvocation="6818" maxMicrosecondsPerInvocation="164917" standardDeviationMircosecondsPerInvocation="18312"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.TypeDataflowFactory" totalMilliseconds="4491" invocations="658" avgMicrosecondsPerInvocation="6826" maxMicrosecondsPerInvocation="371065" standardDeviationMircosecondsPerInvocation="24782"/>
+      <ClassProfile name="edu.umd.cs.findbugs.ba.npe.NullDerefAndRedundantComparisonFinder" totalMilliseconds="6072" invocations="653" avgMicrosecondsPerInvocation="9299" maxMicrosecondsPerInvocation="216797" standardDeviationMircosecondsPerInvocation="25943"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.ValueNumberDataflowFactory" totalMilliseconds="6405" invocations="884" avgMicrosecondsPerInvocation="7245" maxMicrosecondsPerInvocation="387050" standardDeviationMircosecondsPerInvocation="25622"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.IsNullValueDataflowFactory" totalMilliseconds="6511" invocations="653" avgMicrosecondsPerInvocation="9972" maxMicrosecondsPerInvocation="315432" standardDeviationMircosecondsPerInvocation="26739"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.UnconditionalValueDerefDataflowFactory" totalMilliseconds="8758" invocations="653" avgMicrosecondsPerInvocation="13413" maxMicrosecondsPerInvocation="819227" standardDeviationMircosecondsPerInvocation="46283"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.ClassDataAnalysisEngine" totalMilliseconds="18145" invocations="647" avgMicrosecondsPerInvocation="28045" maxMicrosecondsPerInvocation="677265" standardDeviationMircosecondsPerInvocation="64066"/>
+    </FindBugsProfile>
+  </FindBugsSummary>
+  <ClassFeatures></ClassFeatures>
+  <History></History>
+</BugCollection>
