@@ -14,6 +14,9 @@ package fr.smardine.matroussedemaquillage.base;
 
 public class G_creation_base {
 
+	/**
+	 * Creation des tables
+	 */
 	public static String[] SCRIPT_CREATION_TABLE = {
 			"CREATE TABLE IF NOT EXISTS trousse_produits  (id_produits INTEGER PRIMARY KEY  AUTOINCREMENT, nom_souscatergorie VARCHAR(250)  NULL, nom_categorie VARCHAR (250) NULL, ischecked VARCHAR (250)  NULL)",
 			"CREATE TABLE IF NOT EXISTS trousse_marques (id_marque INTEGER PRIMARY KEY  AUTOINCREMENT, nom_marque VARCHAR(250)  NULL, ischecked VARCHAR (250)  NULL)",
@@ -22,6 +25,9 @@ public class G_creation_base {
 			"CREATE TABLE IF NOT EXISTS Notes ( id_note INTEGER PRIMARY KEY  AUTOINCREMENT,Titre VARCHAR(255) NULL, Message VARCHAR (9999) NULL)",
 			"CREATE TABLE IF NOT EXISTS Param ( AfficheAlerte VARCHAR(255) NULL, DureeViePeremp VARCHAR (255) NULL)" };
 
+	/**
+	 * Insertion des categories
+	 */
 	public static String[] SCRIPT_INSERT_CATEGORIE = {
 			"INSERT INTO trousse_produits (nom_souscatergorie,nom_categorie,ISCHECKED) VALUES ('Fonds de teint','Visage','false')",
 			"INSERT INTO trousse_produits (nom_souscatergorie,nom_categorie,ISCHECKED) VALUES ('Correcteurs - Bases','Visage','false')",
@@ -35,6 +41,9 @@ public class G_creation_base {
 			"INSERT INTO trousse_produits (nom_souscatergorie,nom_categorie,ISCHECKED) VALUES ('Rouges à lèvres','Levres','false')",
 			"INSERT INTO trousse_produits (nom_souscatergorie,nom_categorie,ISCHECKED) VALUES ('Vernis à ongles','Autres','false')" };
 
+	/**
+	 * 
+	 */
 	public static String[] SCRIPT_INSERT_MARQUE = { "INSERT INTO trousse_marques (nom_marque,ISCHECKED) VALUES ('2B','false')",
 			"INSERT INTO trousse_marques (nom_marque,ISCHECKED) VALUES ('Agnès b.','false')",
 			"INSERT INTO trousse_marques (nom_marque,ISCHECKED) VALUES ('Alverde','false')",
