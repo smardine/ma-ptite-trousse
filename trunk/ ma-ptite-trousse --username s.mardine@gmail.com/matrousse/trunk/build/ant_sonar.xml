@@ -12,6 +12,8 @@
 	<condition property="svn" value="${svn.home}\svn.exe" else="svn.exe">
 		<isset property="svn.home"/>
 	</condition>
+	
+	<property file="build.properties" />
 	<!--
 	=======================================================================
 	   Tache de lecture du numéro de révision de la copie de travail.
@@ -41,19 +43,6 @@
 		<delete file=".svnInfo.xml" />
 	</target>
 	
-	
-	
-  
-
-
-	
-	
-	
-	
-	
-	
-	
-	
   
   <!-- Add the target -->
   <target name="sonar" depends="svnrevision" description="lancer l'analyse sonar">
@@ -71,7 +60,7 @@
       <property key="sonar.dynamicAnalysis" value="reuseReports" /><!--reuseReports si on veut utiliser les rapport cobertura, false sinon  -->
       <property key="sonar.projectName" value="android project" />
       <property key="sonar.java.source" value="1.5" />
-      <property key="sonar.projectVersion" value="${majornum}.${svn.revision}-SNAPSHOT" />
+      <property key="sonar.projectVersion" value="${version.major}.${version.minor}.${svn.revision}" />
       <!--<property key="sonar.phase" value="generate-sources"/> -->
      
     
