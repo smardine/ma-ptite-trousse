@@ -2,15 +2,11 @@
 
 <project basedir="." default="sonar" name="Android Project">
 	<!-- Proprietées globales du scripts ant  -->
-	<property name="junit.output.dir" value="../junit"/>
-	<property name="instrumented.dir" value="../cobertura/instrumented"/>
+	
 	<property name="classes.dir" value="../bin"/>
-	<property name="jars.dir" value="../lib"/>
-	<property name="test.dir" value="../test"/>
-	<property name="cobertura.dir" value="${jars.dir}/cobertura"/>
-	<property name="reports.xml.dir" value="../cobertura/reports"/>
-	<property name="cob.ser.file" value="cobertura.ser" />
-	<property name="majornum" value="0"/>
+	<property name="jars.dir" value="../libs"/>
+
+		<property name="majornum" value="0"/>
 	<!-- Propriete exclusive a svn  -->
 	
 	<condition property="svn" value="${svn.home}\svn.exe" else="svn.exe">
@@ -47,82 +43,16 @@
 	
 	
 	
-  <!-- Define the Sonar task if this hasn't been done in a common script -->
-  <taskdef uri="antlib:org.sonar.ant" resource="org/sonar/ant/antlib.xml">
-    <classpath path="C:\hudson\tools\my_ant\lib" />
- </taskdef>
-	
-	<path id="cobertura.classpath">
-	    <fileset dir="${cobertura.dir}">
-	        <include name="cobertura.jar" />
-	        <include name="lib/**/*.jar" />
-	    </fileset>
-		<fileset dir="${jars.dir}">
-			<include name="**/*.jar"/>
-		</fileset>
-	</path>
+  
 
-	<taskdef classpathref="cobertura.classpath" resource="tasks.properties" />
-	
-	<target name="clean" depends="svnrevision" description="effacer les repertoires instrumented et reports ">
-		<delete dir="${instrumented.dir}" />
-		<delete dir="${reports.xml.dir}" />
-		<delete file="${cob.ser.file}" />
-	</target>
-	
-	<target name="prepare" depends="clean" description="créer les repertoires instrumented et reports ">
-		    <mkdir dir="${instrumented.dir}" />
-		    <mkdir dir="${reports.xml.dir}" />
-	</target>
-	<target name="instrument" depends="prepare" description="intrumenter les classes pour cobertura">
-		<cobertura-instrument todir="${instrumented.dir}">
-			    <ignore regex="org.apache.log4j.*" />
-			    <fileset dir="${classes.dir}">
-			        <include name="**/*.class" />
-			        <exclude name="**/*Test.class" />
-			    </fileset>
-			    
-			</cobertura-instrument>
-	</target>
-	
-	
-	
-	<target name="testsuite" depends="instrument" description="lancer la classe testsuite qui déroule tout les tests">
-		<junit fork="yes" dir="${test.dir}" failureProperty="test.failed"  printsummary="withOutAndErr">
-				<!--
-					Specify the name of the coverage data file to use.
-					The value specified below is the default.
-				-->
-				<sysproperty key="net.sourceforge.cobertura.datafile"
-					file="${basedir}/cobertura.ser" />
-				<!--
-					Note the classpath order: instrumented classes are before the
-					original (uninstrumented) classes.  This is important.
-				-->
-				<classpath location="${instrumented.dir}" />
-				<classpath location="${classes.dir}" />
-			
-				<!--
-					The instrumented classes reference classes used by the
-					Cobertura runtime, so Cobertura and its dependencies
-					must be on your classpath.
-				-->
-				<classpath refid="cobertura.classpath" />
 
-				<formatter type="xml" />
-				<test name="test.TestSuiteClientMail" todir="${reports.xml.dir}" />
-				<!-- a decommenter si on veut test les TestClasses une par une -->
-				<!--<batchtest todir="${reports.xml.dir}" unless="testcase">
-					<fileset dir="${test.dir}">
-						<include name="**/*Test*.java" />
-					</fileset>
-				</batchtest>-->
-			</junit>
-	</target>
 	
-	<target name="cover-report" depends="testsuite" description="generer le rapport cobertura">
-		<cobertura-report format="xml" destdir="${reports.xml.dir}" srcdir="${test.dir}" />
-	</target>
+	
+	
+	
+	
+	
+	
 	
   
   <!-- Add the target -->
