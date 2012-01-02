@@ -19,6 +19,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.util.Log;
 
+/**
+ * @author smardine
+ */
 public class BDAcces {
 
 	private static final String PRODUITS_TABLE = "trousse_produits";
@@ -31,21 +34,29 @@ public class BDAcces {
 
 	private final Context mCtx;
 
+	/**
+	 * 
+	 */
 	public static DatabaseHelper mDbHelper;
+	/**
+	 * 
+	 */
 	public static SQLiteDatabase mDb;
 
+	/**
+	 * 
+	 */
 	public SQLiteQueryBuilder mbbuilder;
 
 	private static final String TAG = "BDAcces";
 	private static final int DATABASE_VERSION = 14;
 	private static String Message_Erreur = "";
 
-	// private static Handler handler;
+	/**
+	 * @param ctx
+	 */
 	public BDAcces(Context ctx) {
-
 		this.mCtx = ctx;
-		// BDAcces.handler = mHandler;
-
 	}
 
 	private static class DatabaseHelper extends SQLiteOpenHelper {
@@ -57,16 +68,11 @@ public class BDAcces {
 		@Override
 		public void onCreate(SQLiteDatabase db) {
 			String Script = "";
-			// Message msg = handler.obtainMessage();
-			// Bundle b = new Bundle();
-			// b.putString("en cours", "Création des tables...");
-			// msg.setData(b);
-			// handler.sendMessage(msg);
 
 			try {
 
 				String[] listeScripts = G_creation_base.SCRIPT_CREATION_TABLE;
-				// ArrayList<ArrayList> listeScripts = renvoi_liste_script_xml("script_creation_table");
+
 				Script = "";
 				for (int i = 0; i < listeScripts.length; i++) {
 					Script = listeScripts[i].toString();
@@ -74,22 +80,15 @@ public class BDAcces {
 					db.execSQL(Script.replace("[", "").replace("]", ""));
 				}
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
+
 				Message_Erreur = e.toString();
 				Log.e(TAG, "erreur application script: " + Script);
 				Log.e(TAG, "erreur: " + Message_Erreur);
-				// adError.setMessage("Erreur sur la base de données: \n "+Message_Erreur);
-				// adError.show();
-				// e.printStackTrace();
+
 			}
 
 			try {
-				// Message msg1 = handler.obtainMessage();
-				// Bundle b1 = new Bundle();
-				// b1.putString("en cours", "Création des catégories...");
-				// msg1.setData(b1);
-				// handler.sendMessage(msg1);
-				// ArrayList<ArrayList> listeScripts = renvoi_liste_script_xml("script_insert_categorie");
+
 				String[] listeScripts = G_creation_base.SCRIPT_INSERT_CATEGORIE;
 				for (int i = 0; i < listeScripts.length; i++) {
 					Script = listeScripts[i].toString();
@@ -97,21 +96,14 @@ public class BDAcces {
 					db.execSQL(Script.replace("[", "").replace("]", ""));
 				}
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
+
 				Message_Erreur = e.toString();
 				Log.e(TAG, "erreur application script: " + Script);
 				Log.e(TAG, "erreur: " + Message_Erreur);
-				// adError.setMessage("Erreur sur la base de données: \n "+Message_Erreur);
-				// adError.show();
-				// e.printStackTrace();
+
 			}
 			try {
-				// Message msg1 = handler.obtainMessage();
-				// Bundle b1 = new Bundle();
-				// b1.putString("en cours", "Création des marques...");
-				// msg1.setData(b1);
-				// handler.sendMessage(msg1);
-				// ArrayList<ArrayList> listeScripts = renvoi_liste_script_xml("script_insert_marque");
+
 				String[] listeScripts = G_creation_base.SCRIPT_INSERT_MARQUE;
 				for (int i = 0; i < listeScripts.length; i++) {
 					Script = listeScripts[i].toString();
@@ -119,23 +111,14 @@ public class BDAcces {
 					db.execSQL(Script.replace("[", "").replace("]", ""));
 				}
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
+
 				Message_Erreur = e.toString();
 				Log.e(TAG, "erreur application script: " + Script);
 				Log.e(TAG, "erreur: " + Message_Erreur);
-				// adError.setMessage("Erreur sur la base de données: \n "+Message_Erreur);
-				// adError.show();
 
-				// e.printStackTrace();
 			}
 			try {
-				// Message msg1 = handler.obtainMessage();
-				// Bundle b1 = new Bundle();
-				// b1.putString("en cours", "Mise à jour de la base v1 vers v2");
-				// msg1.setData(b1);
-				// handler.sendMessage(msg1);
-				@SuppressWarnings({})
-				// ArrayList<ArrayList> listeScripts = renvoi_liste_script_maj_xml("script_maj_table_v2");
+
 				String[] listeScripts = G_maj_base.SCRIPT_MAJ_V02;
 
 				for (int i = 0; i < listeScripts.length; i++) {
@@ -144,22 +127,14 @@ public class BDAcces {
 					db.execSQL(Script.replace("[", "").replace("]", ""));
 				}
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
+
 				Message_Erreur = e.toString();
 				Log.e(TAG, "erreur application script: " + Script);
 				Log.e(TAG, "erreur: " + Message_Erreur);
-				// adError.setMessage("Erreur sur la base de données: \n "+Message_Erreur);
-				// adError.show();
-				// e.printStackTrace();
+
 			}
 			try {
-				// Message msg1 = handler.obtainMessage();
-				// Bundle b1 = new Bundle();
-				// b1.putString("en cours", "Mise à jour de la base v2 vers v3");
-				// msg1.setData(b1);
-				// handler.sendMessage(msg1);
-				@SuppressWarnings({})
-				// ArrayList<ArrayList> listeScripts = renvoi_liste_script_maj_xml("script_maj_table_v3");
+
 				String[] listeScripts = G_maj_base.SCRIPT_MAJ_V03;
 
 				for (int i = 0; i < listeScripts.length; i++) {
@@ -168,23 +143,14 @@ public class BDAcces {
 					db.execSQL(Script.replace("[", "").replace("]", ""));
 				}
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
+
 				Message_Erreur = e.toString();
 				Log.e(TAG, "erreur application script: " + Script);
 				Log.e(TAG, "erreur: " + Message_Erreur);
-				// adError.setMessage("Erreur sur la base de données: \n "+Message_Erreur);
-				// adError.show();
 
-				// e.printStackTrace();
 			}
 			try {
-				// Message msg1 = handler.obtainMessage();
-				// Bundle b1 = new Bundle();
-				// b1.putString("en cours", "Mise à jour de la base v3 vers v4");
-				// msg1.setData(b1);
-				// handler.sendMessage(msg1);
-				@SuppressWarnings({})
-				// ArrayList<ArrayList> listeScripts = renvoi_liste_script_maj_xml("script_maj_table_v4");
+
 				String[] listeScripts = G_maj_base.SCRIPT_MAJ_V04;
 
 				for (int i = 0; i < listeScripts.length; i++) {
@@ -193,49 +159,29 @@ public class BDAcces {
 					db.execSQL(Script.replace("[", "").replace("]", ""));
 				}
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
+
 				Message_Erreur = e.toString();
 				Log.e(TAG, "erreur application script: " + Script);
 				Log.e(TAG, "erreur: " + Message_Erreur);
-				// adError.setMessage("Erreur sur la base de données: \n "+Message_Erreur);
-				// adError.show();
 
-				// e.printStackTrace();
 			}
 			try {
-				// Message msg1 = handler.obtainMessage();
-				// Bundle b1 = new Bundle();
-				// b1.putString("en cours", "Mise à jour de la base v4 vers v5");
-				// msg1.setData(b1);
-				// handler.sendMessage(msg1);
-				@SuppressWarnings({})
-				// ArrayList<ArrayList> listeScripts = renvoi_liste_script_maj_xml("script_maj_table_v5");
 				String[] listeScripts = G_maj_base.SCRIPT_MAJ_V05;
-				// String Script="";
+
 				for (int i = 0; i < listeScripts.length; i++) {
 					Script = listeScripts[i].toString();
 					Script = Script.replace("''", "\"");
 					db.execSQL(Script.replace("[", "").replace("]", ""));
 				}
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
+
 				Message_Erreur = e.toString();
 				Log.e(TAG, "erreur application script: " + Script);
 				Log.e(TAG, "erreur: " + Message_Erreur);
-				/*
-				 * adError.setMessage("Erreur sur la base de données: \n "+Message_Erreur); adError.show();
-				 */
 
-				// e.printStackTrace();
 			}
 			try {
-				// Message msg1 = handler.obtainMessage();
-				// Bundle b1 = new Bundle();
-				// b1.putString("en cours", "Mise à jour de la base v5 vers v6");
-				// msg1.setData(b1);
-				// handler.sendMessage(msg1);
-				@SuppressWarnings({})
-				// ArrayList<ArrayList> listeScripts = renvoi_liste_script_maj_xml("script_maj_table_v6");
+
 				String[] listeScripts = G_maj_base.SCRIPT_MAJ_V06;
 				for (int i = 0; i < listeScripts.length; i++) {
 					Script = listeScripts[i].toString();
@@ -243,25 +189,10 @@ public class BDAcces {
 					db.execSQL(Script.replace("[", "").replace("]", ""));
 				}
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				Message_Erreur = e.toString();
-				Log.e(TAG, "erreur application script: " + Script);
-				Log.e(TAG, "erreur: " + Message_Erreur);
-				/*
-				 * adError.setMessage("Erreur sur la base de données: \n "+Message_Erreur); adError.show();
-				 */
 
-				// e.printStackTrace();
 			}
 			try {
-				// Message msg1 = handler.obtainMessage();
-				// Bundle b1 = new Bundle();
-				// b1.putString("en cours", "Mise à jour de la base v6 vers v7");
-				// msg1.setData(b1);
-				// handler.sendMessage(msg1);
-				@SuppressWarnings({})
-				// ArrayList<ArrayList> listeScripts = renvoi_liste_script_maj_xml("script_maj_table_v7");
-				// String Script="";
+
 				String[] listeScripts = G_maj_base.SCRIPT_MAJ_V07;
 				for (int i = 0; i < listeScripts.length; i++) {
 					Script = listeScripts[i].toString();
@@ -269,51 +200,31 @@ public class BDAcces {
 					db.execSQL(Script.replace("[", "").replace("]", ""));
 				}
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
+
 				Message_Erreur = e.toString();
 				Log.e(TAG, "erreur application script: " + Script);
 				Log.e(TAG, "erreur: " + Message_Erreur);
-				/*
-				 * adError.setMessage("Erreur sur la base de données: \n "+Message_Erreur); adError.show();
-				 */
-
-				// e.printStackTrace();
 			}
 			try {
-				// Message msg1 = handler.obtainMessage();
-				// Bundle b1 = new Bundle();
-				// b1.putString("en cours", "Mise à jour de la base v7 vers v8");
-				// msg1.setData(b1);
-				// handler.sendMessage(msg1);
-				@SuppressWarnings({})
+
 				String[] listeScripts = G_maj_base.SCRIPT_MAJ_V08;
-				// ArrayList<ArrayList> listeScripts = renvoi_liste_script_maj_xml("script_maj_table_v8");
-				// String Script="";
+
 				for (int i = 0; i < listeScripts.length; i++) {
 					Script = listeScripts[i].toString();
 					Script = Script.replace("''", "\"");
 					db.execSQL(Script.replace("[", "").replace("]", ""));
 				}
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
+
 				Message_Erreur = e.toString();
-				/*
-				 * adError.setMessage("Erreur sur la base de données: \n "+Message_Erreur); adError.show();
-				 */
+
 				Log.e(TAG, "erreur application script: " + Script);
 				Log.e(TAG, "erreur: " + Message_Erreur);
 
-				// e.printStackTrace();
 			}
 
 			try {
-				// Message msg1 = handler.obtainMessage();
-				// Bundle b1 = new Bundle();
-				// b1.putString("en cours", "Mise à jour de la base v8 vers v9");
-				// msg1.setData(b1);
-				// handler.sendMessage(msg1);
-				@SuppressWarnings({})
-				// ArrayList<ArrayList> listeScripts = renvoi_liste_script_maj_xml("script_maj_table_v9");
+
 				String[] listeScripts = G_maj_base.SCRIPT_MAJ_V09;
 				for (int i = 0; i < listeScripts.length; i++) {
 					Script = listeScripts[i].toString();
@@ -321,24 +232,15 @@ public class BDAcces {
 					db.execSQL(Script.replace("[", "").replace("]", ""));
 				}
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
+
 				Message_Erreur = e.toString();
 				Log.e(TAG, "erreur application script: " + Script);
 				Log.e(TAG, "erreur: " + Message_Erreur);
-				/*
-				 * adError.setMessage("Erreur sur la base de données: \n "+Message_Erreur); adError.show();
-				 */
 
-				// e.printStackTrace();
 			}
 			try {
 				// Message msg1 = handler.obtainMessage();
-				// Bundle b1 = new Bundle();
-				// b1.putString("en cours", "Mise à jour de la base v9 vers v10");
-				// msg1.setData(b1);
-				// handler.sendMessage(msg1);
-				@SuppressWarnings({})
-				// ArrayList<ArrayList> listeScripts = renvoi_liste_script_maj_xml("script_maj_table_v10");
+
 				String[] listeScripts = G_maj_base.SCRIPT_MAJ_V10;
 				for (int i = 0; i < listeScripts.length; i++) {
 					Script = listeScripts[i].toString();
@@ -346,24 +248,14 @@ public class BDAcces {
 					db.execSQL(Script.replace("[", "").replace("]", ""));
 				}
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
+
 				Message_Erreur = e.toString();
 				Log.e(TAG, "erreur application script: " + Script);
 				Log.e(TAG, "erreur: " + Message_Erreur);
-				/*
-				 * adError.setMessage("Erreur sur la base de données: \n "+Message_Erreur); adError.show();
-				 */
 
-				// e.printStackTrace();
 			}
 			try {
-				// Message msg1 = handler.obtainMessage();
-				// Bundle b1 = new Bundle();
-				// b1.putString("en cours", "Mise à jour de la base v10 vers v11");
-				// msg1.setData(b1);
-				// handler.sendMessage(msg1);
-				@SuppressWarnings({})
-				// ArrayList<ArrayList> listeScripts = renvoi_liste_script_maj_xml("script_maj_table_v11");
+
 				String[] listeScripts = G_maj_base.SCRIPT_MAJ_V11;
 				// String Script="";
 				for (int i = 0; i < listeScripts.length; i++) {
@@ -372,24 +264,14 @@ public class BDAcces {
 					db.execSQL(Script.replace("[", "").replace("]", ""));
 				}
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
+
 				Message_Erreur = e.toString();
 				Log.e(TAG, "erreur application script: " + Script);
 				Log.e(TAG, "erreur: " + Message_Erreur);
-				/*
-				 * adError.setMessage("Erreur sur la base de données: \n "+Message_Erreur); adError.show();
-				 */
 
-				// e.printStackTrace();
 			}
 			try {
-				// Message msg1 = handler.obtainMessage();
-				// Bundle b1 = new Bundle();
-				// b1.putString("en cours", "Mise à jour de la base v11 vers v12");
-				// msg1.setData(b1);
-				// handler.sendMessage(msg1);
-				@SuppressWarnings({})
-				// ArrayList<ArrayList> listeScripts = renvoi_liste_script_maj_xml("script_maj_table_v12");
+
 				String[] listeScripts = G_maj_base.SCRIPT_MAJ_V12;
 				// String Script="";
 				for (int i = 0; i < listeScripts.length; i++) {
@@ -398,71 +280,43 @@ public class BDAcces {
 					db.execSQL(Script.replace("[", "").replace("]", ""));
 				}
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
+
 				Message_Erreur = e.toString();
 				Log.e(TAG, "erreur application script: " + Script);
 				Log.e(TAG, "erreur: " + Message_Erreur);
-				/*
-				 * adError.setMessage("Erreur sur la base de données: \n "+Message_Erreur); adError.show();
-				 */
 
-				// e.printStackTrace();
 			}
 			try {
-				// Message msg1 = handler.obtainMessage();
-				// Bundle b1 = new Bundle();
-				// b1.putString("en cours", "Mise à jour de la base v12 vers v13");
-				// msg1.setData(b1);
-				// handler.sendMessage(msg1);
-				@SuppressWarnings({})
-				// ArrayList<ArrayList> listeScripts = renvoi_liste_script_maj_xml("script_maj_table_v13");
+
 				String[] listeScripts = G_maj_base.SCRIPT_MAJ_V13;
-				// String Script="";
+
 				for (int i = 0; i < listeScripts.length; i++) {
 					Script = listeScripts[i].toString();
 					Script = Script.replace("''", "\"");
 					db.execSQL(Script.replace("[", "").replace("]", ""));
 				}
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
+
 				Message_Erreur = e.toString();
 				Log.e(TAG, "erreur application script: " + Script);
 				Log.e(TAG, "erreur: " + Message_Erreur);
-				/*
-				 * adError.setMessage("Erreur sur la base de données: \n "+Message_Erreur); adError.show();
-				 */
 
-				// e.printStackTrace();
 			}
 			try {
-				// Message msg1 = handler.obtainMessage();
-				// Bundle b1 = new Bundle();
-				// b1.putString("en cours", "Mise à jour de la base v13 vers v14\n" +
-				// "Ajout d'un nouveau theme...");
-				// msg1.setData(b1);
-				// handler.sendMessage(msg1);
-				@SuppressWarnings({})
-				// ArrayList<ArrayList> listeScripts = renvoi_liste_script_maj_xml("script_maj_table_v14");
 				String[] listeScripts = G_maj_base.SCRIPT_MAJ_V14;
-				// String Script="";
+
 				for (int i = 0; i < listeScripts.length; i++) {
 					Script = listeScripts[i].toString();
 					Script = Script.replace("''", "\"");
 					db.execSQL(Script.replace("[", "").replace("]", ""));
 				}
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
+
 				Message_Erreur = e.toString();
 				Log.e(TAG, "erreur application script: " + Script);
 				Log.e(TAG, "erreur: " + Message_Erreur);
-				/*
-				 * adError.setMessage("Erreur sur la base de données: \n "+Message_Erreur); adError.show();
-				 */
 
-				// e.printStackTrace();
 			}
-
-			// db.execSQL(INSERT_PRODUIT_AUTRES1);
 
 		}
 
@@ -470,48 +324,32 @@ public class BDAcces {
 		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 			String Script = "";
 			Log.w(TAG, "Upgrading database from version " + oldVersion + " to " + newVersion + ", which will destroy all old data");
-			// Message msg = handler.obtainMessage();
-			// Bundle b = new Bundle();
-			// b.putString("en cours", "Passage de la version " +oldVersion+ "à la version "+newVersion);
-			// msg.setData(b);
-			// handler.sendMessage(msg);
+
 			if (oldVersion == 1) {
 				// la version de la base est en v1 => on passe en V2
-				// Message msg1 = handler.obtainMessage();
-				// Bundle b1 = new Bundle();
-				// b1.putString("en cours", "Passage de la version " +oldVersion+ " à la version "+newVersion);
-				// msg1.setData(b1);
-				// handler.sendMessage(msg1);
+
 				try {
 
-					// ArrayList<ArrayList> listeScripts = renvoi_liste_script_maj_xml("script_maj_table_v2");
 					String[] listeScripts = G_maj_base.SCRIPT_MAJ_V02;
-					// String Script="";
+
 					for (int i = 0; i < listeScripts.length; i++) {
 						Script = listeScripts[i].toString();
 						Script = Script.replace("''", "\"");
 						db.execSQL(Script.replace("[", "").replace("]", ""));
 					}
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
+
 					Message_Erreur = e.toString();
 					Log.d(TAG, "erreur application script: " + Script);
 					Log.d(TAG, "erreur: " + Message_Erreur);
-					/*
-					 * adError.setMessage("Erreur sur la base de données: \n "+Message_Erreur); adError.show();
-					 */
+
 				}
 				oldVersion = 2;
 			}
 			if (oldVersion == 2) {
-				// Message msg1 = handler.obtainMessage();
-				// Bundle b1 = new Bundle();
-				// b1.putString("en cours", "Passage de la version " +oldVersion+ " à la version "+newVersion);
-				// msg1.setData(b1);
-				// handler.sendMessage(msg1);
+
 				try {
 
-					// ArrayList<ArrayList> listeScripts = renvoi_liste_script_maj_xml("script_maj_table_v3");
 					String[] listeScripts = G_maj_base.SCRIPT_MAJ_V03;
 
 					for (int i = 0; i < listeScripts.length; i++) {
@@ -520,327 +358,243 @@ public class BDAcces {
 						db.execSQL(Script.replace("[", "").replace("]", ""));
 					}
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
+
 					Message_Erreur = e.toString();
 					Log.d(TAG, "erreur application script: " + Script);
 					Log.d(TAG, "erreur: " + Message_Erreur);
-					/*
-					 * adError.setMessage("Erreur sur la base de données: \n "+Message_Erreur); adError.show();
-					 */
+
 				}
 				oldVersion = 3;
 			}
 			if (oldVersion == 3) {
-				// Message msg1 = handler.obtainMessage();
-				// Bundle b1 = new Bundle();
-				// b1.putString("en cours", "Passage de la version " +oldVersion+ " à la version "+newVersion);
-				// msg1.setData(b1);
-				// handler.sendMessage(msg1);
+
 				try {
 
-					// ArrayList<ArrayList> listeScripts =renvoi_liste_script_maj_xml("script_maj_table_v4");
 					String[] listeScripts = G_maj_base.SCRIPT_MAJ_V04;
-					// String Script="";
+
 					for (int i = 0; i < listeScripts.length; i++) {
 						Script = listeScripts[i].toString();
 						Script = Script.replace("''", "\"");
 						db.execSQL(Script.replace("[", "").replace("]", ""));
 					}
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
+
 					Message_Erreur = e.toString();
 					Log.d(TAG, "erreur application script: " + Script);
 					Log.d(TAG, "erreur: " + Message_Erreur);
-					/*
-					 * adError.setMessage("Erreur sur la base de données: \n "+Message_Erreur); adError.show();
-					 */
+
 				}
 				oldVersion = 4;
 			}
 			if (oldVersion == 4) {
-				// Message msg1 = handler.obtainMessage();
-				// Bundle b1 = new Bundle();
-				// b1.putString("en cours", "Passage de la version " +oldVersion+ " à la version "+newVersion);
-				// msg1.setData(b1);
-				// handler.sendMessage(msg1);
+
 				try {
 
-					// ArrayList<ArrayList> listeScripts = renvoi_liste_script_maj_xml("script_maj_table_v5");
 					String[] listeScripts = G_maj_base.SCRIPT_MAJ_V05;
-					// String Script="";
+
 					for (int i = 0; i < listeScripts.length; i++) {
 						Script = listeScripts[i].toString();
 						Script = Script.replace("''", "\"");
 						db.execSQL(Script.replace("[", "").replace("]", ""));
 					}
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
+
 					Message_Erreur = e.toString();
 					Log.d(TAG, "erreur application script: " + Script);
 					Log.d(TAG, "erreur: " + Message_Erreur);
-					/*
-					 * adError.setMessage("Erreur sur la base de données: \n "+Message_Erreur); adError.show();
-					 */
+
 				}
 				oldVersion = 5;
 			}
 			if (oldVersion == 5) {
-				// Message msg1 = handler.obtainMessage();
-				// Bundle b1 = new Bundle();
-				// b1.putString("en cours", "Passage de la version " +oldVersion+ " à la version "+newVersion);
-				// msg1.setData(b1);
-				// handler.sendMessage(msg1);
+
 				try {
 
-					// ArrayList<ArrayList> listeScripts = renvoi_liste_script_maj_xml("script_maj_table_v6");
 					String[] listeScripts = G_maj_base.SCRIPT_MAJ_V06;
-					// String Script="";
+
 					for (int i = 0; i < listeScripts.length; i++) {
 						Script = listeScripts[i].toString();
 						Script = Script.replace("''", "\"");
 						db.execSQL(Script.replace("[", "").replace("]", ""));
 					}
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
+
 					Message_Erreur = e.toString();
 					Log.d(TAG, "erreur application script: " + Script);
 					Log.d(TAG, "erreur: " + Message_Erreur);
-					/*
-					 * adError.setMessage("Erreur sur la base de données: \n "+Message_Erreur); adError.show();
-					 */
+
 				}
 				oldVersion = 6;
 			}
 			if (oldVersion == 6) {
-				// Message msg1 = handler.obtainMessage();
-				// Bundle b1 = new Bundle();
-				// b1.putString("en cours", "Passage de la version " +oldVersion+ " à la version "+newVersion);
-				// msg1.setData(b1);
-				// handler.sendMessage(msg1);
+
 				try {
 
-					// ArrayList<ArrayList> listeScripts = renvoi_liste_script_maj_xml("script_maj_table_v7");
 					String[] listeScripts = G_maj_base.SCRIPT_MAJ_V07;
-					// String Script="";
+
 					for (int i = 0; i < listeScripts.length; i++) {
 						Script = listeScripts[i].toString();
 						Script = Script.replace("''", "\"");
 						db.execSQL(Script.replace("[", "").replace("]", ""));
 					}
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
+
 					Message_Erreur = e.toString();
 					Log.d(TAG, "erreur application script: " + Script);
 					Log.d(TAG, "erreur: " + Message_Erreur);
-					/*
-					 * adError.setMessage("Erreur sur la base de données: \n "+Message_Erreur); adError.show();
-					 */
+
 				}
 				oldVersion = 7;
 			}
 
 			if (oldVersion == 7) {
-				// Message msg1 = handler.obtainMessage();
-				// Bundle b1 = new Bundle();
-				// b1.putString("en cours", "Passage de la version " +oldVersion+ " à la version "+newVersion);
-				// msg1.setData(b1);
-				// handler.sendMessage(msg1);
+
 				try {
 
-					// ArrayList<ArrayList> listeScripts = renvoi_liste_script_maj_xml("script_maj_table_v8");
 					String[] listeScripts = G_maj_base.SCRIPT_MAJ_V08;
-					// String Script="";
+
 					for (int i = 0; i < listeScripts.length; i++) {
 						Script = listeScripts[i].toString();
 						Script = Script.replace("''", "\"");
 						db.execSQL(Script.replace("[", "").replace("]", ""));
 					}
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
+
 					Message_Erreur = e.toString();
 					Log.d(TAG, "erreur application script: " + Script);
 					Log.d(TAG, "erreur: " + Message_Erreur);
-					/*
-					 * adError.setMessage("Erreur sur la base de données: \n "+Message_Erreur); adError.show();
-					 */
+
 				}
 				oldVersion = 8;
 			}
 
 			if (oldVersion == 8) {
-				// Message msg1 = handler.obtainMessage();
-				// Bundle b1 = new Bundle();
-				// b1.putString("en cours", "Passage de la version " +oldVersion+ " à la version "+newVersion);
-				// msg1.setData(b1);
-				// handler.sendMessage(msg1);
+
 				try {
 
-					// ArrayList<ArrayList> listeScripts = renvoi_liste_script_maj_xml("script_maj_table_v9");
 					String[] listeScripts = G_maj_base.SCRIPT_MAJ_V09;
-					// String Script="";
+
 					for (int i = 0; i < listeScripts.length; i++) {
 						Script = listeScripts[i].toString();
 						Script = Script.replace("''", "\"");
 						db.execSQL(Script.replace("[", "").replace("]", ""));
 					}
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
+
 					Message_Erreur = e.toString();
 					Log.d(TAG, "erreur application script: " + Script);
 					Log.d(TAG, "erreur: " + Message_Erreur);
-					/*
-					 * adError.setMessage("Erreur sur la base de données: \n "+Message_Erreur); adError.show();
-					 */
+
 				}
 				oldVersion = 9;
 			}
 			if (oldVersion == 9) {
-				// Message msg1 = handler.obtainMessage();
-				// Bundle b1 = new Bundle();
-				// b1.putString("en cours", "Passage de la version " +oldVersion+ " à la version "+newVersion);
-				// msg1.setData(b1);
-				// handler.sendMessage(msg1);
+
 				try {
 
-					// ArrayList<ArrayList> listeScripts = renvoi_liste_script_maj_xml("script_maj_table_v10");
 					String[] listeScripts = G_maj_base.SCRIPT_MAJ_V10;
-					// String Script="";
+
 					for (int i = 0; i < listeScripts.length; i++) {
 						Script = listeScripts[i].toString();
 						Script = Script.replace("''", "\"");
 						db.execSQL(Script.replace("[", "").replace("]", ""));
 					}
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
+
 					Message_Erreur = e.toString();
 					Log.d(TAG, "erreur application script: " + Script);
 					Log.d(TAG, "erreur: " + Message_Erreur);
-					/*
-					 * adError.setMessage("Erreur sur la base de données: \n "+Message_Erreur); adError.show();
-					 */
+
 				}
 				oldVersion = 10;
 			}
 			if (oldVersion == 10) {
-				// Message msg1 = handler.obtainMessage();
-				// Bundle b1 = new Bundle();
-				// b1.putString("en cours", "Passage de la version " +oldVersion+ " à la version "+newVersion);
-				// msg1.setData(b1);
-				// handler.sendMessage(msg1);
+
 				try {
 
-					// ArrayList<ArrayList> listeScripts = renvoi_liste_script_maj_xml("script_maj_table_v11");
 					String[] listeScripts = G_maj_base.SCRIPT_MAJ_V11;
-					// String Script="";
+
 					for (int i = 0; i < listeScripts.length; i++) {
 						Script = listeScripts[i].toString();
 						Script = Script.replace("''", "\"");
 						db.execSQL(Script.replace("[", "").replace("]", ""));
 					}
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
+
 					Message_Erreur = e.toString();
 					Log.d(TAG, "erreur application script: " + Script);
 					Log.d(TAG, "erreur: " + Message_Erreur);
-					/*
-					 * adError.setMessage("Erreur sur la base de données: \n "+Message_Erreur); adError.show();
-					 */
+
 				}
 				oldVersion = 11;
 			}
 			if (oldVersion == 11) {
-				// Message msg1 = handler.obtainMessage();
-				// Bundle b1 = new Bundle();
-				// b1.putString("en cours", "Passage de la version " +oldVersion+ " à la version "+newVersion);
-				// msg1.setData(b1);
-				// handler.sendMessage(msg1);
+
 				try {
 
-					// ArrayList<ArrayList> listeScripts = renvoi_liste_script_maj_xml("script_maj_table_v12");
 					String[] listeScripts = G_maj_base.SCRIPT_MAJ_V12;
-					// String Script="";
+
 					for (int i = 0; i < listeScripts.length; i++) {
 						Script = listeScripts[i].toString();
 						Script = Script.replace("''", "\"");
 						db.execSQL(Script.replace("[", "").replace("]", ""));
 					}
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
+
 					Message_Erreur = e.toString();
 					Log.d(TAG, "erreur application script: " + Script);
 					Log.d(TAG, "erreur: " + Message_Erreur);
-					/*
-					 * adError.setMessage("Erreur sur la base de données: \n "+Message_Erreur); adError.show();
-					 */
+
 				}
 				oldVersion = 12;
 			}
 			if (oldVersion == 12) {
-				// Message msg1 = handler.obtainMessage();
-				// Bundle b1 = new Bundle();
-				// b1.putString("en cours", "Passage de la version " +oldVersion+ " à la version "+newVersion);
-				// msg1.setData(b1);
-				// handler.sendMessage(msg1);
+
 				try {
 
-					// ArrayList<ArrayList> listeScripts = renvoi_liste_script_maj_xml("script_maj_table_v13");
 					String[] listeScripts = G_maj_base.SCRIPT_MAJ_V13;
-					// String Script="";
+
 					for (int i = 0; i < listeScripts.length; i++) {
 						Script = listeScripts[i].toString();
 						Script = Script.replace("''", "\"");
 						db.execSQL(Script.replace("[", "").replace("]", ""));
 					}
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
+
 					Message_Erreur = e.toString();
 					Log.d(TAG, "erreur application script: " + Script);
 					Log.d(TAG, "erreur: " + Message_Erreur);
-					/*
-					 * adError.setMessage("Erreur sur la base de données: \n "+Message_Erreur); adError.show();
-					 */
+
 				}
 				oldVersion = 13;
 			}
 			if (oldVersion == 13) {
-				// Message msg1 = handler.obtainMessage();
-				// Bundle b1 = new Bundle();
-				// b1.putString("en cours", "Passage de la version " +oldVersion+ " à la version "+newVersion+"\n" +
-				// "Ajout d'un nouveau theme...");
-				// msg1.setData(b1);
-				// handler.sendMessage(msg1);
+
 				try {
 
-					// ArrayList<ArrayList> listeScripts = renvoi_liste_script_maj_xml("script_maj_table_v14");
 					String[] listeScripts = G_maj_base.SCRIPT_MAJ_V14;
-					// String Script="";
+
 					for (int i = 0; i < listeScripts.length; i++) {
 						Script = listeScripts[i].toString();
 						Script = Script.replace("''", "\"");
 						db.execSQL(Script.replace("[", "").replace("]", ""));
 					}
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
+
 					Message_Erreur = e.toString();
 					Log.d(TAG, "erreur application script: " + Script);
 					Log.d(TAG, "erreur: " + Message_Erreur);
-					/*
-					 * adError.setMessage("Erreur sur la base de données: \n "+Message_Erreur); adError.show();
-					 */
+
 				}
 				oldVersion = 14;
 			}
-			// onCreate(db);
+
 		}
 	}
 
-	/*
-	 * public int updateTable(String Table, ContentValues Value,String whereClause,String[] whereArgs){ int nbdeChampAffecté =
-	 * mDb.update(Table, Value, whereClause, whereArgs); return nbdeChampAffecté; }
+	/**
+	 * @throws SQLException
 	 */
-
-	// ---opens the database---
-	@SuppressWarnings("unused")
 	public void open() throws SQLException {
 		// si la base est deja ouverte, on la ferme.
 		if (mDb != null) {
@@ -856,18 +610,24 @@ public class BDAcces {
 		// ouverture de la base
 		mDb = mDbHelper.getWritableDatabase();
 
-		boolean isLockedByCurrent = mDb.isDbLockedByCurrentThread();
-		boolean isLockedByOther = mDb.isDbLockedByOtherThreads();
-
-		// check database version
-		int version = mDb.getVersion();
+		// boolean isLockedByCurrent = mDb.isDbLockedByCurrentThread();
+		// boolean isLockedByOther = mDb.isDbLockedByOtherThreads();
+		//
+		// // check database version
+		// int version = mDb.getVersion();
 	}
 
+	/**
+	 * @return le path de la database
+	 */
 	public String getPath() {
 		return mDb.getPath();
 	}
 
-	// ---closes the database---
+	/**
+	 * ferme la connexion a la database
+	 * @throws SQLException
+	 */
 	public void close() throws SQLException {
 		// si il reste des transaction active, on les ferme.
 		boolean isTransactionOpen = mDb.inTransaction();
@@ -881,8 +641,11 @@ public class BDAcces {
 
 	}
 
-	@SuppressWarnings("rawtypes")
-	public ArrayList[] renvoi_liste_produits(String Catégorie) {
+	/**
+	 * @param Catégorie
+	 * @return un tableau de liste de String
+	 */
+	public ArrayList<String>[] renvoi_liste_produits(String Catégorie) {
 
 		String[] colonne = new String[] { "nom_souscatergorie", "ischecked" };
 		String condition = "nom_categorie='" + Catégorie + "'";
@@ -918,9 +681,15 @@ public class BDAcces {
 		return aTableRetour;
 	}
 
-	public Cursor recupererLaListeDesBenefs(String[] colonne, String OrderBy, String GroupBy) {
+	/**
+	 * @param colonne
+	 * @param OrderBy
+	 * @param GroupBy
+	 * @return la liste des produits enregistres en base
+	 */
+	public Cursor recupererLaListeDesProduits(String[] colonne, String OrderBy, String GroupBy) {
 		try {
-			// Log.i(TAG, ">> getAllBenefs récupération de 3 champs de tous les enreg de table "+T_BENEF);
+
 			String condition = "";
 			String[] conditionArgs = null;
 
@@ -934,6 +703,10 @@ public class BDAcces {
 		}
 	}
 
+	/**
+	 * @param ScriptSQL
+	 * @return le nombre de produit perimé
+	 */
 	public int revoiNbProdPerimeOuPresquePerime(String ScriptSQL) {
 		Cursor objCursor = mDb.rawQuery(ScriptSQL, null);
 
@@ -942,8 +715,12 @@ public class BDAcces {
 		return itotal;
 	}
 
-	@SuppressWarnings("rawtypes")
-	public ArrayList[] renvoi_liste_TrousseFinalAvecFiltrage(String ScriptSQL, String[] p_colonnes) {
+	/**
+	 * @param ScriptSQL
+	 * @param p_colonnes
+	 * @return la liste complete des produits
+	 */
+	public ArrayList<String>[] renvoi_liste_TrousseFinalAvecFiltrage(String ScriptSQL, String[] p_colonnes) {
 		// String SQL = "SELECT " + p_colonnes + " FROM produit_Enregistre where nom_souscatergorie LIKE '%?%'";
 
 		Cursor objCursor = mDb.rawQuery(ScriptSQL, null);
@@ -960,7 +737,7 @@ public class BDAcces {
 
 		objCursor.moveToFirst();
 
-		ArrayList[] aTableRetour = new ArrayList[4];
+		ArrayList<String>[] aTableRetour = new ArrayList[4];
 
 		/* Check if our result was valid. */
 		if (objCursor != null) {
@@ -1006,8 +783,16 @@ public class BDAcces {
 		return aTableRetour;
 	}
 
-	@SuppressWarnings("rawtypes")
-	public ArrayList[] renvoi_liste_TrousseFinal(String[] colonne, String OrderBy, String GroupBy, String condition, String[] conditionArgs) {
+	/**
+	 * @param colonne
+	 * @param OrderBy
+	 * @param GroupBy
+	 * @param condition
+	 * @param conditionArgs
+	 * @return la liste des produits
+	 */
+	public ArrayList<String>[] renvoi_liste_TrousseFinal(String[] colonne, String OrderBy, String GroupBy, String condition,
+			String[] conditionArgs) {
 
 		// String[] colonne= new String[]{"nom_produit","DateAchat","Date_Peremption"};
 		// String condition = "nom_categorie='"+Catégorie+"'";
@@ -1029,7 +814,7 @@ public class BDAcces {
 		ArrayList<String> aTableRetourDateAchat1 = new ArrayList<String>();
 
 		objCursor.moveToFirst();
-		ArrayList[] aTableRetour = new ArrayList[5];
+		ArrayList<String>[] aTableRetour = new ArrayList[5];
 
 		/* Check if our result was valid. */
 		if (objCursor != null) {
@@ -1076,8 +861,15 @@ public class BDAcces {
 		return aTableRetour;
 	}
 
-	@SuppressWarnings("rawtypes")
-	public ArrayList[] renvoi_liste_Note(String[] colonne, String OrderBy, String GroupBy, String condition, String[] conditionArgs) {
+	/**
+	 * @param colonne
+	 * @param OrderBy
+	 * @param GroupBy
+	 * @param condition
+	 * @param conditionArgs
+	 * @return la liste des notes enregistrees en base
+	 */
+	public ArrayList<String>[] renvoi_liste_Note(String[] colonne, String OrderBy, String GroupBy, String condition, String[] conditionArgs) {
 
 		// String[] colonne= new String[]{"nom_produit","DateAchat","Date_Peremption"};
 		// String condition = "nom_categorie='"+Catégorie+"'";
@@ -1095,7 +887,7 @@ public class BDAcces {
 		ArrayList<String> aTableRetourNom = new ArrayList<String>();
 
 		objCursor.moveToFirst();
-		ArrayList[] aTableRetour = new ArrayList[3];
+		ArrayList<String>[] aTableRetour = new ArrayList[3];
 
 		/* Check if our result was valid. */
 		if (objCursor != null) {
@@ -1125,8 +917,16 @@ public class BDAcces {
 		return aTableRetour;
 	}
 
-	@SuppressWarnings("rawtypes")
-	public ArrayList[] renvoi_liste_NoteTotale(String[] colonne, String OrderBy, String GroupBy, String condition, String[] conditionArgs) {
+	/**
+	 * @param colonne
+	 * @param OrderBy
+	 * @param GroupBy
+	 * @param condition
+	 * @param conditionArgs
+	 * @return la liste complete des notes en base.
+	 */
+	public ArrayList<String>[] renvoi_liste_NoteTotale(String[] colonne, String OrderBy, String GroupBy, String condition,
+			String[] conditionArgs) {
 
 		// String[] colonne= new String[]{"nom_produit","DateAchat","Date_Peremption"};
 		// String condition = "id_note='"+Catégorie+"'";
@@ -1146,7 +946,7 @@ public class BDAcces {
 		ArrayList<String> aTableRetourMessage = new ArrayList<String>();
 
 		objCursor.moveToFirst();
-		ArrayList[] aTableRetour = new ArrayList[4];
+		ArrayList<String>[] aTableRetour = new ArrayList[4];
 
 		/* Check if our result was valid. */
 		if (objCursor != null) {
@@ -1182,11 +982,15 @@ public class BDAcces {
 		return aTableRetour;
 	}
 
-	@SuppressWarnings("rawtypes")
-	public ArrayList[] VerifAuDemarrage(String[] colonne, String OrderBy, String GroupBy) {
-		// open();
-		// String[] colonne= new String[]{"nom_produit","DateAchat","Date_Peremption"};
-		// String condition = "nom_categorie='"+Catégorie+"'";
+	/**
+	 * @param colonne
+	 * @param OrderBy
+	 * @param GroupBy
+	 * @return la liste des dates de peremptions
+	 */
+
+	public ArrayList<String>[] VerifAuDemarrage(String[] colonne, String OrderBy, String GroupBy) {
+
 		String condition = "";
 		String[] conditionArgs = null;
 
@@ -1205,7 +1009,7 @@ public class BDAcces {
 		ArrayList<String> aTableRetourDureeVie = new ArrayList<String>();
 
 		objCursor.moveToFirst();
-		ArrayList[] aTableRetour = new ArrayList[5];
+		ArrayList<String>[] aTableRetour = new ArrayList[5];
 
 		/* Check if our result was valid. */
 		if (objCursor != null) {
@@ -1250,6 +1054,10 @@ public class BDAcces {
 		return aTableRetour;
 	}
 
+	/**
+	 * @param TABLE
+	 * @return nombre de champs dans une table
+	 */
 	public int renvoi_nbChamp(String TABLE) {
 		open();
 		Cursor objCursor = mDb.query(TABLE, null, null, null, null, null, null);
@@ -1260,8 +1068,12 @@ public class BDAcces {
 
 	}
 
-	@SuppressWarnings("rawtypes")
-	public ArrayList[] renvoi_liste_TrousseFinalComplete(String[] colonne, String id) {
+	/**
+	 * @param colonne
+	 * @param id
+	 * @return la liste complete
+	 */
+	public ArrayList<String>[] renvoi_liste_TrousseFinalComplete(String[] colonne, String id) {
 
 		// String[] colonne= new String[]{"nom_produit","DateAchat","Date_Peremption"};
 		String condition = "id_produits='" + id + "'";
@@ -1293,7 +1105,7 @@ public class BDAcces {
 
 		objCursor.moveToFirst();
 
-		ArrayList[] aTableRetour = new ArrayList[objCursor.getColumnCount() + 1];
+		ArrayList<String>[] aTableRetour = new ArrayList[objCursor.getColumnCount() + 1];
 
 		/* Check if our result was valid. */
 		if (objCursor != null) {
@@ -1365,8 +1177,10 @@ public class BDAcces {
 		return aTableRetour;
 	}
 
-	@SuppressWarnings("rawtypes")
-	public ArrayList[] renvoi_liste_TrousseTempo() {
+	/**
+	 * @return la liste des produits temporaire
+	 */
+	public ArrayList<String>[] renvoi_liste_TrousseTempo() {
 
 		String[] colonne = new String[] { "nom_produit", "numero_Teinte", "DateAchat", "Duree_Vie" };
 		// String condition = "nom_categorie='"+Catégorie+"'";
@@ -1388,7 +1202,7 @@ public class BDAcces {
 		ArrayList<String> aTableRetourDureeVie = new ArrayList<String>();
 
 		objCursor.moveToFirst();
-		ArrayList[] aTableRetour = new ArrayList[4];
+		ArrayList<String>[] aTableRetour = new ArrayList[4];
 
 		/* Check if our result was valid. */
 		if (objCursor != null) {
@@ -1434,6 +1248,11 @@ public class BDAcces {
 		return aTableRetour;
 	}
 
+	/**
+	 * @param Table
+	 * @param Colonne
+	 * @return
+	 */
 	public String[] renvoi_liste_ValeurDansString(String Table, String Colonne) {
 
 		String[] colonne = new String[] { Colonne };
@@ -1470,6 +1289,12 @@ public class BDAcces {
 		return aTableRetour;
 	}
 
+	/**
+	 * @param Table
+	 * @param Colonne
+	 * @return
+	 * @throws Exception
+	 */
 	public String[] renvoi_liste_Valeur(String Table, String Colonne) throws Exception {
 		open();
 		String[] colonne = new String[] { Colonne };
@@ -1507,18 +1332,30 @@ public class BDAcces {
 		return aTableRetour;
 	}
 
+	/**
+	 * 
+	 */
 	public void update_bdd() {
 		int newversion = mDb.getVersion() + 1;
 		mDbHelper.onUpgrade(mDb, mDb.getVersion(), newversion);
 		// mDbHelper.onCreate(mDb);
 	}
 
-	@SuppressWarnings("rawtypes")
-	public ArrayList[] tableau_tmp() {
-		ArrayList[] aTableauTmp = new ArrayList[4];
+	/**
+	 * @return
+	 */
+	public ArrayList<String>[] tableau_tmp() {
+		ArrayList<String>[] aTableauTmp = new ArrayList[4];
 		return aTableauTmp;
 	}
 
+	/**
+	 * @param Table
+	 * @param modifiedValues
+	 * @param whereClause
+	 * @param whereArgs
+	 * @return
+	 */
 	public int majTable(String Table, ContentValues modifiedValues, String whereClause, String[] whereArgs) {
 		// TODO Auto-generated method stub
 		int nbdeChampAffecté = 0;
@@ -1533,8 +1370,11 @@ public class BDAcces {
 
 	}
 
-	@SuppressWarnings("rawtypes")
-	public ArrayList[] renvoiCategorieCochée() {
+	/**
+	 * @return
+	 */
+
+	public ArrayList<String>[] renvoiCategorieCochée() {
 		String[] colonne = new String[] { "nom_souscatergorie" };
 		String condition = "ischecked='true'";
 		String[] conditionArgs = null;
@@ -1545,7 +1385,7 @@ public class BDAcces {
 		int iPostNomProduits = objCursor.getColumnIndex("nom_souscatergorie");
 
 		int itotal = objCursor.getCount();
-		ArrayList[] aTableRetour = new ArrayList[itotal + 1];
+		ArrayList<String>[] aTableRetour = new ArrayList[itotal + 1];
 		ArrayList<String> aTableRetourNom = new ArrayList<String>();
 		if (itotal != 0) {
 
@@ -1569,6 +1409,11 @@ public class BDAcces {
 
 	}
 
+	/**
+	 * @param Table
+	 * @param values
+	 * @return
+	 */
 	public boolean InsertDonnéedansTable(String Table, ContentValues values) {
 
 		long RowNumber = mDb.insert(Table, null, values);
@@ -1579,6 +1424,12 @@ public class BDAcces {
 		}
 	}
 
+	/**
+	 * @param table
+	 * @param whereClause
+	 * @param whereArgs
+	 * @return
+	 */
 	public int deleteTable(String table, String whereClause, String[] whereArgs) {
 
 		int RowNumber = mDb.delete(table, whereClause, whereArgs);
@@ -1588,7 +1439,12 @@ public class BDAcces {
 
 	}
 
-	@SuppressWarnings("rawtypes")
+	/**
+	 * @param Table
+	 * @param Colonnes
+	 * @return
+	 */
+
 	public ArrayList[] renvoi_liste_ValeurTroussetempo(String Table, String[] Colonnes) {
 		String[] colonne = Colonnes;
 		// String condition = "nom_categorie='"+Catégorie+"'";
@@ -1642,7 +1498,6 @@ public class BDAcces {
 		return aTableRetour;
 	}
 
-	@SuppressWarnings("rawtypes")
 	public ArrayList[] renvoiCategorieEtProduitCochée() {
 		String[] colonne = new String[] { "nom_souscatergorie", "nom_categorie" };
 		String condition = "ischecked='true'";
@@ -1687,7 +1542,7 @@ public class BDAcces {
 	 * @param colonne
 	 * @return
 	 */
-	@SuppressWarnings("rawtypes")
+
 	public ArrayList<String>[] renvoi_param(String[] colonne) {
 		// open();
 
@@ -1748,13 +1603,20 @@ public class BDAcces {
 		return aTableRetour;
 	}
 
+	/**
+	 * @param ScriptSql
+	 */
 	public void execSQL(String ScriptSql) {
 		// TODO Auto-generated method stub
 		mDb.execSQL(ScriptSql);
 
 	}
 
-	@SuppressWarnings("rawtypes")
+	/**
+	 * @param Element
+	 * @return
+	 * @throws Exception
+	 */
 	public static ArrayList<ArrayList> renvoi_liste_script_xml(String Element) throws Exception {
 
 		// ***********************création de notre tableau dinamique
@@ -1783,7 +1645,11 @@ public class BDAcces {
 
 	}
 
-	@SuppressWarnings("rawtypes")
+	/**
+	 * @param Element
+	 * @return
+	 * @throws Exception
+	 */
 	public static ArrayList<ArrayList> renvoi_liste_script_maj_xml(String Element) throws Exception {
 
 		// ***********************création de notre tableau dinamique
