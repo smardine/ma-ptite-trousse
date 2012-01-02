@@ -1,0 +1,10 @@
+# ##########################################################
+# Informations propre à la structure du poste local
+#
+# en vue d'exécuter les scripts Ant sur le poste local
+# - modifier les valeurs des attributs indiqués ici
+# - enlever les # provoquant le commentaire
+# - renommer le fichier en local.properties
+# 
+# 
+# sdk.dir=C:\\android\\android-sdk-windows
