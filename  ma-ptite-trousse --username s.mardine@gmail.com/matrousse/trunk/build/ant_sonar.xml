@@ -56,7 +56,7 @@
 	
   
   <!-- Add the target -->
-  <target name="sonar" description="lancer l'analyse sonar">
+  <target name="sonar" depends="svnrevision" description="lancer l'analyse sonar">
   	<buildnumber/>
   	  
     <!-- The workDir directory is used by Sonar to store temporary files -->
