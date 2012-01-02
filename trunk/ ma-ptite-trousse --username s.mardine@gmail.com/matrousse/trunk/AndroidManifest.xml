@@ -1,66 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
       package="fr.smardine.matroussedemaquillage"
-      android:versionCode="57" android:versionName="build.properties">
-    <application android:label="@string/app_name" android:icon="@drawable/icone_bisounours">
-        <activity android:name="EntryPoint" android:screenOrientation="portrait">
-	        <intent-filter>
-	        	<action android:name="android.intent.action.MAIN"></action>
-				<category android:name="android.intent.category.LAUNCHER"></category>
-			</intent-filter>
+      android:versionCode="57" 
+      android:versionName="build.properties">
+    <application 
+    	android:label="@string/app_name" 
+    	android:icon="@drawable/icone_bisounours">
+        <activity 	android:name="EntryPoint" 
+        			android:screenOrientation="portrait">
+			        <intent-filter>
+			        	<action android:name="android.intent.action.MAIN"></action>
+						<category android:name="android.intent.category.LAUNCHER"></category>
+					</intent-filter>
 		</activity>
-		<activity android:label="@string/app_name" android:name="Main" android:screenOrientation="portrait">
+		<activity 	android:label="@string/app_name" 
+					android:name="Main" 
+					android:screenOrientation="portrait">
  		</activity>
-		<activity android:name=".remplir.formulaire_entree_page1bis" 
-			android:screenOrientation="portrait" 
-			android:windowSoftInputMode="stateHidden">
+		<activity 	android:name=".remplir.formulaire_entree_page1bis" 
+					android:screenOrientation="portrait" 
+					android:windowSoftInputMode="stateHidden">
 		</activity>
-		<activity android:screenOrientation="portrait" 
-		android:name=".remplir.formulaire_entree_page3" 
-		android:windowSoftInputMode="stateHidden">
+		<activity 	android:screenOrientation="portrait" 
+					android:name=".remplir.formulaire_entree_page3" 
+					android:windowSoftInputMode="stateHidden">
 		</activity>
-		<activity android:name=".remplir.choix_produit_a_duppliquer" 
-		android:screenOrientation="portrait">
+		<activity 	android:name=".remplir.choix_produit_a_duppliquer" 
+					android:screenOrientation="portrait">
 		</activity>
-		<activity android:screenOrientation="portrait" 
-		android:windowSoftInputMode="stateHidden" 
-		android:name=".recherche.Recherche">
+		<activity 	android:screenOrientation="portrait" 
+					android:windowSoftInputMode="stateHidden" 
+					android:name=".recherche.Recherche">
 		</activity>
-		<activity android:name=".recherche.affiche_detail" 
-		android:screenOrientation="portrait">
+		<activity 	android:name=".recherche.affiche_detail" 
+					android:screenOrientation="portrait">
 		</activity>
-		<activity android:name=".recherche.recherche_produit_perime" 
-		android:windowSoftInputMode="stateHidden" 
-		android:screenOrientation="portrait">
+		<activity 	android:name=".recherche.recherche_produit_perime" 
+					android:windowSoftInputMode="stateHidden" 
+					android:screenOrientation="portrait">
 		</activity>
-		<activity android:name=".modifier.modif_cat" 
-		android:screenOrientation="portrait">
+		<activity 	android:name=".modifier.modif_cat" 
+					android:screenOrientation="portrait">
 		</activity>
-		<activity android:name=".note.note_page1" 
-		android:screenOrientation="portrait" 
-		android:windowSoftInputMode="stateHidden">
+		<activity 	android:name=".note.note_page1" 
+					android:screenOrientation="portrait" 
+					android:windowSoftInputMode="stateHidden">
 		</activity>
-		<activity android:name=".note.note_saisie" 
-		android:screenOrientation="portrait" 
-		android:windowSoftInputMode="stateHidden">
+		<activity 	android:name=".note.note_saisie" 
+					android:screenOrientation="portrait" 
+					android:windowSoftInputMode="stateHidden">
 		</activity>
-		<activity android:name=".param.tab_param" 
-		android:screenOrientation="portrait">
+		<activity 	android:name=".param.tab_param" 
+					android:screenOrientation="portrait">
 		</activity>
-		<activity android:name=".param.tab1" 
-		android:screenOrientation="portrait" 
-		android:windowSoftInputMode="stateHidden">
+		<activity 	android:name=".param.tab1" 
+					android:screenOrientation="portrait" 
+					android:windowSoftInputMode="stateHidden">
 		</activity>
-		<activity android:name=".param.tab2" 
-		android:screenOrientation="portrait" 
-		android:windowSoftInputMode="stateHidden">
+		<activity 	android:name=".param.tab2" 
+					android:screenOrientation="portrait" 
+					android:windowSoftInputMode="stateHidden">
 		</activity>
-		<activity android:name=".param.tab3" 
-		android:screenOrientation="portrait" 
-		android:windowSoftInputMode="stateHidden">
+		<activity 	android:name=".param.tab3" 
+					android:screenOrientation="portrait" 
+					android:windowSoftInputMode="stateHidden">
 		</activity>
-		<activity android:name=".param.tab4" 
-		android:screenOrientation="portrait">
+		<activity 	android:name=".param.tab4" 
+					android:screenOrientation="portrait">
 		</activity>
   		 <!-- ************************************* -->
         <!--      	APPWIDGET PACKAGE           	-->
