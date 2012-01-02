@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="Equinox" default="help">
+<project name="matroussedemaquillage" default="help">
 	<!-- ATTENTION la tache par défaut help se trouve dans un import, build est versionné pour être récupéré dans hudson
 	     pour éviter l'erreur du projet dans eclipse > window > preference > ant > editeur > problem
 	     ajouter build.xml à la liste des fichier écarté des fichiers vérifiés -->
