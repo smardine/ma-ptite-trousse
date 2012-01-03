@@ -1,6 +1,36 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <project default="javadoc">
-    <target name="javadoc">
-        <javadoc access="public" author="true" classpath="libs/edtftpj.jar" destdir="doc" nodeprecated="false" nodeprecatedlist="false" noindex="false" nonavbar="false" notree="false" packagenames="fr.microconcept.android.equinox,fr.microconcept.android.custom.crashreport,fr.microconcept.android.custom.handler,fr.microconcept.android.custom.sauvegarde,fr.microconcept.android.synchro,fr.microconcept.android.custom.factory,fr.microconcept.android.custom.gestionlogcat,fr.microconcept.android.custom.restauration,fr.microconcept.android.custom,fr.microconcept.android.equinox.adapter,fr.microconcept.android.equinox.metier,fr.microconcept.android.custom.view,fr.microconcept.android.equinox.ihm" source="1.6" sourcepath="gen;src" splitindex="true" use="true" version="true"/>
+	<property name="doc.dir" value="../build/javadocs"/>
+		<target name="clean">
+			<delete dir="${doc.dir}" />
+		</target>
+    <target name="javadoc" depends="clean">
+        <javadoc access="public" 
+        	author="true" 
+        	classpath="libs/edtftpj.jar" 
+        	destdir="./build/javadocs"
+        	nodeprecated="false"
+        	nodeprecatedlist="false"
+        	noindex="false"
+        	nonavbar="false"
+        	notree="false"
+        	packagenames="fr.smardine.matroussedemaquillage,
+        	fr.smardine.matroussedemaquillage.base,
+        	fr.smardine.matroussedemaquillage.crashreport,
+        	fr.smardine.matroussedemaquillage.ftp,
+        	fr.smardine.matroussedemaquillage.modifier,
+        	fr.smardine.matroussedemaquillage.note,
+        	fr.smardine.matroussedemaquillage.param,
+        	fr.smardine.matroussedemaquillage.recherche,
+        	fr.smardine.matroussedemaquillage.remplir,
+        	fr.smardine.matroussedemaquillage.variableglobale,
+        	com.example.android.apis.animation,
+        	helper,
+        	widget"
+        	source="1.6"
+        	sourcepath="gen;src"
+        	splitindex="true"
+        	use="true"
+        	version="true"/>
     </target>
 </project>
