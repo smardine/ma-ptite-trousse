@@ -12,39 +12,98 @@
 
 package fr.smardine.matroussedemaquillage.base;
 
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * @author smardine Contient les scripts de creation de la base
+ */
 public class G_creation_base {
-
-	/**
-	 * Creation des tables
-	 */
-	public static String[] SCRIPT_CREATION_TABLE = {
-			"CREATE TABLE IF NOT EXISTS trousse_produits  (id_produits INTEGER PRIMARY KEY  AUTOINCREMENT, nom_souscatergorie VARCHAR(250)  NULL, nom_categorie VARCHAR (250) NULL, ischecked VARCHAR (250)  NULL)",
-			"CREATE TABLE IF NOT EXISTS trousse_marques (id_marque INTEGER PRIMARY KEY  AUTOINCREMENT, nom_marque VARCHAR(250)  NULL, ischecked VARCHAR (250)  NULL)",
-			"CREATE TABLE IF NOT EXISTS trousse_tempo ( nom_marque_choisie VARCHAR(250)  NULL, nom_produit VARCHAR(255) NULL, numero_Teinte VARCHAR (255) NULL,DateAchat VARCHAR (255) NULL,Duree_Vie VARCHAR (255) NULL)",
-			"CREATE TABLE IF NOT EXISTS produit_Enregistre ( id_produits INTEGER PRIMARY KEY  AUTOINCREMENT,nom_produit VARCHAR(255) NULL, nom_souscatergorie VARCHAR(250) NULL, nom_categorie VARCHAR (250) NULL,numero_Teinte VARCHAR (255) NULL,DateAchat VARCHAR (255) NULL,Duree_Vie VARCHAR (255) NULL,Date_Peremption VARCHAR (255))",
-			"CREATE TABLE IF NOT EXISTS Notes ( id_note INTEGER PRIMARY KEY  AUTOINCREMENT,Titre VARCHAR(255) NULL, Message VARCHAR (9999) NULL)",
-			"CREATE TABLE IF NOT EXISTS Param ( AfficheAlerte VARCHAR(255) NULL, DureeViePeremp VARCHAR (255) NULL)" };
-
-	/**
-	 * Insertion des categories
-	 */
-	public static String[] SCRIPT_INSERT_CATEGORIE = {
-			"INSERT INTO trousse_produits (nom_souscatergorie,nom_categorie,ISCHECKED) VALUES ('Fonds de teint','Visage','false')",
-			"INSERT INTO trousse_produits (nom_souscatergorie,nom_categorie,ISCHECKED) VALUES ('Correcteurs - Bases','Visage','false')",
-			"INSERT INTO trousse_produits (nom_souscatergorie,nom_categorie,ISCHECKED) VALUES ('Blush','Visage','false')",
-			"INSERT INTO trousse_produits (nom_souscatergorie,nom_categorie,ISCHECKED) VALUES ('Poudres','Visage','false')",
-			"INSERT INTO trousse_produits (nom_souscatergorie,nom_categorie,ISCHECKED) VALUES ('Crayons - Eyliners','Yeux','false')",
-			"INSERT INTO trousse_produits (nom_souscatergorie,nom_categorie,ISCHECKED) VALUES ('Bases','Yeux','false')",
-			"INSERT INTO trousse_produits (nom_souscatergorie,nom_categorie,ISCHECKED) VALUES ('Fards','Yeux','false')",
-			"INSERT INTO trousse_produits (nom_souscatergorie,nom_categorie,ISCHECKED) VALUES ('Mascaras','Yeux','false')",
-			"INSERT INTO trousse_produits (nom_souscatergorie,nom_categorie,ISCHECKED) VALUES ('Crayons contour','Levres','false')",
-			"INSERT INTO trousse_produits (nom_souscatergorie,nom_categorie,ISCHECKED) VALUES ('Rouges à lèvres','Levres','false')",
-			"INSERT INTO trousse_produits (nom_souscatergorie,nom_categorie,ISCHECKED) VALUES ('Vernis à ongles','Autres','false')" };
+	private List<String> allCreation;
+	private List<String> creationtable;
+	private List<String> creationCategorie;
+	private List<String> creationMarque;
 
 	/**
 	 * 
 	 */
-	public static String[] SCRIPT_INSERT_MARQUE = { "INSERT INTO trousse_marques (nom_marque,ISCHECKED) VALUES ('2B','false')",
+	public G_creation_base() {
+
+	}
+
+	/**
+	 * @return l'ensemble des scripts de creation de la base.
+	 */
+	public List<String> getallCreation() {
+		allCreation = new ArrayList<String>();
+		allCreation.addAll(creationtable);
+		allCreation.addAll(creationCategorie);
+		allCreation.addAll(creationMarque);
+		return allCreation;
+	}
+
+	/**
+	 * Creation des tables
+	 */
+	public List<String> getCreationTable() {
+		creationtable = new ArrayList<String>();
+		creationtable
+				.add("CREATE TABLE IF NOT EXISTS trousse_produits  (id_produits INTEGER PRIMARY KEY  AUTOINCREMENT, nom_souscatergorie VARCHAR(250)  NULL, nom_categorie VARCHAR (250) NULL, ischecked VARCHAR (250)  NULL)");
+		creationtable
+				.add("CREATE TABLE IF NOT EXISTS trousse_marques (id_marque INTEGER PRIMARY KEY  AUTOINCREMENT, nom_marque VARCHAR(250)  NULL, ischecked VARCHAR (250)  NULL)");
+		creationtable
+				.add("CREATE TABLE IF NOT EXISTS trousse_tempo ( nom_marque_choisie VARCHAR(250)  NULL, nom_produit VARCHAR(255) NULL, numero_Teinte VARCHAR (255) NULL,DateAchat VARCHAR (255) NULL,Duree_Vie VARCHAR (255) NULL)");
+		creationtable
+				.add("CREATE TABLE IF NOT EXISTS produit_Enregistre ( id_produits INTEGER PRIMARY KEY  AUTOINCREMENT,nom_produit VARCHAR(255) NULL, nom_souscatergorie VARCHAR(250) NULL, nom_categorie VARCHAR (250) NULL,numero_Teinte VARCHAR (255) NULL,DateAchat VARCHAR (255) NULL,Duree_Vie VARCHAR (255) NULL,Date_Peremption VARCHAR (255))");
+		creationtable
+				.add("CREATE TABLE IF NOT EXISTS Notes ( id_note INTEGER PRIMARY KEY  AUTOINCREMENT,Titre VARCHAR(255) NULL, Message VARCHAR (9999) NULL)");
+		creationtable.add("CREATE TABLE IF NOT EXISTS Param ( AfficheAlerte VARCHAR(255) NULL, DureeViePeremp VARCHAR (255) NULL)");
+		return creationtable;
+	}
+
+	/**
+	 * @return l'ensemble des categories a inserer en base.
+	 */
+	public List<String> getGategorie() {
+		creationCategorie = new ArrayList<String>();
+		creationCategorie
+				.add("INSERT INTO trousse_produits (nom_souscatergorie,nom_categorie,ISCHECKED) VALUES ('Fonds de teint','Visage','false')");
+		creationCategorie
+				.add("INSERT INTO trousse_produits (nom_souscatergorie,nom_categorie,ISCHECKED) VALUES ('Correcteurs - Bases','Visage','false')");
+		creationCategorie
+				.add("INSERT INTO trousse_produits (nom_souscatergorie,nom_categorie,ISCHECKED) VALUES ('Blush','Visage','false')");
+		creationCategorie
+				.add("INSERT INTO trousse_produits (nom_souscatergorie,nom_categorie,ISCHECKED) VALUES ('Poudres','Visage','false')");
+		creationCategorie
+				.add("INSERT INTO trousse_produits (nom_souscatergorie,nom_categorie,ISCHECKED) VALUES ('Crayons - Eyliners','Yeux','false')");
+		creationCategorie.add("INSERT INTO trousse_produits (nom_souscatergorie,nom_categorie,ISCHECKED) VALUES ('Bases','Yeux','false')");
+		creationCategorie.add("INSERT INTO trousse_produits (nom_souscatergorie,nom_categorie,ISCHECKED) VALUES ('Fards','Yeux','false')");
+		creationCategorie
+				.add("INSERT INTO trousse_produits (nom_souscatergorie,nom_categorie,ISCHECKED) VALUES ('Mascaras','Yeux','false')");
+		creationCategorie
+				.add("INSERT INTO trousse_produits (nom_souscatergorie,nom_categorie,ISCHECKED) VALUES ('Crayons contour','Levres','false')");
+		creationCategorie
+				.add("INSERT INTO trousse_produits (nom_souscatergorie,nom_categorie,ISCHECKED) VALUES ('Rouges à lèvres','Levres','false')");
+		creationCategorie
+				.add("INSERT INTO trousse_produits (nom_souscatergorie,nom_categorie,ISCHECKED) VALUES ('Vernis à ongles','Autres','false')");
+		return creationCategorie;
+	}
+
+	/**
+	 * @return l'ensemble des marques de depart.
+	 */
+	public List<String> getMarque() {
+		creationMarque = new ArrayList<String>();
+		for (String s : SCRIPT_INSERT_MARQUE) {
+			creationMarque.add(s.replace("''", "\"").replace("[", "").replace("]", ""));
+		}
+		return creationMarque;
+	}
+
+	/**
+	 * 
+	 */
+	private final String[] SCRIPT_INSERT_MARQUE = { "INSERT INTO trousse_marques (nom_marque,ISCHECKED) VALUES ('2B','false')",
 			"INSERT INTO trousse_marques (nom_marque,ISCHECKED) VALUES ('Agnès b.','false')",
 			"INSERT INTO trousse_marques (nom_marque,ISCHECKED) VALUES ('Alverde','false')",
 			"INSERT INTO trousse_marques (nom_marque,ISCHECKED) VALUES ('Annabelle','false')",
