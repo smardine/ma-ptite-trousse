@@ -70,87 +70,56 @@ public class BDAcces {
 			String Script = "";
 
 			try {
-
-				String[] listeScripts = G_creation_base.SCRIPT_CREATION_TABLE;
-
-				Script = "";
-				for (int i = 0; i < listeScripts.length; i++) {
-					Script = listeScripts[i].toString();
-					Script = Script.replace("''", "\"");
-					db.execSQL(Script.replace("[", "").replace("]", ""));
+				G_creation_base creation = new G_creation_base();
+				for (String s : creation.getallCreation()) {
+					s = s.replace("''", "\"");
+					db.execSQL(s.replace("[", "").replace("]", ""));
 				}
-			} catch (Exception e) {
 
-				Message_Erreur = e.toString();
-				Log.e(TAG, "erreur application script: " + Script);
-				Log.e(TAG, "erreur: " + Message_Erreur);
-
-			}
-
-			try {
-
-				String[] listeScripts = G_creation_base.SCRIPT_INSERT_CATEGORIE;
-				for (int i = 0; i < listeScripts.length; i++) {
-					Script = listeScripts[i].toString();
-					Script = Script.replace("''", "\"");
-					db.execSQL(Script.replace("[", "").replace("]", ""));
+				G_maj_base maj = new G_maj_base();
+				for (String s : maj.getAllVersion()) {
+					s = s.replace("''", "\"");
+					db.execSQL(s.replace("[", "").replace("]", ""));
 				}
-			} catch (Exception e) {
 
-				Message_Erreur = e.toString();
-				Log.e(TAG, "erreur application script: " + Script);
-				Log.e(TAG, "erreur: " + Message_Erreur);
+				// String[] listeScripts = G_creation_base.SCRIPT_CREATION_TABLE;
+				//
+				// Script = "";
+				// for (int i = 0; i < listeScripts.length; i++) {
+				// Script = listeScripts[i].toString();
+				// Script = Script.replace("''", "\"");
+				// db.execSQL(Script.replace("[", "").replace("]", ""));
+				// }
+				//
+				// listeScripts = G_creation_base.SCRIPT_INSERT_CATEGORIE;
+				// for (int i = 0; i < listeScripts.length; i++) {
+				// Script = listeScripts[i].toString();
+				// Script = Script.replace("''", "\"");
+				// db.execSQL(Script.replace("[", "").replace("]", ""));
+				// }
+				//
+				// listeScripts = G_creation_base.SCRIPT_INSERT_MARQUE;
+				// for (int i = 0; i < listeScripts.length; i++) {
+				// Script = listeScripts[i].toString();
+				// Script = Script.replace("''", "\"");
+				// db.execSQL(Script.replace("[", "").replace("]", ""));
+				// }
 
-			}
-			try {
+				// String[] listeScripts = G_maj_base.SCRIPT_MAJ_V02;
+				//
+				// for (int i = 0; i < listeScripts.length; i++) {
+				// Script = listeScripts[i].toString();
+				// Script = Script.replace("''", "\"");
+				// db.execSQL(Script.replace("[", "").replace("]", ""));
+				// }
 
-				String[] listeScripts = G_creation_base.SCRIPT_INSERT_MARQUE;
-				for (int i = 0; i < listeScripts.length; i++) {
-					Script = listeScripts[i].toString();
-					Script = Script.replace("''", "\"");
-					db.execSQL(Script.replace("[", "").replace("]", ""));
-				}
-			} catch (Exception e) {
-
-				Message_Erreur = e.toString();
-				Log.e(TAG, "erreur application script: " + Script);
-				Log.e(TAG, "erreur: " + Message_Erreur);
-
-			}
-			try {
-
-				String[] listeScripts = G_maj_base.SCRIPT_MAJ_V02;
-
-				for (int i = 0; i < listeScripts.length; i++) {
-					Script = listeScripts[i].toString();
-					Script = Script.replace("''", "\"");
-					db.execSQL(Script.replace("[", "").replace("]", ""));
-				}
-			} catch (Exception e) {
-
-				Message_Erreur = e.toString();
-				Log.e(TAG, "erreur application script: " + Script);
-				Log.e(TAG, "erreur: " + Message_Erreur);
-
-			}
-			try {
-
-				String[] listeScripts = G_maj_base.SCRIPT_MAJ_V03;
-
-				for (int i = 0; i < listeScripts.length; i++) {
-					Script = listeScripts[i].toString();
-					Script = Script.replace("''", "\"");
-					db.execSQL(Script.replace("[", "").replace("]", ""));
-				}
-			} catch (Exception e) {
-
-				Message_Erreur = e.toString();
-				Log.e(TAG, "erreur application script: " + Script);
-				Log.e(TAG, "erreur: " + Message_Erreur);
-
-			}
-			try {
-
+				// listeScripts = G_maj_base.SCRIPT_MAJ_V03;
+				//
+				// for (int i = 0; i < listeScripts.length; i++) {
+				// Script = listeScripts[i].toString();
+				// Script = Script.replace("''", "\"");
+				// db.execSQL(Script.replace("[", "").replace("]", ""));
+				// }
 				String[] listeScripts = G_maj_base.SCRIPT_MAJ_V04;
 
 				for (int i = 0; i < listeScripts.length; i++) {
@@ -158,152 +127,66 @@ public class BDAcces {
 					Script = Script.replace("''", "\"");
 					db.execSQL(Script.replace("[", "").replace("]", ""));
 				}
-			} catch (Exception e) {
-
-				Message_Erreur = e.toString();
-				Log.e(TAG, "erreur application script: " + Script);
-				Log.e(TAG, "erreur: " + Message_Erreur);
-
-			}
-			try {
-				String[] listeScripts = G_maj_base.SCRIPT_MAJ_V05;
+				listeScripts = G_maj_base.SCRIPT_MAJ_V05;
 
 				for (int i = 0; i < listeScripts.length; i++) {
 					Script = listeScripts[i].toString();
 					Script = Script.replace("''", "\"");
 					db.execSQL(Script.replace("[", "").replace("]", ""));
 				}
-			} catch (Exception e) {
-
-				Message_Erreur = e.toString();
-				Log.e(TAG, "erreur application script: " + Script);
-				Log.e(TAG, "erreur: " + Message_Erreur);
-
-			}
-			try {
-
-				String[] listeScripts = G_maj_base.SCRIPT_MAJ_V06;
+				listeScripts = G_maj_base.SCRIPT_MAJ_V06;
 				for (int i = 0; i < listeScripts.length; i++) {
 					Script = listeScripts[i].toString();
 					Script = Script.replace("''", "\"");
 					db.execSQL(Script.replace("[", "").replace("]", ""));
 				}
-			} catch (Exception e) {
-
-			}
-			try {
-
-				String[] listeScripts = G_maj_base.SCRIPT_MAJ_V07;
+				listeScripts = G_maj_base.SCRIPT_MAJ_V07;
 				for (int i = 0; i < listeScripts.length; i++) {
 					Script = listeScripts[i].toString();
 					Script = Script.replace("''", "\"");
 					db.execSQL(Script.replace("[", "").replace("]", ""));
 				}
-			} catch (Exception e) {
-
-				Message_Erreur = e.toString();
-				Log.e(TAG, "erreur application script: " + Script);
-				Log.e(TAG, "erreur: " + Message_Erreur);
-			}
-			try {
-
-				String[] listeScripts = G_maj_base.SCRIPT_MAJ_V08;
+				listeScripts = G_maj_base.SCRIPT_MAJ_V08;
 
 				for (int i = 0; i < listeScripts.length; i++) {
 					Script = listeScripts[i].toString();
 					Script = Script.replace("''", "\"");
 					db.execSQL(Script.replace("[", "").replace("]", ""));
 				}
-			} catch (Exception e) {
-
-				Message_Erreur = e.toString();
-
-				Log.e(TAG, "erreur application script: " + Script);
-				Log.e(TAG, "erreur: " + Message_Erreur);
-
-			}
-
-			try {
-
-				String[] listeScripts = G_maj_base.SCRIPT_MAJ_V09;
+				listeScripts = G_maj_base.SCRIPT_MAJ_V09;
 				for (int i = 0; i < listeScripts.length; i++) {
 					Script = listeScripts[i].toString();
 					Script = Script.replace("''", "\"");
 					db.execSQL(Script.replace("[", "").replace("]", ""));
 				}
-			} catch (Exception e) {
-
-				Message_Erreur = e.toString();
-				Log.e(TAG, "erreur application script: " + Script);
-				Log.e(TAG, "erreur: " + Message_Erreur);
-
-			}
-			try {
-				// Message msg1 = handler.obtainMessage();
-
-				String[] listeScripts = G_maj_base.SCRIPT_MAJ_V10;
+				listeScripts = G_maj_base.SCRIPT_MAJ_V10;
 				for (int i = 0; i < listeScripts.length; i++) {
 					Script = listeScripts[i].toString();
 					Script = Script.replace("''", "\"");
 					db.execSQL(Script.replace("[", "").replace("]", ""));
 				}
-			} catch (Exception e) {
-
-				Message_Erreur = e.toString();
-				Log.e(TAG, "erreur application script: " + Script);
-				Log.e(TAG, "erreur: " + Message_Erreur);
-
-			}
-			try {
-
-				String[] listeScripts = G_maj_base.SCRIPT_MAJ_V11;
+				listeScripts = G_maj_base.SCRIPT_MAJ_V11;
 				// String Script="";
 				for (int i = 0; i < listeScripts.length; i++) {
 					Script = listeScripts[i].toString();
 					Script = Script.replace("''", "\"");
 					db.execSQL(Script.replace("[", "").replace("]", ""));
 				}
-			} catch (Exception e) {
-
-				Message_Erreur = e.toString();
-				Log.e(TAG, "erreur application script: " + Script);
-				Log.e(TAG, "erreur: " + Message_Erreur);
-
-			}
-			try {
-
-				String[] listeScripts = G_maj_base.SCRIPT_MAJ_V12;
-				// String Script="";
-				for (int i = 0; i < listeScripts.length; i++) {
-					Script = listeScripts[i].toString();
-					Script = Script.replace("''", "\"");
-					db.execSQL(Script.replace("[", "").replace("]", ""));
-				}
-			} catch (Exception e) {
-
-				Message_Erreur = e.toString();
-				Log.e(TAG, "erreur application script: " + Script);
-				Log.e(TAG, "erreur: " + Message_Erreur);
-
-			}
-			try {
-
-				String[] listeScripts = G_maj_base.SCRIPT_MAJ_V13;
+				listeScripts = G_maj_base.SCRIPT_MAJ_V12;
 
 				for (int i = 0; i < listeScripts.length; i++) {
 					Script = listeScripts[i].toString();
 					Script = Script.replace("''", "\"");
 					db.execSQL(Script.replace("[", "").replace("]", ""));
 				}
-			} catch (Exception e) {
+				listeScripts = G_maj_base.SCRIPT_MAJ_V13;
 
-				Message_Erreur = e.toString();
-				Log.e(TAG, "erreur application script: " + Script);
-				Log.e(TAG, "erreur: " + Message_Erreur);
-
-			}
-			try {
-				String[] listeScripts = G_maj_base.SCRIPT_MAJ_V14;
+				for (int i = 0; i < listeScripts.length; i++) {
+					Script = listeScripts[i].toString();
+					Script = Script.replace("''", "\"");
+					db.execSQL(Script.replace("[", "").replace("]", ""));
+				}
+				listeScripts = G_maj_base.SCRIPT_MAJ_V14;
 
 				for (int i = 0; i < listeScripts.length; i++) {
 					Script = listeScripts[i].toString();
@@ -325,47 +208,47 @@ public class BDAcces {
 			String Script = "";
 			Log.w(TAG, "Upgrading database from version " + oldVersion + " to " + newVersion + ", which will destroy all old data");
 
-			if (oldVersion == 1) {
-				// la version de la base est en v1 => on passe en V2
-
-				try {
-
-					String[] listeScripts = G_maj_base.SCRIPT_MAJ_V02;
-
-					for (int i = 0; i < listeScripts.length; i++) {
-						Script = listeScripts[i].toString();
-						Script = Script.replace("''", "\"");
-						db.execSQL(Script.replace("[", "").replace("]", ""));
-					}
-				} catch (Exception e) {
-
-					Message_Erreur = e.toString();
-					Log.d(TAG, "erreur application script: " + Script);
-					Log.d(TAG, "erreur: " + Message_Erreur);
-
-				}
-				oldVersion = 2;
-			}
-			if (oldVersion == 2) {
-
-				try {
-
-					String[] listeScripts = G_maj_base.SCRIPT_MAJ_V03;
-
-					for (int i = 0; i < listeScripts.length; i++) {
-						Script = listeScripts[i].toString();
-						Script = Script.replace("''", "\"");
-						db.execSQL(Script.replace("[", "").replace("]", ""));
-					}
-				} catch (Exception e) {
-
-					Message_Erreur = e.toString();
-					Log.d(TAG, "erreur application script: " + Script);
-					Log.d(TAG, "erreur: " + Message_Erreur);
-
-				}
-				oldVersion = 3;
-			}
+			// if (oldVersion == 1) {
+			// // la version de la base est en v1 => on passe en V2
+			//
+			// try {
+			//
+			// String[] listeScripts = G_maj_base.SCRIPT_MAJ_V02;
+			//
+			// for (int i = 0; i < listeScripts.length; i++) {
+			// Script = listeScripts[i].toString();
+			// Script = Script.replace("''", "\"");
+			// db.execSQL(Script.replace("[", "").replace("]", ""));
+			// }
+			// } catch (Exception e) {
+			//
+			// Message_Erreur = e.toString();
+			// Log.d(TAG, "erreur application script: " + Script);
+			// Log.d(TAG, "erreur: " + Message_Erreur);
+			//
+			// }
+			// oldVersion = 2;
+			// }
+			// if (oldVersion == 2) {
+			//
+			// try {
+			//
+			// String[] listeScripts = G_maj_base.SCRIPT_MAJ_V03;
+			//
+			// for (int i = 0; i < listeScripts.length; i++) {
+			// Script = listeScripts[i].toString();
+			// Script = Script.replace("''", "\"");
+			// db.execSQL(Script.replace("[", "").replace("]", ""));
+			// }
+			// } catch (Exception e) {
+			//
+			// Message_Erreur = e.toString();
+			// Log.d(TAG, "erreur application script: " + Script);
+			// Log.d(TAG, "erreur: " + Message_Erreur);
+			//
+			// }
+			// oldVersion = 3;
+			// }
 			if (oldVersion == 3) {
 
 				try {
