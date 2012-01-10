@@ -14,6 +14,7 @@ import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import fr.smardine.matroussedemaquillage.R;
 import fr.smardine.matroussedemaquillage.base.BDAcces;
+import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableTrousseProduits;
 import fr.smardine.matroussedemaquillage.recherche.Recherche;
 import fr.smardine.matroussedemaquillage.recherche.affiche_detail;
 import fr.smardine.matroussedemaquillage.variableglobale.ActivityParam;
@@ -25,13 +26,12 @@ import fr.smardine.matroussedemaquillage.variableglobale.EnTheme;
 
 /**
  * @author sims
- *
  */
 public class modif_cat extends Activity implements OnClickListener {
-	
+
 	ImageView BtVisage, BtYeux, BtLevres, BtAutres;
 	private BDAcces objBd;
-	
+
 	String MarqueChoisie = "";
 	String DureeVie = "";
 	String DateChoisie = "";
@@ -104,7 +104,7 @@ public class modif_cat extends Activity implements OnClickListener {
 
 		}
 		if (EnTheme.Classique.getLib().equals(nomThemeChoisi)) {
-//			setContentView(R.layout.formulaire_entree_page1bis);
+			// setContentView(R.layout.formulaire_entree_page1bis);
 			ContentValues values = new ContentValues();
 			values.put("Theme", EnTheme.Fleur.getLib());
 
@@ -123,8 +123,6 @@ public class modif_cat extends Activity implements OnClickListener {
 
 	@Override
 	public void onClick(View v) {
-
-		
 
 		if (v == BtVisage) {// si le bouton cliqué est le "BoutonVisage"
 			String[] NomProduits = recupereSousCategorie("Visage");
@@ -165,7 +163,7 @@ public class modif_cat extends Activity implements OnClickListener {
 			adChoixVisage.setPositiveButton("Choisir", new DialogInterface.OnClickListener() {
 				@Override
 				public void onClick(DialogInterface dialog, int id) {
-					
+
 					majTableEtLancePage2();
 				}
 			});
@@ -295,10 +293,8 @@ public class modif_cat extends Activity implements OnClickListener {
 
 	private int recupereIndiceSousCategorieCochee(String p_categorie) {
 		int indiceProduitCoche = -1;
-		objBd.open();
-
-		@SuppressWarnings("rawtypes")
-		ArrayList[] ListeProduits = objBd.renvoi_liste_produits(p_categorie);
+		AccesTableTrousseProduits accesProduits = new AccesTableTrousseProduits(this);
+		ArrayList[] ListeProduits = accesProduits.renvoi_liste_produits(p_categorie);
 		String[] NomProduits = new String[ListeProduits[0].size()];
 		for (int j = 0; j < ListeProduits[0].size(); j++) {
 			NomProduits[j] = ListeProduits[0].get(j).toString();
@@ -316,9 +312,8 @@ public class modif_cat extends Activity implements OnClickListener {
 	 * @return
 	 */
 	private String[] recupereSousCategorie(String p_categorie) {
-		objBd.open();
-		@SuppressWarnings("rawtypes")
-		ArrayList[] ListeProduits = objBd.renvoi_liste_produits(p_categorie);
+		AccesTableTrousseProduits accesProduits = new AccesTableTrousseProduits(this);
+		ArrayList[] ListeProduits = accesProduits.renvoi_liste_produits(p_categorie);
 		String[] NomProduits = new String[ListeProduits[0].size()];
 		for (int j = 0; j < ListeProduits[0].size(); j++) {
 			NomProduits[j] = ListeProduits[0].get(j).toString();
@@ -335,7 +330,7 @@ public class modif_cat extends Activity implements OnClickListener {
 		ContentValues modifiedValuesEfface = new ContentValues();
 		modifiedValuesEfface.put("ischecked", "false");
 		String whereClauseEfface = "ischecked=?";
-		String[]	whereArgsEfface = new String[] { "true" };
+		String[] whereArgsEfface = new String[] { "true" };
 
 		objBd.open();
 		objBd.majTable(Table, modifiedValuesEfface, whereClauseEfface, whereArgsEfface);
@@ -565,9 +560,10 @@ public class modif_cat extends Activity implements OnClickListener {
 		}
 		return super.onKeyDown(keyCode, event);
 	}
-/**
- * detruit l'activity
- */
+
+	/**
+	 * detruit l'activity
+	 */
 	public void OnDestroy() {
 		popUp("OnDestroy-Page1");
 		super.onDestroy();

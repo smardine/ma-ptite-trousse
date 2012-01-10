@@ -41,6 +41,7 @@ import com.example.android.apis.animation.Animlineaire;
 import fr.smardine.matroussedemaquillage.Main;
 import fr.smardine.matroussedemaquillage.R;
 import fr.smardine.matroussedemaquillage.base.BDAcces;
+import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableTrousseProduits;
 import fr.smardine.matroussedemaquillage.note.note_page1;
 import fr.smardine.matroussedemaquillage.param.tab_param;
 import fr.smardine.matroussedemaquillage.recherche.Recherche;
@@ -178,7 +179,7 @@ public class formulaire_entree_page1bis extends Activity implements OnClickListe
 
 		}
 		if (EnTheme.Classique.getLib().equals(nomThemeChoisi)) {
-//			setContentView(R.layout.formulaire_entree_page1bis);
+			// setContentView(R.layout.formulaire_entree_page1bis);
 			ContentValues values = new ContentValues();
 			values.put("Theme", EnTheme.Fleur.getLib());
 
@@ -513,9 +514,9 @@ public class formulaire_entree_page1bis extends Activity implements OnClickListe
 	 * @return
 	 */
 	private String[] recupereSousCategorie(String p_categorie) {
-		objBd.open();
-		@SuppressWarnings("rawtypes")
-		ArrayList[] ListeProduits = objBd.renvoi_liste_produits(p_categorie);
+
+		AccesTableTrousseProduits accesProduits = new AccesTableTrousseProduits(this);
+		ArrayList[] ListeProduits = accesProduits.renvoi_liste_produits(p_categorie);
 		String[] NomProduits = new String[ListeProduits[0].size()];
 		for (int j = 0; j < ListeProduits[0].size(); j++) {
 			NomProduits[j] = ListeProduits[0].get(j).toString();
@@ -526,10 +527,8 @@ public class formulaire_entree_page1bis extends Activity implements OnClickListe
 
 	private int recupereIndiceSousCategorieCochee(String p_categorie) {
 		int indiceProduitCoche = -1;
-		objBd.open();
-
-		@SuppressWarnings("rawtypes")
-		ArrayList[] ListeProduits = objBd.renvoi_liste_produits(p_categorie);
+		AccesTableTrousseProduits accesProduits = new AccesTableTrousseProduits(this);
+		ArrayList[] ListeProduits = accesProduits.renvoi_liste_produits(p_categorie);
 		String[] NomProduits = new String[ListeProduits[0].size()];
 		for (int j = 0; j < ListeProduits[0].size(); j++) {
 			NomProduits[j] = ListeProduits[0].get(j).toString();

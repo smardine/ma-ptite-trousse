@@ -36,9 +36,9 @@ public class G_creation_base {
 	 */
 	public List<String> getallCreation() {
 		allCreation = new ArrayList<String>();
-		allCreation.addAll(creationtable);
-		allCreation.addAll(creationCategorie);
-		allCreation.addAll(creationMarque);
+		allCreation.addAll(getCreationTable());
+		allCreation.addAll(getCategorie());
+		allCreation.addAll(getMarque());
 		return allCreation;
 	}
 
@@ -64,7 +64,7 @@ public class G_creation_base {
 	/**
 	 * @return l'ensemble des categories a inserer en base.
 	 */
-	public List<String> getGategorie() {
+	public List<String> getCategorie() {
 		creationCategorie = new ArrayList<String>();
 		creationCategorie
 				.add("INSERT INTO trousse_produits (nom_souscatergorie,nom_categorie,ISCHECKED) VALUES ('Fonds de teint','Visage','false')");
@@ -95,7 +95,7 @@ public class G_creation_base {
 	public List<String> getMarque() {
 		creationMarque = new ArrayList<String>();
 		for (String s : SCRIPT_INSERT_MARQUE) {
-			creationMarque.add(s.replace("''", "\"").replace("[", "").replace("]", ""));
+			creationMarque.add(s);
 		}
 		return creationMarque;
 	}
