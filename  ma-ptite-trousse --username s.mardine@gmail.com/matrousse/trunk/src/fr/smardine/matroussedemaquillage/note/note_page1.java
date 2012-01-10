@@ -30,13 +30,15 @@ import android.widget.Toast;
 import fr.smardine.matroussedemaquillage.Main;
 import fr.smardine.matroussedemaquillage.R;
 import fr.smardine.matroussedemaquillage.base.BDAcces;
+import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableParams;
 import fr.smardine.matroussedemaquillage.note.noteListAdapter.ViewHolder;
 import fr.smardine.matroussedemaquillage.param.tab_param;
 import fr.smardine.matroussedemaquillage.recherche.Recherche;
 import fr.smardine.matroussedemaquillage.variableglobale.ActivityParam;
 import fr.smardine.matroussedemaquillage.variableglobale.EnTheme;
 
-public class note_page1 extends Activity implements OnItemClickListener, OnClickListener, OnItemLongClickListener {
+public class note_page1 extends Activity implements OnItemClickListener,
+		OnClickListener, OnItemLongClickListener {
 
 	ArrayList<produitNote> produitNote = new ArrayList<produitNote>();
 	ImageView BtAddNote, BtSupprTtteNote;
@@ -57,7 +59,8 @@ public class note_page1 extends Activity implements OnItemClickListener, OnClick
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		// ExceptionHandler.register(this, "http://simon.mardine.free.fr/trousse_maquillage/test/server.php","ma_ptite_trousse");
+		// ExceptionHandler.register(this,
+		// "http://simon.mardine.free.fr/trousse_maquillage/test/server.php","ma_ptite_trousse");
 		ChoisiLeTheme();
 
 		NoteListView = (ListView) this.findViewById(R.id.produitListViewNote);
@@ -94,13 +97,9 @@ public class note_page1 extends Activity implements OnItemClickListener, OnClick
 
 		}
 		if (EnTheme.Classique.getLib().equals(nomThemeChoisi)) {
-//			setContentView(R.layout.note_page1);
-			ContentValues values = new ContentValues();
-			values.put("Theme", EnTheme.Fleur.getLib());
-
-			objBd.open();
-			objBd.majTable("Param", values, "", null);
-			objBd.close();
+			// setContentView(R.layout.note_page1);
+			AccesTableParams accesParam = new AccesTableParams(this);
+			accesParam.majTheme(EnTheme.Fleur);
 			ChoisiLeTheme();
 
 		}
@@ -141,11 +140,13 @@ public class note_page1 extends Activity implements OnItemClickListener, OnClick
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// évènement appelé lorsqu'un menu est choisi
 		switch (item.getItemId()) {
-			// l'identifiant integer est moins gourmand en ressource que le string
+			// l'identifiant integer est moins gourmand en ressource que le
+			// string
 			case 2000:
 				Toast.makeText(this, "Recherche", 1000).show();
 				Intent intentRecherche = new Intent(this, Recherche.class);
-				intentRecherche.putExtra(ActivityParam.LaunchFromNotePage1, true);
+				intentRecherche.putExtra(ActivityParam.LaunchFromNotePage1,
+						true);
 				// on demarre la nouvelle activité
 				startActivity(intentRecherche);
 				termineActivity();
@@ -153,7 +154,8 @@ public class note_page1 extends Activity implements OnItemClickListener, OnClick
 			case 2001:
 				Toast.makeText(this, "Paramètres", 1000).show();
 				Intent intentParametres = new Intent(this, tab_param.class);
-				intentParametres.putExtra(ActivityParam.LaunchFromNotePage1, true);
+				intentParametres.putExtra(ActivityParam.LaunchFromNotePage1,
+						true);
 				// on demarre la nouvelle activité
 				startActivity(intentParametres);
 				termineActivity();
@@ -183,7 +185,8 @@ public class note_page1 extends Activity implements OnItemClickListener, OnClick
 	}
 
 	@SuppressWarnings("rawtypes")
-	private void AfficheLeContenu(String TypeRecherche, ArrayList<produitNote> produitNote2, ListView produitListView) {
+	private void AfficheLeContenu(String TypeRecherche,
+			ArrayList<produitNote> produitNote2, ListView produitListView) {
 
 		objBd.open();
 
@@ -191,7 +194,8 @@ public class note_page1 extends Activity implements OnItemClickListener, OnClick
 
 			String[] Colonnes = { "id_note", "Titre" };
 
-			ArrayList[] ListeProduits = objBd.renvoi_liste_Note(Colonnes, "id_note", "", "", null);
+			ArrayList[] ListeProduits = objBd.renvoi_liste_Note(Colonnes,
+					"id_note", "", "", null);
 			int nbdobjet = ListeProduits[0].size();
 			if (nbdobjet != 0) {
 				for (int j = 0; j < nbdobjet; j++) {
@@ -201,9 +205,11 @@ public class note_page1 extends Activity implements OnItemClickListener, OnClick
 				}
 				BtSupprTtteNote.setVisibility(VISIBLE);
 			} else {
-				AlertDialog.Builder adAlertNoNotes = new AlertDialog.Builder(this);
+				AlertDialog.Builder adAlertNoNotes = new AlertDialog.Builder(
+						this);
 				adAlertNoNotes.setTitle("Pour Information");
-				adAlertNoNotes.setMessage("Aucune note n'est encore enregistrée");
+				adAlertNoNotes
+						.setMessage("Aucune note n'est encore enregistrée");
 				adAlertNoNotes.setIcon(R.drawable.ad_attention);
 				adAlertNoNotes.setNegativeButton("Ok", null);
 				adAlertNoNotes.show();
@@ -218,11 +224,13 @@ public class note_page1 extends Activity implements OnItemClickListener, OnClick
 		Animation animation = new AlphaAnimation(0.0f, 1.0f);
 		animation.setDuration(100);
 		set.addAnimation(animation);
-		animation = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF,
+		animation = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0.0f,
+				Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF,
 				-1.0f, Animation.RELATIVE_TO_SELF, 0.0f);
 		animation.setDuration(100);
 		set.addAnimation(animation);
-		LayoutAnimationController controller = new LayoutAnimationController(set, 0.5f);
+		LayoutAnimationController controller = new LayoutAnimationController(
+				set, 0.5f);
 		produitListView.setLayoutAnimation(controller);
 
 		// paramètrer l'adapteur correspondant
@@ -243,7 +251,8 @@ public class note_page1 extends Activity implements OnItemClickListener, OnClick
 	}
 
 	/**
-	 * Exécuté lorsque l'activité devient visible à l'utilisateur. La fonction onStart() est suivie de la fonction onResume().
+	 * Exécuté lorsque l'activité devient visible à l'utilisateur. La fonction
+	 * onStart() est suivie de la fonction onResume().
 	 */
 	@Override
 	protected void onStart() {
@@ -252,8 +261,10 @@ public class note_page1 extends Activity implements OnItemClickListener, OnClick
 	}
 
 	/**
-	 * Exécutée a chaque passage en premier plan de l'activité. Ou bien, si l'activité passe à nouveau en premier (si une autre activité
-	 * était passé en premier plan entre temps). La fonction onResume() est suivie de l'exécution de l'activité.
+	 * Exécutée a chaque passage en premier plan de l'activité. Ou bien, si
+	 * l'activité passe à nouveau en premier (si une autre activité était passé
+	 * en premier plan entre temps). La fonction onResume() est suivie de
+	 * l'exécution de l'activité.
 	 */
 	@Override
 	protected void onResume() {
@@ -262,9 +273,11 @@ public class note_page1 extends Activity implements OnItemClickListener, OnClick
 	}
 
 	/**
-	 * La fonction onStop() est exécutée : - lorsque l'activité n'est plus en premier plan - ou bien lorsque l'activité va être détruite
-	 * Cette fonction est suivie : - de la fonction onRestart() si l'activité passe à nouveau en premier plan - de la fonction onDestroy()
-	 * lorsque l'activité se termine ou bien lorsque le système décide de l'arrêter
+	 * La fonction onStop() est exécutée : - lorsque l'activité n'est plus en
+	 * premier plan - ou bien lorsque l'activité va être détruite Cette fonction
+	 * est suivie : - de la fonction onRestart() si l'activité passe à nouveau
+	 * en premier plan - de la fonction onDestroy() lorsque l'activité se
+	 * termine ou bien lorsque le système décide de l'arrêter
 	 */
 	@Override
 	protected void onStop() {
@@ -273,9 +286,11 @@ public class note_page1 extends Activity implements OnItemClickListener, OnClick
 	}
 
 	/**
-	 * La fonction onPause() est suivie : - d'un onResume() si l'activité passe à nouveau en premier plan - d'un onStop() si elle devient
-	 * invisible à l'utilisateur L'exécution de la fonction onPause() doit être rapide, car la prochaine activité ne démarrera pas tant que
-	 * l'exécution de la fonction onPause() n'est pas terminée.
+	 * La fonction onPause() est suivie : - d'un onResume() si l'activité passe
+	 * à nouveau en premier plan - d'un onStop() si elle devient invisible à
+	 * l'utilisateur L'exécution de la fonction onPause() doit être rapide, car
+	 * la prochaine activité ne démarrera pas tant que l'exécution de la
+	 * fonction onPause() n'est pas terminée.
 	 */
 	@Override
 	protected void onPause() {
@@ -309,7 +324,8 @@ public class note_page1 extends Activity implements OnItemClickListener, OnClick
 	}
 
 	@Override
-	public void onItemClick(AdapterView<?> Parent, View view, int position, long id) {
+	public void onItemClick(AdapterView<?> Parent, View view, int position,
+			long id) {
 		// TODO Auto-generated method stub
 		// int Itemposition = Parent.getSelectedItemPosition();
 
@@ -339,28 +355,33 @@ public class note_page1 extends Activity implements OnItemClickListener, OnClick
 			adTitre.setMessage("Veuillez renseigner le titre de la note");
 
 			adTitre.setView(inputProduit);
-			adTitre.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(DialogInterface dialog, int whichButton) {
-					String value = inputProduit.getText().toString();
-					objBd.open();
-					ContentValues values = new ContentValues();
-					values.put("Titre", value);
-					values.put("Message", " ");
-					boolean succes = objBd.InsertDonnéedansTable("Notes", values);
-					if (succes) {
-						popUp("insertReussi");
-					}
-					produitNote.removeAll(produitNote);
-					AfficheLeContenu("Tout", produitNote, NoteListView);
-				}
-			});
-			adTitre.setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(DialogInterface dialog, int whichButton) {
-					// Canceled.
-				}
-			});
+			adTitre.setPositiveButton("Ok",
+					new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog,
+								int whichButton) {
+							String value = inputProduit.getText().toString();
+							objBd.open();
+							ContentValues values = new ContentValues();
+							values.put("Titre", value);
+							values.put("Message", " ");
+							boolean succes = objBd.InsertDonnéedansTable(
+									"Notes", values);
+							if (succes) {
+								popUp("insertReussi");
+							}
+							produitNote.removeAll(produitNote);
+							AfficheLeContenu("Tout", produitNote, NoteListView);
+						}
+					});
+			adTitre.setNegativeButton("Annuler",
+					new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog,
+								int whichButton) {
+							// Canceled.
+						}
+					});
 			adTitre.show();
 
 		}
@@ -369,36 +390,44 @@ public class note_page1 extends Activity implements OnItemClickListener, OnClick
 
 			adSupprNote = new AlertDialog.Builder(this);
 			adSupprNote.setTitle("Question");
-			adSupprNote.setMessage("Confirmer vous la suppression de toutes les notes?");
+			adSupprNote
+					.setMessage("Confirmer vous la suppression de toutes les notes?");
 			adSupprNote.setIcon(R.drawable.ad_question);
 
-			adSupprNote.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(DialogInterface dialog, int whichButton) {
+			adSupprNote.setPositiveButton("Oui",
+					new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog,
+								int whichButton) {
 
-					objBd.open();
-					int nbChanmpSupprime = objBd.deleteTable("Notes", "1", null);
+							objBd.open();
+							int nbChanmpSupprime = objBd.deleteTable("Notes",
+									"1", null);
 
-					if (nbChanmpSupprime > 0) {
-						popUp("nb de notes supprimees: " + nbChanmpSupprime);
-					}
-					produitNote.removeAll(produitNote);
-					AfficheLeContenu("Tout", produitNote, NoteListView);
-				}
-			});
-			adSupprNote.setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(DialogInterface dialog, int whichButton) {
-					// Canceled.
-				}
-			});
+							if (nbChanmpSupprime > 0) {
+								popUp("nb de notes supprimees: "
+										+ nbChanmpSupprime);
+							}
+							produitNote.removeAll(produitNote);
+							AfficheLeContenu("Tout", produitNote, NoteListView);
+						}
+					});
+			adSupprNote.setNegativeButton("Annuler",
+					new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog,
+								int whichButton) {
+							// Canceled.
+						}
+					});
 			adSupprNote.show();
 		}
 
 	}
 
 	@Override
-	public boolean onItemLongClick(AdapterView<?> arg0, View view, int position, long id) {
+	public boolean onItemLongClick(AdapterView<?> arg0, View view,
+			int position, long id) {
 		ViewHolder holder = (ViewHolder) view.getTag();
 
 		Txt01 = (String) holder.TvIdNote.getText();
@@ -407,7 +436,8 @@ public class note_page1 extends Activity implements OnItemClickListener, OnClick
 		final AlertDialog.Builder dial = new AlertDialog.Builder(this);
 		dial.setTitle("Suppression");
 		dial.setIcon(R.drawable.ad_question);
-		dial.setMessage("Confirmez vous la suppression de la note suivante: " + "" + Txt02);
+		dial.setMessage("Confirmez vous la suppression de la note suivante: "
+				+ "" + Txt02);
 
 		dial.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 

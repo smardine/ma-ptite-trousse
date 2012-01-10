@@ -14,6 +14,7 @@ import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import fr.smardine.matroussedemaquillage.R;
 import fr.smardine.matroussedemaquillage.base.BDAcces;
+import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableParams;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableTrousseProduits;
 import fr.smardine.matroussedemaquillage.recherche.Recherche;
 import fr.smardine.matroussedemaquillage.recherche.affiche_detail;
@@ -47,13 +48,18 @@ public class modif_cat extends Activity implements OnClickListener {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		// ExceptionHandler.register(this, "http://simon.mardine.free.fr/trousse_maquillage/test/server.php","ma_ptite_trousse");
+		// ExceptionHandler.register(this,
+		// "http://simon.mardine.free.fr/trousse_maquillage/test/server.php","ma_ptite_trousse");
 		ChoisiLeTheme();
 
-		// ProduitListView1 = (ListView)this.findViewById(R.id.produitListView01_page1);
-		// ProduitListView2 = (ListView) this.findViewById(R.id.produitListView02_page1);
-		// ProduitListView3 = (ListView)this.findViewById(R.id.produitListView03_page1);
-		// ProduitListView4 = (ListView) this.findViewById(R.id.produitListView04_page1);
+		// ProduitListView1 =
+		// (ListView)this.findViewById(R.id.produitListView01_page1);
+		// ProduitListView2 = (ListView)
+		// this.findViewById(R.id.produitListView02_page1);
+		// ProduitListView3 =
+		// (ListView)this.findViewById(R.id.produitListView03_page1);
+		// ProduitListView4 = (ListView)
+		// this.findViewById(R.id.produitListView04_page1);
 
 		BtVisage = (ImageView) this.findViewById(R.id.ImageViewVisage_page1);
 		BtYeux = (ImageView) this.findViewById(R.id.ImageViewYeux_page1);
@@ -70,7 +76,8 @@ public class modif_cat extends Activity implements OnClickListener {
 		// adPlusieurCat = new AlertDialog.Builder(this);
 		// adPlusieurCat.setTitle("Attention");
 		// adPlusieurCat.setIcon(R.drawable.ad_attention);
-		// adPlusieurCat.setMessage("Vous avez séléctionné plus d'une categorie \n" +
+		// adPlusieurCat.setMessage("Vous avez séléctionné plus d'une categorie \n"
+		// +
 		// "Veuillez n'en choisir qu'une.");
 		// adPlusieurCat.setPositiveButton("Ok",null);
 		//
@@ -78,7 +85,8 @@ public class modif_cat extends Activity implements OnClickListener {
 		// adAucuneCat = new AlertDialog.Builder(this);
 		// adAucuneCat.setTitle("Attention");
 		// adAucuneCat.setIcon(R.drawable.ad_attention);
-		// adAucuneCat.setMessage("Vous n'avez selectionné aucune categorie. \n" +
+		// adAucuneCat.setMessage("Vous n'avez selectionné aucune categorie. \n"
+		// +
 		// "Merci d'en choisir au moins une.");
 		// adAucuneCat.setPositiveButton("Ok",null);
 		objBd = new BDAcces(this);
@@ -104,13 +112,8 @@ public class modif_cat extends Activity implements OnClickListener {
 
 		}
 		if (EnTheme.Classique.getLib().equals(nomThemeChoisi)) {
-			// setContentView(R.layout.formulaire_entree_page1bis);
-			ContentValues values = new ContentValues();
-			values.put("Theme", EnTheme.Fleur.getLib());
-
-			objBd.open();
-			objBd.majTable("Param", values, "", null);
-			objBd.close();
+			AccesTableParams accesParam = new AccesTableParams(this);
+			accesParam.majTheme(EnTheme.Fleur);
 			ChoisiLeTheme();
 
 		}
@@ -129,44 +132,52 @@ public class modif_cat extends Activity implements OnClickListener {
 			int idProdCoche = recupereIndiceSousCategorieCochee("Visage");
 			AlertDialog.Builder adChoixVisage = new AlertDialog.Builder(this);
 			adChoixVisage.setTitle("Visage");
-			adChoixVisage.setSingleChoiceItems(NomProduits, idProdCoche, new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(DialogInterface dialog, int item) {
-					/* User clicked on a radio button do some stuff */
+			adChoixVisage.setSingleChoiceItems(NomProduits, idProdCoche,
+					new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int item) {
+							/* User clicked on a radio button do some stuff */
 
-					if (item == EnCategorieVisage.FONDS_DE_TEINTS.getCode()) {
-						modifiedValues = new ContentValues();
-						modifiedValues.put("ischecked", "true");
-						whereClause = "nom_souscatergorie=?";
-						whereArgs = new String[] { EnCategorieVisage.FONDS_DE_TEINTS.getLib() };
-					}
-					if (item == EnCategorieVisage.Correcteurs_Bases.getCode()) {
-						modifiedValues = new ContentValues();
-						modifiedValues.put("ischecked", "true");
-						whereClause = "nom_souscatergorie=?";
-						whereArgs = new String[] { EnCategorieVisage.Correcteurs_Bases.getLib() };
-					}
-					if (item == EnCategorieVisage.Blush.getCode()) {
-						modifiedValues = new ContentValues();
-						modifiedValues.put("ischecked", "true");
-						whereClause = "nom_souscatergorie=?";
-						whereArgs = new String[] { EnCategorieVisage.Blush.getLib() };
-					}
-					if (item == EnCategorieVisage.Poudres.getCode()) {
-						modifiedValues = new ContentValues();
-						modifiedValues.put("ischecked", "true");
-						whereClause = "nom_souscatergorie=?";
-						whereArgs = new String[] { EnCategorieVisage.Poudres.getLib() };
-					}
-				}
-			});
-			adChoixVisage.setPositiveButton("Choisir", new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(DialogInterface dialog, int id) {
+							if (item == EnCategorieVisage.FONDS_DE_TEINTS
+									.getCode()) {
+								modifiedValues = new ContentValues();
+								modifiedValues.put("ischecked", "true");
+								whereClause = "nom_souscatergorie=?";
+								whereArgs = new String[] { EnCategorieVisage.FONDS_DE_TEINTS
+										.getLib() };
+							}
+							if (item == EnCategorieVisage.Correcteurs_Bases
+									.getCode()) {
+								modifiedValues = new ContentValues();
+								modifiedValues.put("ischecked", "true");
+								whereClause = "nom_souscatergorie=?";
+								whereArgs = new String[] { EnCategorieVisage.Correcteurs_Bases
+										.getLib() };
+							}
+							if (item == EnCategorieVisage.Blush.getCode()) {
+								modifiedValues = new ContentValues();
+								modifiedValues.put("ischecked", "true");
+								whereClause = "nom_souscatergorie=?";
+								whereArgs = new String[] { EnCategorieVisage.Blush
+										.getLib() };
+							}
+							if (item == EnCategorieVisage.Poudres.getCode()) {
+								modifiedValues = new ContentValues();
+								modifiedValues.put("ischecked", "true");
+								whereClause = "nom_souscatergorie=?";
+								whereArgs = new String[] { EnCategorieVisage.Poudres
+										.getLib() };
+							}
+						}
+					});
+			adChoixVisage.setPositiveButton("Choisir",
+					new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int id) {
 
-					majTableEtLancePage2();
-				}
-			});
+							majTableEtLancePage2();
+						}
+					});
 			adChoixVisage.setNegativeButton("Annuler", null);
 			adChoixVisage.show();
 
@@ -177,43 +188,50 @@ public class modif_cat extends Activity implements OnClickListener {
 			int idProdCoche = recupereIndiceSousCategorieCochee("Yeux");
 			AlertDialog.Builder adChoixYeux = new AlertDialog.Builder(this);
 			adChoixYeux.setTitle("Yeux");
-			adChoixYeux.setSingleChoiceItems(NomProduits, idProdCoche, new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(DialogInterface dialog, int item) {
-					/* User clicked on a radio button do some stuff */
+			adChoixYeux.setSingleChoiceItems(NomProduits, idProdCoche,
+					new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int item) {
+							/* User clicked on a radio button do some stuff */
 
-					if (item == EnCategorieYeux.Bases.getCode()) {
-						modifiedValues = new ContentValues();
-						modifiedValues.put("ischecked", "true");
-						whereClause = "nom_souscatergorie=?";
-						whereArgs = new String[] { EnCategorieYeux.Bases.getLib() };
-					}
-					if (item == EnCategorieYeux.Crayons_Eyeliners.getCode()) {
-						modifiedValues = new ContentValues();
-						modifiedValues.put("ischecked", "true");
-						whereClause = "nom_souscatergorie=?";
-						whereArgs = new String[] { EnCategorieYeux.Crayons_Eyeliners.getLib() };
-					}
-					if (item == EnCategorieYeux.Fards.getCode()) {
-						modifiedValues = new ContentValues();
-						modifiedValues.put("ischecked", "true");
-						whereClause = "nom_souscatergorie=?";
-						whereArgs = new String[] { EnCategorieYeux.Fards.getLib() };
-					}
-					if (item == EnCategorieYeux.Mascaras.getCode()) {
-						modifiedValues = new ContentValues();
-						modifiedValues.put("ischecked", "true");
-						whereClause = "nom_souscatergorie=?";
-						whereArgs = new String[] { EnCategorieYeux.Mascaras.getLib() };
-					}
-				}
-			});
-			adChoixYeux.setPositiveButton("Choisir", new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(DialogInterface dialog, int id) {
-					majTableEtLancePage2();
-				}
-			});
+							if (item == EnCategorieYeux.Bases.getCode()) {
+								modifiedValues = new ContentValues();
+								modifiedValues.put("ischecked", "true");
+								whereClause = "nom_souscatergorie=?";
+								whereArgs = new String[] { EnCategorieYeux.Bases
+										.getLib() };
+							}
+							if (item == EnCategorieYeux.Crayons_Eyeliners
+									.getCode()) {
+								modifiedValues = new ContentValues();
+								modifiedValues.put("ischecked", "true");
+								whereClause = "nom_souscatergorie=?";
+								whereArgs = new String[] { EnCategorieYeux.Crayons_Eyeliners
+										.getLib() };
+							}
+							if (item == EnCategorieYeux.Fards.getCode()) {
+								modifiedValues = new ContentValues();
+								modifiedValues.put("ischecked", "true");
+								whereClause = "nom_souscatergorie=?";
+								whereArgs = new String[] { EnCategorieYeux.Fards
+										.getLib() };
+							}
+							if (item == EnCategorieYeux.Mascaras.getCode()) {
+								modifiedValues = new ContentValues();
+								modifiedValues.put("ischecked", "true");
+								whereClause = "nom_souscatergorie=?";
+								whereArgs = new String[] { EnCategorieYeux.Mascaras
+										.getLib() };
+							}
+						}
+					});
+			adChoixYeux.setPositiveButton("Choisir",
+					new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int id) {
+							majTableEtLancePage2();
+						}
+					});
 			adChoixYeux.setNegativeButton("Annuler", null);
 			adChoixYeux.show();
 
@@ -223,32 +241,38 @@ public class modif_cat extends Activity implements OnClickListener {
 			int idProdCoche = recupereIndiceSousCategorieCochee("Levres");
 			AlertDialog.Builder adChoixLevre = new AlertDialog.Builder(this);
 			adChoixLevre.setTitle("Levres");
-			adChoixLevre.setSingleChoiceItems(NomProduits, idProdCoche, new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(DialogInterface dialog, int item) {
-					/* User clicked on a radio button do some stuff */
+			adChoixLevre.setSingleChoiceItems(NomProduits, idProdCoche,
+					new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int item) {
+							/* User clicked on a radio button do some stuff */
 
-					if (item == EnCategorieLevre.Crayons_contour.getCode()) {
-						modifiedValues = new ContentValues();
-						modifiedValues.put("ischecked", "true");
-						whereClause = "nom_souscatergorie=?";
-						whereArgs = new String[] { EnCategorieLevre.Crayons_contour.getLib() };
-					}
-					if (item == EnCategorieLevre.RougesAlevres.getCode()) {
-						modifiedValues = new ContentValues();
-						modifiedValues.put("ischecked", "true");
-						whereClause = "nom_souscatergorie=?";
-						whereArgs = new String[] { EnCategorieLevre.RougesAlevres.getLib() };
-					}
+							if (item == EnCategorieLevre.Crayons_contour
+									.getCode()) {
+								modifiedValues = new ContentValues();
+								modifiedValues.put("ischecked", "true");
+								whereClause = "nom_souscatergorie=?";
+								whereArgs = new String[] { EnCategorieLevre.Crayons_contour
+										.getLib() };
+							}
+							if (item == EnCategorieLevre.RougesAlevres
+									.getCode()) {
+								modifiedValues = new ContentValues();
+								modifiedValues.put("ischecked", "true");
+								whereClause = "nom_souscatergorie=?";
+								whereArgs = new String[] { EnCategorieLevre.RougesAlevres
+										.getLib() };
+							}
 
-				}
-			});
-			adChoixLevre.setPositiveButton("Choisir", new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(DialogInterface dialog, int id) {
-					majTableEtLancePage2();
-				}
-			});
+						}
+					});
+			adChoixLevre.setPositiveButton("Choisir",
+					new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int id) {
+							majTableEtLancePage2();
+						}
+					});
 			adChoixLevre.setNegativeButton("Annuler", null);
 			adChoixLevre.show();
 
@@ -258,32 +282,37 @@ public class modif_cat extends Activity implements OnClickListener {
 			int idProdCoche = recupereIndiceSousCategorieCochee("Autres");
 			AlertDialog.Builder adChoixAutres = new AlertDialog.Builder(this);
 			adChoixAutres.setTitle("Autres");
-			adChoixAutres.setSingleChoiceItems(NomProduits, idProdCoche, new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(DialogInterface dialog, int item) {
-					/* User clicked on a radio button do some stuff */
+			adChoixAutres.setSingleChoiceItems(NomProduits, idProdCoche,
+					new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int item) {
+							/* User clicked on a radio button do some stuff */
 
-					if (item == EnCategorieAutres.Pinceaux.getCode()) {
-						modifiedValues = new ContentValues();
-						modifiedValues.put("ischecked", "true");
-						whereClause = "nom_souscatergorie=?";
-						whereArgs = new String[] { EnCategorieAutres.Pinceaux.getLib() };
-					}
-					if (item == EnCategorieAutres.VernisAongles.getCode()) {
-						modifiedValues = new ContentValues();
-						modifiedValues.put("ischecked", "true");
-						whereClause = "nom_souscatergorie=?";
-						whereArgs = new String[] { EnCategorieAutres.VernisAongles.getLib() };
-					}
+							if (item == EnCategorieAutres.Pinceaux.getCode()) {
+								modifiedValues = new ContentValues();
+								modifiedValues.put("ischecked", "true");
+								whereClause = "nom_souscatergorie=?";
+								whereArgs = new String[] { EnCategorieAutres.Pinceaux
+										.getLib() };
+							}
+							if (item == EnCategorieAutres.VernisAongles
+									.getCode()) {
+								modifiedValues = new ContentValues();
+								modifiedValues.put("ischecked", "true");
+								whereClause = "nom_souscatergorie=?";
+								whereArgs = new String[] { EnCategorieAutres.VernisAongles
+										.getLib() };
+							}
 
-				}
-			});
-			adChoixAutres.setPositiveButton("Choisir", new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(DialogInterface dialog, int id) {
-					majTableEtLancePage2();
-				}
-			});
+						}
+					});
+			adChoixAutres.setPositiveButton("Choisir",
+					new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int id) {
+							majTableEtLancePage2();
+						}
+					});
 			adChoixAutres.setNegativeButton("Annuler", null);
 			adChoixAutres.show();
 
@@ -293,8 +322,10 @@ public class modif_cat extends Activity implements OnClickListener {
 
 	private int recupereIndiceSousCategorieCochee(String p_categorie) {
 		int indiceProduitCoche = -1;
-		AccesTableTrousseProduits accesProduits = new AccesTableTrousseProduits(this);
-		ArrayList[] ListeProduits = accesProduits.renvoi_liste_produits(p_categorie);
+		AccesTableTrousseProduits accesProduits = new AccesTableTrousseProduits(
+				this);
+		ArrayList[] ListeProduits = accesProduits
+				.renvoi_liste_produits(p_categorie);
 		String[] NomProduits = new String[ListeProduits[0].size()];
 		for (int j = 0; j < ListeProduits[0].size(); j++) {
 			NomProduits[j] = ListeProduits[0].get(j).toString();
@@ -312,8 +343,10 @@ public class modif_cat extends Activity implements OnClickListener {
 	 * @return
 	 */
 	private String[] recupereSousCategorie(String p_categorie) {
-		AccesTableTrousseProduits accesProduits = new AccesTableTrousseProduits(this);
-		ArrayList[] ListeProduits = accesProduits.renvoi_liste_produits(p_categorie);
+		AccesTableTrousseProduits accesProduits = new AccesTableTrousseProduits(
+				this);
+		ArrayList[] ListeProduits = accesProduits
+				.renvoi_liste_produits(p_categorie);
 		String[] NomProduits = new String[ListeProduits[0].size()];
 		for (int j = 0; j < ListeProduits[0].size(); j++) {
 			NomProduits[j] = ListeProduits[0].get(j).toString();
@@ -324,38 +357,47 @@ public class modif_cat extends Activity implements OnClickListener {
 
 	protected void majTableEtLancePage2() {
 		/**
-		 * pour eviter les doublons, on commence par remettre a false ttes les case qui etait à true
+		 * pour eviter les doublons, on commence par remettre a false ttes les
+		 * case qui etait à true
 		 */
-		String Table = "trousse_produits";
-		ContentValues modifiedValuesEfface = new ContentValues();
-		modifiedValuesEfface.put("ischecked", "false");
-		String whereClauseEfface = "ischecked=?";
-		String[] whereArgsEfface = new String[] { "true" };
-
-		objBd.open();
-		objBd.majTable(Table, modifiedValuesEfface, whereClauseEfface, whereArgsEfface);
-		objBd.close();
+		AccesTableTrousseProduits accesProduit = new AccesTableTrousseProduits(
+				this);
+		accesProduit.reinitProduitChoisi();
+		// String Table = "trousse_produits";
+		// ContentValues modifiedValuesEfface = new ContentValues();
+		// modifiedValuesEfface.put("ischecked", "false");
+		// String whereClauseEfface = "ischecked=?";
+		// String[] whereArgsEfface = new String[] { "true" };
+		//
+		// objBd.open();
+		// objBd.majTable(Table, modifiedValuesEfface, whereClauseEfface,
+		// whereArgsEfface);
+		// objBd.close();
 
 		/**
 		 * @throws SQLException
 		 */
 
 		objBd.open();
-		int nbdechamp = objBd.majTable("trousse_produits", modifiedValues, whereClause, whereArgs);
-		System.out.println("Nombre de champ modifié : " + nbdechamp);
+		// int nbdechamp = objBd.majTable("trousse_produits", modifiedValues,
+		// whereClause, whereArgs);
+		// System.out.println("Nombre de champ modifié : " + nbdechamp);
 		objBd.deleteTable("trousse_tempo", "1", null);
 		objBd.close();
 
 		// popUp("On Continue");
-		// on créer une nouvelle activité avec comme point de depart "Main" et comme destination "FicheClient"
+		// on créer une nouvelle activité avec comme point de depart "Main" et
+		// comme destination "FicheClient"
 		Intent intent = new Intent(modif_cat.this, affiche_detail.class);
 		// on demarre la nouvelle activité
 		objBd = new BDAcces(this);
 		objBd.open();
 		@SuppressWarnings("rawtypes")
 		ArrayList[] Categorie_Cochée = objBd.renvoiCategorieEtProduitCochée();
-		String SousCat = Categorie_Cochée[0].toString().replace("[", "").replace("]", "");
-		String Cat = Categorie_Cochée[1].toString().replace("[", "").replace("]", "");
+		String SousCat = Categorie_Cochée[0].toString().replace("[", "")
+				.replace("]", "");
+		String Cat = Categorie_Cochée[1].toString().replace("[", "")
+				.replace("]", "");
 
 		intent.putExtra(ActivityParam.IdProduit, Id_Produit);
 		intent.putExtra(ActivityParam.LaunchFromModfiCat, true);
@@ -385,25 +427,34 @@ public class modif_cat extends Activity implements OnClickListener {
 		String[] whereArgs = new String[] { "" + Id_Produits + "" };
 		objBd = new BDAcces(this);
 		objBd.open();
-		int nbdechamp = objBd.majTable(Table, modifiedValues, whereClause, whereArgs);
+		int nbdechamp = objBd.majTable(Table, modifiedValues, whereClause,
+				whereArgs);
 		// objBd.deleteTable("trousse_tempo","1",null);
-		System.out.println("Nombre de champ modifie dans la table produit_Enregistre : " + nbdechamp + " sur l'id n° " + Id_Produits
-				+ "nom cat=" + cat + "nom sous cat" + souscat);
+		System.out
+				.println("Nombre de champ modifie dans la table produit_Enregistre : "
+						+ nbdechamp
+						+ " sur l'id n° "
+						+ Id_Produits
+						+ "nom cat=" + cat + "nom sous cat" + souscat);
 		objBd.close();
 	}
 
 	private void remetAZeroLaTableCat() {
 		// TODO Auto-generated method stub
-		String Table = "trousse_produits";
-		ContentValues modifiedValues = new ContentValues();
-		modifiedValues.put("ischecked", "false");
-		String whereClause = "ischecked=?";
-		String[] whereArgs = new String[] { "true" };
+		AccesTableTrousseProduits accesProduit = new AccesTableTrousseProduits(
+				this);
+		accesProduit.reinitProduitChoisi();
+		// String Table = "trousse_produits";
+		// ContentValues modifiedValues = new ContentValues();
+		// modifiedValues.put("ischecked", "false");
+		// String whereClause = "ischecked=?";
+		// String[] whereArgs = new String[] { "true" };
 		objBd = new BDAcces(this);
 		objBd.open();
-		int nbdechamp = objBd.majTable(Table, modifiedValues, whereClause, whereArgs);
+		// int nbdechamp = objBd.majTable(Table, modifiedValues, whereClause,
+		// whereArgs);
 		objBd.deleteTable("trousse_tempo", "1", null);
-		System.out.println("Nombre de champ modifié : " + nbdechamp);
+		// System.out.println("Nombre de champ modifié : " + nbdechamp);
 		objBd.close();
 	}
 
@@ -444,7 +495,8 @@ public class modif_cat extends Activity implements OnClickListener {
 	//
 	// }
 	//
-	// private void AfficheLeContenu(String Catégorie,ArrayList<produit> produits,
+	// private void AfficheLeContenu(String Catégorie,ArrayList<produit>
+	// produits,
 	// ListView produitListView ) {
 	//
 	// if (!Catégorie.equals("")){
@@ -472,7 +524,8 @@ public class modif_cat extends Activity implements OnClickListener {
 	// );
 	// animation.setDuration(100);
 	// set.addAnimation(animation);
-	// LayoutAnimationController controller = new LayoutAnimationController(set, 0.5f);
+	// LayoutAnimationController controller = new LayoutAnimationController(set,
+	// 0.5f);
 	// produitListView.setLayoutAnimation(controller);
 	//
 	// //paramètrer l'adapteur correspondant
@@ -495,7 +548,8 @@ public class modif_cat extends Activity implements OnClickListener {
 	}
 
 	/**
-	 * Exécuté lorsque l'activité devient visible à l'utilisateur. La fonction onStart() est suivie de la fonction onResume().
+	 * Exécuté lorsque l'activité devient visible à l'utilisateur. La fonction
+	 * onStart() est suivie de la fonction onResume().
 	 */
 	@Override
 	protected void onStart() {
@@ -504,25 +558,31 @@ public class modif_cat extends Activity implements OnClickListener {
 	}
 
 	/**
-	 * Exécutée a chaque passage en premier plan de l'activité. Ou bien, si l'activité passe à nouveau en premier (si une autre activité
-	 * était passé en premier plan entre temps). La fonction onResume() est suivie de l'exécution de l'activité.
+	 * Exécutée a chaque passage en premier plan de l'activité. Ou bien, si
+	 * l'activité passe à nouveau en premier (si une autre activité était passé
+	 * en premier plan entre temps). La fonction onResume() est suivie de
+	 * l'exécution de l'activité.
 	 */
 	@Override
 	protected void onResume() {
 		super.onResume();
 
-		boolean IsCalledFromDetail = getIntent().getBooleanExtra(ActivityParam.LaunchFromAfficheDetail, false);
+		boolean IsCalledFromDetail = getIntent().getBooleanExtra(
+				ActivityParam.LaunchFromAfficheDetail, false);
 
 		if (IsCalledFromDetail) {
-			Id_Produit = getIntent().getStringExtra(ActivityParam.IdProduit).trim();
+			Id_Produit = getIntent().getStringExtra(ActivityParam.IdProduit)
+					.trim();
 		}
 
 	}
 
 	/**
-	 * La fonction onStop() est exécutée : - lorsque l'activité n'est plus en premier plan - ou bien lorsque l'activité va être détruite
-	 * Cette fonction est suivie : - de la fonction onRestart() si l'activité passe à nouveau en premier plan - de la fonction onDestroy()
-	 * lorsque l'activité se termine ou bien lorsque le système décide de l'arrêter
+	 * La fonction onStop() est exécutée : - lorsque l'activité n'est plus en
+	 * premier plan - ou bien lorsque l'activité va être détruite Cette fonction
+	 * est suivie : - de la fonction onRestart() si l'activité passe à nouveau
+	 * en premier plan - de la fonction onDestroy() lorsque l'activité se
+	 * termine ou bien lorsque le système décide de l'arrêter
 	 */
 	@Override
 	protected void onStop() {
@@ -531,9 +591,11 @@ public class modif_cat extends Activity implements OnClickListener {
 	}
 
 	/**
-	 * La fonction onPause() est suivie : - d'un onResume() si l'activité passe à nouveau en premier plan - d'un onStop() si elle devient
-	 * invisible à l'utilisateur L'exécution de la fonction onPause() doit être rapide, car la prochaine activité ne démarrera pas tant que
-	 * l'exécution de la fonction onPause() n'est pas terminée.
+	 * La fonction onPause() est suivie : - d'un onResume() si l'activité passe
+	 * à nouveau en premier plan - d'un onStop() si elle devient invisible à
+	 * l'utilisateur L'exécution de la fonction onPause() doit être rapide, car
+	 * la prochaine activité ne démarrera pas tant que l'exécution de la
+	 * fonction onPause() n'est pas terminée.
 	 */
 	@Override
 	protected void onPause() {
