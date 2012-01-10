@@ -16,6 +16,7 @@ import android.content.Intent;
 import android.widget.RemoteViews;
 import fr.smardine.matroussedemaquillage.R;
 import fr.smardine.matroussedemaquillage.base.BDAcces;
+import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableProduitEnregistre;
 import fr.smardine.matroussedemaquillage.recherche.recherche_produit_perime;
 import fr.smardine.matroussedemaquillage.variableglobale.EnActionParDefaut;
 import fr.smardine.matroussedemaquillage.variableglobale.EnTheme;
@@ -38,7 +39,7 @@ public class majWidget {
 		objBd = new BDAcces(context);
 
 		if (majAussiBdd) {
-			majBddProduitPerime();
+			majBddProduitPerime(context);
 		}
 
 		// conaitre le nb de produit perimé dans la trousse:
@@ -90,11 +91,13 @@ public class majWidget {
 
 	}
 
-	private void majBddProduitPerime() {
+	private void majBddProduitPerime(Context p_context) {
 		System.out.println("maj bdd produit perime dans maj Widget");
-		objBd.open();
-		int nbDenregistrement = objBd.renvoi_nbChamp("produit_Enregistre");
-		objBd.close();
+		// objBd.open();
+		AccesTableProduitEnregistre accesProduit = new AccesTableProduitEnregistre(p_context);
+		int nbDenregistrement = accesProduit.getNbEnregistrement();
+		// int nbDenregistrement = objBd.renvoi_nbChamp("produit_Enregistre");
+		// objBd.close();
 
 		if (nbDenregistrement > 0) {
 			String[] colonne = new String[] { "Date_Peremption_milli", "id_produits", "DateAchat", "Duree_Vie" };

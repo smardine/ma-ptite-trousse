@@ -2,13 +2,8 @@ package fr.smardine.matroussedemaquillage;
 
 import java.util.ArrayList;
 
-import widget.CountdownWidget;
-
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.appwidget.AppWidgetManager;
-import android.content.ComponentName;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -23,11 +18,12 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.CheckBox;
 import android.widget.ImageView;
-import android.widget.RemoteViews;
 
 import com.example.android.apis.animation.Animlineaire;
 
 import fr.smardine.matroussedemaquillage.base.BDAcces;
+import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableParams;
+import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableProduitEnregistre;
 import fr.smardine.matroussedemaquillage.note.note_page1;
 import fr.smardine.matroussedemaquillage.param.tab_param;
 import fr.smardine.matroussedemaquillage.recherche.Recherche;
@@ -76,12 +72,8 @@ public class Main extends Activity implements OnClickListener {
 				System.out.println("etat de la coche " + cb.isChecked());
 				if (cb.isChecked()) {
 					// si la case est cochée par l'utilisateur , on met a jour la table "param"
-					ContentValues values = new ContentValues();
-					values.put("AfficheAlerte", "false");
-					objBd = new BDAcces(ctx);
-					objBd.open();
-					objBd.majTable("Param", values, "", null);
-					objBd.close();
+					AccesTableParams accesParam = new AccesTableParams(ctx);
+					accesParam.desactiveAlerte();
 				}
 				Intent intentRecherche = new Intent(Main.this, recherche_produit_perime.class);
 				intentRecherche.putExtra(ActivityParam.LaunchFromMain, true);
@@ -97,12 +89,8 @@ public class Main extends Activity implements OnClickListener {
 			public void onClick(DialogInterface p_dialog, int p_which) {
 				if (cb.isChecked()) {
 					// si la case est cochée par l'utilisateur , on met a jour la table "param"
-					ContentValues values = new ContentValues();
-					values.put("AfficheAlerte", "false");
-					objBd = new BDAcces(ctx);
-					objBd.open();
-					objBd.majTable("Param", values, "", null);
-					objBd.close();
+					AccesTableParams accesParam = new AccesTableParams(ctx);
+					accesParam.desactiveAlerte();
 				}
 
 			}
@@ -126,14 +114,8 @@ public class Main extends Activity implements OnClickListener {
 		adSortie.setNegativeButton("Non", null);
 
 		this.setTitle("Ma p'tite trousse");
-		
-		
-		
-
 
 	}
-
-	
 
 	private void onCreateMenu(Menu menu) {
 		SubMenu recherche = menu.addSubMenu(1, 2000, 1, "Recherche");
@@ -208,10 +190,12 @@ public class Main extends Activity implements OnClickListener {
 	public void onClick(View v) {
 
 		if (v == BtRemplir) {
-			objBd = new BDAcces(ctx);
-			objBd.open();
-			int nbDenregistrement = objBd.renvoi_nbChamp("produit_Enregistre");
-			objBd.close();
+			// objBd = new BDAcces(ctx);
+			// objBd.open();
+			AccesTableProduitEnregistre accesProduit = new AccesTableProduitEnregistre(ctx);
+			int nbDenregistrement = accesProduit.getNbEnregistrement();
+			// = objBd.renvoi_nbChamp("produit_Enregistre");
+			// objBd.close();
 			if (nbDenregistrement > 0) {
 				AlertDialog.Builder adChoixDupplique = new AlertDialog.Builder(this);
 				adChoixDupplique.setTitle("Que voulez vous faire ?");
@@ -263,9 +247,9 @@ public class Main extends Activity implements OnClickListener {
 		}
 		if (v == BtDuppliquer) {// on verifie si on a au moins un enregistrement, si oui, on permet la dpplication,
 			// sinon, on indique a l'utilisateur que la dupplication est impossible
-			objBd = new BDAcces(ctx);
-			objBd.open();
-			int nbDenregistrement = objBd.renvoi_nbChamp("produit_Enregistre");
+			AccesTableProduitEnregistre accesProduit = new AccesTableProduitEnregistre(ctx);
+			int nbDenregistrement = accesProduit.getNbEnregistrement();
+			// int nbDenregistrement = objBd.renvoi_nbChamp("produit_Enregistre");
 
 			if (nbDenregistrement <= 0) {
 
@@ -379,8 +363,6 @@ public class Main extends Activity implements OnClickListener {
 				adInfoProduitPerimé.show();
 			}
 		}
-		
-		
 
 		/*
 		 * AlphaAnimation anim11 = new AlphaAnimation(1, 0.2f); anim11.setDuration (5000); BtRemplir.startAnimation (anim11);
@@ -425,17 +407,12 @@ public class Main extends Activity implements OnClickListener {
 			BtNotes.startAnimation(anim3.getAnim());
 		}
 		if (EnTheme.Classique.getLib().equals(nomThemeChoisi)) {
-			//on supprime le theme classique car trop buggué visuellement,
-			//dans le cas ou un utilisateur aurait gardé ce theme,
-			//on force l'application du theme "Fleur" et on relance la verification du theme
-			ContentValues values = new ContentValues();
-			values.put("Theme", EnTheme.Fleur.getLib());
-
-			objBd.open();
-			objBd.majTable("Param", values, "", null);
-			objBd.close();
+			// on supprime le theme classique car trop buggué visuellement,
+			// dans le cas ou un utilisateur aurait gardé ce theme,
+			// on force l'application du theme "Fleur" et on relance la verification du theme
+			AccesTableParams accesParams = new AccesTableParams(ctx);
+			accesParams.majTheme(EnTheme.Fleur);
 			ChoisiLeTheme();
-			
 
 		}
 		if (EnTheme.Fleur.getLib().equals(nomThemeChoisi)) {
@@ -464,7 +441,6 @@ public class Main extends Activity implements OnClickListener {
 			BtNotes.startAnimation(anim3.getAnim());
 		}
 
-		
 	}
 
 	/**

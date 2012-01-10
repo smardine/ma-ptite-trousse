@@ -11,7 +11,6 @@ import java.util.Date;
 
 import widget.majWidget;
 import android.app.Activity;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -23,6 +22,8 @@ import android.widget.ImageSwitcher;
 import android.widget.ImageView;
 import android.widget.ViewSwitcher.ViewFactory;
 import fr.smardine.matroussedemaquillage.base.BDAcces;
+import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableParams;
+import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableProduitEnregistre;
 import fr.smardine.matroussedemaquillage.variableglobale.ActivityParam;
 
 /**
@@ -214,7 +215,7 @@ public class EntryPoint extends Activity implements ViewFactory {
 
 	private void majwidget() {
 		Context context = this;
-		new majWidget(context,false);
+		new majWidget(context, false);
 
 	}
 
@@ -318,19 +319,7 @@ public class EntryPoint extends Activity implements ViewFactory {
 		dureeVie = dureeVie.replace("[", "").replace("]", "");
 
 		try {
-			// int DureeVie = 0;
-			// DureeVie = Integer.valueOf(dureeVie);
-			//
-			// String tabAchat[] = dateAchat1.split("-");
-			// int jourAchat = Integer.parseInt(tabAchat[0]);
-			// int mois = Integer.parseInt(tabAchat[1]) - 1;// les mois commence à 0 (janvier) et se termine à 11 (decembre)
-			// int annee = Integer.parseInt(tabAchat[2]) - 1900;// les années commence à 0(1900), pour avoir l'année exacte a partir d'une
-			// // velur contenu dans un string, il faut retrancher 1900 a la valeur de
-			// // l'année.
-			// // exemple, l'année 2010 est considérée comme 2010-1900 = 110
-			//
-			// Date DateAchatAuformatDate = new Date(annee, mois, jourAchat);
-			// long DateAchatEnMilli = DateAchatAuformatDate.getTime();// on recupere la date d'achat au format milliseconde
+
 			objBd.open();
 			String[] champ = { "AfficheAlerte", "DureeViePeremp", "Theme" };
 			ArrayList[] Param = objBd.renvoi_param(champ);
@@ -361,17 +350,20 @@ public class EntryPoint extends Activity implements ViewFactory {
 			String Date_Peremption = dateFormat.format(datePeremp);// date de peremtion au format jj/mm/aaaa
 
 			long DatePeremtInMilli = datePeremp.getTime(); // on converti la date de permeption en milliseconde
-			String Table11 = "produit_Enregistre";
-			ContentValues modifiedValues11 = new ContentValues();
-			modifiedValues11.put("Date_Peremption", Date_Peremption);
-			modifiedValues11.put("Date_Peremption_milli", DatePeremtInMilli);
-			modifiedValues11.put("IS_PERIME", perime);
-			modifiedValues11.put("IS_PRESQUE_PERIME", presqueperime);
-			String whereClause11 = "id_produits=?";
-			String[] whereArgs11 = new String[] { "" + idProduit + "" };
-			objBd.open();
-			// int nbLigneModifiée1 = objBd.majTable(Table11, modifiedValues11, whereClause11, whereArgs11);
-			objBd.majTable(Table11, modifiedValues11, whereClause11, whereArgs11);
+			// String Table11 = "produit_Enregistre";
+			// ContentValues modifiedValues11 = new ContentValues();
+			// modifiedValues11.put("Date_Peremption", Date_Peremption);
+			// modifiedValues11.put("Date_Peremption_milli", DatePeremtInMilli);
+			// modifiedValues11.put("IS_PERIME", perime);
+			// modifiedValues11.put("IS_PRESQUE_PERIME", presqueperime);
+			// String whereClause11 = "id_produits=?";
+			// String[] whereArgs11 = new String[] { "" + idProduit + "" };
+
+			AccesTableProduitEnregistre accesProduit = new AccesTableProduitEnregistre(ctx);
+			accesProduit.majDatepremeption(Integer.parseInt(idProduit), Date_Peremption, DatePeremtInMilli, perime, presqueperime);
+			// objBd.open();
+			// // int nbLigneModifiée1 = objBd.majTable(Table11, modifiedValues11, whereClause11, whereArgs11);
+			// objBd.majTable(Table11, modifiedValues11, whereClause11, whereArgs11);
 			// objBd.close();
 			// String Message="nb de ligne modifiée:"+nbLigneModifiée1;
 		} catch (Exception e) {
@@ -388,43 +380,16 @@ public class EntryPoint extends Activity implements ViewFactory {
 	 * @throws Exception
 	 */
 	@SuppressWarnings("rawtypes")
-	public int verifErreurEnregistrementDsBase(String IdProduit) throws Exception {
+	public void verifErreurEnregistrementDsBase(String IdProduit) throws Exception {
 
-		String[] Colonnes = { "nom_produit", "nom_souscatergorie", "nom_categorie", "numero_Teinte", "Duree_Vie", "Date_Peremption",
-				"DateAchat", "nom_marque" };
+		AccesTableProduitEnregistre accesProduit = new AccesTableProduitEnregistre(ctx);
+		accesProduit.CorrigeProduitsEnregistre(Integer.parseInt(IdProduit));
 
-		objBd.open();
-		ArrayList[] trousse_final = objBd.renvoi_liste_TrousseFinalComplete(Colonnes, IdProduit);
-		// objBd.close();
-		String Table = "produit_Enregistre";
-		String Nom_Produit = trousse_final[0].toString().trim();
-		String SousCat = trousse_final[1].toString();
-		String Cat = trousse_final[2].toString();
-		String Numeroteinte = trousse_final[3].toString();
-		String DurreeVie = trousse_final[4].toString();
-		String DatePeremption = trousse_final[5].toString();
-		String DateAchat = trousse_final[6].toString();
-		String NomMarque = trousse_final[7].toString();
-
-		ContentValues modifiedValues = new ContentValues();
-		modifiedValues.put("nom_produit", Nom_Produit.trim().replace("[", "").replace("]", ""));
-		modifiedValues.put("nom_souscatergorie", SousCat.trim().replace("[", "").replace("]", ""));
-		modifiedValues.put("nom_categorie", Cat.trim().replace("[", "").replace("]", ""));
-		modifiedValues.put("numero_Teinte", Numeroteinte.trim().replace("[", "").replace("]", ""));
-		modifiedValues.put("Duree_Vie", DurreeVie.trim().replace("[", "").replace("]", ""));
-		modifiedValues.put("Date_Peremption", DatePeremption.trim().replace("[", "").replace("]", ""));
-		modifiedValues.put("DateAchat", DateAchat.trim().replace("[", "").replace("]", ""));
-		modifiedValues.put("nom_marque", NomMarque.trim().replace("[", "").replace("]", ""));
-		// modifiedValues.put("Date_Peremption_milli", DatePeremtInMilli.trim().replace("[", "").replace("]",""));
-
-		String whereClause = "id_produits=?";
-		String[] whereArgs = new String[] { "" + IdProduit + "" };
-
-		objBd.open();
-		int nbdechamp = objBd.majTable(Table, modifiedValues, whereClause, whereArgs);
-		// objBd.close();
-
-		return nbdechamp;
+		// objBd.open();
+		// int nbdechamp = objBd.majTable(Table, modifiedValues, whereClause, whereArgs);
+		// // objBd.close();
+		//
+		// return nbdechamp;
 
 	}
 
@@ -433,16 +398,8 @@ public class EntryPoint extends Activity implements ViewFactory {
 	 * Maintenant si la valeur est superieure à 99 ou inferieur à 0 => on met 30 jours.
 	 */
 	public void CorrectionTableparam() {
-
-		String Table = "Param";
-		ContentValues modifiedValues = new ContentValues();
-		modifiedValues.put("DureeViePeremp", 30);
-		String whereClause = "DureeViePeremp>? or DureeViePeremp<?";
-		String[] whereArgs = new String[] { "" + 99 + "", "" + 0 + "" };
-
-		objBd.open();
-		/* int nbLigneModifiée = */objBd.majTable(Table, modifiedValues, whereClause, whereArgs);
-		objBd.close();
+		AccesTableParams accesParam = new AccesTableParams(ctx);
+		accesParam.CorrigeTableParam();
 
 	}
 
@@ -534,10 +491,12 @@ public class EntryPoint extends Activity implements ViewFactory {
 
 		@Override
 		protected Object doInBackground(Object... p_arg0) {
-			objBd = new BDAcces(ctx);
-			objBd.open();
-			int nbDenregistrement = objBd.renvoi_nbChamp("produit_Enregistre");
-			objBd.close();
+			// objBd = new BDAcces(ctx);
+			// objBd.open();
+			AccesTableProduitEnregistre accesProduits = new AccesTableProduitEnregistre(ctx);
+			int nbDenregistrement = accesProduits.getNbEnregistrement();
+			// int nbDenregistrement = objBd.renvoi_nbChamp("produit_Enregistre");
+			// objBd.close();
 
 			// Correction de parametres si l'utilisateur a mis n'importe quoi comme valeur.
 			CorrectionTableparam();
