@@ -21,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import fr.smardine.matroussedemaquillage.R;
 import fr.smardine.matroussedemaquillage.base.BDAcces;
+import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableParams;
 import fr.smardine.matroussedemaquillage.param.tab_param;
 import fr.smardine.matroussedemaquillage.recherche.Recherche;
 import fr.smardine.matroussedemaquillage.variableglobale.ActivityParam;
@@ -41,7 +42,8 @@ public class note_saisie extends Activity implements OnClickListener {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		// ExceptionHandler.register(this, "http://simon.mardine.free.fr/trousse_maquillage/test/server.php","ma_ptite_trousse");
+		// ExceptionHandler.register(this,
+		// "http://simon.mardine.free.fr/trousse_maquillage/test/server.php","ma_ptite_trousse");
 		ChoisiLeTheme();
 
 		txtTitre = (TextView) findViewById(R.id.TvTitreNote);
@@ -58,7 +60,8 @@ public class note_saisie extends Activity implements OnClickListener {
 		String[] Colonnes = { "id_note", "Titre", "Message" };
 		String condition = "id_note=?";
 		String[] args = { IdNote };
-		ArrayList[] notes = objBd.renvoi_liste_NoteTotale(Colonnes, "", "", condition, args);
+		ArrayList[] notes = objBd.renvoi_liste_NoteTotale(Colonnes, "", "",
+				condition, args);
 
 		objBd.close();
 		int nbdobjet = notes[0].size();
@@ -94,13 +97,9 @@ public class note_saisie extends Activity implements OnClickListener {
 
 		}
 		if (EnTheme.Classique.getLib().equals(nomThemeChoisi)) {
-//			setContentView(R.layout.note_saisie);
-			ContentValues values = new ContentValues();
-			values.put("Theme", EnTheme.Fleur.getLib());
-
-			objBd.open();
-			objBd.majTable("Param", values, "", null);
-			objBd.close();
+			// setContentView(R.layout.note_saisie);
+			AccesTableParams accesParam = new AccesTableParams(this);
+			accesParam.majTheme(EnTheme.Fleur);
 			ChoisiLeTheme();
 
 		}
@@ -121,19 +120,23 @@ public class note_saisie extends Activity implements OnClickListener {
 			adTitre.setIcon(R.drawable.button_modifier);
 			inputTeinte.setText(txtTitre.getText().toString());
 			adTitre.setView(inputTeinte);
-			adTitre.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(DialogInterface dialog, int whichButton) {
-					String value = inputTeinte.getText().toString();
-					txtTitre.setText(value);
-				}
-			});
-			adTitre.setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(DialogInterface dialog, int whichButton) {
-					// Canceled.
-				}
-			});
+			adTitre.setPositiveButton("Ok",
+					new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog,
+								int whichButton) {
+							String value = inputTeinte.getText().toString();
+							txtTitre.setText(value);
+						}
+					});
+			adTitre.setNegativeButton("Annuler",
+					new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog,
+								int whichButton) {
+							// Canceled.
+						}
+					});
 			adTitre.show();
 		}
 		if (v == ChangerMessage) {
@@ -143,19 +146,23 @@ public class note_saisie extends Activity implements OnClickListener {
 			adMessage.setIcon(R.drawable.button_modifier);
 			inputTeinte.setText(editMessage.getText().toString());
 			adMessage.setView(inputTeinte);
-			adMessage.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(DialogInterface dialog, int whichButton) {
-					String value = inputTeinte.getText().toString();
-					editMessage.setText(value);
-				}
-			});
-			adMessage.setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(DialogInterface dialog, int whichButton) {
-					// Canceled.
-				}
-			});
+			adMessage.setPositiveButton("Ok",
+					new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog,
+								int whichButton) {
+							String value = inputTeinte.getText().toString();
+							editMessage.setText(value);
+						}
+					});
+			adMessage.setNegativeButton("Annuler",
+					new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog,
+								int whichButton) {
+							// Canceled.
+						}
+					});
 			adMessage.show();
 		}
 
@@ -172,7 +179,8 @@ public class note_saisie extends Activity implements OnClickListener {
 	}
 
 	/**
-	 * Exécuté lorsque l'activité devient visible à l'utilisateur. La fonction onStart() est suivie de la fonction onResume().
+	 * Exécuté lorsque l'activité devient visible à l'utilisateur. La fonction
+	 * onStart() est suivie de la fonction onResume().
 	 */
 	@Override
 	protected void onStart() {
@@ -181,8 +189,10 @@ public class note_saisie extends Activity implements OnClickListener {
 	}
 
 	/**
-	 * Exécutée a chaque passage en premier plan de l'activité. Ou bien, si l'activité passe à nouveau en premier (si une autre activité
-	 * était passé en premier plan entre temps). La fonction onResume() est suivie de l'exécution de l'activité.
+	 * Exécutée a chaque passage en premier plan de l'activité. Ou bien, si
+	 * l'activité passe à nouveau en premier (si une autre activité était passé
+	 * en premier plan entre temps). La fonction onResume() est suivie de
+	 * l'exécution de l'activité.
 	 */
 	@Override
 	protected void onResume() {
@@ -192,9 +202,11 @@ public class note_saisie extends Activity implements OnClickListener {
 	}
 
 	/**
-	 * La fonction onStop() est exécutée : - lorsque l'activité n'est plus en premier plan - ou bien lorsque l'activité va être détruite
-	 * Cette fonction est suivie : - de la fonction onRestart() si l'activité passe à nouveau en premier plan - de la fonction onDestroy()
-	 * lorsque l'activité se termine ou bien lorsque le système décide de l'arrêter
+	 * La fonction onStop() est exécutée : - lorsque l'activité n'est plus en
+	 * premier plan - ou bien lorsque l'activité va être détruite Cette fonction
+	 * est suivie : - de la fonction onRestart() si l'activité passe à nouveau
+	 * en premier plan - de la fonction onDestroy() lorsque l'activité se
+	 * termine ou bien lorsque le système décide de l'arrêter
 	 */
 	@Override
 	protected void onStop() {
@@ -203,9 +215,11 @@ public class note_saisie extends Activity implements OnClickListener {
 	}
 
 	/**
-	 * La fonction onPause() est suivie : - d'un onResume() si l'activité passe à nouveau en premier plan - d'un onStop() si elle devient
-	 * invisible à l'utilisateur L'exécution de la fonction onPause() doit être rapide, car la prochaine activité ne démarrera pas tant que
-	 * l'exécution de la fonction onPause() n'est pas terminée.
+	 * La fonction onPause() est suivie : - d'un onResume() si l'activité passe
+	 * à nouveau en premier plan - d'un onStop() si elle devient invisible à
+	 * l'utilisateur L'exécution de la fonction onPause() doit être rapide, car
+	 * la prochaine activité ne démarrera pas tant que l'exécution de la
+	 * fonction onPause() n'est pas terminée.
 	 */
 	@Override
 	protected void onPause() {
@@ -233,11 +247,13 @@ public class note_saisie extends Activity implements OnClickListener {
 
 		// évènement appelé lorsqu'un menu est choisi
 		switch (item.getItemId()) {
-			// l'identifiant integer est moins gourmand en ressource que le string
+			// l'identifiant integer est moins gourmand en ressource que le
+			// string
 			case 2000:
 				Toast.makeText(this, "Recherche", 1000).show();
 				intentRecherche = new Intent(this, Recherche.class);
-				intentRecherche.putExtra(ActivityParam.LaunchFromNoteSaisie, true);
+				intentRecherche.putExtra(ActivityParam.LaunchFromNoteSaisie,
+						true);
 				// on demarre la nouvelle activité
 				startActivity(intentRecherche);
 				termineActivity();
@@ -245,7 +261,8 @@ public class note_saisie extends Activity implements OnClickListener {
 			case 2001:
 				Toast.makeText(this, "Paramètres", 1000).show();
 				intentParametres = new Intent(this, tab_param.class);
-				intentParametres.putExtra(ActivityParam.LaunchFromNoteSaisie, true);
+				intentParametres.putExtra(ActivityParam.LaunchFromNoteSaisie,
+						true);
 				intentParametres.putExtra(ActivityParam.IdNote, IdNote);
 				// on demarre la nouvelle activité
 				startActivity(intentParametres);
@@ -275,7 +292,8 @@ public class note_saisie extends Activity implements OnClickListener {
 			String whereClause = "id_note=?";
 			String[] whereArgs = { IdNote };
 			objBd.open();
-			int nbCHampModif = objBd.majTable("Notes", modifiedValues, whereClause, whereArgs);
+			int nbCHampModif = objBd.majTable("Notes", modifiedValues,
+					whereClause, whereArgs);
 
 			Log.d("Modif note", ">>nb de champ modifié: " + nbCHampModif);
 

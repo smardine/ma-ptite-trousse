@@ -33,6 +33,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import fr.smardine.matroussedemaquillage.R;
 import fr.smardine.matroussedemaquillage.base.BDAcces;
+import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableParams;
+import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableTrousseProduits;
 import fr.smardine.matroussedemaquillage.modifier.modif_cat;
 import fr.smardine.matroussedemaquillage.note.note_page1;
 import fr.smardine.matroussedemaquillage.param.tab_param;
@@ -46,7 +48,8 @@ public class affiche_detail extends Activity implements OnClickListener {
 	TextView nomProduitDetail, numeroTeinteDetail;
 	TextView MarqueDetail;
 
-	ImageView BTChangerCat, BTChangerMarque, BTChangerNom, BTChangerTeinte, BTChangerDateAchat, BTChangerDatePermeption;
+	ImageView BTChangerCat, BTChangerMarque, BTChangerNom, BTChangerTeinte,
+			BTChangerDateAchat, BTChangerDatePermeption;
 	private BDAcces objBd;
 	String DuréeVie = "";
 	String IdProduit;
@@ -58,7 +61,8 @@ public class affiche_detail extends Activity implements OnClickListener {
 	boolean IsAffichageProduitPerimé;
 	AlertDialog.Builder adChoixNbMois, adMarque, adProduit, adTeinte;
 	int nbMoisDurreeDeVie = 0;
-	int RequestCodePage1 = 1, RequestCodePage2 = 2, RequestCodePage3 = 3, mYear, mMonth, mDay;
+	int RequestCodePage1 = 1, RequestCodePage2 = 2, RequestCodePage3 = 3,
+			mYear, mMonth, mDay;
 	private StringBuilder categorie;
 
 	// ///////////////////
@@ -72,7 +76,8 @@ public class affiche_detail extends Activity implements OnClickListener {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		// ExceptionHandler.register(this, "http://simon.mardine.free.fr/trousse_maquillage/test/server.php","ma_ptite_trousse");
+		// ExceptionHandler.register(this,
+		// "http://simon.mardine.free.fr/trousse_maquillage/test/server.php","ma_ptite_trousse");
 		ChoisiLeTheme();
 
 		// capture our View elements
@@ -102,8 +107,10 @@ public class affiche_detail extends Activity implements OnClickListener {
 		BTChangerDateAchat.setOnClickListener(this);
 		BTChangerDatePermeption.setOnClickListener(this);
 
-		IsCalledFromMain = getIntent().getBooleanExtra(ActivityParam.LaunchFromMain, false);
-		IsAffichageProduitPerimé = getIntent().getBooleanExtra(ActivityParam.LaunchFromRechercheProduitPerime, false);
+		IsCalledFromMain = getIntent().getBooleanExtra(
+				ActivityParam.LaunchFromMain, false);
+		IsAffichageProduitPerimé = getIntent().getBooleanExtra(
+				ActivityParam.LaunchFromRechercheProduitPerime, false);
 
 		popUp("OnCreate-pageDetail");
 
@@ -132,13 +139,10 @@ public class affiche_detail extends Activity implements OnClickListener {
 
 		}
 		if (EnTheme.Classique.getLib().equals(nomThemeChoisi)) {
-//			setContentView(R.layout.affiche_detail);
-			ContentValues values = new ContentValues();
-			values.put("Theme", EnTheme.Fleur.getLib());
+			// setContentView(R.layout.affiche_detail);
+			AccesTableParams accesParam = new AccesTableParams(this);
+			accesParam.majTheme(EnTheme.Fleur);
 
-			objBd.open();
-			objBd.majTable("Param", values, "", null);
-			objBd.close();
 			ChoisiLeTheme();
 
 		}
@@ -175,16 +179,23 @@ public class affiche_detail extends Activity implements OnClickListener {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// évènement appelé lorsqu'un menu est choisi
 		switch (item.getItemId()) {
-			// l'identifiant integer est moins gourmand en ressource que le string
+			// l'identifiant integer est moins gourmand en ressource que le
+			// string
 			case 2001:
 				Toast.makeText(this, "Paramètres", 1000).show();
 				Intent intentParametres = new Intent(this, tab_param.class);
 				intentParametres.putExtra(ActivityParam.IdProduit, IdProduit);
-				intentParametres.putExtra(ActivityParam.LaunchFromAfficheDetail, true);
-				intentParametres.putExtra(ActivityParam.LaunchFromRecherche,
-						getIntent().getBooleanExtra(ActivityParam.LaunchFromRecherche, false));
-				intentParametres.putExtra(ActivityParam.LaunchFromRechercheProduitPerime,
-						getIntent().getBooleanExtra(ActivityParam.LaunchFromRechercheProduitPerime, false));
+				intentParametres.putExtra(
+						ActivityParam.LaunchFromAfficheDetail, true);
+				intentParametres.putExtra(
+						ActivityParam.LaunchFromRecherche,
+						getIntent().getBooleanExtra(
+								ActivityParam.LaunchFromRecherche, false));
+				intentParametres.putExtra(
+						ActivityParam.LaunchFromRechercheProduitPerime,
+						getIntent().getBooleanExtra(
+								ActivityParam.LaunchFromRechercheProduitPerime,
+								false));
 				// on demarre la nouvelle activité
 				startActivity(intentParametres);
 				termineActivity();
@@ -200,7 +211,8 @@ public class affiche_detail extends Activity implements OnClickListener {
 				AlertDialog.Builder adHelp = new AlertDialog.Builder(this);
 				adHelp.setTitle("Aide");
 				adHelp.setIcon(R.drawable.ad_question);
-				adHelp.setMessage("En cliquant les icones en forme de flèches,\n" + "vous pourrez modifier votre produit");
+				adHelp.setMessage("En cliquant les icones en forme de flèches,\n"
+						+ "vous pourrez modifier votre produit");
 				adHelp.setPositiveButton("Ok", null);
 				adHelp.show();
 		}
@@ -219,7 +231,8 @@ public class affiche_detail extends Activity implements OnClickListener {
 	protected Dialog onCreateDialog(int id) {
 		switch (id) {
 			case DATE_DIALOG_ID:
-				return new DatePickerDialog(this, mDateSetListener, mYear, mMonth, mDay);
+				return new DatePickerDialog(this, mDateSetListener, mYear,
+						mMonth, mDay);
 
 		}
 		return null;
@@ -242,21 +255,30 @@ public class affiche_detail extends Activity implements OnClickListener {
 	private void updateDisplay() {
 		objBd.open();
 		IdProduit = getIntent().getStringExtra(ActivityParam.IdProduit).trim();
-		String[] Colonnes = { "nom_produit", "nom_souscatergorie", "nom_categorie", "numero_Teinte", "Duree_Vie", "Date_Peremption",
-				"DateAchat", "nom_marque" };
+		String[] Colonnes = { "nom_produit", "nom_souscatergorie",
+				"nom_categorie", "numero_Teinte", "Duree_Vie",
+				"Date_Peremption", "DateAchat", "nom_marque" };
 
-		trousse_final = objBd.renvoi_liste_TrousseFinalComplete(Colonnes, IdProduit);
-		categorie = new StringBuilder().append(trousse_final[1].toString().replace("[", "").replace("]", ""));
+		trousse_final = objBd.renvoi_liste_TrousseFinalComplete(Colonnes,
+				IdProduit);
+		categorie = new StringBuilder().append(trousse_final[1].toString()
+				.replace("[", "").replace("]", ""));
 		CategorieDetail.setText(categorie);
-		MarqueDetail.setText(new StringBuilder().append(trousse_final[7].toString().replace("[", "").replace("]", "")));
-		nomProduitDetail.setText(new StringBuilder().append(trousse_final[0].toString().replace("[", "").replace("]", "")));
-		numeroTeinteDetail.setText(new StringBuilder().append(trousse_final[3].toString().replace("[", "").replace("]", "")));
-		DateAchatDetail
-				.setText(new StringBuilder().append(trousse_final[6].toString().replace("[", "").replace("]", "").replace("-", "/")));
-		DatePeremtionDetail.setText(new StringBuilder().append(trousse_final[5].toString().replace("[", "").replace("]", "")
-				.replace("-", "/")));
+		MarqueDetail.setText(new StringBuilder().append(trousse_final[7]
+				.toString().replace("[", "").replace("]", "")));
+		nomProduitDetail.setText(new StringBuilder().append(trousse_final[0]
+				.toString().replace("[", "").replace("]", "")));
+		numeroTeinteDetail.setText(new StringBuilder().append(trousse_final[3]
+				.toString().replace("[", "").replace("]", "")));
+		DateAchatDetail.setText(new StringBuilder()
+				.append(trousse_final[6].toString().replace("[", "")
+						.replace("]", "").replace("-", "/")));
+		DatePeremtionDetail.setText(new StringBuilder()
+				.append(trousse_final[5].toString().replace("[", "")
+						.replace("]", "").replace("-", "/")));
 
-		DuréeVie = trousse_final[4].toString().replace("[", "").replace("]", "");
+		DuréeVie = trousse_final[4].toString().replace("[", "")
+				.replace("]", "");
 		objBd.close();
 	}
 
@@ -264,27 +286,39 @@ public class affiche_detail extends Activity implements OnClickListener {
 	private void majTableProduit() {
 		// TODO Auto-generated method stub
 
-		String[] Colonnes = { "nom_produit", "nom_souscatergorie", "nom_categorie", "numero_Teinte", "Duree_Vie", "Date_Peremption",
-				"DateAchat", "nom_marque" };
+		String[] Colonnes = { "nom_produit", "nom_souscatergorie",
+				"nom_categorie", "numero_Teinte", "Duree_Vie",
+				"Date_Peremption", "DateAchat", "nom_marque" };
 
 		objBd.open();
-		trousse_final = objBd.renvoi_liste_TrousseFinalComplete(Colonnes, IdProduit);
+		trousse_final = objBd.renvoi_liste_TrousseFinalComplete(Colonnes,
+				IdProduit);
 		objBd.close();
 		String Table = "produit_Enregistre";
-		String Nom_Produit = nomProduitDetail.getText().toString().trim().replace("[", "").replace("]", "");
-		String SousCat = trousse_final[1].toString().replace("[", "").replace("]", "");
-		String Cat = trousse_final[2].toString().replace("[", "").replace("]", "");
-		String Numeroteinte = numeroTeinteDetail.getText().toString().trim().replace("[", "").replace("]", "");
+		String Nom_Produit = nomProduitDetail.getText().toString().trim()
+				.replace("[", "").replace("]", "");
+		String SousCat = trousse_final[1].toString().replace("[", "")
+				.replace("]", "");
+		String Cat = trousse_final[2].toString().replace("[", "")
+				.replace("]", "");
+		String Numeroteinte = numeroTeinteDetail.getText().toString().trim()
+				.replace("[", "").replace("]", "");
 		String DurreeVie = "";
-		if (nbMoisDurreeDeVie == 0) {// aucun changement apporté par l'utilisateur, on garde la valeur en base
-			DurreeVie = trousse_final[4].toString().replace("[", "").replace("]", "");
+		if (nbMoisDurreeDeVie == 0) {// aucun changement apporté par
+										// l'utilisateur, on garde la valeur en
+										// base
+			DurreeVie = trousse_final[4].toString().replace("[", "")
+					.replace("]", "");
 		} else {
 			DurreeVie = "" + nbMoisDurreeDeVie + "";
 		}
 
-		String DatePeremption = DatePeremtionDetail.getText().toString().trim().replace("[", "").replace("]", "").replace("/", "-");
-		String DateAchat = DateAchatDetail.getText().toString().trim().replace("[", "").replace("]", "").replace("/", "-");
-		String NomMarque = MarqueDetail.getText().toString().trim().replace("[", "").replace("]", "");
+		String DatePeremption = DatePeremtionDetail.getText().toString().trim()
+				.replace("[", "").replace("]", "").replace("/", "-");
+		String DateAchat = DateAchatDetail.getText().toString().trim()
+				.replace("[", "").replace("]", "").replace("/", "-");
+		String NomMarque = MarqueDetail.getText().toString().trim()
+				.replace("[", "").replace("]", "");
 
 		ContentValues modifiedValues = new ContentValues();
 		modifiedValues.put("nom_produit", Nom_Produit);
@@ -301,7 +335,8 @@ public class affiche_detail extends Activity implements OnClickListener {
 		String[] whereArgs = new String[] { "" + IdProduit + "" };
 		objBd = new BDAcces(this);
 		objBd.open();
-		int nbdechamp = objBd.majTable(Table, modifiedValues, whereClause, whereArgs);
+		int nbdechamp = objBd.majTable(Table, modifiedValues, whereClause,
+				whereArgs);
 		// objBd.deleteTable("trousse_tempo","1",null);
 		// System.out.println("Nombre de champ modifie dans la table produit_Enregistre : "+nbdechamp+" sur l'id n° "+Id_Produits+"nom cat="+cat+"nom sous cat"
 		// + souscat);
@@ -311,13 +346,15 @@ public class affiche_detail extends Activity implements OnClickListener {
 	// the callback received when the user "sets" the date in the dialog
 	private final DatePickerDialog.OnDateSetListener mDateSetListener = new DatePickerDialog.OnDateSetListener() {
 		@Override
-		public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+		public void onDateSet(DatePicker view, int year, int monthOfYear,
+				int dayOfMonth) {
 			mYear = year;
 			mMonth = monthOfYear;
 			mDay = dayOfMonth;
 			// updateDisplay();
-			DateAchatDetail.setText(new StringBuilder().append(mDay).append("/")
-			// Month is 0 based so add 1
+			DateAchatDetail.setText(new StringBuilder().append(mDay)
+					.append("/")
+					// Month is 0 based so add 1
 					.append(mMonth + 1).append("/").append(mYear).append(" "));
 		}
 	};
@@ -333,7 +370,8 @@ public class affiche_detail extends Activity implements OnClickListener {
 	}
 
 	/**
-	 * Exécuté lorsque l'activité devient visible à l'utilisateur. La fonction onStart() est suivie de la fonction onResume().
+	 * Exécuté lorsque l'activité devient visible à l'utilisateur. La fonction
+	 * onStart() est suivie de la fonction onResume().
 	 */
 	@Override
 	protected void onStart() {
@@ -342,8 +380,10 @@ public class affiche_detail extends Activity implements OnClickListener {
 	}
 
 	/**
-	 * Exécutée a chaque passage en premier plan de l'activité. Ou bien, si l'activité passe à nouveau en premier (si une autre activité
-	 * était passé en premier plan entre temps). La fonction onResume() est suivie de l'exécution de l'activité.
+	 * Exécutée a chaque passage en premier plan de l'activité. Ou bien, si
+	 * l'activité passe à nouveau en premier (si une autre activité était passé
+	 * en premier plan entre temps). La fonction onResume() est suivie de
+	 * l'exécution de l'activité.
 	 */
 	@Override
 	protected void onResume() {
@@ -353,9 +393,11 @@ public class affiche_detail extends Activity implements OnClickListener {
 	}
 
 	/**
-	 * La fonction onStop() est exécutée : - lorsque l'activité n'est plus en premier plan - ou bien lorsque l'activité va être détruite
-	 * Cette fonction est suivie : - de la fonction onRestart() si l'activité passe à nouveau en premier plan - de la fonction onDestroy()
-	 * lorsque l'activité se termine ou bien lorsque le système décide de l'arrêter
+	 * La fonction onStop() est exécutée : - lorsque l'activité n'est plus en
+	 * premier plan - ou bien lorsque l'activité va être détruite Cette fonction
+	 * est suivie : - de la fonction onRestart() si l'activité passe à nouveau
+	 * en premier plan - de la fonction onDestroy() lorsque l'activité se
+	 * termine ou bien lorsque le système décide de l'arrêter
 	 */
 	@Override
 	protected void onStop() {
@@ -364,9 +406,11 @@ public class affiche_detail extends Activity implements OnClickListener {
 	}
 
 	/**
-	 * La fonction onPause() est suivie : - d'un onResume() si l'activité passe à nouveau en premier plan - d'un onStop() si elle devient
-	 * invisible à l'utilisateur L'exécution de la fonction onPause() doit être rapide, car la prochaine activité ne démarrera pas tant que
-	 * l'exécution de la fonction onPause() n'est pas terminée.
+	 * La fonction onPause() est suivie : - d'un onResume() si l'activité passe
+	 * à nouveau en premier plan - d'un onStop() si elle devient invisible à
+	 * l'utilisateur L'exécution de la fonction onPause() doit être rapide, car
+	 * la prochaine activité ne démarrera pas tant que l'exécution de la
+	 * fonction onPause() n'est pas terminée.
 	 */
 	@Override
 	protected void onPause() {
@@ -399,6 +443,9 @@ public class affiche_detail extends Activity implements OnClickListener {
 		return super.onKeyDown(keyCode, event);
 	}
 
+	/**
+	 * 
+	 */
 	public void OnDestroy() {
 		popUp("OnDestroy-PageDetail");
 		super.onDestroy();
@@ -409,20 +456,25 @@ public class affiche_detail extends Activity implements OnClickListener {
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
 		if (v == BTChangerCat) {
-			
-			ContentValues modifiedValues = new ContentValues();
-			
-			modifiedValues.put("ischecked", "true");
-			String whereClause = "nom_souscatergorie=?";
-						
-			//String whereClause = "nom_souscatergorie=? and nom_categorie=?";
-			String[] whereArgs = new String[] { "" + categorie + "" };
+			AccesTableTrousseProduits accesProduit = new AccesTableTrousseProduits(
+					this);
+			accesProduit.majSouscatChoisie(categorie.toString());
+			// ContentValues modifiedValues = new ContentValues();
+			//
+			// modifiedValues.put("ischecked", "true");
+			// String whereClause = "nom_souscatergorie=?";
+			//
+			// // String whereClause =
+			// "nom_souscatergorie=? and nom_categorie=?";
+			// String[] whereArgs = new String[] { "" + categorie + "" };
 			objBd.open();
-			int nbdechamp = objBd.majTable("trousse_produits", modifiedValues, whereClause, whereArgs);
-			System.out.println("Nombre de champ modifié : " + nbdechamp);
+			// int nbdechamp = objBd.majTable("trousse_produits",
+			// modifiedValues,
+			// whereClause, whereArgs);
+			// System.out.println("Nombre de champ modifié : " + nbdechamp);
 			objBd.deleteTable("trousse_tempo", "1", null);
 			objBd.close();
-			
+
 			Intent modifcat = new Intent(this, modif_cat.class);
 			modifcat.putExtra(ActivityParam.IdProduit, IdProduit);
 			modifcat.putExtra(ActivityParam.LaunchFromAfficheDetail, true);
@@ -458,93 +510,172 @@ public class affiche_detail extends Activity implements OnClickListener {
 				}
 
 				@Override
-				public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
+				public void beforeTextChanged(CharSequence arg0, int arg1,
+						int arg2, int arg3) {
 
 					String str = inputDurreeVie.getText().toString();
 					len = str.length();
 				}
 
 				@Override
-				public void onTextChanged(CharSequence s, int start, int before, int count) {
+				public void onTextChanged(CharSequence s, int start,
+						int before, int count) {
 				}
 
 			});
 			// get the current date
 			adChoixNbMois = new AlertDialog.Builder(this);
 			adChoixNbMois.setTitle("Durrée de vie");
-			adChoixNbMois.setMessage("Merci de renseigner la durée de vie de votre produit\n(en nombre de mois) ");
+			adChoixNbMois
+					.setMessage("Merci de renseigner la durée de vie de votre produit\n(en nombre de mois) ");
 			// Set an EditText view to get user input
 			inputDurreeVie.setText(DuréeVie);
 			inputDurreeVie.setInputType(InputType.TYPE_CLASS_NUMBER);
 			adChoixNbMois.setView(inputDurreeVie);
-			adChoixNbMois.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(DialogInterface dialog, int whichButton) {
-					String value = inputDurreeVie.getText().toString();
-					// Do something with value!
-					if (value.equals("")) {
-						value = "1";
-					}
-					nbMoisDurreeDeVie = Integer.parseInt(value);
-					int nbJours = nbMoisDurreeDeVie * 30;
+			adChoixNbMois.setPositiveButton("Ok",
+					new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog,
+								int whichButton) {
+							String value = inputDurreeVie.getText().toString();
+							// Do something with value!
+							if (value.equals("")) {
+								value = "1";
+							}
+							nbMoisDurreeDeVie = Integer.parseInt(value);
+							int nbJours = nbMoisDurreeDeVie * 30;
 
-					String DateAchat = DateAchatDetail.getText().toString().trim();
-					String tabAchat[] = DateAchat.split("/");
-					int jourAchat = Integer.parseInt(tabAchat[0]);
-					int mois = Integer.parseInt(tabAchat[1]) - 1;// les mois commence à 0 (janvier) et se termine à 11 (decembre)
-					int annee = Integer.parseInt(tabAchat[2]) - 1900;// les années commence à 0(1900), pour avoir l'année exacte a partir
-																		// d'une velur contenu dans un string, il faut retrancher 1900 a la
-																		// valeur de l'année.
-					// exemple, l'année 2010 est considérée comme 2010-1900 = 110
+							String DateAchat = DateAchatDetail.getText()
+									.toString().trim();
+							String tabAchat[] = DateAchat.split("/");
+							int jourAchat = Integer.parseInt(tabAchat[0]);
+							int mois = Integer.parseInt(tabAchat[1]) - 1;// les
+																			// mois
+																			// commence
+																			// à
+																			// 0
+																			// (janvier)
+																			// et
+																			// se
+																			// termine
+																			// à
+																			// 11
+																			// (decembre)
+							int annee = Integer.parseInt(tabAchat[2]) - 1900;// les
+																				// années
+																				// commence
+																				// à
+																				// 0(1900),
+																				// pour
+																				// avoir
+																				// l'année
+																				// exacte
+																				// a
+																				// partir
+																				// d'une
+																				// velur
+																				// contenu
+																				// dans
+																				// un
+																				// string,
+																				// il
+																				// faut
+																				// retrancher
+																				// 1900
+																				// a
+																				// la
+																				// valeur
+																				// de
+																				// l'année.
+							// exemple, l'année 2010 est considérée comme
+							// 2010-1900 = 110
 
-					Date DateAchatAuformatDate = new Date(annee, mois, jourAchat);
-					DatePeremtInMilli = DateAchatAuformatDate.getTime();// on recupere la date d'achat au format milliseconde
-					Date DatePeremption = getDateAfterDays(DatePeremtInMilli, nbJours);// on calcule la date de permetpion en fonction de la
-																						// date d'achat+nb de jour donné par l'utilisateur
-					DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-					String Date_Peremption = dateFormat.format(DatePeremption);// date de peremtion au format jj/mm/aaaa
+							Date DateAchatAuformatDate = new Date(annee, mois,
+									jourAchat);
+							DatePeremtInMilli = DateAchatAuformatDate.getTime();// on
+																				// recupere
+																				// la
+																				// date
+																				// d'achat
+																				// au
+																				// format
+																				// milliseconde
+							Date DatePeremption = getDateAfterDays(
+									DatePeremtInMilli, nbJours);// on calcule la
+																// date de
+																// permetpion en
+																// fonction de
+																// la
+																// date
+																// d'achat+nb de
+																// jour donné
+																// par
+																// l'utilisateur
+							DateFormat dateFormat = new SimpleDateFormat(
+									"dd/MM/yyyy");
+							String Date_Peremption = dateFormat
+									.format(DatePeremption);// date de peremtion
+															// au format
+															// jj/mm/aaaa
 
-					DatePeremtInMilli = DatePeremption.getTime(); // on converti la date de permeption en milliseconde
+							DatePeremtInMilli = DatePeremption.getTime(); // on
+																			// converti
+																			// la
+																			// date
+																			// de
+																			// permeption
+																			// en
+																			// milliseconde
 
-					DatePeremtionDetail.setText(Date_Peremption);
-				}
-			});
-			adChoixNbMois.setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(DialogInterface dialog, int whichButton) {
-					// Canceled.
-				}
-			});
+							DatePeremtionDetail.setText(Date_Peremption);
+						}
+					});
+			adChoixNbMois.setNegativeButton("Annuler",
+					new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog,
+								int whichButton) {
+							// Canceled.
+						}
+					});
 			adChoixNbMois.show();
 		}
 		if (v == BTChangerMarque) {
-			final AutoCompleteTextView inputMarque = new AutoCompleteTextView(this);
+			final AutoCompleteTextView inputMarque = new AutoCompleteTextView(
+					this);
 			adMarque = new AlertDialog.Builder(this);
 			adMarque.setTitle("Choix de la marque");
 			adMarque.setMessage("Veuillez de renseigner la marque");
 			inputMarque.setText(MarqueDetail.getText().toString());
 			adMarque.setView(inputMarque);
 			objBd.open();
-			String[] Marque = objBd.renvoi_liste_ValeurDansString("trousse_marques", "nom_marque");
+			String[] Marque = objBd.renvoi_liste_ValeurDansString(
+					"trousse_marques", "nom_marque");
 
 			objBd.close();
-			ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.list_item_marque_auto, Marque);
+			ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+					R.layout.list_item_marque_auto, Marque);
 			inputMarque.setAdapter(adapter);
-			inputMarque.setThreshold(1);// des le premier caractere tapé, on affiche la iste.
-			adMarque.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(DialogInterface dialog, int whichButton) {
-					String value = inputMarque.getText().toString();
-					MarqueDetail.setText(value);
-				}
-			});
+			inputMarque.setThreshold(1);// des le premier caractere tapé, on
+										// affiche la iste.
+			adMarque.setPositiveButton("Ok",
+					new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog,
+								int whichButton) {
+							String value = inputMarque.getText().toString();
+							MarqueDetail.setText(value);
+						}
+					});
 
-			adMarque.setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(DialogInterface dialog, int whichButton) {
-					// Canceled.
-				}
-			});
+			adMarque.setNegativeButton("Annuler",
+					new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog,
+								int whichButton) {
+							// Canceled.
+						}
+					});
 			adMarque.show();
 		}
 		if (v == BTChangerNom) {
@@ -554,19 +685,23 @@ public class affiche_detail extends Activity implements OnClickListener {
 			adProduit.setMessage("Veuillez renseigner le nom du produit");
 			inputProduit.setText(nomProduitDetail.getText().toString());
 			adProduit.setView(inputProduit);
-			adProduit.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(DialogInterface dialog, int whichButton) {
-					String value = inputProduit.getText().toString();
-					nomProduitDetail.setText(value);
-				}
-			});
-			adProduit.setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(DialogInterface dialog, int whichButton) {
-					// Canceled.
-				}
-			});
+			adProduit.setPositiveButton("Ok",
+					new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog,
+								int whichButton) {
+							String value = inputProduit.getText().toString();
+							nomProduitDetail.setText(value);
+						}
+					});
+			adProduit.setNegativeButton("Annuler",
+					new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog,
+								int whichButton) {
+							// Canceled.
+						}
+					});
 			adProduit.show();
 		}
 		if (v == BTChangerTeinte) {
@@ -576,19 +711,23 @@ public class affiche_detail extends Activity implements OnClickListener {
 			adTeinte.setMessage("Veuillez renseigner la teinte du produit");
 			inputTeinte.setText(numeroTeinteDetail.getText().toString());
 			adTeinte.setView(inputTeinte);
-			adTeinte.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(DialogInterface dialog, int whichButton) {
-					String value = inputTeinte.getText().toString();
-					numeroTeinteDetail.setText(value);
-				}
-			});
-			adTeinte.setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(DialogInterface dialog, int whichButton) {
-					// Canceled.
-				}
-			});
+			adTeinte.setPositiveButton("Ok",
+					new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog,
+								int whichButton) {
+							String value = inputTeinte.getText().toString();
+							numeroTeinteDetail.setText(value);
+						}
+					});
+			adTeinte.setNegativeButton("Annuler",
+					new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog,
+								int whichButton) {
+							// Canceled.
+						}
+					});
 			adTeinte.show();
 		}
 
