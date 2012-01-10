@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -26,6 +25,9 @@ import android.widget.Toast;
 import fr.smardine.matroussedemaquillage.Main;
 import fr.smardine.matroussedemaquillage.R;
 import fr.smardine.matroussedemaquillage.base.BDAcces;
+import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableParams;
+import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableTrousseMarque;
+import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableTrousseProduits;
 import fr.smardine.matroussedemaquillage.note.note_page1;
 import fr.smardine.matroussedemaquillage.param.tab_param;
 import fr.smardine.matroussedemaquillage.recherche.Recherche;
@@ -91,13 +93,9 @@ public class choix_produit_a_duppliquer extends Activity implements OnItemClickL
 
 		}
 		if (EnTheme.Classique.getLib().equals(nomThemeChoisi)) {
-//			setContentView(R.layout.affiche_liste_produit_a_duppliquer);
-			ContentValues values = new ContentValues();
-			values.put("Theme", EnTheme.Fleur.getLib());
-
-			objBd.open();
-			objBd.majTable("Param", values, "", null);
-			objBd.close();
+			// setContentView(R.layout.affiche_liste_produit_a_duppliquer);
+			AccesTableParams accesParams = new AccesTableParams(this);
+			accesParams.majTheme(EnTheme.Fleur);
 			ChoisiLeTheme();
 
 		}
@@ -270,16 +268,19 @@ public class choix_produit_a_duppliquer extends Activity implements OnItemClickL
 		// if (IsCalledFromMain || IsCalledFromPageRecap) {
 		// popUp("IscreatFormRecap: " + IsCalledFromPageRecap);
 		// popUp("IscreatFormMain: " + IsCalledFromMain);
-		String Table = "trousse_produits";
-		ContentValues modifiedValues = new ContentValues();
-		modifiedValues.put("ischecked", "false");
-		String whereClause = "ischecked=?";
-		String[] whereArgs = new String[] { "true" };
+		AccesTableTrousseProduits accesTrousse = new AccesTableTrousseProduits(this);
+		accesTrousse.reinitProduitChoisi();
+		// String Table = "trousse_produits";
+		// ContentValues modifiedValues = new ContentValues();
+		// modifiedValues.put("ischecked", "false");
+		// String whereClause = "ischecked=?";
+		// String[] whereArgs = new String[] { "true" };
 		objBd = new BDAcces(this);
 		objBd.open();
-		int nbdechamp = objBd.majTable(Table, modifiedValues, whereClause, whereArgs);
+		// int nbdechamp = objBd.majTable(Table, modifiedValues, whereClause, whereArgs);
+
 		objBd.deleteTable("trousse_tempo", "1", null);
-		System.out.println("Nombre de champ modifié : " + nbdechamp);
+		// System.out.println("Nombre de champ modifié : " + nbdechamp);
 		objBd.close();
 		// }
 		// boolean IsCalledFromPage2 = getIntent().getBooleanExtra("LaunchByPage2", false);
@@ -400,28 +401,31 @@ public class choix_produit_a_duppliquer extends Activity implements OnItemClickL
 
 		// on rempli "trousse tempo" avec les valeurs de Categories et sous categorie afin que cescase soient cochée lors de l'affichage de
 		// la page1 du formulaire
-		String Table = "trousse_marques";
-		ContentValues modifiedValues = new ContentValues();
-		modifiedValues.put("ischecked", "true");
-		String whereClause = "nom_marque=?";
-		String[] whereArgs = new String[] { MarqueChoisie };
-		objBd.open();
-		int nbdechamp = objBd.majTable(Table, modifiedValues, whereClause, whereArgs);
-
-		System.out.println("Nombre de champ modifié : " + nbdechamp);
-		objBd.close();
-
-		String Table1 = "trousse_produits";
-		ContentValues modifiedValues1 = new ContentValues();
-		modifiedValues1.put("ischecked", "true");
-		String whereClause1 = "nom_souscatergorie=?";
-		String[] whereArgs1 = new String[] { SousCat };
-
-		objBd.open();
-		int nbdechamp1 = objBd.majTable(Table1, modifiedValues1, whereClause1, whereArgs1);
-
-		System.out.println("Nombre de champ modifié : " + nbdechamp1);
-		objBd.close();
+		AccesTableTrousseMarque accesMarque = new AccesTableTrousseMarque(this);
+		accesMarque.majMarqueChoisi(MarqueChoisie);
+		// String Table = "trousse_marques";
+		// ContentValues modifiedValues = new ContentValues();
+		// modifiedValues.put("ischecked", "true");
+		// String whereClause = "nom_marque=?";
+		// String[] whereArgs = new String[] { MarqueChoisie };
+		// objBd.open();
+		// int nbdechamp = objBd.majTable(Table, modifiedValues, whereClause, whereArgs);
+		//
+		// System.out.println("Nombre de champ modifié : " + nbdechamp);
+		// objBd.close();
+		AccesTableTrousseProduits accesTrousse = new AccesTableTrousseProduits(this);
+		accesTrousse.majSouscatChoisie(SousCat);
+		// String Table1 = "trousse_produits";
+		// ContentValues modifiedValues1 = new ContentValues();
+		// modifiedValues1.put("ischecked", "true");
+		// String whereClause1 = "nom_souscatergorie=?";
+		// String[] whereArgs1 = new String[] { SousCat };
+		//
+		// objBd.open();
+		// int nbdechamp1 = objBd.majTable(Table1, modifiedValues1, whereClause1, whereArgs1);
+		//
+		// System.out.println("Nombre de champ modifié : " + nbdechamp1);
+		// objBd.close();
 		//
 		Intent intentPage3Dupplique = new Intent(this, formulaire_entree_page3.class);
 		// on demarre la nouvelle activité

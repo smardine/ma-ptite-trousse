@@ -32,6 +32,8 @@ import android.widget.Toast;
 import fr.smardine.matroussedemaquillage.Main;
 import fr.smardine.matroussedemaquillage.R;
 import fr.smardine.matroussedemaquillage.base.BDAcces;
+import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableParams;
+import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableTrousseProduits;
 import fr.smardine.matroussedemaquillage.note.note_page1;
 import fr.smardine.matroussedemaquillage.param.tab_param;
 import fr.smardine.matroussedemaquillage.recherche.Recherche;
@@ -123,16 +125,18 @@ public class formulaire_entree_page3 extends Activity implements OnClickListener
 
 			@Override
 			public void onClick(DialogInterface dialog, int id) {
-				String Table = "trousse_produits";
-				ContentValues modifiedValues = new ContentValues();
-				modifiedValues.put("ischecked", "false");
-				String whereClause = "ischecked=?";
-				String[] whereArgs = new String[] { "true" };
+				AccesTableTrousseProduits accesTrousse = new AccesTableTrousseProduits(getApplicationContext());
+				accesTrousse.reinitProduitChoisi();
+				// String Table = "trousse_produits";
+				// ContentValues modifiedValues = new ContentValues();
+				// modifiedValues.put("ischecked", "false");
+				// String whereClause = "ischecked=?";
+				// String[] whereArgs = new String[] { "true" };
 
 				objBd.open();
-				int nbdechamp = objBd.majTable(Table, modifiedValues, whereClause, whereArgs);
+				// int nbdechamp = objBd.majTable(Table, modifiedValues, whereClause, whereArgs);
 				objBd.deleteTable("trousse_tempo", "1", null);
-				System.out.println("Nombre de champ modifié : " + nbdechamp);
+				// System.out.println("Nombre de champ modifié : " + nbdechamp);
 				objBd.close();
 
 				if (NouveauProduit) {// on retourne a la 1° fenetre du formulaire
@@ -296,14 +300,16 @@ public class formulaire_entree_page3 extends Activity implements OnClickListener
 
 		}
 		if (EnTheme.Classique.getLib().equals(nomThemeChoisi)) {
-//			setContentView(R.layout.formulaire_entree_page3);
-			ContentValues values = new ContentValues();
-			values.put("Theme", EnTheme.Fleur.getLib());
-
-			objBd.open();
-			objBd.majTable("Param", values, "", null);
-			objBd.close();
-			ChoisiLeTheme();
+			// setContentView(R.layout.formulaire_entree_page3);
+			AccesTableParams accesParam = new AccesTableParams(this);
+			accesParam.majTheme(EnTheme.Fleur);
+			// ContentValues values = new ContentValues();
+			// values.put("Theme", EnTheme.Fleur.getLib());
+			//
+			// objBd.open();
+			// objBd.majTable("Param", values, "", null);
+			// objBd.close();
+			// ChoisiLeTheme();
 
 		}
 		if (EnTheme.Fleur.getLib().equals(nomThemeChoisi)) {
@@ -500,19 +506,21 @@ public class formulaire_entree_page3 extends Activity implements OnClickListener
 		insertOk = objBd.InsertDonnéedansTable("produit_Enregistre", valuesProduitsFinal);
 		if (insertOk) {
 			popUp("Insert Ok");
-			String Table = "trousse_produits";
-			ContentValues modifiedValues = new ContentValues();
-			modifiedValues.put("ischecked", "false");
-			String whereClause = "ischecked=?";
-			String[] whereArgs = new String[] { "true" };
+			AccesTableTrousseProduits accesTrousse = new AccesTableTrousseProduits(this);
+			accesTrousse.reinitProduitChoisi();
+			// String Table = "trousse_produits";
+			// ContentValues modifiedValues = new ContentValues();
+			// modifiedValues.put("ischecked", "false");
+			// String whereClause = "ischecked=?";
+			// String[] whereArgs = new String[] { "true" };
 
 			objBd.open();
-			int nbdechamp = objBd.majTable(Table, modifiedValues, whereClause, whereArgs);
+			// int nbdechamp = objBd.majTable(Table, modifiedValues, whereClause, whereArgs);
 			objBd.deleteTable("trousse_tempo", "1", null);
-			System.out.println("Nombre de champ modifié : " + nbdechamp);
+			// System.out.println("Nombre de champ modifié : " + nbdechamp);
 			objBd.close();
 
-			objBd.close();
+			// objBd.close();
 			adFiniOuPas.show();
 		} else {
 			// popUp("Insert Pas Ok");

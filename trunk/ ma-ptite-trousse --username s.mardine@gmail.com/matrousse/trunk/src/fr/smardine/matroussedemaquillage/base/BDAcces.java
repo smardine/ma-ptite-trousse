@@ -18,6 +18,7 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+import fr.smardine.matroussedemaquillage.factory.RequeteFactory;
 
 /**
  * @author smardine
@@ -164,77 +165,38 @@ public class BDAcces {
 	}
 
 	// /**
-	// * @param Catégorie
-	// * @return un tableau de liste de String
+	// * @param colonne
+	// * @param OrderBy
+	// * @param GroupBy
+	// * @return la liste des produits enregistres en base
 	// */
-	// public ArrayList<String>[] renvoi_liste_produits(String Catégorie) {
+	// public Cursor recupererLaListeDesProduits(String[] colonne, String OrderBy, String GroupBy) {
+	// try {
 	//
-	// String[] colonne = new String[] { "nom_souscatergorie", "ischecked" };
-	// String condition = "nom_categorie='" + Catégorie + "'";
+	// String condition = "";
 	// String[] conditionArgs = null;
-	// String groupby = "";
+	//
 	// String having = "";
-	// String orderby = "nom_souscatergorie";
-	// Cursor objCursor = mDb.query(PRODUITS_TABLE, colonne, condition, conditionArgs, groupby, having, orderby);
-	// int iPostNomProduits = objCursor.getColumnIndex("nom_souscatergorie");
-	// int iPostisChecked = objCursor.getColumnIndex("ischecked");
 	//
-	// int itotal = objCursor.getCount();
-	// ArrayList<String> aTableRetourNom = new ArrayList<String>();
-	// ArrayList<String> aTableRetourisChecked = new ArrayList<String>();
+	// return mDb.query("produit_Enregistre", colonne, condition, conditionArgs, GroupBy, having, OrderBy);
 	//
-	// objCursor.moveToFirst();
-	// @SuppressWarnings("unchecked")
-	// ArrayList<String>[] aTableRetour = new ArrayList[25];
-	//
-	// /* Check if our result was valid. */
-	// if (objCursor != null) {
-	// for (int i = 0; i < itotal; i++) {
-	// String resultnom_produits = objCursor.getString(iPostNomProduits);
-	// String resultischecked = objCursor.getString(iPostisChecked);
-	// aTableRetourNom.add(resultnom_produits);
-	// aTableRetourisChecked.add(resultischecked);
-	// objCursor.moveToNext();
+	// } catch (SQLException e) {
+	// Log.d(TAG, ">> recupererLaListeDesBenefs ERROR: " + e.getLocalizedMessage());
+	// throw e;
 	// }
 	// }
-	// objCursor.close();
-	// aTableRetour[0] = aTableRetourNom;
-	// aTableRetour[1] = aTableRetourisChecked;
-	// return aTableRetour;
-	// }
-
-	/**
-	 * @param colonne
-	 * @param OrderBy
-	 * @param GroupBy
-	 * @return la liste des produits enregistres en base
-	 */
-	public Cursor recupererLaListeDesProduits(String[] colonne, String OrderBy, String GroupBy) {
-		try {
-
-			String condition = "";
-			String[] conditionArgs = null;
-
-			String having = "";
-
-			return mDb.query("produit_Enregistre", colonne, condition, conditionArgs, GroupBy, having, OrderBy);
-
-		} catch (SQLException e) {
-			Log.d(TAG, ">> recupererLaListeDesBenefs ERROR: " + e.getLocalizedMessage());
-			throw e;
-		}
-	}
 
 	/**
 	 * @param ScriptSQL
 	 * @return le nombre de produit perimé
 	 */
 	public int revoiNbProdPerimeOuPresquePerime(String ScriptSQL) {
-		Cursor objCursor = mDb.rawQuery(ScriptSQL, null);
-
-		int itotal = objCursor.getCount();
-		objCursor.close();
-		return itotal;
+		RequeteFactory requeteFact = new RequeteFactory(mCtx);
+		return Integer.parseInt(requeteFact.get1Champ(ScriptSQL));
+		// Cursor objCursor = mDb.rawQuery(ScriptSQL, null);
+		// int itotal = objCursor.getCount();
+		// objCursor.close();
+		// return itotal;
 	}
 
 	/**
@@ -576,19 +538,19 @@ public class BDAcces {
 		return aTableRetour;
 	}
 
-	/**
-	 * @param TABLE
-	 * @return nombre de champs dans une table
-	 */
-	public int renvoi_nbChamp(String TABLE) {
-		open();
-		Cursor objCursor = mDb.query(TABLE, null, null, null, null, null, null);
-		int iNbChamp = 0;
-		iNbChamp = objCursor.getCount();
-		objCursor.close();
-		return iNbChamp;
-
-	}
+	// /**
+	// * @param TABLE
+	// * @return nombre de champs dans une table
+	// */
+	// public int renvoi_nbChamp(String TABLE) {
+	// open();
+	// Cursor objCursor = mDb.query(TABLE, null, null, null, null, null, null);
+	// int iNbChamp = 0;
+	// iNbChamp = objCursor.getCount();
+	// objCursor.close();
+	// return iNbChamp;
+	//
+	// }
 
 	/**
 	 * @param colonne
@@ -861,26 +823,26 @@ public class BDAcces {
 
 	}
 
-	/**
-	 * @param Table
-	 * @param modifiedValues
-	 * @param whereClause
-	 * @param whereArgs
-	 * @return
-	 */
-	public int majTable(String Table, ContentValues modifiedValues, String whereClause, String[] whereArgs) {
-		// TODO Auto-generated method stub
-		int nbdeChampAffecté = 0;
-		try {
-			nbdeChampAffecté = mDb.update(Table, modifiedValues, whereClause, whereArgs);
-		} catch (Exception e) {
-			String message = "erreur: " + e;
-			System.out.println(message);
-		}
-
-		return nbdeChampAffecté;
-
-	}
+	// /**
+	// * @param Table
+	// * @param modifiedValues
+	// * @param whereClause
+	// * @param whereArgs
+	// * @return
+	// */
+	// public int majTable(String Table, ContentValues modifiedValues, String whereClause, String[] whereArgs) {
+	// // TODO Auto-generated method stub
+	// int nbdeChampAffecté = 0;
+	// try {
+	// nbdeChampAffecté = mDb.update(Table, modifiedValues, whereClause, whereArgs);
+	// } catch (Exception e) {
+	// String message = "erreur: " + e;
+	// System.out.println(message);
+	// }
+	//
+	// return nbdeChampAffecté;
+	//
+	// }
 
 	/**
 	 * @return
