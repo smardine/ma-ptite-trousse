@@ -6,7 +6,7 @@ package fr.smardine.matroussedemaquillage.base.structure;
 /**
  * @author smardine
  */
-public enum EnProduitEnregistre implements StructureTable {
+public enum EnStructProduitEnregistre implements StructureTable {
 	/**
 	 * id du produit
 	 */
@@ -63,7 +63,7 @@ public enum EnProduitEnregistre implements StructureTable {
 	private final Class<?> typeClass;
 	private final Integer tailleMax;
 
-	EnProduitEnregistre(String p_nomChamp, Class<?> p_typeClass, Integer p_tailleMax) {
+	EnStructProduitEnregistre(String p_nomChamp, Class<?> p_typeClass, Integer p_tailleMax) {
 		this.nomChamp = p_nomChamp;
 		this.typeClass = p_typeClass;
 		this.tailleMax = p_tailleMax;

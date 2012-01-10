@@ -2,6 +2,7 @@ package fr.smardine.matroussedemaquillage.base;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -16,7 +17,6 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.database.sqlite.SQLiteQueryBuilder;
 import android.util.Log;
 
 /**
@@ -25,9 +25,9 @@ import android.util.Log;
 public class BDAcces {
 
 	private static final String PRODUITS_TABLE = "trousse_produits";
-	@SuppressWarnings("unused")
+
 	private static final String MARQUES_TABLE = "trousse_marques";
-	@SuppressWarnings("unused")
+
 	private static final String TEMPO_TABLE = "trousse_tempo";
 
 	private static final String DATABASE_NAME = "trousse_base";
@@ -37,16 +37,16 @@ public class BDAcces {
 	/**
 	 * 
 	 */
-	public static DatabaseHelper mDbHelper;
+	public DatabaseHelper mDbHelper;
 	/**
 	 * 
 	 */
-	public static SQLiteDatabase mDb;
+	private SQLiteDatabase mDb;
 
 	/**
 	 * 
 	 */
-	public SQLiteQueryBuilder mbbuilder;
+	// private SQLiteQueryBuilder mbbuilder;
 
 	private static final String TAG = "BDAcces";
 	private static final int DATABASE_VERSION = 14;
@@ -67,409 +67,61 @@ public class BDAcces {
 
 		@Override
 		public void onCreate(SQLiteDatabase db) {
-			String Script = "";
-
-			try {
-				G_creation_base creation = new G_creation_base();
-				for (String s : creation.getallCreation()) {
-					s = s.replace("''", "\"");
-					db.execSQL(s.replace("[", "").replace("]", ""));
-				}
-
-				G_maj_base maj = new G_maj_base();
-				for (String s : maj.getAllVersion()) {
-					s = s.replace("''", "\"");
-					db.execSQL(s.replace("[", "").replace("]", ""));
-				}
-
-				// String[] listeScripts = G_creation_base.SCRIPT_CREATION_TABLE;
-				//
-				// Script = "";
-				// for (int i = 0; i < listeScripts.length; i++) {
-				// Script = listeScripts[i].toString();
-				// Script = Script.replace("''", "\"");
-				// db.execSQL(Script.replace("[", "").replace("]", ""));
-				// }
-				//
-				// listeScripts = G_creation_base.SCRIPT_INSERT_CATEGORIE;
-				// for (int i = 0; i < listeScripts.length; i++) {
-				// Script = listeScripts[i].toString();
-				// Script = Script.replace("''", "\"");
-				// db.execSQL(Script.replace("[", "").replace("]", ""));
-				// }
-				//
-				// listeScripts = G_creation_base.SCRIPT_INSERT_MARQUE;
-				// for (int i = 0; i < listeScripts.length; i++) {
-				// Script = listeScripts[i].toString();
-				// Script = Script.replace("''", "\"");
-				// db.execSQL(Script.replace("[", "").replace("]", ""));
-				// }
-
-				// String[] listeScripts = G_maj_base.SCRIPT_MAJ_V02;
-				//
-				// for (int i = 0; i < listeScripts.length; i++) {
-				// Script = listeScripts[i].toString();
-				// Script = Script.replace("''", "\"");
-				// db.execSQL(Script.replace("[", "").replace("]", ""));
-				// }
-
-				// listeScripts = G_maj_base.SCRIPT_MAJ_V03;
-				//
-				// for (int i = 0; i < listeScripts.length; i++) {
-				// Script = listeScripts[i].toString();
-				// Script = Script.replace("''", "\"");
-				// db.execSQL(Script.replace("[", "").replace("]", ""));
-				// }
-				String[] listeScripts = G_maj_base.SCRIPT_MAJ_V04;
-
-				for (int i = 0; i < listeScripts.length; i++) {
-					Script = listeScripts[i].toString();
-					Script = Script.replace("''", "\"");
-					db.execSQL(Script.replace("[", "").replace("]", ""));
-				}
-				listeScripts = G_maj_base.SCRIPT_MAJ_V05;
-
-				for (int i = 0; i < listeScripts.length; i++) {
-					Script = listeScripts[i].toString();
-					Script = Script.replace("''", "\"");
-					db.execSQL(Script.replace("[", "").replace("]", ""));
-				}
-				listeScripts = G_maj_base.SCRIPT_MAJ_V06;
-				for (int i = 0; i < listeScripts.length; i++) {
-					Script = listeScripts[i].toString();
-					Script = Script.replace("''", "\"");
-					db.execSQL(Script.replace("[", "").replace("]", ""));
-				}
-				listeScripts = G_maj_base.SCRIPT_MAJ_V07;
-				for (int i = 0; i < listeScripts.length; i++) {
-					Script = listeScripts[i].toString();
-					Script = Script.replace("''", "\"");
-					db.execSQL(Script.replace("[", "").replace("]", ""));
-				}
-				listeScripts = G_maj_base.SCRIPT_MAJ_V08;
-
-				for (int i = 0; i < listeScripts.length; i++) {
-					Script = listeScripts[i].toString();
-					Script = Script.replace("''", "\"");
-					db.execSQL(Script.replace("[", "").replace("]", ""));
-				}
-				listeScripts = G_maj_base.SCRIPT_MAJ_V09;
-				for (int i = 0; i < listeScripts.length; i++) {
-					Script = listeScripts[i].toString();
-					Script = Script.replace("''", "\"");
-					db.execSQL(Script.replace("[", "").replace("]", ""));
-				}
-				listeScripts = G_maj_base.SCRIPT_MAJ_V10;
-				for (int i = 0; i < listeScripts.length; i++) {
-					Script = listeScripts[i].toString();
-					Script = Script.replace("''", "\"");
-					db.execSQL(Script.replace("[", "").replace("]", ""));
-				}
-				listeScripts = G_maj_base.SCRIPT_MAJ_V11;
-				// String Script="";
-				for (int i = 0; i < listeScripts.length; i++) {
-					Script = listeScripts[i].toString();
-					Script = Script.replace("''", "\"");
-					db.execSQL(Script.replace("[", "").replace("]", ""));
-				}
-				listeScripts = G_maj_base.SCRIPT_MAJ_V12;
-
-				for (int i = 0; i < listeScripts.length; i++) {
-					Script = listeScripts[i].toString();
-					Script = Script.replace("''", "\"");
-					db.execSQL(Script.replace("[", "").replace("]", ""));
-				}
-				listeScripts = G_maj_base.SCRIPT_MAJ_V13;
-
-				for (int i = 0; i < listeScripts.length; i++) {
-					Script = listeScripts[i].toString();
-					Script = Script.replace("''", "\"");
-					db.execSQL(Script.replace("[", "").replace("]", ""));
-				}
-				listeScripts = G_maj_base.SCRIPT_MAJ_V14;
-
-				for (int i = 0; i < listeScripts.length; i++) {
-					Script = listeScripts[i].toString();
-					Script = Script.replace("''", "\"");
-					db.execSQL(Script.replace("[", "").replace("]", ""));
-				}
-			} catch (Exception e) {
-
-				Message_Erreur = e.toString();
-				Log.e(TAG, "erreur application script: " + Script);
-				Log.e(TAG, "erreur: " + Message_Erreur);
-
+			G_creation_base creation = new G_creation_base();
+			for (String s : creation.getallCreation()) {
+				db.execSQL(s);
 			}
+
+			G_maj_base maj = new G_maj_base();
+			for (String s : maj.getAllVersion()) {
+				db.execSQL(s);
+			}
+
+			// Log.e(TAG, "erreur application script: " + Script);
+			// Log.e(TAG, "erreur: " + Message_Erreur);
 
 		}
 
 		@Override
 		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-			String Script = "";
 			Log.w(TAG, "Upgrading database from version " + oldVersion + " to " + newVersion + ", which will destroy all old data");
+			G_maj_base maj = new G_maj_base();
 
-			// if (oldVersion == 1) {
-			// // la version de la base est en v1 => on passe en V2
-			//
-			// try {
-			//
-			// String[] listeScripts = G_maj_base.SCRIPT_MAJ_V02;
-			//
-			// for (int i = 0; i < listeScripts.length; i++) {
-			// Script = listeScripts[i].toString();
-			// Script = Script.replace("''", "\"");
-			// db.execSQL(Script.replace("[", "").replace("]", ""));
-			// }
-			// } catch (Exception e) {
-			//
-			// Message_Erreur = e.toString();
-			// Log.d(TAG, "erreur application script: " + Script);
-			// Log.d(TAG, "erreur: " + Message_Erreur);
-			//
-			// }
-			// oldVersion = 2;
-			// }
-			// if (oldVersion == 2) {
-			//
-			// try {
-			//
-			// String[] listeScripts = G_maj_base.SCRIPT_MAJ_V03;
-			//
-			// for (int i = 0; i < listeScripts.length; i++) {
-			// Script = listeScripts[i].toString();
-			// Script = Script.replace("''", "\"");
-			// db.execSQL(Script.replace("[", "").replace("]", ""));
-			// }
-			// } catch (Exception e) {
-			//
-			// Message_Erreur = e.toString();
-			// Log.d(TAG, "erreur application script: " + Script);
-			// Log.d(TAG, "erreur: " + Message_Erreur);
-			//
-			// }
-			// oldVersion = 3;
-			// }
-			if (oldVersion == 3) {
+			switch (oldVersion) {
+				case 1:
+					LanceMiseAJour(db, maj.getVersion2());
+				case 2:
+					LanceMiseAJour(db, maj.getVersion3());
+				case 3:
+					LanceMiseAJour(db, maj.getVersion4());
+				case 4:
+					LanceMiseAJour(db, maj.getVersion5());
+				case 5:
+					LanceMiseAJour(db, maj.getVersion6());
+				case 6:
+					LanceMiseAJour(db, maj.getVersion7());
+				case 7:
+					LanceMiseAJour(db, maj.getVersion8());
+				case 8:
+					LanceMiseAJour(db, maj.getVersion9());
+				case 9:
+					LanceMiseAJour(db, maj.getVersion10());
+				case 10:
+					LanceMiseAJour(db, maj.getVersion11());
+				case 11:
+					LanceMiseAJour(db, maj.getVersion12());
+				case 12:
+					LanceMiseAJour(db, maj.getVersion13());
+				case 13:
+					LanceMiseAJour(db, maj.getVersion14());
 
-				try {
-
-					String[] listeScripts = G_maj_base.SCRIPT_MAJ_V04;
-
-					for (int i = 0; i < listeScripts.length; i++) {
-						Script = listeScripts[i].toString();
-						Script = Script.replace("''", "\"");
-						db.execSQL(Script.replace("[", "").replace("]", ""));
-					}
-				} catch (Exception e) {
-
-					Message_Erreur = e.toString();
-					Log.d(TAG, "erreur application script: " + Script);
-					Log.d(TAG, "erreur: " + Message_Erreur);
-
-				}
-				oldVersion = 4;
-			}
-			if (oldVersion == 4) {
-
-				try {
-
-					String[] listeScripts = G_maj_base.SCRIPT_MAJ_V05;
-
-					for (int i = 0; i < listeScripts.length; i++) {
-						Script = listeScripts[i].toString();
-						Script = Script.replace("''", "\"");
-						db.execSQL(Script.replace("[", "").replace("]", ""));
-					}
-				} catch (Exception e) {
-
-					Message_Erreur = e.toString();
-					Log.d(TAG, "erreur application script: " + Script);
-					Log.d(TAG, "erreur: " + Message_Erreur);
-
-				}
-				oldVersion = 5;
-			}
-			if (oldVersion == 5) {
-
-				try {
-
-					String[] listeScripts = G_maj_base.SCRIPT_MAJ_V06;
-
-					for (int i = 0; i < listeScripts.length; i++) {
-						Script = listeScripts[i].toString();
-						Script = Script.replace("''", "\"");
-						db.execSQL(Script.replace("[", "").replace("]", ""));
-					}
-				} catch (Exception e) {
-
-					Message_Erreur = e.toString();
-					Log.d(TAG, "erreur application script: " + Script);
-					Log.d(TAG, "erreur: " + Message_Erreur);
-
-				}
-				oldVersion = 6;
-			}
-			if (oldVersion == 6) {
-
-				try {
-
-					String[] listeScripts = G_maj_base.SCRIPT_MAJ_V07;
-
-					for (int i = 0; i < listeScripts.length; i++) {
-						Script = listeScripts[i].toString();
-						Script = Script.replace("''", "\"");
-						db.execSQL(Script.replace("[", "").replace("]", ""));
-					}
-				} catch (Exception e) {
-
-					Message_Erreur = e.toString();
-					Log.d(TAG, "erreur application script: " + Script);
-					Log.d(TAG, "erreur: " + Message_Erreur);
-
-				}
-				oldVersion = 7;
 			}
 
-			if (oldVersion == 7) {
+		}
 
-				try {
-
-					String[] listeScripts = G_maj_base.SCRIPT_MAJ_V08;
-
-					for (int i = 0; i < listeScripts.length; i++) {
-						Script = listeScripts[i].toString();
-						Script = Script.replace("''", "\"");
-						db.execSQL(Script.replace("[", "").replace("]", ""));
-					}
-				} catch (Exception e) {
-
-					Message_Erreur = e.toString();
-					Log.d(TAG, "erreur application script: " + Script);
-					Log.d(TAG, "erreur: " + Message_Erreur);
-
-				}
-				oldVersion = 8;
-			}
-
-			if (oldVersion == 8) {
-
-				try {
-
-					String[] listeScripts = G_maj_base.SCRIPT_MAJ_V09;
-
-					for (int i = 0; i < listeScripts.length; i++) {
-						Script = listeScripts[i].toString();
-						Script = Script.replace("''", "\"");
-						db.execSQL(Script.replace("[", "").replace("]", ""));
-					}
-				} catch (Exception e) {
-
-					Message_Erreur = e.toString();
-					Log.d(TAG, "erreur application script: " + Script);
-					Log.d(TAG, "erreur: " + Message_Erreur);
-
-				}
-				oldVersion = 9;
-			}
-			if (oldVersion == 9) {
-
-				try {
-
-					String[] listeScripts = G_maj_base.SCRIPT_MAJ_V10;
-
-					for (int i = 0; i < listeScripts.length; i++) {
-						Script = listeScripts[i].toString();
-						Script = Script.replace("''", "\"");
-						db.execSQL(Script.replace("[", "").replace("]", ""));
-					}
-				} catch (Exception e) {
-
-					Message_Erreur = e.toString();
-					Log.d(TAG, "erreur application script: " + Script);
-					Log.d(TAG, "erreur: " + Message_Erreur);
-
-				}
-				oldVersion = 10;
-			}
-			if (oldVersion == 10) {
-
-				try {
-
-					String[] listeScripts = G_maj_base.SCRIPT_MAJ_V11;
-
-					for (int i = 0; i < listeScripts.length; i++) {
-						Script = listeScripts[i].toString();
-						Script = Script.replace("''", "\"");
-						db.execSQL(Script.replace("[", "").replace("]", ""));
-					}
-				} catch (Exception e) {
-
-					Message_Erreur = e.toString();
-					Log.d(TAG, "erreur application script: " + Script);
-					Log.d(TAG, "erreur: " + Message_Erreur);
-
-				}
-				oldVersion = 11;
-			}
-			if (oldVersion == 11) {
-
-				try {
-
-					String[] listeScripts = G_maj_base.SCRIPT_MAJ_V12;
-
-					for (int i = 0; i < listeScripts.length; i++) {
-						Script = listeScripts[i].toString();
-						Script = Script.replace("''", "\"");
-						db.execSQL(Script.replace("[", "").replace("]", ""));
-					}
-				} catch (Exception e) {
-
-					Message_Erreur = e.toString();
-					Log.d(TAG, "erreur application script: " + Script);
-					Log.d(TAG, "erreur: " + Message_Erreur);
-
-				}
-				oldVersion = 12;
-			}
-			if (oldVersion == 12) {
-
-				try {
-
-					String[] listeScripts = G_maj_base.SCRIPT_MAJ_V13;
-
-					for (int i = 0; i < listeScripts.length; i++) {
-						Script = listeScripts[i].toString();
-						Script = Script.replace("''", "\"");
-						db.execSQL(Script.replace("[", "").replace("]", ""));
-					}
-				} catch (Exception e) {
-
-					Message_Erreur = e.toString();
-					Log.d(TAG, "erreur application script: " + Script);
-					Log.d(TAG, "erreur: " + Message_Erreur);
-
-				}
-				oldVersion = 13;
-			}
-			if (oldVersion == 13) {
-
-				try {
-
-					String[] listeScripts = G_maj_base.SCRIPT_MAJ_V14;
-
-					for (int i = 0; i < listeScripts.length; i++) {
-						Script = listeScripts[i].toString();
-						Script = Script.replace("''", "\"");
-						db.execSQL(Script.replace("[", "").replace("]", ""));
-					}
-				} catch (Exception e) {
-
-					Message_Erreur = e.toString();
-					Log.d(TAG, "erreur application script: " + Script);
-					Log.d(TAG, "erreur: " + Message_Erreur);
-
-				}
-				oldVersion = 14;
+		private void LanceMiseAJour(SQLiteDatabase p_db, List<String> p_lstScripts) {
+			for (String s : p_lstScripts) {
+				p_db.execSQL(s);
 			}
 
 		}
@@ -480,24 +132,13 @@ public class BDAcces {
 	 */
 	public void open() throws SQLException {
 		// si la base est deja ouverte, on la ferme.
-		if (mDb != null) {
-			boolean isAlreadyOpen = mDb.isOpen();
-			if (isAlreadyOpen) {
-				close();
-			}
+		if (mDb != null && mDb.isOpen()) {
+			close();
 		}
-
 		// ouverture du helper
 		mDbHelper = new DatabaseHelper(mCtx);
-
 		// ouverture de la base
 		mDb = mDbHelper.getWritableDatabase();
-
-		// boolean isLockedByCurrent = mDb.isDbLockedByCurrentThread();
-		// boolean isLockedByOther = mDb.isDbLockedByOtherThreads();
-		//
-		// // check database version
-		// int version = mDb.getVersion();
 	}
 
 	/**
@@ -513,56 +154,54 @@ public class BDAcces {
 	 */
 	public void close() throws SQLException {
 		// si il reste des transaction active, on les ferme.
-		boolean isTransactionOpen = mDb.inTransaction();
-		if (isTransactionOpen) {
+		if (mDb.inTransaction()) {
 			mDb.endTransaction();
 		}
 		// on commence par fermer la base
 		mDb.close();
 		// on ferme le helper.
 		mDbHelper.close();
-
 	}
 
-	/**
-	 * @param Catégorie
-	 * @return un tableau de liste de String
-	 */
-	public ArrayList<String>[] renvoi_liste_produits(String Catégorie) {
-
-		String[] colonne = new String[] { "nom_souscatergorie", "ischecked" };
-		String condition = "nom_categorie='" + Catégorie + "'";
-		String[] conditionArgs = null;
-		String groupby = "";
-		String having = "";
-		String orderby = "nom_souscatergorie";
-		Cursor objCursor = mDb.query(PRODUITS_TABLE, colonne, condition, conditionArgs, groupby, having, orderby);
-		int iPostNomProduits = objCursor.getColumnIndex("nom_souscatergorie");
-		int iPostisChecked = objCursor.getColumnIndex("ischecked");
-
-		int itotal = objCursor.getCount();
-		ArrayList<String> aTableRetourNom = new ArrayList<String>();
-		ArrayList<String> aTableRetourisChecked = new ArrayList<String>();
-
-		objCursor.moveToFirst();
-		@SuppressWarnings("unchecked")
-		ArrayList<String>[] aTableRetour = new ArrayList[25];
-
-		/* Check if our result was valid. */
-		if (objCursor != null) {
-			for (int i = 0; i < itotal; i++) {
-				String resultnom_produits = objCursor.getString(iPostNomProduits);
-				String resultischecked = objCursor.getString(iPostisChecked);
-				aTableRetourNom.add(resultnom_produits);
-				aTableRetourisChecked.add(resultischecked);
-				objCursor.moveToNext();
-			}
-		}
-		objCursor.close();
-		aTableRetour[0] = aTableRetourNom;
-		aTableRetour[1] = aTableRetourisChecked;
-		return aTableRetour;
-	}
+	// /**
+	// * @param Catégorie
+	// * @return un tableau de liste de String
+	// */
+	// public ArrayList<String>[] renvoi_liste_produits(String Catégorie) {
+	//
+	// String[] colonne = new String[] { "nom_souscatergorie", "ischecked" };
+	// String condition = "nom_categorie='" + Catégorie + "'";
+	// String[] conditionArgs = null;
+	// String groupby = "";
+	// String having = "";
+	// String orderby = "nom_souscatergorie";
+	// Cursor objCursor = mDb.query(PRODUITS_TABLE, colonne, condition, conditionArgs, groupby, having, orderby);
+	// int iPostNomProduits = objCursor.getColumnIndex("nom_souscatergorie");
+	// int iPostisChecked = objCursor.getColumnIndex("ischecked");
+	//
+	// int itotal = objCursor.getCount();
+	// ArrayList<String> aTableRetourNom = new ArrayList<String>();
+	// ArrayList<String> aTableRetourisChecked = new ArrayList<String>();
+	//
+	// objCursor.moveToFirst();
+	// @SuppressWarnings("unchecked")
+	// ArrayList<String>[] aTableRetour = new ArrayList[25];
+	//
+	// /* Check if our result was valid. */
+	// if (objCursor != null) {
+	// for (int i = 0; i < itotal; i++) {
+	// String resultnom_produits = objCursor.getString(iPostNomProduits);
+	// String resultischecked = objCursor.getString(iPostisChecked);
+	// aTableRetourNom.add(resultnom_produits);
+	// aTableRetourisChecked.add(resultischecked);
+	// objCursor.moveToNext();
+	// }
+	// }
+	// objCursor.close();
+	// aTableRetour[0] = aTableRetourNom;
+	// aTableRetour[1] = aTableRetourisChecked;
+	// return aTableRetour;
+	// }
 
 	/**
 	 * @param colonne
@@ -1210,8 +849,6 @@ public class BDAcces {
 			}
 		}
 		objCursor.close();
-		// aTableRetour=aTableRetourNom;
-		// aTableRetour[1]=aTableRetourisChecked;
 		return aTableRetour;
 	}
 
@@ -1221,15 +858,7 @@ public class BDAcces {
 	public void update_bdd() {
 		int newversion = mDb.getVersion() + 1;
 		mDbHelper.onUpgrade(mDb, mDb.getVersion(), newversion);
-		// mDbHelper.onCreate(mDb);
-	}
 
-	/**
-	 * @return
-	 */
-	public ArrayList<String>[] tableau_tmp() {
-		ArrayList<String>[] aTableauTmp = new ArrayList[4];
-		return aTableauTmp;
 	}
 
 	/**
@@ -1562,6 +1191,13 @@ public class BDAcces {
 
 		return aTableRetour;
 
+	}
+
+	/**
+	 * @return l'instance de connexion a la database
+	 */
+	public SQLiteDatabase getMdb() {
+		return mDb;
 	}
 
 	// **************************fin de la classe**********************************
