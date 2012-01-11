@@ -3,10 +3,8 @@ package fr.smardine.matroussedemaquillage.param;
 import java.util.ArrayList;
 
 import widget.majWidget;
-
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.ContentValues;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -26,6 +24,7 @@ import android.widget.TextView;
 import fr.smardine.matroussedemaquillage.Main;
 import fr.smardine.matroussedemaquillage.R;
 import fr.smardine.matroussedemaquillage.base.BDAcces;
+import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableParams;
 import fr.smardine.matroussedemaquillage.note.note_page1;
 import fr.smardine.matroussedemaquillage.note.note_saisie;
 import fr.smardine.matroussedemaquillage.recherche.Recherche;
@@ -39,7 +38,8 @@ import fr.smardine.matroussedemaquillage.variableglobale.EnActionParDefaut;
 import fr.smardine.matroussedemaquillage.variableglobale.EnTheme;
 import fr.smardine.matroussedemaquillage.variableglobale.ValeurParDefaut;
 
-public class tab1 extends Activity implements OnClickListener, ColorPickerDialog.OnColorChangedListener, OnItemSelectedListener {
+public class tab1 extends Activity implements OnClickListener,
+		ColorPickerDialog.OnColorChangedListener, OnItemSelectedListener {
 	EditText textView;
 	CheckBox CbAfficheAlerte;
 	BDAcces objBd;
@@ -48,7 +48,9 @@ public class tab1 extends Activity implements OnClickListener, ColorPickerDialog
 	Spinner sp;
 	ImageView IvPreviewWidget;
 
-	private static final String[] mStrings = { EnActionParDefaut.RECHERCHE.getLib(), EnActionParDefaut.PAGE_PRINC.getLib(),
+	private static final String[] mStrings = {
+			EnActionParDefaut.RECHERCHE.getLib(),
+			EnActionParDefaut.PAGE_PRINC.getLib(),
 			EnActionParDefaut.PERIME.getLib() };
 
 	@SuppressWarnings("rawtypes")
@@ -63,7 +65,7 @@ public class tab1 extends Activity implements OnClickListener, ColorPickerDialog
 		BtColorPicker.setOnClickListener(this);
 		ApercuCouleur = (TextView) findViewById(R.id.TvPreviewColor);
 		IvPreviewWidget = (ImageView) findViewById(R.id.IvPreviewWidget);
-		
+
 		/**
 		 * on met la couleur du fond dès la creation de la fenetre
 		 */
@@ -73,14 +75,15 @@ public class tab1 extends Activity implements OnClickListener, ColorPickerDialog
 
 		// le spinner qui permet de choisir la periodicité
 		sp = (Spinner) findViewById(R.id.SpWidget);
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, mStrings);
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+				android.R.layout.simple_spinner_item, mStrings);
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		sp.setAdapter(adapter);
 		sp.setOnItemSelectedListener(this);
 		String action = val.getActionParDefaut();
-		for (EnActionParDefaut act : EnActionParDefaut.values()){
-			if (act.getLib().equals(action)){
-				sp.setSelection(act.getCode());	
+		for (EnActionParDefaut act : EnActionParDefaut.values()) {
+			if (act.getLib().equals(action)) {
+				sp.setSelection(act.getCode());
 			}
 		}
 		objBd = new BDAcces(this);
@@ -111,19 +114,22 @@ public class tab1 extends Activity implements OnClickListener, ColorPickerDialog
 				}
 
 				/*
-				 * if(str.length()==4*&& len <str.length()*){ textView.append("-"); }
+				 * if(str.length()==4*&& len <str.length()*){
+				 * textView.append("-"); }
 				 */
 			}
 
 			@Override
-			public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
+			public void beforeTextChanged(CharSequence arg0, int arg1,
+					int arg2, int arg3) {
 
 				// String str = textView.getText().toString();
 				// len = str.length();
 			}
 
 			@Override
-			public void onTextChanged(CharSequence s, int start, int before, int count) {
+			public void onTextChanged(CharSequence s, int start, int before,
+					int count) {
 			}
 
 		});
@@ -135,7 +141,7 @@ public class tab1 extends Activity implements OnClickListener, ColorPickerDialog
 		super.onRestart();
 		// popUp("onRestart()-Page2");
 	}
-	
+
 	/**
 	 * permet de changer l'icone du widget sur l'objet ImageView
 	 */
@@ -149,7 +155,7 @@ public class tab1 extends Activity implements OnClickListener, ColorPickerDialog
 		String nomThemeChoisi = Param[2].get(0).toString().trim();
 		if (EnTheme.Bisounours.getLib().equals(nomThemeChoisi)) {
 			IvPreviewWidget.setImageResource(R.drawable.icone_bisounours);
-			
+
 		}
 		if (EnTheme.Fleur.getLib().equals(nomThemeChoisi)) {
 
@@ -159,7 +165,8 @@ public class tab1 extends Activity implements OnClickListener, ColorPickerDialog
 	}
 
 	/**
-	 * Exécuté lorsque l'activité devient visible à l'utilisateur. La fonction onStart() est suivie de la fonction onResume().
+	 * Exécuté lorsque l'activité devient visible à l'utilisateur. La fonction
+	 * onStart() est suivie de la fonction onResume().
 	 */
 	@Override
 	protected void onStart() {
@@ -168,8 +175,10 @@ public class tab1 extends Activity implements OnClickListener, ColorPickerDialog
 	}
 
 	/**
-	 * Exécutée a chaque passage en premier plan de l'activité. Ou bien, si l'activité passe à nouveau en premier (si une autre activité
-	 * était passé en premier plan entre temps). La fonction onResume() est suivie de l'exécution de l'activité.
+	 * Exécutée a chaque passage en premier plan de l'activité. Ou bien, si
+	 * l'activité passe à nouveau en premier (si une autre activité était passé
+	 * en premier plan entre temps). La fonction onResume() est suivie de
+	 * l'exécution de l'activité.
 	 */
 	@Override
 	protected void onResume() {
@@ -179,9 +188,11 @@ public class tab1 extends Activity implements OnClickListener, ColorPickerDialog
 	}
 
 	/**
-	 * La fonction onStop() est exécutée : - lorsque l'activité n'est plus en premier plan - ou bien lorsque l'activité va être détruite
-	 * Cette fonction est suivie : - de la fonction onRestart() si l'activité passe à nouveau en premier plan - de la fonction onDestroy()
-	 * lorsque l'activité se termine ou bien lorsque le système décide de l'arrêter
+	 * La fonction onStop() est exécutée : - lorsque l'activité n'est plus en
+	 * premier plan - ou bien lorsque l'activité va être détruite Cette fonction
+	 * est suivie : - de la fonction onRestart() si l'activité passe à nouveau
+	 * en premier plan - de la fonction onDestroy() lorsque l'activité se
+	 * termine ou bien lorsque le système décide de l'arrêter
 	 */
 	@Override
 	protected void onStop() {
@@ -190,9 +201,11 @@ public class tab1 extends Activity implements OnClickListener, ColorPickerDialog
 	}
 
 	/**
-	 * La fonction onPause() est suivie : - d'un onResume() si l'activité passe à nouveau en premier plan - d'un onStop() si elle devient
-	 * invisible à l'utilisateur L'exécution de la fonction onPause() doit être rapide, car la prochaine activité ne démarrera pas tant que
-	 * l'exécution de la fonction onPause() n'est pas terminée.
+	 * La fonction onPause() est suivie : - d'un onResume() si l'activité passe
+	 * à nouveau en premier plan - d'un onStop() si elle devient invisible à
+	 * l'utilisateur L'exécution de la fonction onPause() doit être rapide, car
+	 * la prochaine activité ne démarrera pas tant que l'exécution de la
+	 * fonction onPause() n'est pas terminée.
 	 */
 	@Override
 	protected void onPause() {
@@ -214,14 +227,16 @@ public class tab1 extends Activity implements OnClickListener, ColorPickerDialog
 			} else {
 				AfficheAlerte = "false";
 			}
-
-			ContentValues values = new ContentValues();
-			values.put("AfficheAlerte", AfficheAlerte);
-			values.put("DureeViePeremp", DurreeViePeremp);
-
-			objBd.open();
-			objBd.majTable("Param", values, "", null);
-			objBd.close();
+			AccesTableParams accesParam = new AccesTableParams(this);
+			accesParam.majAfficheAlerte(AfficheAlerte);
+			accesParam.majDureeVie(DurreeViePeremp);
+			// ContentValues values = new ContentValues();
+			// values.put("AfficheAlerte", AfficheAlerte);
+			// values.put("DureeViePeremp", DurreeViePeremp);
+			//
+			// objBd.open();
+			// objBd.majTable("Param", values, "", null);
+			// objBd.close();
 
 		}
 	}
@@ -229,33 +244,50 @@ public class tab1 extends Activity implements OnClickListener, ColorPickerDialog
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
-			new majWidget(this,false);
+			new majWidget(this, false);
 			Intent intent = null;
-			boolean isLaunchByNotePage1 = getIntent().getBooleanExtra(ActivityParam.LaunchFromNotePage1, false);
-			boolean isLaunchByNoteSaisie = getIntent().getBooleanExtra(ActivityParam.LaunchFromNoteSaisie, false);
-			boolean isLaunchByAfficheDetail = getIntent().getBooleanExtra(ActivityParam.LaunchFromAfficheDetail, false);
-			boolean isLaunchByProduitPerime = getIntent().getBooleanExtra(ActivityParam.LaunchFromRechercheProduitPerime, false);
-			boolean isLaunchByRecherche = getIntent().getBooleanExtra(ActivityParam.LaunchFromRecherche, false);
-			boolean isLaunchByDupplique = getIntent().getBooleanExtra(ActivityParam.LaunchFromDuppliquer, false);
-			boolean isLaunchByPage1 = getIntent().getBooleanExtra(ActivityParam.LaunchFromPage1, false);
-			boolean isLaunchBypagerecap = getIntent().getBooleanExtra(ActivityParam.LaunchFromPageRecap, false);
-			boolean isLaunchByMain = getIntent().getBooleanExtra("LaunchFromMain", false);
+			boolean isLaunchByNotePage1 = getIntent().getBooleanExtra(
+					ActivityParam.LaunchFromNotePage1, false);
+			boolean isLaunchByNoteSaisie = getIntent().getBooleanExtra(
+					ActivityParam.LaunchFromNoteSaisie, false);
+			boolean isLaunchByAfficheDetail = getIntent().getBooleanExtra(
+					ActivityParam.LaunchFromAfficheDetail, false);
+			boolean isLaunchByProduitPerime = getIntent().getBooleanExtra(
+					ActivityParam.LaunchFromRechercheProduitPerime, false);
+			boolean isLaunchByRecherche = getIntent().getBooleanExtra(
+					ActivityParam.LaunchFromRecherche, false);
+			boolean isLaunchByDupplique = getIntent().getBooleanExtra(
+					ActivityParam.LaunchFromDuppliquer, false);
+			boolean isLaunchByPage1 = getIntent().getBooleanExtra(
+					ActivityParam.LaunchFromPage1, false);
+			boolean isLaunchBypagerecap = getIntent().getBooleanExtra(
+					ActivityParam.LaunchFromPageRecap, false);
+			boolean isLaunchByMain = getIntent().getBooleanExtra(
+					"LaunchFromMain", false);
 			if (isLaunchByNotePage1) {
 				intent = new Intent(this, note_page1.class);
 
 			}
 			if (isLaunchByNoteSaisie) {
-				String idNote = getIntent().getStringExtra(ActivityParam.IdNote);
+				String idNote = getIntent()
+						.getStringExtra(ActivityParam.IdNote);
 				intent = new Intent(this, note_saisie.class);
 				intent.putExtra(ActivityParam.IdNote, idNote);
 			}
 			if (isLaunchByAfficheDetail) {
-				String idProduit = getIntent().getStringExtra(ActivityParam.IdProduit);
+				String idProduit = getIntent().getStringExtra(
+						ActivityParam.IdProduit);
 				intent = new Intent(this, affiche_detail.class);
 				intent.putExtra(ActivityParam.IdProduit, idProduit);
-				intent.putExtra(ActivityParam.LaunchFromRecherche, getIntent().getBooleanExtra(ActivityParam.LaunchFromRecherche, false));
-				intent.putExtra(ActivityParam.LaunchFromRechercheProduitPerime,
-						getIntent().getBooleanExtra(ActivityParam.LaunchFromRechercheProduitPerime, false));
+				intent.putExtra(
+						ActivityParam.LaunchFromRecherche,
+						getIntent().getBooleanExtra(
+								ActivityParam.LaunchFromRecherche, false));
+				intent.putExtra(
+						ActivityParam.LaunchFromRechercheProduitPerime,
+						getIntent().getBooleanExtra(
+								ActivityParam.LaunchFromRechercheProduitPerime,
+								false));
 			}
 			if (isLaunchByProduitPerime) {
 				intent = new Intent(this, recherche_produit_perime.class);
@@ -267,33 +299,45 @@ public class tab1 extends Activity implements OnClickListener, ColorPickerDialog
 				intent = new Intent(this, choix_produit_a_duppliquer.class);
 			}
 			if (isLaunchByPage1) {
-				String MarqueChoisie = getIntent().getStringExtra(ActivityParam.Marque);
-				String DureeVie = getIntent().getStringExtra(ActivityParam.DurreeDeVie);
-				String DateChoisie = getIntent().getStringExtra(ActivityParam.DateAchat);
-				String numTeinte = getIntent().getStringExtra(ActivityParam.NumeroDeTeinte);
-				String nomProduitRecup = getIntent().getStringExtra(ActivityParam.NomProduit);
+				String MarqueChoisie = getIntent().getStringExtra(
+						ActivityParam.Marque);
+				String DureeVie = getIntent().getStringExtra(
+						ActivityParam.DurreeDeVie);
+				String DateChoisie = getIntent().getStringExtra(
+						ActivityParam.DateAchat);
+				String numTeinte = getIntent().getStringExtra(
+						ActivityParam.NumeroDeTeinte);
+				String nomProduitRecup = getIntent().getStringExtra(
+						ActivityParam.NomProduit);
 
 				intent = new Intent(this, formulaire_entree_page1bis.class);
 				intent.putExtra(ActivityParam.Marque, MarqueChoisie.trim());
 				intent.putExtra(ActivityParam.DurreeDeVie, DureeVie.trim());
 				intent.putExtra(ActivityParam.DateAchat, DateChoisie.trim());
 				intent.putExtra(ActivityParam.NumeroDeTeinte, numTeinte.trim());
-				intent.putExtra(ActivityParam.NomProduit, nomProduitRecup.trim());
+				intent.putExtra(ActivityParam.NomProduit,
+						nomProduitRecup.trim());
 
 			}
 			if (isLaunchBypagerecap) {
-				String MarqueChoisie = getIntent().getStringExtra(ActivityParam.Marque);
-				String DureeVie = getIntent().getStringExtra(ActivityParam.DurreeDeVie);
-				String DateChoisie = getIntent().getStringExtra(ActivityParam.DateAchat);
-				String numTeinte = getIntent().getStringExtra(ActivityParam.NumeroDeTeinte);
-				String nomProduitRecup = getIntent().getStringExtra(ActivityParam.NomProduit);
+				String MarqueChoisie = getIntent().getStringExtra(
+						ActivityParam.Marque);
+				String DureeVie = getIntent().getStringExtra(
+						ActivityParam.DurreeDeVie);
+				String DateChoisie = getIntent().getStringExtra(
+						ActivityParam.DateAchat);
+				String numTeinte = getIntent().getStringExtra(
+						ActivityParam.NumeroDeTeinte);
+				String nomProduitRecup = getIntent().getStringExtra(
+						ActivityParam.NomProduit);
 
 				intent = new Intent(this, formulaire_entree_page3.class);
 				intent.putExtra(ActivityParam.Marque, MarqueChoisie.trim());
 				intent.putExtra(ActivityParam.DurreeDeVie, DureeVie.trim());
 				intent.putExtra(ActivityParam.DateAchat, DateChoisie.trim());
 				intent.putExtra(ActivityParam.NumeroDeTeinte, numTeinte.trim());
-				intent.putExtra(ActivityParam.NomProduit, nomProduitRecup.trim());
+				intent.putExtra(ActivityParam.NomProduit,
+						nomProduitRecup.trim());
 			}
 			if (isLaunchByMain) {
 				intent = new Intent(this, Main.class);
@@ -304,7 +348,7 @@ public class tab1 extends Activity implements OnClickListener, ColorPickerDialog
 			return true;
 		}
 		if (keyCode == KeyEvent.KEYCODE_SEARCH) {
-			new majWidget(this,false);
+			new majWidget(this, false);
 			Intent intentRecherche = new Intent(this, Recherche.class);
 			// on demarre la nouvelle activité
 			startActivity(intentRecherche);
@@ -330,7 +374,7 @@ public class tab1 extends Activity implements OnClickListener, ColorPickerDialog
 	public void onClick(View p_v) {
 		if (p_v == BtColorPicker) {
 			ValeurParDefaut val = new ValeurParDefaut(this);
-			new ColorPickerDialog(this, this,val.getCouleurPastille()).show();
+			new ColorPickerDialog(this, this, val.getCouleurPastille()).show();
 		}
 
 	}
@@ -340,26 +384,27 @@ public class tab1 extends Activity implements OnClickListener, ColorPickerDialog
 		ApercuCouleur.setTextColor(p_color);
 		ValeurParDefaut val = new ValeurParDefaut(this);
 		val.setCouleurPastille(p_color);
-		new majWidget(this,false);
+		new majWidget(this, false);
 
 	}
 
 	@Override
-	public void onItemSelected(AdapterView<?> Parent, View view, int position, long id) {
+	public void onItemSelected(AdapterView<?> Parent, View view, int position,
+			long id) {
 		if (id == EnActionParDefaut.RECHERCHE.getCode()) {
 			ValeurParDefaut val = new ValeurParDefaut(this);
 			val.setActionParDefaut(EnActionParDefaut.RECHERCHE.getLib());
-			
+
 		}
 		if (id == EnActionParDefaut.PAGE_PRINC.getCode()) {
 			ValeurParDefaut val = new ValeurParDefaut(this);
 			val.setActionParDefaut(EnActionParDefaut.PAGE_PRINC.getLib());
 		}
-		if (id ==  EnActionParDefaut.PERIME.getCode()) {
+		if (id == EnActionParDefaut.PERIME.getCode()) {
 			ValeurParDefaut val = new ValeurParDefaut(this);
 			val.setActionParDefaut(EnActionParDefaut.PERIME.getLib());
 		}
-		new majWidget(this,false);
+		new majWidget(this, false);
 
 	}
 

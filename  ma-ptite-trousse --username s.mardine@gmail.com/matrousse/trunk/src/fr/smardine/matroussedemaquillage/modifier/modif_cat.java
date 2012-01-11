@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import fr.smardine.matroussedemaquillage.R;
 import fr.smardine.matroussedemaquillage.base.BDAcces;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableParams;
+import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableProduitEnregistre;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableTrousseProduits;
 import fr.smardine.matroussedemaquillage.recherche.Recherche;
 import fr.smardine.matroussedemaquillage.recherche.affiche_detail;
@@ -419,24 +420,10 @@ public class modif_cat extends Activity implements OnClickListener {
 
 	private void majTableProduit(int Id_Produits, String souscat, String cat) {
 		// TODO Auto-generated method stub
-		String Table = "produit_Enregistre";
-		ContentValues modifiedValues = new ContentValues();
-		modifiedValues.put("nom_souscatergorie", souscat);
-		modifiedValues.put("nom_categorie", cat);
-		String whereClause = "id_produits=?";
-		String[] whereArgs = new String[] { "" + Id_Produits + "" };
-		objBd = new BDAcces(this);
-		objBd.open();
-		int nbdechamp = objBd.majTable(Table, modifiedValues, whereClause,
-				whereArgs);
-		// objBd.deleteTable("trousse_tempo","1",null);
-		System.out
-				.println("Nombre de champ modifie dans la table produit_Enregistre : "
-						+ nbdechamp
-						+ " sur l'id n° "
-						+ Id_Produits
-						+ "nom cat=" + cat + "nom sous cat" + souscat);
-		objBd.close();
+		AccesTableProduitEnregistre accesProduit = new AccesTableProduitEnregistre(
+				this);
+		accesProduit.majCatEtSousCat(Id_Produits, cat, souscat);
+
 	}
 
 	private void remetAZeroLaTableCat() {

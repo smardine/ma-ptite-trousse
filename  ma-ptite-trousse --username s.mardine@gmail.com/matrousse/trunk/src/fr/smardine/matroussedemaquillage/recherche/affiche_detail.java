@@ -10,7 +10,6 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -34,6 +33,7 @@ import android.widget.Toast;
 import fr.smardine.matroussedemaquillage.R;
 import fr.smardine.matroussedemaquillage.base.BDAcces;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableParams;
+import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableProduitEnregistre;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableTrousseProduits;
 import fr.smardine.matroussedemaquillage.modifier.modif_cat;
 import fr.smardine.matroussedemaquillage.note.note_page1;
@@ -282,7 +282,6 @@ public class affiche_detail extends Activity implements OnClickListener {
 		objBd.close();
 	}
 
-	@SuppressWarnings("unused")
 	private void majTableProduit() {
 		// TODO Auto-generated method stub
 
@@ -320,27 +319,33 @@ public class affiche_detail extends Activity implements OnClickListener {
 		String NomMarque = MarqueDetail.getText().toString().trim()
 				.replace("[", "").replace("]", "");
 
-		ContentValues modifiedValues = new ContentValues();
-		modifiedValues.put("nom_produit", Nom_Produit);
-		modifiedValues.put("nom_souscatergorie", SousCat);
-		modifiedValues.put("nom_categorie", Cat);
-		modifiedValues.put("numero_Teinte", Numeroteinte);
-		modifiedValues.put("Duree_Vie", DurreeVie);
-		modifiedValues.put("Date_Peremption", DatePeremption);
-		modifiedValues.put("DateAchat", DateAchat);
-		modifiedValues.put("nom_marque", NomMarque);
-		modifiedValues.put("Date_Peremption_milli", DatePeremtInMilli);
+		AccesTableProduitEnregistre accesProduit = new AccesTableProduitEnregistre(
+				this);
+		accesProduit.majProduitComplet(IdProduit, Nom_Produit, SousCat, Cat,
+				Numeroteinte, DurreeVie, DatePeremption, DateAchat, NomMarque,
+				DatePeremtInMilli);
 
-		String whereClause = "id_produits=?";
-		String[] whereArgs = new String[] { "" + IdProduit + "" };
-		objBd = new BDAcces(this);
-		objBd.open();
-		int nbdechamp = objBd.majTable(Table, modifiedValues, whereClause,
-				whereArgs);
+		// ContentValues modifiedValues = new ContentValues();
+		// modifiedValues.put("nom_produit", Nom_Produit);
+		// modifiedValues.put("nom_souscatergorie", SousCat);
+		// modifiedValues.put("nom_categorie", Cat);
+		// modifiedValues.put("numero_Teinte", Numeroteinte);
+		// modifiedValues.put("Duree_Vie", DurreeVie);
+		// modifiedValues.put("Date_Peremption", DatePeremption);
+		// modifiedValues.put("DateAchat", DateAchat);
+		// modifiedValues.put("nom_marque", NomMarque);
+		// modifiedValues.put("Date_Peremption_milli", DatePeremtInMilli);
+		//
+		// String whereClause = "id_produits=?";
+		// String[] whereArgs = new String[] { "" + IdProduit + "" };
+		// objBd = new BDAcces(this);
+		// objBd.open();
+		// int nbdechamp = objBd.majTable(Table, modifiedValues, whereClause,
+		// whereArgs);
 		// objBd.deleteTable("trousse_tempo","1",null);
 		// System.out.println("Nombre de champ modifie dans la table produit_Enregistre : "+nbdechamp+" sur l'id n° "+Id_Produits+"nom cat="+cat+"nom sous cat"
 		// + souscat);
-		objBd.close();
+		// objBd.close();
 	}
 
 	// the callback received when the user "sets" the date in the dialog

@@ -6,7 +6,6 @@ import java.util.List;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import fr.smardine.matroussedemaquillage.base.BDAcces;
 import fr.smardine.matroussedemaquillage.base.structure.EnTable;
 
@@ -16,7 +15,6 @@ import fr.smardine.matroussedemaquillage.base.structure.EnTable;
 public class RequeteFactory {
 
 	private final Context ctx;
-	private final SQLiteDatabase mdb;
 	private final BDAcces bdAcces;
 
 	/**
@@ -25,12 +23,13 @@ public class RequeteFactory {
 	public RequeteFactory(Context p_ctx) {
 		this.ctx = p_ctx;
 		this.bdAcces = new BDAcces(ctx);
-		this.mdb = bdAcces.getMdb();
+
 	}
 
 	/**
 	 * @param p_requete
-	 * @return 1 champ la quete doit etre de type SELECT UNCHAMP FROM UNETABLE [where...]
+	 * @return 1 champ la quete doit etre de type SELECT UNCHAMP FROM UNETABLE
+	 *         [where...]
 	 */
 	public String get1Champ(String p_requete) {
 		bdAcces.open();
@@ -48,7 +47,8 @@ public class RequeteFactory {
 	 */
 	public int getNombreEnregistrement(EnTable p_table) {
 		bdAcces.open();
-		Cursor objCursor = bdAcces.getMdb().query(p_table.getNomTable(), null, null, null, null, null, null);
+		Cursor objCursor = bdAcces.getMdb().query(p_table.getNomTable(), null,
+				null, null, null, null, null);
 		int iNbChamp = objCursor.getCount();
 		objCursor.close();
 		bdAcces.close();
@@ -83,9 +83,26 @@ public class RequeteFactory {
 	 * @param p_whereArgs
 	 * @return le nombre d'enregistrement affecté
 	 */
-	public int majTable(EnTable p_table, ContentValues p_modifiedValue, String p_whereClause, String[] p_whereArgs) {
+	public int majTable(EnTable p_table, ContentValues p_modifiedValue,
+			String p_whereClause, String[] p_whereArgs) {
 		bdAcces.open();
-		int nb = bdAcces.getMdb().update(p_table.getNomTable(), p_modifiedValue, p_whereClause, p_whereArgs);
+		int nb = bdAcces.getMdb().update(p_table.getNomTable(),
+				p_modifiedValue, p_whereClause, p_whereArgs);
+		bdAcces.close();
+		return nb;
+	}
+
+	/**
+	 * @param p_table
+	 * @param p_whereClause
+	 * @param p_whereArgs
+	 * @return le nombre de ligne suprrimée(s)
+	 */
+	public int deleteTable(EnTable p_table, String p_whereClause,
+			String[] p_whereArgs) {
+		bdAcces.open();
+		int nb = bdAcces.getMdb().delete(p_table.getNomTable(), p_whereClause,
+				p_whereArgs);
 		bdAcces.close();
 		return nb;
 	}
