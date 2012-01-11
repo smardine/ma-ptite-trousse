@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import fr.smardine.matroussedemaquillage.R;
 import fr.smardine.matroussedemaquillage.base.BDAcces;
+import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableNotes;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableParams;
 import fr.smardine.matroussedemaquillage.param.tab_param;
 import fr.smardine.matroussedemaquillage.recherche.Recherche;
@@ -286,16 +286,20 @@ public class note_saisie extends Activity implements OnClickListener {
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
 			Titre = txtTitre.getText().toString();
 			Message = editMessage.getText().toString();
-			ContentValues modifiedValues = new ContentValues();
-			modifiedValues.put("Titre", Titre);
-			modifiedValues.put("Message", Message);
-			String whereClause = "id_note=?";
-			String[] whereArgs = { IdNote };
-			objBd.open();
-			int nbCHampModif = objBd.majTable("Notes", modifiedValues,
-					whereClause, whereArgs);
 
-			Log.d("Modif note", ">>nb de champ modifié: " + nbCHampModif);
+			AccesTableNotes accesNote = new AccesTableNotes(this);
+			accesNote.majTitreEtMessage(IdNote, Titre, Message);
+			//
+			// ContentValues modifiedValues = new ContentValues();
+			// modifiedValues.put("Titre", Titre);
+			// modifiedValues.put("Message", Message);
+			// String whereClause = "id_note=?";
+			// String[] whereArgs = { IdNote };
+			// objBd.open();
+			// int nbCHampModif = objBd.majTable("Notes", modifiedValues,
+			// whereClause, whereArgs);
+
+			// Log.d("Modif note", ">>nb de champ modifié: " + nbCHampModif);
 
 			Intent note_page1 = new Intent(this, note_page1.class);
 			note_page1.putExtra(ActivityParam.LaunchFromNoteSaisie, true);

@@ -27,9 +27,12 @@ public class AccesTableParams {
 	public void CorrigeTableParam() {
 		ContentValues modifiedValues = new ContentValues();
 		modifiedValues.put(EnStructParam.DUREE_VIE_PEREMP.getNomChamp(), 30);
-		String whereClause = EnStructParam.DUREE_VIE_PEREMP.getNomChamp() + ">? or " + EnStructParam.DUREE_VIE_PEREMP.getNomChamp() + "<?";
+		String whereClause = EnStructParam.DUREE_VIE_PEREMP.getNomChamp()
+				+ ">? or " + EnStructParam.DUREE_VIE_PEREMP.getNomChamp()
+				+ "<?";
 		String[] whereArgs = new String[] { "" + 99 + "", "" + 0 + "" };
-		requeteFact.majTable(EnTable.PARAM, modifiedValues, whereClause, whereArgs);
+		requeteFact.majTable(EnTable.PARAM, modifiedValues, whereClause,
+				whereArgs);
 	}
 
 	/**
@@ -49,6 +52,24 @@ public class AccesTableParams {
 		values.put("Theme", p_theme.getLib());
 		requeteFact.majTable(EnTable.PARAM, values, "", null);
 
+	}
+
+	/**
+	 * @param p_affiche
+	 */
+	public void majAfficheAlerte(String p_affiche) {
+		ContentValues values = new ContentValues();
+		values.put("AfficheAlerte", p_affiche);
+		requeteFact.majTable(EnTable.PARAM, values, "", null);
+	}
+
+	/**
+	 * @param p_dureeVie
+	 */
+	public void majDureeVie(String p_dureeVie) {
+		ContentValues values = new ContentValues();
+		values.put("DureeViePeremp", p_dureeVie);
+		requeteFact.majTable(EnTable.PARAM, values, "", null);
 	}
 
 }

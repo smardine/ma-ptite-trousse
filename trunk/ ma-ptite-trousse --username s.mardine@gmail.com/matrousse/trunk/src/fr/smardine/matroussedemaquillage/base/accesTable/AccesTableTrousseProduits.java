@@ -11,8 +11,8 @@ import fr.smardine.matroussedemaquillage.base.structure.EnTable;
 import fr.smardine.matroussedemaquillage.factory.RequeteFactory;
 
 /**
- * @author smardine Acces a la table "Trousse produits" Contient les categories Visage, Yeux, Levres et Autres, elle meme divisée en sous
- *         categorie:
+ * @author smardine Acces a la table "Trousse produits" Contient les categories
+ *         Visage, Yeux, Levres et Autres, elle meme divisée en sous categorie:
  *         <ul>
  *         <li>Visage:</li>
  *         <ul>
@@ -60,7 +60,8 @@ public class AccesTableTrousseProduits {
 		String having = "";
 		String orderby = "nom_souscatergorie";
 
-		Cursor objCursor = mdb.query(EnTable.TROUSSE_PRODUIT.getNomTable(), colonne, condition, conditionArgs, groupby, having, orderby);
+		Cursor objCursor = mdb.query(EnTable.TROUSSE_PRODUIT.getNomTable(),
+				colonne, condition, conditionArgs, groupby, having, orderby);
 		int idxNomSousCat = objCursor.getColumnIndex("nom_souscatergorie");
 		int idxIsChecked = objCursor.getColumnIndex("ischecked");
 
@@ -92,15 +93,16 @@ public class AccesTableTrousseProduits {
 		modifiedValues.put("ischecked", "false");
 		String whereClause = "ischecked=?";
 		String[] whereArgs = new String[] { "true" };
-		requeteFact.majTable(EnTable.TROUSSE_PRODUIT, modifiedValues, whereClause, whereArgs);
+		requeteFact.majTable(EnTable.TROUSSE_PRODUIT, modifiedValues,
+				whereClause, whereArgs);
 	}
 
 	public void majSouscatChoisie(String p_sousCat) {
-		String Table1 = "trousse_produits";
-		ContentValues modifiedValues1 = new ContentValues();
-		modifiedValues1.put("ischecked", "true");
-		String whereClause1 = "nom_souscatergorie=?";
-		String[] whereArgs1 = new String[] { p_sousCat };
-		requeteFact.majTable(EnTable.TROUSSE_PRODUIT, modifiedValues1, whereClause1, whereArgs1);
+		ContentValues modifiedValues = new ContentValues();
+		modifiedValues.put("ischecked", "true");
+		String whereClause = "nom_souscatergorie=?";
+		String[] whereArgs = new String[] { p_sousCat };
+		requeteFact.majTable(EnTable.TROUSSE_PRODUIT, modifiedValues,
+				whereClause, whereArgs);
 	}
 }
