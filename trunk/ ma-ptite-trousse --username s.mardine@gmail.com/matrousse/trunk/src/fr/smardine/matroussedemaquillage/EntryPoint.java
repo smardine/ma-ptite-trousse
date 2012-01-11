@@ -41,20 +41,24 @@ public class EntryPoint extends Activity implements ViewFactory {
 	BDAcces objBd;
 	Context ctx = null;
 
-	boolean auMoinsUnProduitPermié = false, auMoinsUnProduitPresquePermié = false;
+	boolean auMoinsUnProduitPermié = false,
+			auMoinsUnProduitPresquePermié = false;
 
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		// ExceptionHandler.register(this, "http://simon.mardine.free.fr/trousse_maquillage/test/server.php","ma_ptite_trousse");
+		// ExceptionHandler.register(this,
+		// "http://simon.mardine.free.fr/trousse_maquillage/test/server.php","ma_ptite_trousse");
 		setContentView(R.layout.entrypoint);
 		this.setTitle("Ma p'tite trousse");
-		// creation du thread qui va rafraichir les valeur de progression et de vitesse
+		// creation du thread qui va rafraichir les valeur de progression et de
+		// vitesse
 		mSwitcher = (ImageSwitcher) findViewById(R.id.ImageSwitcher01);
 		mSwitcher.setFactory(this);
 		ctx = this;
-		isLaunchFromMain = getIntent().getBooleanExtra(ActivityParam.LaunchFromMain, false);
+		isLaunchFromMain = getIntent().getBooleanExtra(
+				ActivityParam.LaunchFromMain, false);
 		if (isLaunchFromMain) {
 			updateUIFermeture();
 			handler.removeCallbacks(updateTimeTaskFermeture);
@@ -87,7 +91,8 @@ public class EntryPoint extends Activity implements ViewFactory {
 
 	private void updateUI() {
 
-		// final ProgressBar Progress = (ProgressBar) findViewById(R.id.ProgressBar01);
+		// final ProgressBar Progress = (ProgressBar)
+		// findViewById(R.id.ProgressBar01);
 		//
 		// // on affecte des valeurs aux composant
 		// Progress.setProgress(total);
@@ -126,7 +131,8 @@ public class EntryPoint extends Activity implements ViewFactory {
 
 	private void updateUIFermeture() {
 
-		// final ProgressBar Progress = (ProgressBar) findViewById(R.id.ProgressBar01);
+		// final ProgressBar Progress = (ProgressBar)
+		// findViewById(R.id.ProgressBar01);
 
 		// on affecte des valeurs aux composant
 		// Progress.setProgress(total);
@@ -162,12 +168,14 @@ public class EntryPoint extends Activity implements ViewFactory {
 		}
 
 		if (total >= 100) {
-			// on a fini tt les traitement avant fermeture => on quitte completement l'appli
+			// on a fini tt les traitement avant fermeture => on quitte
+			// completement l'appli
 			majwidget();
 			finish();
 			onStop();
 			onDestroy();
-			// a faire avant System.exit pour supprimer correctement toute les données presentes en memoire
+			// a faire avant System.exit pour supprimer correctement toute les
+			// données presentes en memoire
 			System.runFinalizersOnExit(true);
 			System.exit(0);
 		}
@@ -175,12 +183,14 @@ public class EntryPoint extends Activity implements ViewFactory {
 	}
 
 	/**
-	 * permet d'afficher une alerte a l'utilisateur si un des produits est perimé ou sur le point de l'etre
+	 * permet d'afficher une alerte a l'utilisateur si un des produits est
+	 * perimé ou sur le point de l'etre
 	 * @param AuMoinsUnProduitPerimé - boolean
 	 * @param AuMoinsUnProduitPresquePermié - boolean
 	 */
 	@SuppressWarnings("rawtypes")
-	public void gotoPrevienUtilisateur(boolean AuMoinsUnProduitPerimé, boolean AuMoinsUnProduitPresquePermié) {
+	public void gotoPrevienUtilisateur(boolean AuMoinsUnProduitPerimé,
+			boolean AuMoinsUnProduitPresquePermié) {
 
 		// objBd.open();
 		String[] champ = { "AfficheAlerte", "DureeViePeremp", "Theme" };
@@ -234,7 +244,8 @@ public class EntryPoint extends Activity implements ViewFactory {
 	}
 
 	/**
-	 * permet de determiner une date a partir d'un dateTime (Long) ainsi qu'un nb de jour (int)
+	 * permet de determiner une date a partir d'un dateTime (Long) ainsi qu'un
+	 * nb de jour (int)
 	 * @param dateEnMilli Long
 	 * @param days int
 	 * @return la nouvelle date
@@ -247,7 +258,8 @@ public class EntryPoint extends Activity implements ViewFactory {
 	}
 
 	/**
-	 * determine au format Long le nb de milliseconde avant la permenption d'un produit
+	 * determine au format Long le nb de milliseconde avant la permenption d'un
+	 * produit
 	 * @param dateAVerif Long
 	 * @return la difference entre la date du jour et la valeur passée en param.
 	 */
@@ -260,19 +272,22 @@ public class EntryPoint extends Activity implements ViewFactory {
 	}
 
 	/**
-	 * permet de determiner une date a partir d'un dateTime (Long) ainsi qu'un nb de jour (int)
+	 * permet de determiner une date a partir d'un dateTime (Long) ainsi qu'un
+	 * nb de jour (int)
 	 * @param days int
 	 * @return la nouvelle date
 	 */
 	public static Date getDateBeforeDays(int days) {
-		long backDateMS = System.currentTimeMillis() - ((long) days) * 24 * 60 * 60 * 1000;
+		long backDateMS = System.currentTimeMillis() - ((long) days) * 24 * 60
+				* 60 * 1000;
 		Date backDate = new Date();
 		backDate.setTime(backDateMS);
 		return backDate;
 	}
 
 	/**
-	 * Exécuté que l'activité arrêtée via un "stop" redémarre. La fonction onRestart() est suivie de la fonction onStart().
+	 * Exécuté que l'activité arrêtée via un "stop" redémarre. La fonction
+	 * onRestart() est suivie de la fonction onStart().
 	 */
 	@Override
 	protected void onRestart() {
@@ -281,7 +296,8 @@ public class EntryPoint extends Activity implements ViewFactory {
 	}
 
 	/**
-	 * Exécuté lorsque l'activité devient visible à l'utilisateur. La fonction onStart() est suivie de la fonction onResume().
+	 * Exécuté lorsque l'activité devient visible à l'utilisateur. La fonction
+	 * onStart() est suivie de la fonction onResume().
 	 */
 
 	@Override
@@ -293,8 +309,10 @@ public class EntryPoint extends Activity implements ViewFactory {
 	}
 
 	/**
-	 * Exécutée a chaque passage en premier plan de l'activité. Ou bien, si l'activité passe à nouveau en premier (si une autre activité
-	 * était passé en premier plan entre temps). La fonction onResume() est suivie de l'exécution de l'activité.
+	 * Exécutée a chaque passage en premier plan de l'activité. Ou bien, si
+	 * l'activité passe à nouveau en premier (si une autre activité était passé
+	 * en premier plan entre temps). La fonction onResume() est suivie de
+	 * l'exécution de l'activité.
 	 */
 
 	@SuppressWarnings({ "unchecked", "unused" })
@@ -315,7 +333,8 @@ public class EntryPoint extends Activity implements ViewFactory {
 	}
 
 	@SuppressWarnings({ "rawtypes" })
-	private void CalculDatePeremtionEtMajDansBase(String dateAchat1, String dureeVie, String idProduit) throws Exception {
+	private void CalculDatePeremtionEtMajDansBase(String dateAchat1,
+			String dureeVie, String idProduit) throws Exception {
 		dureeVie = dureeVie.replace("[", "").replace("]", "");
 
 		try {
@@ -324,7 +343,8 @@ public class EntryPoint extends Activity implements ViewFactory {
 			String[] champ = { "AfficheAlerte", "DureeViePeremp", "Theme" };
 			ArrayList[] Param = objBd.renvoi_param(champ);
 			objBd.close();
-			int NbDeJourAvantPeremp = Integer.parseInt(Param[1].get(0).toString().replace("[", "").replace("]", ""));
+			int NbDeJourAvantPeremp = Integer.parseInt(Param[1].get(0)
+					.toString().replace("[", "").replace("]", ""));
 
 			boolean isPerime = DateHelper.isProduitPerime(dateAchat1, dureeVie);
 			String perime;
@@ -334,8 +354,10 @@ public class EntryPoint extends Activity implements ViewFactory {
 			} else {
 				perime = "false";
 			}
-			Date datePeremp = DateHelper.getDatePeremption(dateAchat1, dureeVie);
-			boolean isPresquePerime = DateHelper.isProduitPresquePerime(dateAchat1, dureeVie, NbDeJourAvantPeremp);
+			Date datePeremp = DateHelper
+					.getDatePeremption(dateAchat1, dureeVie);
+			boolean isPresquePerime = DateHelper.isProduitPresquePerime(
+					dateAchat1, dureeVie, NbDeJourAvantPeremp);
 			String presqueperime;
 			if (isPresquePerime) {
 				presqueperime = "true";
@@ -344,12 +366,20 @@ public class EntryPoint extends Activity implements ViewFactory {
 				presqueperime = "false";
 			}
 			// int nbJours = DureeVie * NbDeJourAvantPeremp;
-			// Date DatePeremption1 = getDateAfterDays(DateAchatEnMilli, nbJours);// on calcule la date de permetpion en fonction de la date
+			// Date DatePeremption1 = getDateAfterDays(DateAchatEnMilli,
+			// nbJours);// on calcule la date de permetpion en fonction de la
+			// date
 			// // d'achat+nb de jour donné par l'utilisateur
 			DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-			String Date_Peremption = dateFormat.format(datePeremp);// date de peremtion au format jj/mm/aaaa
+			String Date_Peremption = dateFormat.format(datePeremp);// date de
+																	// peremtion
+																	// au format
+																	// jj/mm/aaaa
 
-			long DatePeremtInMilli = datePeremp.getTime(); // on converti la date de permeption en milliseconde
+			long DatePeremtInMilli = datePeremp.getTime(); // on converti la
+															// date de
+															// permeption en
+															// milliseconde
 			// String Table11 = "produit_Enregistre";
 			// ContentValues modifiedValues11 = new ContentValues();
 			// modifiedValues11.put("Date_Peremption", Date_Peremption);
@@ -359,11 +389,15 @@ public class EntryPoint extends Activity implements ViewFactory {
 			// String whereClause11 = "id_produits=?";
 			// String[] whereArgs11 = new String[] { "" + idProduit + "" };
 
-			AccesTableProduitEnregistre accesProduit = new AccesTableProduitEnregistre(ctx);
-			accesProduit.majDatepremeption(Integer.parseInt(idProduit), Date_Peremption, DatePeremtInMilli, perime, presqueperime);
+			AccesTableProduitEnregistre accesProduit = new AccesTableProduitEnregistre(
+					ctx);
+			accesProduit.majDatepremeption(Integer.parseInt(idProduit),
+					Date_Peremption, DatePeremtInMilli, perime, presqueperime);
 			// objBd.open();
-			// // int nbLigneModifiée1 = objBd.majTable(Table11, modifiedValues11, whereClause11, whereArgs11);
-			// objBd.majTable(Table11, modifiedValues11, whereClause11, whereArgs11);
+			// // int nbLigneModifiée1 = objBd.majTable(Table11,
+			// modifiedValues11, whereClause11, whereArgs11);
+			// objBd.majTable(Table11, modifiedValues11, whereClause11,
+			// whereArgs11);
 			// objBd.close();
 			// String Message="nb de ligne modifiée:"+nbLigneModifiée1;
 		} catch (Exception e) {
@@ -374,19 +408,23 @@ public class EntryPoint extends Activity implements ViewFactory {
 	}
 
 	/**
-	 * suite a un bug => correction des champs en base pour enlever les caractere "[" et "]"
+	 * suite a un bug => correction des champs en base pour enlever les
+	 * caractere "[" et "]"
 	 * @param IdProduit String => necessaire a la mise a jour de la table
 	 * @return 1 si la ligne a été modifiée, 0 si rien n'a été fait.
 	 * @throws Exception
 	 */
 	@SuppressWarnings("rawtypes")
-	public void verifErreurEnregistrementDsBase(String IdProduit) throws Exception {
+	public void verifErreurEnregistrementDsBase(String IdProduit)
+			throws Exception {
 
-		AccesTableProduitEnregistre accesProduit = new AccesTableProduitEnregistre(ctx);
+		AccesTableProduitEnregistre accesProduit = new AccesTableProduitEnregistre(
+				ctx);
 		accesProduit.CorrigeProduitsEnregistre(Integer.parseInt(IdProduit));
 
 		// objBd.open();
-		// int nbdechamp = objBd.majTable(Table, modifiedValues, whereClause, whereArgs);
+		// int nbdechamp = objBd.majTable(Table, modifiedValues, whereClause,
+		// whereArgs);
 		// // objBd.close();
 		//
 		// return nbdechamp;
@@ -394,8 +432,9 @@ public class EntryPoint extends Activity implements ViewFactory {
 	}
 
 	/**
-	 * Suite a un bug, l'utilisateur pouvait rentrer un chiffre aberent, => ca faisait planter l'appli car on attend un "int" dans ce champ.
-	 * Maintenant si la valeur est superieure à 99 ou inferieur à 0 => on met 30 jours.
+	 * Suite a un bug, l'utilisateur pouvait rentrer un chiffre aberent, => ca
+	 * faisait planter l'appli car on attend un "int" dans ce champ. Maintenant
+	 * si la valeur est superieure à 99 ou inferieur à 0 => on met 30 jours.
 	 */
 	public void CorrectionTableparam() {
 		AccesTableParams accesParam = new AccesTableParams(ctx);
@@ -425,9 +464,11 @@ public class EntryPoint extends Activity implements ViewFactory {
 	}
 
 	/**
-	 * La fonction onStop() est exécutée : - lorsque l'activité n'est plus en premier plan - ou bien lorsque l'activité va être détruite
-	 * Cette fonction est suivie : - de la fonction onRestart() si l'activité passe à nouveau en premier plan - de la fonction onDestroy()
-	 * lorsque l'activité se termine ou bien lorsque le système décide de l'arrêter
+	 * La fonction onStop() est exécutée : - lorsque l'activité n'est plus en
+	 * premier plan - ou bien lorsque l'activité va être détruite Cette fonction
+	 * est suivie : - de la fonction onRestart() si l'activité passe à nouveau
+	 * en premier plan - de la fonction onDestroy() lorsque l'activité se
+	 * termine ou bien lorsque le système décide de l'arrêter
 	 */
 	@Override
 	protected void onStop() {
@@ -443,9 +484,11 @@ public class EntryPoint extends Activity implements ViewFactory {
 	}
 
 	/**
-	 * La fonction onPause() est suivie : - d'un onResume() si l'activité passe à nouveau en premier plan - d'un onStop() si elle devient
-	 * invisible à l'utilisateur L'exécution de la fonction onPause() doit être rapide, car la prochaine activité ne démarrera pas tant que
-	 * l'exécution de la fonction onPause() n'est pas terminée.
+	 * La fonction onPause() est suivie : - d'un onResume() si l'activité passe
+	 * à nouveau en premier plan - d'un onStop() si elle devient invisible à
+	 * l'utilisateur L'exécution de la fonction onPause() doit être rapide, car
+	 * la prochaine activité ne démarrera pas tant que l'exécution de la
+	 * fonction onPause() n'est pas terminée.
 	 */
 	@Override
 	protected void onPause() {
@@ -491,43 +534,53 @@ public class EntryPoint extends Activity implements ViewFactory {
 
 		@Override
 		protected Object doInBackground(Object... p_arg0) {
-			// objBd = new BDAcces(ctx);
+			objBd = new BDAcces(ctx);
 			// objBd.open();
-			AccesTableProduitEnregistre accesProduits = new AccesTableProduitEnregistre(ctx);
+			AccesTableProduitEnregistre accesProduits = new AccesTableProduitEnregistre(
+					ctx);
 			int nbDenregistrement = accesProduits.getNbEnregistrement();
-			// int nbDenregistrement = objBd.renvoi_nbChamp("produit_Enregistre");
+			// int nbDenregistrement =
+			// objBd.renvoi_nbChamp("produit_Enregistre");
 			// objBd.close();
 
-			// Correction de parametres si l'utilisateur a mis n'importe quoi comme valeur.
+			// Correction de parametres si l'utilisateur a mis n'importe quoi
+			// comme valeur.
 			CorrectionTableparam();
 
 			if (nbDenregistrement > 0) {
-				String[] colonne = new String[] { "Date_Peremption_milli", "id_produits", "DateAchat", "Duree_Vie" };
+				String[] colonne = new String[] { "Date_Peremption_milli",
+						"id_produits", "DateAchat", "Duree_Vie" };
 				objBd.open();
 
 				ArrayList[] datePerem = objBd.VerifAuDemarrage(colonne, "", "");
 				// objBd.close();
-				// / dans le cas ou il y a des caracteres bizarre dans un des champs => correction
+				// / dans le cas ou il y a des caracteres bizarre dans un des
+				// champs => correction
 
 				// int nbdeDateEnregistré = datePerem[0].size();
 				// long DateAVerif;
-				// on commence par recalculer la date de permeption suite au bug de calcul lors de l'entrée du produit:
+				// on commence par recalculer la date de permeption suite au bug
+				// de calcul lors de l'entrée du produit:
 				for (int j = 0; j < nbDenregistrement; j++) {
 					if (j > 0) {
 						total = (100 * j) / nbDenregistrement;
 						// total = total / 2;
 
 					}
-					String s_idProduit = datePerem[1].get(j).toString().replace("[", "").replace("]", "");
+					String s_idProduit = datePerem[1].get(j).toString()
+							.replace("[", "").replace("]", "");
 
 					// //////////////////////////////////
 					// Correction des champs en base ////
 					// //////////////////////////////////
 					try {
-						/* int nbEnregistrementCorrigé = */verifErreurEnregistrementDsBase(datePerem[1].get(j).toString());
+						/* int nbEnregistrementCorrigé = */verifErreurEnregistrementDsBase(datePerem[1]
+								.get(j).toString());
 					} catch (Exception e1) {
 
-						System.out.println("erreur dans verifEnregistrement ds base " + e1.getMessage());
+						System.out
+								.println("erreur dans verifEnregistrement ds base "
+										+ e1.getMessage());
 					}
 
 					// //////////////////////////////////////////
@@ -537,18 +590,22 @@ public class EntryPoint extends Activity implements ViewFactory {
 					String DureeVie = datePerem[3].get(j).toString();
 
 					try {
-						CalculDatePeremtionEtMajDansBase(DateAchat1, DureeVie, s_idProduit);
+						CalculDatePeremtionEtMajDansBase(DateAchat1, DureeVie,
+								s_idProduit);
 					} catch (Exception e) {
 
-						System.out.println("erreur dans calculDatepermp " + e.getMessage());// e.printStackTrace();
+						System.out.println("erreur dans calculDatepermp "
+								+ e.getMessage());// e.printStackTrace();
 					}
 
 				}
 
 			}
 
-			if (auMoinsUnProduitPermié == true || auMoinsUnProduitPresquePermié == true) {
-				gotoPrevienUtilisateur(auMoinsUnProduitPermié, auMoinsUnProduitPresquePermié);
+			if (auMoinsUnProduitPermié == true
+					|| auMoinsUnProduitPresquePermié == true) {
+				gotoPrevienUtilisateur(auMoinsUnProduitPermié,
+						auMoinsUnProduitPresquePermié);
 			} else {
 				gotoLancePageMain();
 
@@ -559,15 +616,18 @@ public class EntryPoint extends Activity implements ViewFactory {
 
 	}
 
-	private final Integer[] mImageIds = { R.drawable.eclair01, R.drawable.eclair02, R.drawable.eclair03, R.drawable.eclair04,
-			R.drawable.eclair05, R.drawable.eclair06, R.drawable.eclair07, R.drawable.eclair08, R.drawable.eclair09 };
+	private final Integer[] mImageIds = { R.drawable.eclair01,
+			R.drawable.eclair02, R.drawable.eclair03, R.drawable.eclair04,
+			R.drawable.eclair05, R.drawable.eclair06, R.drawable.eclair07,
+			R.drawable.eclair08, R.drawable.eclair09 };
 
 	@Override
 	public View makeView() {
 		ImageView i = new ImageView(this);
 		i.setBackgroundColor(0xFF000000);
 		i.setScaleType(ImageView.ScaleType.FIT_CENTER);
-		i.setLayoutParams(new ImageSwitcher.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
+		i.setLayoutParams(new ImageSwitcher.LayoutParams(
+				LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
 		return i;
 	}
 
@@ -597,7 +657,8 @@ public class EntryPoint extends Activity implements ViewFactory {
 			System.out.println(e);
 		}
 
-		// si une base appellée "trousse_baseé existe, la supprimer, ca correspond a l'ancien format de sauvegarde
+		// si une base appellée "trousse_baseé existe, la supprimer, ca
+		// correspond a l'ancien format de sauvegarde
 
 		File f = new File(PATH + "trousse_base");
 		if (f.exists()) {
@@ -643,7 +704,8 @@ public class EntryPoint extends Activity implements ViewFactory {
 			System.out.println(e);
 		}
 
-		File fichierSurCarteSD = new File(PATH + "trousse_base" + sYear + sMonth + sDay);
+		File fichierSurCarteSD = new File(PATH + "trousse_base" + sYear
+				+ sMonth + sDay);
 
 		result = ManipFichier.copier(baseDansTel, fichierSurCarteSD);
 
@@ -655,7 +717,8 @@ public class EntryPoint extends Activity implements ViewFactory {
 			System.out.println(e);
 		}
 
-		// si la sauvegarde s'est bien passée, on verifie que l'on a pas + de 10 sauvegarde, sinon, on suppr la + ancienne.
+		// si la sauvegarde s'est bien passée, on verifie que l'on a pas + de 10
+		// sauvegarde, sinon, on suppr la + ancienne.
 		if (result) {
 			Comptage compte = new Comptage(PATH);
 			int nbFichier = compte.getNbFichier();
