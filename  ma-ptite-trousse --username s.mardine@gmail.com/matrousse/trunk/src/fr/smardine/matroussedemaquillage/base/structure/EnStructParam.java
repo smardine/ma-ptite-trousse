@@ -5,13 +5,14 @@ package fr.smardine.matroussedemaquillage.base.structure;
  */
 public enum EnStructParam implements StructureTable {
 	/**
-	 * Doit on afficher l'alerte de peremption au demarrage, prend "ture" ou "false"
+	 * Doit on afficher l'alerte de peremption au demarrage, prend "ture" ou
+	 * "false"
 	 */
 	AFFICHE_ALERTE("AfficheAletre", String.class, 255), //
 	/**
 	 * le nb de jour a partir duquel un produit est considere comme perime
 	 */
-	DUREE_VIE_PEREMP("DureeViePremp", Integer.class, null), //
+	DUREE_VIE_PEREMP("DureeViePeremp", Integer.class, null), //
 	/**
 	 * le nom du theme choisi
 	 */
