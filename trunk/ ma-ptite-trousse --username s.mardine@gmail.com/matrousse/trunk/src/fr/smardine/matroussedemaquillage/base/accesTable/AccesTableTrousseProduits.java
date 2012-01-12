@@ -1,14 +1,13 @@
 package fr.smardine.matroussedemaquillage.base.accesTable;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import fr.smardine.matroussedemaquillage.base.BDAcces;
+import fr.smardine.matroussedemaquillage.base.RequeteFactory;
+import fr.smardine.matroussedemaquillage.base.structure.EnStructProduits;
 import fr.smardine.matroussedemaquillage.base.structure.EnTable;
-import fr.smardine.matroussedemaquillage.factory.RequeteFactory;
 
 /**
  * @author smardine Acces a la table "Trousse produits" Contient les categories
@@ -34,8 +33,6 @@ import fr.smardine.matroussedemaquillage.factory.RequeteFactory;
 public class AccesTableTrousseProduits {
 
 	private final Context ctx;
-	private final BDAcces bd;
-	private final SQLiteDatabase mdb;
 	private final RequeteFactory requeteFact;
 
 	/**
@@ -43,8 +40,6 @@ public class AccesTableTrousseProduits {
 	 */
 	public AccesTableTrousseProduits(Context p_ctx) {
 		this.ctx = p_ctx;
-		bd = new BDAcces(ctx);
-		mdb = bd.getMdb();
 		requeteFact = new RequeteFactory(p_ctx);
 	}
 
@@ -53,41 +48,53 @@ public class AccesTableTrousseProduits {
 	 * @return un tableau de liste de String
 	 */
 	public ArrayList<String>[] renvoi_liste_produits(String Catégorie) {
-		String[] colonne = new String[] { "nom_souscatergorie", "ischecked" };
-		String condition = "nom_categorie='" + Catégorie + "'";
-		String[] conditionArgs = null;
-		String groupby = "";
-		String having = "";
-		String orderby = "nom_souscatergorie";
+		String requete = "SELECT " + EnStructProduits.NOM_SOUSCAT.getNomChamp()
+				+ ", " + EnStructProduits.ISCHECKED.getNomChamp() + " FROM "
+				+ EnTable.TROUSSE_PRODUIT.getNomTable() + " WHERE "
+				+ EnStructProduits.NOM_CAT.getNomChamp() + "='" + Catégorie
+				+ "' ORDER BY " + EnStructProduits.NOM_SOUSCAT.getNomChamp();
 
-		Cursor objCursor = mdb.query(EnTable.TROUSSE_PRODUIT.getNomTable(),
-				colonne, condition, conditionArgs, groupby, having, orderby);
-		int idxNomSousCat = objCursor.getColumnIndex("nom_souscatergorie");
-		int idxIsChecked = objCursor.getColumnIndex("ischecked");
+		List<ArrayList<String>> retour = requeteFact.getListeDeChamp(requete);
 
-		ArrayList<String> aTableRetourNom = new ArrayList<String>();
-		ArrayList<String> aTableRetourisChecked = new ArrayList<String>();
-
-		objCursor.moveToFirst();
-		@SuppressWarnings("unchecked")
+		// String[] colonne = new String[] { "nom_souscatergorie", "ischecked"
+		// };
+		// String condition = "nom_categorie='" + Catégorie + "'";
+		// String[] conditionArgs = null;
+		// String groupby = "";
+		// String having = "";
+		// String orderby = "nom_souscatergorie";
+		//
+		// Cursor objCursor = mdb.query(EnTable.TROUSSE_PRODUIT.getNomTable(),
+		// colonne, condition, conditionArgs, groupby, having, orderby);
+		// int idxNomSousCat = objCursor.getColumnIndex("nom_souscatergorie");
+		// int idxIsChecked = objCursor.getColumnIndex("ischecked");
+		//
+		// ArrayList<String> aTableRetourNom = new ArrayList<String>();
+		// ArrayList<String> aTableRetourisChecked = new ArrayList<String>();
+		//
+		// objCursor.moveToFirst();
+		// @SuppressWarnings("unchecked")
 		ArrayList<String>[] aTableRetour = new ArrayList[25];
 
 		/* Check if our result was valid. */
-		if (objCursor != null) {
-			for (int i = 0; i < objCursor.getCount(); i++) {
-				String resultnom_produits = objCursor.getString(idxNomSousCat);
-				String resultischecked = objCursor.getString(idxIsChecked);
-				aTableRetourNom.add(resultnom_produits);
-				aTableRetourisChecked.add(resultischecked);
-				objCursor.moveToNext();
-			}
-		}
-		objCursor.close();
-		aTableRetour[0] = aTableRetourNom;
-		aTableRetour[1] = aTableRetourisChecked;
+		// if (objCursor != null) {
+		// for (int i = 0; i < objCursor.getCount(); i++) {
+		// String resultnom_produits = objCursor.getString(idxNomSousCat);
+		// String resultischecked = objCursor.getString(idxIsChecked);
+		// aTableRetourNom.add(resultnom_produits);
+		// aTableRetourisChecked.add(resultischecked);
+		// objCursor.moveToNext();
+		// }
+		// }
+		// objCursor.close();
+		// aTableRetour[0] = aTableRetourNom;
+		// aTableRetour[1] = aTableRetourisChecked;
 		return aTableRetour;
 	}
 
+	/**
+	 * 
+	 */
 	public void reinitProduitChoisi() {
 		ContentValues modifiedValues = new ContentValues();
 		modifiedValues.put("ischecked", "false");
@@ -97,6 +104,9 @@ public class AccesTableTrousseProduits {
 				whereClause, whereArgs);
 	}
 
+	/**
+	 * @param p_sousCat
+	 */
 	public void majSouscatChoisie(String p_sousCat) {
 		ContentValues modifiedValues = new ContentValues();
 		modifiedValues.put("ischecked", "true");

@@ -3,7 +3,7 @@ package fr.smardine.matroussedemaquillage.variableglobale;
 /**
  * @author smardine
  */
-public enum EnCategorieAutres {
+public enum EnCategorieAutres implements EnCategorie {
 	Pinceaux(0, "Pinceaux"), //
 	VernisAongles(1, "Vernis à ongles");
 

@@ -24,6 +24,8 @@ import android.widget.ViewSwitcher.ViewFactory;
 import fr.smardine.matroussedemaquillage.base.BDAcces;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableParams;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableProduitEnregistre;
+import fr.smardine.matroussedemaquillage.mdl.MlListeProduits;
+import fr.smardine.matroussedemaquillage.mdl.MlProduit;
 import fr.smardine.matroussedemaquillage.variableglobale.ActivityParam;
 
 /**
@@ -332,21 +334,15 @@ public class EntryPoint extends Activity implements ViewFactory {
 
 	}
 
-	@SuppressWarnings({ "rawtypes" })
-	private void CalculDatePeremtionEtMajDansBase(String dateAchat1,
-			String dureeVie, String idProduit) throws Exception {
-		dureeVie = dureeVie.replace("[", "").replace("]", "");
+	private void CalculDatePeremtionEtMajDansBase(Date dateAchat1,
+			int p_dureeVie, int p_idProduit) {
 
 		try {
+			AccesTableParams accesParams = new AccesTableParams(ctx);
+			int NbDeJourAvantPeremp = accesParams.getDureeViePeremption();
 
-			objBd.open();
-			String[] champ = { "AfficheAlerte", "DureeViePeremp", "Theme" };
-			ArrayList[] Param = objBd.renvoi_param(champ);
-			objBd.close();
-			int NbDeJourAvantPeremp = Integer.parseInt(Param[1].get(0)
-					.toString().replace("[", "").replace("]", ""));
-
-			boolean isPerime = DateHelper.isProduitPerime(dateAchat1, dureeVie);
+			boolean isPerime = DateHelper.isProduitPerime(dateAchat1,
+					p_dureeVie);
 			String perime;
 			if (isPerime) {
 				perime = "true";
@@ -354,10 +350,10 @@ public class EntryPoint extends Activity implements ViewFactory {
 			} else {
 				perime = "false";
 			}
-			Date datePeremp = DateHelper
-					.getDatePeremption(dateAchat1, dureeVie);
+			Date datePeremp = DateHelper.getDatePeremption(dateAchat1,
+					p_dureeVie);
 			boolean isPresquePerime = DateHelper.isProduitPresquePerime(
-					dateAchat1, dureeVie, NbDeJourAvantPeremp);
+					dateAchat1, p_dureeVie, NbDeJourAvantPeremp);
 			String presqueperime;
 			if (isPresquePerime) {
 				presqueperime = "true";
@@ -365,11 +361,8 @@ public class EntryPoint extends Activity implements ViewFactory {
 			} else {
 				presqueperime = "false";
 			}
-			// int nbJours = DureeVie * NbDeJourAvantPeremp;
-			// Date DatePeremption1 = getDateAfterDays(DateAchatEnMilli,
-			// nbJours);// on calcule la date de permetpion en fonction de la
-			// date
-			// // d'achat+nb de jour donné par l'utilisateur
+			// on calcule la date de permetpion en fonction de la
+			// date d'achat+nb de jour donné par l'utilisateur
 			DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 			String Date_Peremption = dateFormat.format(datePeremp);// date de
 																	// peremtion
@@ -380,26 +373,12 @@ public class EntryPoint extends Activity implements ViewFactory {
 															// date de
 															// permeption en
 															// milliseconde
-			// String Table11 = "produit_Enregistre";
-			// ContentValues modifiedValues11 = new ContentValues();
-			// modifiedValues11.put("Date_Peremption", Date_Peremption);
-			// modifiedValues11.put("Date_Peremption_milli", DatePeremtInMilli);
-			// modifiedValues11.put("IS_PERIME", perime);
-			// modifiedValues11.put("IS_PRESQUE_PERIME", presqueperime);
-			// String whereClause11 = "id_produits=?";
-			// String[] whereArgs11 = new String[] { "" + idProduit + "" };
 
 			AccesTableProduitEnregistre accesProduit = new AccesTableProduitEnregistre(
 					ctx);
-			accesProduit.majDatepremeption(Integer.parseInt(idProduit),
-					Date_Peremption, DatePeremtInMilli, perime, presqueperime);
-			// objBd.open();
-			// // int nbLigneModifiée1 = objBd.majTable(Table11,
-			// modifiedValues11, whereClause11, whereArgs11);
-			// objBd.majTable(Table11, modifiedValues11, whereClause11,
-			// whereArgs11);
-			// objBd.close();
-			// String Message="nb de ligne modifiée:"+nbLigneModifiée1;
+			accesProduit.majDatepremeption(p_idProduit, Date_Peremption,
+					DatePeremtInMilli, perime, presqueperime);
+
 		} catch (Exception e) {
 			System.out.println("erreur calcul date peremp " + e.getMessage());
 			return;
@@ -410,24 +389,14 @@ public class EntryPoint extends Activity implements ViewFactory {
 	/**
 	 * suite a un bug => correction des champs en base pour enlever les
 	 * caractere "[" et "]"
-	 * @param IdProduit String => necessaire a la mise a jour de la table
-	 * @return 1 si la ligne a été modifiée, 0 si rien n'a été fait.
-	 * @throws Exception
+	 * @param p_idProduit int => necessaire a la mise a jour de la table
 	 */
-	@SuppressWarnings("rawtypes")
-	public void verifErreurEnregistrementDsBase(String IdProduit)
-			throws Exception {
+
+	public void verifErreurEnregistrementDsBase(int p_idProduit) {
 
 		AccesTableProduitEnregistre accesProduit = new AccesTableProduitEnregistre(
 				ctx);
-		accesProduit.CorrigeProduitsEnregistre(Integer.parseInt(IdProduit));
-
-		// objBd.open();
-		// int nbdechamp = objBd.majTable(Table, modifiedValues, whereClause,
-		// whereArgs);
-		// // objBd.close();
-		//
-		// return nbdechamp;
+		accesProduit.CorrigeProduitsEnregistre(p_idProduit);
 
 	}
 
@@ -439,7 +408,6 @@ public class EntryPoint extends Activity implements ViewFactory {
 	public void CorrectionTableparam() {
 		AccesTableParams accesParam = new AccesTableParams(ctx);
 		accesParam.CorrigeTableParam();
-
 	}
 
 	/**
@@ -478,8 +446,6 @@ public class EntryPoint extends Activity implements ViewFactory {
 		} else {
 			handler.removeCallbacks(updateTimeTask);
 		}
-
-		objBd.close();
 
 	}
 
@@ -548,58 +514,68 @@ public class EntryPoint extends Activity implements ViewFactory {
 			CorrectionTableparam();
 
 			if (nbDenregistrement > 0) {
-				String[] colonne = new String[] { "Date_Peremption_milli",
-						"id_produits", "DateAchat", "Duree_Vie" };
-				objBd.open();
-
-				ArrayList[] datePerem = objBd.VerifAuDemarrage(colonne, "", "");
+				MlListeProduits lstProds = accesProduits.getListeProduits();
+				// String[] colonne = new String[] { "Date_Peremption_milli",
+				// "id_produits", "DateAchat", "Duree_Vie" };
+				// objBd.open();
+				//
+				// ArrayList[] datePerem = objBd.VerifAuDemarrage(colonne, "",
+				// "");
 				// objBd.close();
 				// / dans le cas ou il y a des caracteres bizarre dans un des
 				// champs => correction
-
+				int count = 0;
+				for (MlProduit p : lstProds) {
+					count++;
+					total = (100 * count) / nbDenregistrement;
+					verifErreurEnregistrementDsBase(p.getIdProduit());
+					CalculDatePeremtionEtMajDansBase(p.getDateAchat(),
+							p.getDureeVie(), p.getIdProduit());
+				}
 				// int nbdeDateEnregistré = datePerem[0].size();
 				// long DateAVerif;
 				// on commence par recalculer la date de permeption suite au bug
 				// de calcul lors de l'entrée du produit:
-				for (int j = 0; j < nbDenregistrement; j++) {
-					if (j > 0) {
-						total = (100 * j) / nbDenregistrement;
-						// total = total / 2;
-
-					}
-					String s_idProduit = datePerem[1].get(j).toString()
-							.replace("[", "").replace("]", "");
-
-					// //////////////////////////////////
-					// Correction des champs en base ////
-					// //////////////////////////////////
-					try {
-						/* int nbEnregistrementCorrigé = */verifErreurEnregistrementDsBase(datePerem[1]
-								.get(j).toString());
-					} catch (Exception e1) {
-
-						System.out
-								.println("erreur dans verifEnregistrement ds base "
-										+ e1.getMessage());
-					}
-
-					// //////////////////////////////////////////
-					// ///////RECALCUL DES DATES DE PEREMTION ///
-					// //////////////////////////////////////////
-					String DateAchat1 = datePerem[2].get(j).toString();
-					String DureeVie = datePerem[3].get(j).toString();
-
-					try {
-						CalculDatePeremtionEtMajDansBase(DateAchat1, DureeVie,
-								s_idProduit);
-					} catch (Exception e) {
-
-						System.out.println("erreur dans calculDatepermp "
-								+ e.getMessage());// e.printStackTrace();
-					}
-
-				}
-
+				// for (int j = 0; j < nbDenregistrement; j++) {
+				// if (j > 0) {
+				// total = (100 * j) / nbDenregistrement;
+				// // total = total / 2;
+				//
+				// }
+				// String s_idProduit = datePerem[1].get(j).toString()
+				// .replace("[", "").replace("]", "");
+				//
+				// // //////////////////////////////////
+				// // Correction des champs en base ////
+				// // //////////////////////////////////
+				// try {
+				// /* int nbEnregistrementCorrigé =
+				// */verifErreurEnregistrementDsBase(datePerem[1]
+				// .get(j).toString());
+				// } catch (Exception e1) {
+				//
+				// System.out
+				// .println("erreur dans verifEnregistrement ds base "
+				// + e1.getMessage());
+				// }
+				//
+				// // //////////////////////////////////////////
+				// // ///////RECALCUL DES DATES DE PEREMTION ///
+				// // //////////////////////////////////////////
+				// String DateAchat1 = datePerem[2].get(j).toString();
+				// String DureeVie = datePerem[3].get(j).toString();
+				//
+				// try {
+				// CalculDatePeremtionEtMajDansBase(DateAchat1, DureeVie,
+				// s_idProduit);
+				// } catch (Exception e) {
+				//
+				// System.out.println("erreur dans calculDatepermp "
+				// + e.getMessage());// e.printStackTrace();
+				// }
+				//
+				// }
+				//
 			}
 
 			if (auMoinsUnProduitPermié == true
@@ -641,7 +617,7 @@ public class EntryPoint extends Activity implements ViewFactory {
 			System.out.println(e);
 		}
 		objBd = new BDAcces(p_ctx);
-		objBd.close();
+		// objBd.close();
 		String cheminBase = objBd.getPath();
 		File baseDansTel = new File(cheminBase);
 		String PATH = "/sdcard/ma_trousse/";

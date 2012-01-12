@@ -1,6 +1,6 @@
 package fr.smardine.matroussedemaquillage.variableglobale;
 
-public enum EnCategorieLevre {
+public enum EnCategorieLevre implements EnCategorie {
 	Crayons_contour(0, "Crayons contour"), RougesAlevres(1, "Rouges à lèvres");
 
 	private int code;

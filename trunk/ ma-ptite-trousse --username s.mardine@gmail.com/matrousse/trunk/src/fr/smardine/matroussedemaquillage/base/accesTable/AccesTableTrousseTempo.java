@@ -1,8 +1,8 @@
 package fr.smardine.matroussedemaquillage.base.accesTable;
 
 import android.content.Context;
+import fr.smardine.matroussedemaquillage.base.RequeteFactory;
 import fr.smardine.matroussedemaquillage.base.structure.EnTable;
-import fr.smardine.matroussedemaquillage.factory.RequeteFactory;
 
 /**
  * @author smardine Acces a la table des Produit temporaires

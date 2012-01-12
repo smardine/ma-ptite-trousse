@@ -2,9 +2,9 @@ package fr.smardine.matroussedemaquillage.base.accesTable;
 
 import android.content.ContentValues;
 import android.content.Context;
+import fr.smardine.matroussedemaquillage.base.RequeteFactory;
 import fr.smardine.matroussedemaquillage.base.structure.EnStructParam;
 import fr.smardine.matroussedemaquillage.base.structure.EnTable;
-import fr.smardine.matroussedemaquillage.factory.RequeteFactory;
 import fr.smardine.matroussedemaquillage.variableglobale.EnTheme;
 
 /**
@@ -33,6 +33,19 @@ public class AccesTableParams {
 		String[] whereArgs = new String[] { "" + 99 + "", "" + 0 + "" };
 		requeteFact.majTable(EnTable.PARAM, modifiedValues, whereClause,
 				whereArgs);
+	}
+
+	/**
+	 * @return le nb de jour avant de prevenir l'utilisateur qu'un produit va
+	 *         etre perimé
+	 */
+	public int getDureeViePeremption() {
+		String requete = "SELECT "
+				+ EnStructParam.DUREE_VIE_PEREMP.getNomChamp() + " FROM "
+				+ EnTable.PARAM.getNomTable();
+
+		return Integer.parseInt(requeteFact.get1Champ(requete));
+
 	}
 
 	/**

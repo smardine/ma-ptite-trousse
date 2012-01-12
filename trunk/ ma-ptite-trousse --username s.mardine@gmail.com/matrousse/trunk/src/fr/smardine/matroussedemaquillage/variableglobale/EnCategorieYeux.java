@@ -1,7 +1,7 @@
 package fr.smardine.matroussedemaquillage.variableglobale;
 
-public enum EnCategorieYeux {
-	Bases(0, "Bases"),//
+public enum EnCategorieYeux implements EnCategorie {
+	Bases(0, "Bases"), //
 	Crayons_Eyeliners(1, "Crayons - Eyeliners"), //
 	Fards(2, "Fards"), //
 	Mascaras(3, "Mascaras");

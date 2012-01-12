@@ -4,9 +4,11 @@ import java.util.ArrayList;
 
 import android.content.ContentValues;
 import android.content.Context;
+import fr.smardine.matroussedemaquillage.base.RequeteFactory;
 import fr.smardine.matroussedemaquillage.base.structure.EnStructProduitEnregistre;
 import fr.smardine.matroussedemaquillage.base.structure.EnTable;
-import fr.smardine.matroussedemaquillage.factory.RequeteFactory;
+import fr.smardine.matroussedemaquillage.mdl.MlListeProduits;
+import fr.smardine.matroussedemaquillage.mdl.MlProduit;
 
 /**
  * @author smardine Acces a la table des Produit enregistré en base
@@ -27,29 +29,81 @@ public class AccesTableProduitEnregistre {
 	 * @return obtenir le nombre d'enregistrement dans la table
 	 */
 	public int getNbEnregistrement() {
-		return requeteFact.getNombreEnregistrement(EnTable.TROUSSE_PRODUIT);
+		return requeteFact.getNombreEnregistrement(EnTable.PRODUIT_ENREGISTRE);
+	}
+
+	/**
+	 * @return MlListeProduits
+	 */
+	public MlListeProduits getListeProduits() {
+		MlListeProduits lstProds = new MlListeProduits();
+		String requete = "SELECT " + EnStructProduitEnregistre.ID.getNomChamp()
+				+ " FROM " + EnTable.PRODUIT_ENREGISTRE.getNomTable();
+		ArrayList<String> lstId = requeteFact.getListeDeChamp(requete).get(0);
+		for (String anId : lstId) {
+			MlProduit prod = new MlProduit(Integer.parseInt(anId), this);
+			lstProds.add(prod);
+		}
+		return lstProds;
+
+	}
+
+	/**
+	 * @return le nombre de produit périmé ou presque
+	 */
+	public int getNbProduitPerimeOuPresque() {
+		String SQL = "SELECT Count("
+				+ EnStructProduitEnregistre.ID.getNomChamp()
+				+ ") FROM "
+				+ EnTable.PRODUIT_ENREGISTRE.getNomTable()
+				+ " WHERE "
+				+ //
+				"(" + EnStructProduitEnregistre.IS_PERIME.getNomChamp()
+				+ "='true'" + " or "
+				+ EnStructProduitEnregistre.IS_PRESQUE_PERIME.getNomChamp()
+				+ "='true') ";
+		return Integer.parseInt(requeteFact.get1Champ(SQL));
 	}
 
 	/**
 	 * @param p_idProduits
 	 * @return une liste de tableau de string
 	 */
-	private ArrayList<String> getTrousseComplete(int p_idProduits) {
+	public ArrayList<String> getTrousseComplete(int p_idProduits) {
 		String requete = "Select "
-				+ EnStructProduitEnregistre.NOM_PRODUIT.getNomChamp() + " ,"
+				+ EnStructProduitEnregistre.NOM_PRODUIT.getNomChamp()
+				+ " ,"
 				+ EnStructProduitEnregistre.NOM_SOUSCAT.getNomChamp()
 				+ //
-				" , " + EnStructProduitEnregistre.NOM_CAT.getNomChamp()
+				" , "
+				+ EnStructProduitEnregistre.NOM_CAT.getNomChamp()
 				+ //
-				" , " + EnStructProduitEnregistre.NUM_TEINTE.getNomChamp()
+				" , "
+				+ EnStructProduitEnregistre.NUM_TEINTE.getNomChamp()
 				+ //
-				" , " + EnStructProduitEnregistre.DUREE_VIE.getNomChamp()
+				" , "
+				+ EnStructProduitEnregistre.DUREE_VIE.getNomChamp()
 				+ //
-				" , " + EnStructProduitEnregistre.DATE_PEREMP.getNomChamp()
+				" , "
+				+ EnStructProduitEnregistre.DATE_PEREMP.getNomChamp()
 				+ //
-				" , " + EnStructProduitEnregistre.DATE_ACHAT.getNomChamp()
+				" , "
+				+ EnStructProduitEnregistre.DATE_ACHAT.getNomChamp()
 				+ //
-				" , " + EnStructProduitEnregistre.NOM_MARQUE.getNomChamp()
+				" , "
+				+ EnStructProduitEnregistre.NOM_MARQUE.getNomChamp()
+				+ //
+				", "
+				+ EnStructProduitEnregistre.DATE_PEREMP_MILLI.getNomChamp()
+				+ //
+				" , "
+				+ EnStructProduitEnregistre.IS_PERIME.getNomChamp()
+				+ //
+				" , "
+				+ EnStructProduitEnregistre.IS_PRESQUE_PERIME.getNomChamp()
+				+ //
+				" , "
+				+ EnStructProduitEnregistre.NB_JOUR_AVANT_PEREMP.getNomChamp()
 				+ //
 				" From " + EnTable.PRODUIT_ENREGISTRE.getNomTable()
 				+ //
@@ -91,8 +145,6 @@ public class AccesTableProduitEnregistre {
 				.replace("]", ""));
 		modifiedValues.put("nom_marque", NomMarque.trim().replace("[", "")
 				.replace("]", ""));
-		// modifiedValues.put("Date_Peremption_milli",
-		// DatePeremtInMilli.trim().replace("[", "").replace("]",""));
 
 		String whereClause = "id_produits=?";
 		String[] whereArgs = new String[] { "" + p_idProduit + "" };
