@@ -191,11 +191,11 @@ public class Main extends Activity implements OnClickListener {
 
 		if (v == BtRemplir) {
 			// objBd = new BDAcces(ctx);
-			// objBd.open();
+			// //objBd.open();
 			AccesTableProduitEnregistre accesProduit = new AccesTableProduitEnregistre(ctx);
 			int nbDenregistrement = accesProduit.getNbEnregistrement();
 			// = objBd.renvoi_nbChamp("produit_Enregistre");
-			// objBd.close();
+			// //objBd.close();
 			if (nbDenregistrement > 0) {
 				AlertDialog.Builder adChoixDupplique = new AlertDialog.Builder(this);
 				adChoixDupplique.setTitle("Que voulez vous faire ?");
@@ -268,7 +268,7 @@ public class Main extends Activity implements OnClickListener {
 				startActivity(intentDupplique);
 				termineActivity();
 			}
-			objBd.close();
+			//objBd.close();
 
 		}
 		if (v == BtNotes) {
@@ -280,7 +280,7 @@ public class Main extends Activity implements OnClickListener {
 		}
 		if (v == BtPerimé) {
 			objBd = new BDAcces(ctx);
-			objBd.open();
+			//objBd.open();
 			String[] Colonnes = { "id_produits", "nom_produit", "Date_Peremption", "nom_marque" };
 			String condition = "IS_PERIME=? or IS_PRESQUE_PERIME=?";
 			String[] args = { "true", "true" };
@@ -374,10 +374,10 @@ public class Main extends Activity implements OnClickListener {
 	private void ChoisiLeTheme() {
 		// TODO Auto-generated method stub
 		objBd = new BDAcces(ctx);
-		objBd.open();
+		//objBd.open();
 		String[] champ = { "AfficheAlerte", "DureeViePeremp", "Theme" };
 		ArrayList[] Param = objBd.renvoi_param(champ);
-		objBd.close();
+		//objBd.close();
 
 		String nomThemeChoisi = Param[2].get(0).toString().trim();
 

@@ -194,10 +194,10 @@ public class EntryPoint extends Activity implements ViewFactory {
 	public void gotoPrevienUtilisateur(boolean AuMoinsUnProduitPerimé,
 			boolean AuMoinsUnProduitPresquePermié) {
 
-		// objBd.open();
+		// //objBd.open();
 		String[] champ = { "AfficheAlerte", "DureeViePeremp", "Theme" };
 		ArrayList[] Param = objBd.renvoi_param(champ);
-		// objBd.close();
+		// //objBd.close();
 		if ("true".equals(Param[0].get(0))) {
 			Intent intentRecherche = new Intent(EntryPoint.this, Main.class);
 			intentRecherche.putExtra(ActivityParam.LaunchFromEntryPoint, true);
@@ -417,14 +417,14 @@ public class EntryPoint extends Activity implements ViewFactory {
 
 		// try {
 		//
-		// objBd.open();
+		// //objBd.open();
 		// String[] ScriptSql = G_remplirBase.SCRIPT_REMPLIR_BASE_TEST;
 		// for (int i = 0; i < ScriptSql.length; i++) {
 		// objBd.execSQL(ScriptSql[i]);
 		// }
-		// objBd.close();
+		// //objBd.close();
 		//
-		// // objBd.close();
+		// // //objBd.close();
 		// } catch (Exception e) {
 		// System.out.println("message d'erreur " + e);
 		// }
@@ -501,13 +501,10 @@ public class EntryPoint extends Activity implements ViewFactory {
 		@Override
 		protected Object doInBackground(Object... p_arg0) {
 			objBd = new BDAcces(ctx);
-			// objBd.open();
+			// //objBd.open();
 			AccesTableProduitEnregistre accesProduits = new AccesTableProduitEnregistre(
 					ctx);
 			int nbDenregistrement = accesProduits.getNbEnregistrement();
-			// int nbDenregistrement =
-			// objBd.renvoi_nbChamp("produit_Enregistre");
-			// objBd.close();
 
 			// Correction de parametres si l'utilisateur a mis n'importe quoi
 			// comme valeur.
@@ -515,15 +512,6 @@ public class EntryPoint extends Activity implements ViewFactory {
 
 			if (nbDenregistrement > 0) {
 				MlListeProduits lstProds = accesProduits.getListeProduits();
-				// String[] colonne = new String[] { "Date_Peremption_milli",
-				// "id_produits", "DateAchat", "Duree_Vie" };
-				// objBd.open();
-				//
-				// ArrayList[] datePerem = objBd.VerifAuDemarrage(colonne, "",
-				// "");
-				// objBd.close();
-				// / dans le cas ou il y a des caracteres bizarre dans un des
-				// champs => correction
 				int count = 0;
 				for (MlProduit p : lstProds) {
 					count++;
@@ -532,50 +520,7 @@ public class EntryPoint extends Activity implements ViewFactory {
 					CalculDatePeremtionEtMajDansBase(p.getDateAchat(),
 							p.getDureeVie(), p.getIdProduit());
 				}
-				// int nbdeDateEnregistré = datePerem[0].size();
-				// long DateAVerif;
-				// on commence par recalculer la date de permeption suite au bug
-				// de calcul lors de l'entrée du produit:
-				// for (int j = 0; j < nbDenregistrement; j++) {
-				// if (j > 0) {
-				// total = (100 * j) / nbDenregistrement;
-				// // total = total / 2;
-				//
-				// }
-				// String s_idProduit = datePerem[1].get(j).toString()
-				// .replace("[", "").replace("]", "");
-				//
-				// // //////////////////////////////////
-				// // Correction des champs en base ////
-				// // //////////////////////////////////
-				// try {
-				// /* int nbEnregistrementCorrigé =
-				// */verifErreurEnregistrementDsBase(datePerem[1]
-				// .get(j).toString());
-				// } catch (Exception e1) {
-				//
-				// System.out
-				// .println("erreur dans verifEnregistrement ds base "
-				// + e1.getMessage());
-				// }
-				//
-				// // //////////////////////////////////////////
-				// // ///////RECALCUL DES DATES DE PEREMTION ///
-				// // //////////////////////////////////////////
-				// String DateAchat1 = datePerem[2].get(j).toString();
-				// String DureeVie = datePerem[3].get(j).toString();
-				//
-				// try {
-				// CalculDatePeremtionEtMajDansBase(DateAchat1, DureeVie,
-				// s_idProduit);
-				// } catch (Exception e) {
-				//
-				// System.out.println("erreur dans calculDatepermp "
-				// + e.getMessage());// e.printStackTrace();
-				// }
-				//
-				// }
-				//
+
 			}
 
 			if (auMoinsUnProduitPermié == true
@@ -617,7 +562,7 @@ public class EntryPoint extends Activity implements ViewFactory {
 			System.out.println(e);
 		}
 		objBd = new BDAcces(p_ctx);
-		// objBd.close();
+		// //objBd.close();
 		String cheminBase = objBd.getPath();
 		File baseDansTel = new File(cheminBase);
 		String PATH = "/sdcard/ma_trousse/";

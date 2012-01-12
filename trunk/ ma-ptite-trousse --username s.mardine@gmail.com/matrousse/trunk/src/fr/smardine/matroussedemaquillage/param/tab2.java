@@ -68,7 +68,7 @@ public class tab2 extends Activity implements OnItemSelectedListener,
 	 */
 	private void verifieLeThemeChoisi() {
 		objBd = new BDAcces(this);
-		objBd.open();
+		//objBd.open();
 		String[] colonnes = { "AfficheAlerte", "DureeViePeremp", "Theme" };
 		@SuppressWarnings("rawtypes")
 		ArrayList[] Param = objBd.renvoi_param(colonnes);
@@ -86,7 +86,7 @@ public class tab2 extends Activity implements OnItemSelectedListener,
 
 			s1.setSelection(EnTheme.Fleur.getCode());
 		}
-		objBd.close();
+		//objBd.close();
 	}
 
 	private static final String[] mStrings = { EnTheme.Fleur.getLib(),
@@ -291,9 +291,9 @@ public class tab2 extends Activity implements OnItemSelectedListener,
 			// ContentValues values = new ContentValues();
 			// values.put("Theme", EnTheme.Classique.getLib());
 			//
-			// objBd.open();
+			// //objBd.open();
 			// objBd.majTable("Param", values, "", null);
-			// objBd.close();
+			// //objBd.close();
 			mSwitcher.setImageResource(mImageIds[EnTheme.Classique.getCode()]);
 		}
 		if (id == EnTheme.Fleur.getCode()) {

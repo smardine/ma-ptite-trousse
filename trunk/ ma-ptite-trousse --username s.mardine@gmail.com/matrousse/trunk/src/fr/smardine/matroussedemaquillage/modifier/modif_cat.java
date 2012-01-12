@@ -102,7 +102,7 @@ public class modif_cat extends Activity implements OnClickListener {
 	 */
 	private void ChoisiLeTheme() {
 		objBd = new BDAcces(this);
-		objBd.open();
+		// //objBd.open();
 		String[] champ = { "AfficheAlerte", "DureeViePeremp", "Theme" };
 		@SuppressWarnings("rawtypes")
 		ArrayList[] Param = objBd.renvoi_param(champ);
@@ -122,7 +122,7 @@ public class modif_cat extends Activity implements OnClickListener {
 			setContentView(R.layout.theme_fleur_modif_cat);
 		}
 
-		objBd.close();
+		// //objBd.close();
 	}
 
 	@Override
@@ -335,7 +335,7 @@ public class modif_cat extends Activity implements OnClickListener {
 				indiceProduitCoche = j;
 			}
 		}
-		objBd.close();
+		// objBd.close();
 		return indiceProduitCoche;
 	}
 
@@ -352,7 +352,7 @@ public class modif_cat extends Activity implements OnClickListener {
 		for (int j = 0; j < ListeProduits[0].size(); j++) {
 			NomProduits[j] = ListeProduits[0].get(j).toString();
 		}
-		objBd.close();
+		// objBd.close();
 		return NomProduits;
 	}
 
@@ -370,21 +370,21 @@ public class modif_cat extends Activity implements OnClickListener {
 		// String whereClauseEfface = "ischecked=?";
 		// String[] whereArgsEfface = new String[] { "true" };
 		//
-		// objBd.open();
+		// //objBd.open();
 		// objBd.majTable(Table, modifiedValuesEfface, whereClauseEfface,
 		// whereArgsEfface);
-		// objBd.close();
+		// //objBd.close();
 
 		/**
 		 * @throws SQLException
 		 */
 
-		objBd.open();
+		// objBd.open();
 		// int nbdechamp = objBd.majTable("trousse_produits", modifiedValues,
 		// whereClause, whereArgs);
 		// System.out.println("Nombre de champ modifié : " + nbdechamp);
 		objBd.deleteTable("trousse_tempo", "1", null);
-		objBd.close();
+		// objBd.close();
 
 		// popUp("On Continue");
 		// on créer une nouvelle activité avec comme point de depart "Main" et
@@ -392,7 +392,7 @@ public class modif_cat extends Activity implements OnClickListener {
 		Intent intent = new Intent(modif_cat.this, affiche_detail.class);
 		// on demarre la nouvelle activité
 		objBd = new BDAcces(this);
-		objBd.open();
+		// objBd.open();
 		@SuppressWarnings("rawtypes")
 		ArrayList[] Categorie_Cochée = objBd.renvoiCategorieEtProduitCochée();
 		String SousCat = Categorie_Cochée[0].toString().replace("[", "")
@@ -405,7 +405,7 @@ public class modif_cat extends Activity implements OnClickListener {
 
 		majTableProduit(Integer.parseInt(Id_Produit), SousCat, Cat);
 		remetAZeroLaTableCat();
-		objBd.close();
+		// objBd.close();
 		startActivity(intent);
 		termineActivity();
 
@@ -437,18 +437,18 @@ public class modif_cat extends Activity implements OnClickListener {
 		// String whereClause = "ischecked=?";
 		// String[] whereArgs = new String[] { "true" };
 		objBd = new BDAcces(this);
-		objBd.open();
+		// objBd.open();
 		// int nbdechamp = objBd.majTable(Table, modifiedValues, whereClause,
 		// whereArgs);
 		objBd.deleteTable("trousse_tempo", "1", null);
 		// System.out.println("Nombre de champ modifié : " + nbdechamp);
-		objBd.close();
+		// objBd.close();
 	}
 
 	// @SuppressWarnings("rawtypes")
 	// private boolean VerfieAuMoinsUneCategorieSelectionnée() {
 	//
-	// objBd.open();
+	// //objBd.open();
 	// ArrayList[] ListeCategorieCochée = objBd.renvoiCategorieCochée();
 	// int nbCategorieCochées = ListeCategorieCochée[0].size();
 	// String NomProduits="";
@@ -458,12 +458,12 @@ public class modif_cat extends Activity implements OnClickListener {
 	//
 	// if ((nbCategorieCochées==1) && (NomProduits.equals("aucun"))){
 	// //popUp ("Vous n'avez selectionné aucune catégorie");
-	// objBd.close();
+	// //objBd.close();
 	// return false;
 	// }
 	// else{
 	// //popUp("On Continue");
-	// objBd.close();
+	// //objBd.close();
 	// return true;
 	// }
 	//
@@ -472,11 +472,11 @@ public class modif_cat extends Activity implements OnClickListener {
 	// @SuppressWarnings("rawtypes")
 	// private int NombreDeCategorieSelectionnée() {
 	//
-	// objBd.open();
+	// //objBd.open();
 	// ArrayList[] ListeCategorieCochée = objBd.renvoiCategorieCochée();
 	// int nbCategorieCochées = ListeCategorieCochée[0].size();
 	//
-	// objBd.close();
+	// //objBd.close();
 	// return nbCategorieCochées;
 	//
 	//
@@ -487,7 +487,7 @@ public class modif_cat extends Activity implements OnClickListener {
 	// ListView produitListView ) {
 	//
 	// if (!Catégorie.equals("")){
-	// objBd.open();
+	// //objBd.open();
 	// @SuppressWarnings("rawtypes")
 	// ArrayList[] ListeProduits = objBd.renvoi_liste_produits(Catégorie);
 	// int nbdobjet = ListeProduits[0].size();
@@ -496,7 +496,7 @@ public class modif_cat extends Activity implements OnClickListener {
 	// String IsChecked = ListeProduits[1].get(j).toString();
 	// produits.add (new produit (NomProduits,IsChecked));
 	// }
-	// objBd.close();
+	// //objBd.close();
 	// }
 	//
 	//

@@ -133,11 +133,11 @@ public class formulaire_entree_page3 extends Activity implements OnClickListener
 				// String whereClause = "ischecked=?";
 				// String[] whereArgs = new String[] { "true" };
 
-				objBd.open();
+				//objBd.open();
 				// int nbdechamp = objBd.majTable(Table, modifiedValues, whereClause, whereArgs);
 				objBd.deleteTable("trousse_tempo", "1", null);
 				// System.out.println("Nombre de champ modifié : " + nbdechamp);
-				objBd.close();
+				//objBd.close();
 
 				if (NouveauProduit) {// on retourne a la 1° fenetre du formulaire
 					Intent intent = new Intent(formulaire_entree_page3.this, formulaire_entree_page1bis.class);
@@ -289,7 +289,7 @@ public class formulaire_entree_page3 extends Activity implements OnClickListener
 	 */
 	private void ChoisiLeTheme() {
 		objBd = new BDAcces(this);
-		objBd.open();
+		//objBd.open();
 		String[] champ = { "AfficheAlerte", "DureeViePeremp", "Theme" };
 		@SuppressWarnings("rawtypes")
 		ArrayList[] Param = objBd.renvoi_param(champ);
@@ -306,9 +306,9 @@ public class formulaire_entree_page3 extends Activity implements OnClickListener
 			// ContentValues values = new ContentValues();
 			// values.put("Theme", EnTheme.Fleur.getLib());
 			//
-			// objBd.open();
+			// //objBd.open();
 			// objBd.majTable("Param", values, "", null);
-			// objBd.close();
+			// //objBd.close();
 			// ChoisiLeTheme();
 
 		}
@@ -316,7 +316,7 @@ public class formulaire_entree_page3 extends Activity implements OnClickListener
 			setContentView(R.layout.theme_fleur_formulaire_entree_page3);
 		}
 
-		objBd.close();
+		//objBd.close();
 	}
 
 	private void onCreateMenu(Menu menu) {
@@ -419,10 +419,10 @@ public class formulaire_entree_page3 extends Activity implements OnClickListener
 			numeroDeTeinte = numeroTeinte.getText().toString().trim();
 			DateAchat = mDateDisplay.getText().toString().trim();
 			DureeVie = dureeVie.getText().toString().trim();
-			objBd.open();
+			//objBd.open();
 			@SuppressWarnings("rawtypes")
 			ArrayList[] Categorie_Cochée = objBd.renvoiCategorieEtProduitCochée();
-			objBd.close();
+			//objBd.close();
 			Cat = Categorie_Cochée[0].toString().replace("[", "").replace("]", "").trim();
 			if (nomDuProduit.equals("") || numeroDeTeinte.equals("") || DateAchat.equals("") || DureeVie.equals("")) {
 				adManqueInfo.show();
@@ -451,7 +451,7 @@ public class formulaire_entree_page3 extends Activity implements OnClickListener
 
 	@SuppressWarnings("rawtypes")
 	protected void insereProduitDansTableEtPrposeLaSuite() {
-		objBd.open();
+		//objBd.open();
 		// **
 		// Remplissage de la table temporaire
 		ContentValues values = new ContentValues();
@@ -514,13 +514,13 @@ public class formulaire_entree_page3 extends Activity implements OnClickListener
 			// String whereClause = "ischecked=?";
 			// String[] whereArgs = new String[] { "true" };
 
-			objBd.open();
+			//objBd.open();
 			// int nbdechamp = objBd.majTable(Table, modifiedValues, whereClause, whereArgs);
 			objBd.deleteTable("trousse_tempo", "1", null);
 			// System.out.println("Nombre de champ modifié : " + nbdechamp);
-			objBd.close();
+			//objBd.close();
 
-			// objBd.close();
+			// //objBd.close();
 			adFiniOuPas.show();
 		} else {
 			// popUp("Insert Pas Ok");
@@ -530,15 +530,15 @@ public class formulaire_entree_page3 extends Activity implements OnClickListener
 			// String whereClause = "ischecked=?";
 			// String[] whereArgs = new String[] { "true" };
 			//
-			// objBd.open();
+			// //objBd.open();
 			// int nbdechamp = objBd.majTable(Table, modifiedValues, whereClause, whereArgs);
 			// objBd.deleteTable("trousse_tempo", "1", null);
 			// System.out.println("Nombre de champ modifié : " + nbdechamp);
-			// objBd.close();
+			// //objBd.close();
 
 		}
 		// popUp("date peremption: "+Date_Peremption);
-		objBd.close();
+		//objBd.close();
 
 	}
 
