@@ -18,7 +18,6 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
-import fr.smardine.matroussedemaquillage.factory.RequeteFactory;
 
 /**
  * @author smardine
@@ -38,7 +37,7 @@ public class BDAcces {
 	/**
 	 * 
 	 */
-	public DatabaseHelper mDbHelper;
+	private DatabaseHelper mDbHelper;
 	/**
 	 * 
 	 */
@@ -51,7 +50,8 @@ public class BDAcces {
 
 	private static final String TAG = "BDAcces";
 	private static final int DATABASE_VERSION = 14;
-	private static String Message_Erreur = "";
+
+	// private static String Message_Erreur = "";
 
 	/**
 	 * @param ctx
@@ -60,7 +60,7 @@ public class BDAcces {
 		this.mCtx = ctx;
 	}
 
-	private static class DatabaseHelper extends SQLiteOpenHelper {
+	private class DatabaseHelper extends SQLiteOpenHelper {
 
 		DatabaseHelper(Context context) {
 			super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -85,9 +85,9 @@ public class BDAcces {
 
 		@Override
 		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-			Log.w(TAG, "Upgrading database from version " + oldVersion + " to " + newVersion + ", which will destroy all old data");
+			Log.w(TAG, "Upgrading database from version " + oldVersion + " to "
+					+ newVersion + ", which will destroy all old data");
 			G_maj_base maj = new G_maj_base();
-
 			switch (oldVersion) {
 				case 1:
 					LanceMiseAJour(db, maj.getVersion2());
@@ -120,7 +120,8 @@ public class BDAcces {
 
 		}
 
-		private void LanceMiseAJour(SQLiteDatabase p_db, List<String> p_lstScripts) {
+		private void LanceMiseAJour(SQLiteDatabase p_db,
+				List<String> p_lstScripts) {
 			for (String s : p_lstScripts) {
 				p_db.execSQL(s);
 			}
@@ -131,7 +132,7 @@ public class BDAcces {
 	/**
 	 * @throws SQLException
 	 */
-	public void open() throws SQLException {
+	protected void open() throws SQLException {
 		// si la base est deja ouverte, on la ferme.
 		if (mDb != null && mDb.isOpen()) {
 			close();
@@ -153,7 +154,7 @@ public class BDAcces {
 	 * ferme la connexion a la database
 	 * @throws SQLException
 	 */
-	public void close() throws SQLException {
+	protected void close() throws SQLException {
 		// si il reste des transaction active, on les ferme.
 		if (mDb.inTransaction()) {
 			mDb.endTransaction();
@@ -170,7 +171,8 @@ public class BDAcces {
 	// * @param GroupBy
 	// * @return la liste des produits enregistres en base
 	// */
-	// public Cursor recupererLaListeDesProduits(String[] colonne, String OrderBy, String GroupBy) {
+	// public Cursor recupererLaListeDesProduits(String[] colonne, String
+	// OrderBy, String GroupBy) {
 	// try {
 	//
 	// String condition = "";
@@ -178,10 +180,12 @@ public class BDAcces {
 	//
 	// String having = "";
 	//
-	// return mDb.query("produit_Enregistre", colonne, condition, conditionArgs, GroupBy, having, OrderBy);
+	// return mDb.query("produit_Enregistre", colonne, condition, conditionArgs,
+	// GroupBy, having, OrderBy);
 	//
 	// } catch (SQLException e) {
-	// Log.d(TAG, ">> recupererLaListeDesBenefs ERROR: " + e.getLocalizedMessage());
+	// Log.d(TAG, ">> recupererLaListeDesBenefs ERROR: " +
+	// e.getLocalizedMessage());
 	// throw e;
 	// }
 	// }
@@ -204,8 +208,10 @@ public class BDAcces {
 	 * @param p_colonnes
 	 * @return la liste complete des produits
 	 */
-	public ArrayList<String>[] renvoi_liste_TrousseFinalAvecFiltrage(String ScriptSQL, String[] p_colonnes) {
-		// String SQL = "SELECT " + p_colonnes + " FROM produit_Enregistre where nom_souscatergorie LIKE '%?%'";
+	public ArrayList<String>[] renvoi_liste_TrousseFinalAvecFiltrage(
+			String ScriptSQL, String[] p_colonnes) {
+		// String SQL = "SELECT " + p_colonnes +
+		// " FROM produit_Enregistre where nom_souscatergorie LIKE '%?%'";
 
 		Cursor objCursor = mDb.rawQuery(ScriptSQL, null);
 		int iPostidProduit = objCursor.getColumnIndex(p_colonnes[0]);
@@ -275,17 +281,20 @@ public class BDAcces {
 	 * @param conditionArgs
 	 * @return la liste des produits
 	 */
-	public ArrayList<String>[] renvoi_liste_TrousseFinal(String[] colonne, String OrderBy, String GroupBy, String condition,
+	public ArrayList<String>[] renvoi_liste_TrousseFinal(String[] colonne,
+			String OrderBy, String GroupBy, String condition,
 			String[] conditionArgs) {
 
-		// String[] colonne= new String[]{"nom_produit","DateAchat","Date_Peremption"};
+		// String[] colonne= new
+		// String[]{"nom_produit","DateAchat","Date_Peremption"};
 		// String condition = "nom_categorie='"+Catégorie+"'";
 		// String condition = "";
 		// String[] conditionArgs = null;
 
 		String having = "";
 
-		Cursor objCursor = mDb.query("produit_Enregistre", colonne, condition, conditionArgs, GroupBy, having, OrderBy);
+		Cursor objCursor = mDb.query("produit_Enregistre", colonne, condition,
+				conditionArgs, GroupBy, having, OrderBy);
 		int iPostidProduit = objCursor.getColumnIndex(colonne[0]);
 		int iPostnomProduit = objCursor.getColumnIndex(colonne[1]);
 		int iPostDateAchat = objCursor.getColumnIndex(colonne[2]);
@@ -353,16 +362,20 @@ public class BDAcces {
 	 * @param conditionArgs
 	 * @return la liste des notes enregistrees en base
 	 */
-	public ArrayList<String>[] renvoi_liste_Note(String[] colonne, String OrderBy, String GroupBy, String condition, String[] conditionArgs) {
+	public ArrayList<String>[] renvoi_liste_Note(String[] colonne,
+			String OrderBy, String GroupBy, String condition,
+			String[] conditionArgs) {
 
-		// String[] colonne= new String[]{"nom_produit","DateAchat","Date_Peremption"};
+		// String[] colonne= new
+		// String[]{"nom_produit","DateAchat","Date_Peremption"};
 		// String condition = "nom_categorie='"+Catégorie+"'";
 		// String condition = "";
 		// String[] conditionArgs = null;
 
 		String having = "";
 
-		Cursor objCursor = mDb.query("Notes", colonne, condition, conditionArgs, GroupBy, having, OrderBy);
+		Cursor objCursor = mDb.query("Notes", colonne, condition,
+				conditionArgs, GroupBy, having, OrderBy);
 		int iPostidProduit = objCursor.getColumnIndex(colonne[0]);
 		int iPostnomProduit = objCursor.getColumnIndex(colonne[1]);
 
@@ -409,17 +422,20 @@ public class BDAcces {
 	 * @param conditionArgs
 	 * @return la liste complete des notes en base.
 	 */
-	public ArrayList<String>[] renvoi_liste_NoteTotale(String[] colonne, String OrderBy, String GroupBy, String condition,
+	public ArrayList<String>[] renvoi_liste_NoteTotale(String[] colonne,
+			String OrderBy, String GroupBy, String condition,
 			String[] conditionArgs) {
 
-		// String[] colonne= new String[]{"nom_produit","DateAchat","Date_Peremption"};
+		// String[] colonne= new
+		// String[]{"nom_produit","DateAchat","Date_Peremption"};
 		// String condition = "id_note='"+Catégorie+"'";
 		// String condition = "";
 		// String[] conditionArgs = null;
 
 		String having = "";
 
-		Cursor objCursor = mDb.query("Notes", colonne, condition, conditionArgs, GroupBy, having, OrderBy);
+		Cursor objCursor = mDb.query("Notes", colonne, condition,
+				conditionArgs, GroupBy, having, OrderBy);
 		int iPostidProduit = objCursor.getColumnIndex(colonne[0]);
 		int iPostnomProduit = objCursor.getColumnIndex(colonne[1]);
 		int iPostMessage = objCursor.getColumnIndex(colonne[2]);
@@ -473,14 +489,16 @@ public class BDAcces {
 	 * @return la liste des dates de peremptions
 	 */
 
-	public ArrayList<String>[] VerifAuDemarrage(String[] colonne, String OrderBy, String GroupBy) {
+	public ArrayList<String>[] VerifAuDemarrage(String[] colonne,
+			String OrderBy, String GroupBy) {
 
 		String condition = "";
 		String[] conditionArgs = null;
 
 		String having = "";
 
-		Cursor objCursor = mDb.query("produit_Enregistre", colonne, condition, conditionArgs, GroupBy, having, OrderBy);
+		Cursor objCursor = mDb.query("produit_Enregistre", colonne, condition,
+				conditionArgs, GroupBy, having, OrderBy);
 		int iPostDatePermemp = objCursor.getColumnIndex(colonne[0]);
 		int iPostIdProduit = objCursor.getColumnIndex(colonne[1]);
 		int iPostDateAchat = objCursor.getColumnIndex(colonne[2]);
@@ -557,16 +575,19 @@ public class BDAcces {
 	 * @param id
 	 * @return la liste complete
 	 */
-	public ArrayList<String>[] renvoi_liste_TrousseFinalComplete(String[] colonne, String id) {
+	public ArrayList<String>[] renvoi_liste_TrousseFinalComplete(
+			String[] colonne, String id) {
 
-		// String[] colonne= new String[]{"nom_produit","DateAchat","Date_Peremption"};
+		// String[] colonne= new
+		// String[]{"nom_produit","DateAchat","Date_Peremption"};
 		String condition = "id_produits='" + id + "'";
 		// String condition = "";
 		String[] conditionArgs = null;
 
 		String having = "";
 
-		Cursor objCursor = mDb.query("produit_Enregistre", colonne, condition, conditionArgs, "", having, "");
+		Cursor objCursor = mDb.query("produit_Enregistre", colonne, condition,
+				conditionArgs, "", having, "");
 		int iPostNomProduit = objCursor.getColumnIndex(colonne[0]);
 		int iPostNomSousCat = objCursor.getColumnIndex(colonne[1]);
 		int iPostNomCat = objCursor.getColumnIndex(colonne[2]);
@@ -589,7 +610,8 @@ public class BDAcces {
 
 		objCursor.moveToFirst();
 
-		ArrayList<String>[] aTableRetour = new ArrayList[objCursor.getColumnCount() + 1];
+		ArrayList<String>[] aTableRetour = new ArrayList[objCursor
+				.getColumnCount() + 1];
 
 		/* Check if our result was valid. */
 		if (objCursor != null) {
@@ -666,14 +688,16 @@ public class BDAcces {
 	 */
 	public ArrayList<String>[] renvoi_liste_TrousseTempo() {
 
-		String[] colonne = new String[] { "nom_produit", "numero_Teinte", "DateAchat", "Duree_Vie" };
+		String[] colonne = new String[] { "nom_produit", "numero_Teinte",
+				"DateAchat", "Duree_Vie" };
 		// String condition = "nom_categorie='"+Catégorie+"'";
 		String condition = "";
 		String[] conditionArgs = null;
 		String groupby = "";
 		String having = "";
 		String orderby = "";
-		Cursor objCursor = mDb.query("trousse_tempo", colonne, condition, conditionArgs, groupby, having, orderby);
+		Cursor objCursor = mDb.query("trousse_tempo", colonne, condition,
+				conditionArgs, groupby, having, orderby);
 		int iPostnomProduit = objCursor.getColumnIndex("nom_produit");
 		int iPostTeinte = objCursor.getColumnIndex("numero_Teinte");
 		int iPostDateAchat = objCursor.getColumnIndex("DateAchat");
@@ -745,7 +769,8 @@ public class BDAcces {
 		String groupby = "";
 		String having = "";
 		String orderby = "";
-		Cursor objCursor = mDb.query(Table, colonne, condition, conditionArgs, groupby, having, orderby);
+		Cursor objCursor = mDb.query(Table, colonne, condition, conditionArgs,
+				groupby, having, orderby);
 		int iPostNomProduits = objCursor.getColumnIndex(Colonne);
 		// int iPostisChecked = objCursor.getColumnIndex("ischecked");
 
@@ -759,7 +784,8 @@ public class BDAcces {
 		/* Check if our result was valid. */
 		if (objCursor != null) {
 			for (int i = 0; i < itotal; i++) {
-				String resultnom_produits = objCursor.getString(iPostNomProduits);
+				String resultnom_produits = objCursor
+						.getString(iPostNomProduits);
 				// String resultischecked = objCursor.getString(iPostisChecked);
 				aTableRetour[i] = resultnom_produits;
 
@@ -779,7 +805,8 @@ public class BDAcces {
 	 * @return
 	 * @throws Exception
 	 */
-	public String[] renvoi_liste_Valeur(String Table, String Colonne) throws Exception {
+	public String[] renvoi_liste_Valeur(String Table, String Colonne)
+			throws Exception {
 		open();
 		String[] colonne = new String[] { Colonne };
 		// String condition = "nom_categorie='"+Catégorie+"'";
@@ -788,7 +815,8 @@ public class BDAcces {
 		String groupby = "";
 		String having = "";
 		String orderby = "";
-		Cursor objCursor = mDb.query(Table, colonne, condition, conditionArgs, groupby, having, orderby);
+		Cursor objCursor = mDb.query(Table, colonne, condition, conditionArgs,
+				groupby, having, orderby);
 		int iPostNomProduits = objCursor.getColumnIndex(Colonne);
 		// int iPostisChecked = objCursor.getColumnIndex("ischecked");
 
@@ -802,7 +830,8 @@ public class BDAcces {
 		/* Check if our result was valid. */
 		if (objCursor != null) {
 			for (int i = 0; i < itotal; i++) {
-				String resultnom_produits = objCursor.getString(iPostNomProduits);
+				String resultnom_produits = objCursor
+						.getString(iPostNomProduits);
 				// String resultischecked = objCursor.getString(iPostisChecked);
 				aTableRetour[i] = resultnom_produits;
 
@@ -830,11 +859,13 @@ public class BDAcces {
 	// * @param whereArgs
 	// * @return
 	// */
-	// public int majTable(String Table, ContentValues modifiedValues, String whereClause, String[] whereArgs) {
+	// public int majTable(String Table, ContentValues modifiedValues, String
+	// whereClause, String[] whereArgs) {
 	// // TODO Auto-generated method stub
 	// int nbdeChampAffecté = 0;
 	// try {
-	// nbdeChampAffecté = mDb.update(Table, modifiedValues, whereClause, whereArgs);
+	// nbdeChampAffecté = mDb.update(Table, modifiedValues, whereClause,
+	// whereArgs);
 	// } catch (Exception e) {
 	// String message = "erreur: " + e;
 	// System.out.println(message);
@@ -855,7 +886,8 @@ public class BDAcces {
 		String groupby = "";
 		String having = "";
 		String orderby = "";
-		Cursor objCursor = mDb.query(PRODUITS_TABLE, colonne, condition, conditionArgs, groupby, having, orderby);
+		Cursor objCursor = mDb.query(PRODUITS_TABLE, colonne, condition,
+				conditionArgs, groupby, having, orderby);
 		int iPostNomProduits = objCursor.getColumnIndex("nom_souscatergorie");
 
 		int itotal = objCursor.getCount();
@@ -867,7 +899,8 @@ public class BDAcces {
 			/* Check if our result was valid. */
 			if (objCursor != null) {
 				for (int i = 0; i < itotal; i++) {
-					String resultnom_produits = objCursor.getString(iPostNomProduits);
+					String resultnom_produits = objCursor
+							.getString(iPostNomProduits);
 					aTableRetourNom.add(resultnom_produits);
 					objCursor.moveToNext();
 				}
@@ -919,7 +952,8 @@ public class BDAcces {
 	 * @return
 	 */
 
-	public ArrayList[] renvoi_liste_ValeurTroussetempo(String Table, String[] Colonnes) {
+	public ArrayList[] renvoi_liste_ValeurTroussetempo(String Table,
+			String[] Colonnes) {
 		String[] colonne = Colonnes;
 		// String condition = "nom_categorie='"+Catégorie+"'";
 		String condition = "";
@@ -927,7 +961,8 @@ public class BDAcces {
 		String groupby = "";
 		String having = "";
 		String orderby = "";
-		Cursor objCursor = mDb.query(Table, colonne, condition, conditionArgs, groupby, having, orderby);
+		Cursor objCursor = mDb.query(Table, colonne, condition, conditionArgs,
+				groupby, having, orderby);
 		int iPostNomMarques = objCursor.getColumnIndex(Colonnes[0]);
 		int iPostNomProduit = objCursor.getColumnIndex(Colonnes[1]);
 		int iPostNumeroTeinte = objCursor.getColumnIndex(Colonnes[2]);
@@ -979,7 +1014,8 @@ public class BDAcces {
 		String groupby = "";
 		String having = "";
 		String orderby = "";
-		Cursor objCursor = mDb.query(PRODUITS_TABLE, colonne, condition, conditionArgs, groupby, having, orderby);
+		Cursor objCursor = mDb.query(PRODUITS_TABLE, colonne, condition,
+				conditionArgs, groupby, having, orderby);
 		int iPostNomProduits = objCursor.getColumnIndex("nom_souscatergorie");
 		int iPostNomCatégories = objCursor.getColumnIndex("nom_categorie");
 
@@ -994,7 +1030,8 @@ public class BDAcces {
 			if (objCursor != null) {
 				for (int i = 0; i < itotal; i++) {
 					String NomProduits = objCursor.getString(iPostNomProduits);
-					String NomCategorie = objCursor.getString(iPostNomCatégories);
+					String NomCategorie = objCursor
+							.getString(iPostNomCatégories);
 
 					aTableRetourNom.add(NomProduits);
 					aTableRetourCatégorie.add(NomCategorie);
@@ -1020,14 +1057,16 @@ public class BDAcces {
 	public ArrayList<String>[] renvoi_param(String[] colonne) {
 		// open();
 
-		// String[] colonne= new String[]{"nom_produit","DateAchat","Date_Peremption"};
+		// String[] colonne= new
+		// String[]{"nom_produit","DateAchat","Date_Peremption"};
 		// String condition = "id_produits='"+id+"'";
 		String condition = "";
 		String[] conditionArgs = null;
 
 		String having = "";
 
-		Cursor objCursor = mDb.query("Param", colonne, condition, conditionArgs, "", having, "");
+		Cursor objCursor = mDb.query("Param", colonne, condition,
+				conditionArgs, "", having, "");
 		int iPostAfficheAlerte = objCursor.getColumnIndex(colonne[0]);
 		int iPostDureeViePeremp = objCursor.getColumnIndex(colonne[1]);
 		int PostTheme = objCursor.getColumnIndex(colonne[2]);
@@ -1091,13 +1130,15 @@ public class BDAcces {
 	 * @return
 	 * @throws Exception
 	 */
-	public static ArrayList<ArrayList> renvoi_liste_script_xml(String Element) throws Exception {
+	public static ArrayList<ArrayList> renvoi_liste_script_xml(String Element)
+			throws Exception {
 
 		// ***********************création de notre tableau dinamique
 		ArrayList<ArrayList> aTableRetour = new ArrayList<ArrayList>();
 
 		// ************************récupération du flux wml
-		URL myURL = new URL("http://simon.mardine.free.fr/trousse_maquillage/bdd.xml");
+		URL myURL = new URL(
+				"http://simon.mardine.free.fr/trousse_maquillage/bdd.xml");
 		DocumentBuilderFactory fabrique = DocumentBuilderFactory.newInstance();
 		// création d'un constructeur de documents
 		DocumentBuilder constructeur = fabrique.newDocumentBuilder();
@@ -1124,13 +1165,15 @@ public class BDAcces {
 	 * @return
 	 * @throws Exception
 	 */
-	public static ArrayList<ArrayList> renvoi_liste_script_maj_xml(String Element) throws Exception {
+	public static ArrayList<ArrayList> renvoi_liste_script_maj_xml(
+			String Element) throws Exception {
 
 		// ***********************création de notre tableau dinamique
 		ArrayList<ArrayList> aTableRetour = new ArrayList<ArrayList>();
 
 		// ************************récupération du flux wml
-		URL myURL = new URL("http://simon.mardine.free.fr/trousse_maquillage/maj_bdd.xml");
+		URL myURL = new URL(
+				"http://simon.mardine.free.fr/trousse_maquillage/maj_bdd.xml");
 		DocumentBuilderFactory fabrique = DocumentBuilderFactory.newInstance();
 		// création d'un constructeur de documents
 		DocumentBuilder constructeur = fabrique.newDocumentBuilder();
@@ -1158,9 +1201,10 @@ public class BDAcces {
 	/**
 	 * @return l'instance de connexion a la database
 	 */
-	public SQLiteDatabase getMdb() {
+	protected SQLiteDatabase getMdb() {
 		return mDb;
 	}
 
-	// **************************fin de la classe**********************************
+	// **************************fin de la
+	// classe**********************************
 }

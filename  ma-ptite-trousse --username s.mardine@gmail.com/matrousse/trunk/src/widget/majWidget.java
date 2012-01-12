@@ -37,7 +37,7 @@ public class majWidget {
 	 * @param context
 	 */
 	public majWidget(Context context, boolean majAussiBdd) {
-		objBd = new BDAcces(context);
+		// objBd = new BDAcces(context);
 		this.ctx = context;
 
 		if (majAussiBdd) {
@@ -49,10 +49,12 @@ public class majWidget {
 				+ "FROM produit_Enregistre "//
 				+ "where " //
 				+ "(IS_PERIME='true' or IS_PRESQUE_PERIME='true') ";
-
-		objBd.open();
-		int nbProds = objBd.revoiNbProdPerimeOuPresquePerime(SQL);
-		objBd.close();
+		AccesTableProduitEnregistre accesProduit = new AccesTableProduitEnregistre(
+				ctx);
+		int nbProds = accesProduit.getNbProduitPerimeOuPresque();
+		// objBd.open();
+		// int nbProds = objBd.revoiNbProdPerimeOuPresquePerime(SQL);
+		// objBd.close();
 
 		ValeurParDefaut val = new ValeurParDefaut(context);
 		String action = val.getActionParDefaut();
@@ -113,7 +115,7 @@ public class majWidget {
 		if (nbDenregistrement > 0) {
 			String[] colonne = new String[] { "Date_Peremption_milli",
 					"id_produits", "DateAchat", "Duree_Vie" };
-			objBd.open();
+			// objBd.open();
 
 			ArrayList[] datePerem = objBd.VerifAuDemarrage(colonne, "", "");
 
@@ -155,7 +157,7 @@ public class majWidget {
 				}
 
 			}
-			objBd.close();
+			// objBd.close();
 		}
 
 	}

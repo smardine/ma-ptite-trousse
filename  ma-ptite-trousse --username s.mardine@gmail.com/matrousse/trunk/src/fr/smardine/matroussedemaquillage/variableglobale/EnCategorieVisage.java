@@ -1,8 +1,8 @@
 package fr.smardine.matroussedemaquillage.variableglobale;
 
-public enum EnCategorieVisage {
-	Blush(0, "Blush"),//
-	Correcteurs_Bases(1, "Correcteurs - Bases"),//
+public enum EnCategorieVisage implements EnCategorie {
+	Blush(0, "Blush"), //
+	Correcteurs_Bases(1, "Correcteurs - Bases"), //
 	FONDS_DE_TEINTS(2, "Fonds de teint"), //
 	Poudres(3, "Poudres");
 
