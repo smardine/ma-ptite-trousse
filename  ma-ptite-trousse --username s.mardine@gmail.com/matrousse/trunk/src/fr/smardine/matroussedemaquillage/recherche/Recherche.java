@@ -227,10 +227,10 @@ public class Recherche extends Activity implements OnClickListener,
 
 	@SuppressWarnings("rawtypes")
 	private void ChoisiLeTheme() {
-		objBd.open();
+		//objBd.open();
 		String[] champ = { "AfficheAlerte", "DureeViePeremp", "Theme" };
 		ArrayList[] Param = objBd.renvoi_param(champ);
-		objBd.close();
+		//objBd.close();
 
 		String nomThemeChoisi = Param[2].get(0).toString().trim();
 
@@ -372,7 +372,7 @@ public class Recherche extends Activity implements OnClickListener,
 	@SuppressWarnings("rawtypes")
 	protected void gotoCreateNewNote(String idProduit) {
 
-		objBd.open();
+		//objBd.open();
 		String[] colonne = { "nom_produit",// 0
 				"nom_souscatergorie",// 1
 				"nom_categorie",// 2
@@ -383,7 +383,7 @@ public class Recherche extends Activity implements OnClickListener,
 				"nom_marque" };// 7
 		ArrayList[] trousse_final = objBd.renvoi_liste_TrousseFinalComplete(
 				colonne, idProduit);
-		objBd.close();
+		//objBd.close();
 		String Nom_Produit = trousse_final[0].toString().replace("[", "")
 				.replace("]", "");
 		String SousCat = trousse_final[1].toString().replace("[", "")
@@ -409,9 +409,9 @@ public class Recherche extends Activity implements OnClickListener,
 				+ "Durée de vie du produit: " + DurreeVie + " mois\n"
 				+ "Date de péremption: " + DatePeremption + "\n");
 
-		objBd.open();
+		//objBd.open();
 		objBd.InsertDonnéedansTable("Notes", values);
-		objBd.close();
+		//objBd.close();
 
 	}
 
@@ -460,7 +460,7 @@ public class Recherche extends Activity implements OnClickListener,
 				String whereClause = "id_produits=?";
 				String[] WhereArgs = new String[] { IdProduit };
 
-				objBd.open();
+				//objBd.open();
 				int nbChampEffacé = objBd.deleteTable("produit_Enregistre",
 						whereClause, WhereArgs);
 				if (nbChampEffacé != 1) {
@@ -469,7 +469,7 @@ public class Recherche extends Activity implements OnClickListener,
 				}
 				filtreSelonSaisieEtBtActive(EtFiltrage.getText().toString(),
 						filtrageChoisi);
-				objBd.close();
+				//objBd.close();
 
 			}
 		});
@@ -531,7 +531,7 @@ public class Recherche extends Activity implements OnClickListener,
 			ArrayList<produitRecherche> produitFinal, ListView produitListView,
 			String p_Filtrage) {
 
-		objBd.open();
+		//objBd.open();
 
 		if (TypeRecherche.equals("TitreCat")) {
 			produitFinal.add(new produitRecherche("", "Catégorie", "Produit",
@@ -672,7 +672,7 @@ public class Recherche extends Activity implements OnClickListener,
 			}
 		}
 
-		objBd.close();
+		//objBd.close();
 		// animation d'affichage cascade du haut vers le bas
 		AnimationSet set = new AnimationSet(true);
 		Animation animation = new AlphaAnimation(0.0f, 1.0f);

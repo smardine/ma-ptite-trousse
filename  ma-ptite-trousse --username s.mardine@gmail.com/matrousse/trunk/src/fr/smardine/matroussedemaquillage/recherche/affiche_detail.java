@@ -128,7 +128,7 @@ public class affiche_detail extends Activity implements OnClickListener {
 	 */
 	private void ChoisiLeTheme() {
 		objBd = new BDAcces(this);
-		objBd.open();
+		//objBd.open();
 		String[] champ = { "AfficheAlerte", "DureeViePeremp", "Theme" };
 		@SuppressWarnings("rawtypes")
 		ArrayList[] Param = objBd.renvoi_param(champ);
@@ -150,7 +150,7 @@ public class affiche_detail extends Activity implements OnClickListener {
 			setContentView(R.layout.theme_fleur_affiche_detail);
 		}
 
-		objBd.close();
+		//objBd.close();
 	}
 
 	private void onCreateMenu(Menu menu) {
@@ -253,7 +253,7 @@ public class affiche_detail extends Activity implements OnClickListener {
 	// updates the date we display in the TextView
 
 	private void updateDisplay() {
-		objBd.open();
+		//objBd.open();
 		IdProduit = getIntent().getStringExtra(ActivityParam.IdProduit).trim();
 		String[] Colonnes = { "nom_produit", "nom_souscatergorie",
 				"nom_categorie", "numero_Teinte", "Duree_Vie",
@@ -279,7 +279,7 @@ public class affiche_detail extends Activity implements OnClickListener {
 
 		DuréeVie = trousse_final[4].toString().replace("[", "")
 				.replace("]", "");
-		objBd.close();
+		//objBd.close();
 	}
 
 	private void majTableProduit() {
@@ -289,10 +289,10 @@ public class affiche_detail extends Activity implements OnClickListener {
 				"nom_categorie", "numero_Teinte", "Duree_Vie",
 				"Date_Peremption", "DateAchat", "nom_marque" };
 
-		objBd.open();
+		//objBd.open();
 		trousse_final = objBd.renvoi_liste_TrousseFinalComplete(Colonnes,
 				IdProduit);
-		objBd.close();
+		//objBd.close();
 		String Table = "produit_Enregistre";
 		String Nom_Produit = nomProduitDetail.getText().toString().trim()
 				.replace("[", "").replace("]", "");
@@ -339,13 +339,13 @@ public class affiche_detail extends Activity implements OnClickListener {
 		// String whereClause = "id_produits=?";
 		// String[] whereArgs = new String[] { "" + IdProduit + "" };
 		// objBd = new BDAcces(this);
-		// objBd.open();
+		// //objBd.open();
 		// int nbdechamp = objBd.majTable(Table, modifiedValues, whereClause,
 		// whereArgs);
 		// objBd.deleteTable("trousse_tempo","1",null);
 		// System.out.println("Nombre de champ modifie dans la table produit_Enregistre : "+nbdechamp+" sur l'id n° "+Id_Produits+"nom cat="+cat+"nom sous cat"
 		// + souscat);
-		// objBd.close();
+		// //objBd.close();
 	}
 
 	// the callback received when the user "sets" the date in the dialog
@@ -472,13 +472,13 @@ public class affiche_detail extends Activity implements OnClickListener {
 			// // String whereClause =
 			// "nom_souscatergorie=? and nom_categorie=?";
 			// String[] whereArgs = new String[] { "" + categorie + "" };
-			objBd.open();
+			//objBd.open();
 			// int nbdechamp = objBd.majTable("trousse_produits",
 			// modifiedValues,
 			// whereClause, whereArgs);
 			// System.out.println("Nombre de champ modifié : " + nbdechamp);
 			objBd.deleteTable("trousse_tempo", "1", null);
-			objBd.close();
+			//objBd.close();
 
 			Intent modifcat = new Intent(this, modif_cat.class);
 			modifcat.putExtra(ActivityParam.IdProduit, IdProduit);
@@ -653,11 +653,11 @@ public class affiche_detail extends Activity implements OnClickListener {
 			adMarque.setMessage("Veuillez de renseigner la marque");
 			inputMarque.setText(MarqueDetail.getText().toString());
 			adMarque.setView(inputMarque);
-			objBd.open();
+			//objBd.open();
 			String[] Marque = objBd.renvoi_liste_ValeurDansString(
 					"trousse_marques", "nom_marque");
 
-			objBd.close();
+			//objBd.close();
 			ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
 					R.layout.list_item_marque_auto, Marque);
 			inputMarque.setAdapter(adapter);

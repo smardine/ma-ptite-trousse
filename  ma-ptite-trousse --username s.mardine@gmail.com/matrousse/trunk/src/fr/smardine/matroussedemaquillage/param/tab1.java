@@ -87,7 +87,7 @@ public class tab1 extends Activity implements OnClickListener,
 			}
 		}
 		objBd = new BDAcces(this);
-		objBd.open();
+		//objBd.open();
 		String[] colonnes = { "AfficheAlerte", "DureeViePeremp", "Theme" };
 		ArrayList[] Param = objBd.renvoi_param(colonnes);
 
@@ -96,7 +96,7 @@ public class tab1 extends Activity implements OnClickListener,
 		}
 		textView.setText(Param[1].get(0).toString());
 
-		objBd.close();
+		//objBd.close();
 		textView.addTextChangedListener(new TextWatcher() {
 
 			// int len=0;
@@ -147,7 +147,7 @@ public class tab1 extends Activity implements OnClickListener,
 	 */
 	private void verifieLeThemeChoisi() {
 		objBd = new BDAcces(this);
-		objBd.open();
+		//objBd.open();
 		String[] colonnes = { "AfficheAlerte", "DureeViePeremp", "Theme" };
 		@SuppressWarnings("rawtypes")
 		ArrayList[] Param = objBd.renvoi_param(colonnes);
@@ -161,7 +161,7 @@ public class tab1 extends Activity implements OnClickListener,
 
 			IvPreviewWidget.setImageResource(R.drawable.icone1);
 		}
-		objBd.close();
+		//objBd.close();
 	}
 
 	/**
@@ -234,9 +234,9 @@ public class tab1 extends Activity implements OnClickListener,
 			// values.put("AfficheAlerte", AfficheAlerte);
 			// values.put("DureeViePeremp", DurreeViePeremp);
 			//
-			// objBd.open();
+			// //objBd.open();
 			// objBd.majTable("Param", values, "", null);
-			// objBd.close();
+			// //objBd.close();
 
 		}
 	}

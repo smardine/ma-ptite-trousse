@@ -82,7 +82,7 @@ public class choix_produit_a_duppliquer extends Activity implements OnItemClickL
 	 */
 	private void ChoisiLeTheme() {
 		objBd = new BDAcces(this);
-		objBd.open();
+		//objBd.open();
 		String[] champ = { "AfficheAlerte", "DureeViePeremp", "Theme" };
 		@SuppressWarnings("rawtypes")
 		ArrayList[] Param = objBd.renvoi_param(champ);
@@ -103,7 +103,7 @@ public class choix_produit_a_duppliquer extends Activity implements OnItemClickL
 			setContentView(R.layout.theme_fleur_affiche_liste_produit_a_duppliquer);
 		}
 
-		objBd.close();
+		//objBd.close();
 	}
 
 	private void onCreateMenu(Menu menu) {
@@ -191,7 +191,7 @@ public class choix_produit_a_duppliquer extends Activity implements OnItemClickL
 	@SuppressWarnings("rawtypes")
 	private void AfficheLeContenu(String TypeRecherche, ArrayList<produitRecherche> produitFinal, ListView produitListView) {
 
-		objBd.open();
+		//objBd.open();
 		if (TypeRecherche.equals("Titre")) {
 			produitDuppliqueTitre.add(new produitRecherche("", "Marque", "Produit", "Catégorie"));
 		}
@@ -213,7 +213,7 @@ public class choix_produit_a_duppliquer extends Activity implements OnItemClickL
 
 			}
 		}
-		objBd.close();
+		//objBd.close();
 
 		// animation d'affichage cascade du haut vers le bas
 		AnimationSet set = new AnimationSet(true);
@@ -276,12 +276,12 @@ public class choix_produit_a_duppliquer extends Activity implements OnItemClickL
 		// String whereClause = "ischecked=?";
 		// String[] whereArgs = new String[] { "true" };
 		objBd = new BDAcces(this);
-		objBd.open();
+		//objBd.open();
 		// int nbdechamp = objBd.majTable(Table, modifiedValues, whereClause, whereArgs);
 
 		objBd.deleteTable("trousse_tempo", "1", null);
 		// System.out.println("Nombre de champ modifié : " + nbdechamp);
-		objBd.close();
+		//objBd.close();
 		// }
 		// boolean IsCalledFromPage2 = getIntent().getBooleanExtra("LaunchByPage2", false);
 		// if (IsCalledFromPage2) {
@@ -384,7 +384,7 @@ public class choix_produit_a_duppliquer extends Activity implements OnItemClickL
 	@SuppressWarnings("rawtypes")
 	protected void gotoDuppliqueEtLanceFormPage3(String IdProduit) {
 		// TODO Auto-generated method stub
-		objBd.open();
+		//objBd.open();
 		// IdProduit=getIntent().getStringExtra("IDProduit").trim();
 		String[] Colonnes = { "nom_produit", "nom_souscatergorie", "nom_categorie", "numero_Teinte", "Duree_Vie", "Date_Peremption",
 				"DateAchat", "nom_marque" };
@@ -397,7 +397,7 @@ public class choix_produit_a_duppliquer extends Activity implements OnItemClickL
 		DateChoisie = trousse_final[6].toString().replace("[", "").replace("]", "");
 		MarqueChoisie = trousse_final[7].toString().replace("[", "").replace("]", "");
 
-		objBd.close();
+		//objBd.close();
 
 		// on rempli "trousse tempo" avec les valeurs de Categories et sous categorie afin que cescase soient cochée lors de l'affichage de
 		// la page1 du formulaire
@@ -408,11 +408,11 @@ public class choix_produit_a_duppliquer extends Activity implements OnItemClickL
 		// modifiedValues.put("ischecked", "true");
 		// String whereClause = "nom_marque=?";
 		// String[] whereArgs = new String[] { MarqueChoisie };
-		// objBd.open();
+		// //objBd.open();
 		// int nbdechamp = objBd.majTable(Table, modifiedValues, whereClause, whereArgs);
 		//
 		// System.out.println("Nombre de champ modifié : " + nbdechamp);
-		// objBd.close();
+		// //objBd.close();
 		AccesTableTrousseProduits accesTrousse = new AccesTableTrousseProduits(this);
 		accesTrousse.majSouscatChoisie(SousCat);
 		// String Table1 = "trousse_produits";
@@ -421,11 +421,11 @@ public class choix_produit_a_duppliquer extends Activity implements OnItemClickL
 		// String whereClause1 = "nom_souscatergorie=?";
 		// String[] whereArgs1 = new String[] { SousCat };
 		//
-		// objBd.open();
+		// //objBd.open();
 		// int nbdechamp1 = objBd.majTable(Table1, modifiedValues1, whereClause1, whereArgs1);
 		//
 		// System.out.println("Nombre de champ modifié : " + nbdechamp1);
-		// objBd.close();
+		// //objBd.close();
 		//
 		Intent intentPage3Dupplique = new Intent(this, formulaire_entree_page3.class);
 		// on demarre la nouvelle activité

@@ -56,14 +56,14 @@ public class note_saisie extends Activity implements OnClickListener {
 
 		IdNote = getIntent().getStringExtra(ActivityParam.IdNote).trim();
 		objBd = new BDAcces(this);
-		objBd.open();
+		//objBd.open();
 		String[] Colonnes = { "id_note", "Titre", "Message" };
 		String condition = "id_note=?";
 		String[] args = { IdNote };
 		ArrayList[] notes = objBd.renvoi_liste_NoteTotale(Colonnes, "", "",
 				condition, args);
 
-		objBd.close();
+		//objBd.close();
 		int nbdobjet = notes[0].size();
 		if (nbdobjet != 0) {
 			for (int j = 0; j < nbdobjet; j++) {
@@ -86,7 +86,7 @@ public class note_saisie extends Activity implements OnClickListener {
 	 */
 	private void ChoisiLeTheme() {
 		objBd = new BDAcces(this);
-		objBd.open();
+		//objBd.open();
 		String[] champ = { "AfficheAlerte", "DureeViePeremp", "Theme" };
 		@SuppressWarnings("rawtypes")
 		ArrayList[] Param = objBd.renvoi_param(champ);
@@ -107,7 +107,7 @@ public class note_saisie extends Activity implements OnClickListener {
 			setContentView(R.layout.theme_fleur_note_saisie);
 		}
 
-		objBd.close();
+		//objBd.close();
 	}
 
 	@Override
@@ -295,7 +295,7 @@ public class note_saisie extends Activity implements OnClickListener {
 			// modifiedValues.put("Message", Message);
 			// String whereClause = "id_note=?";
 			// String[] whereArgs = { IdNote };
-			// objBd.open();
+			// //objBd.open();
 			// int nbCHampModif = objBd.majTable("Notes", modifiedValues,
 			// whereClause, whereArgs);
 

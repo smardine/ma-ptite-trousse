@@ -216,14 +216,14 @@ public class tab4 extends Activity implements OnClickListener {
 	public void onClick(View p_v) {
 		if (p_v == videBase) {
 			objBd = new BDAcces(this);
-			objBd.open();
+			//objBd.open();
 			int nbLignedeleted = objBd.deleteTable("produit_Enregistre", null, null);
 			System.out.println(nbLignedeleted + " lignes effacée");
-			objBd.close();
+			//objBd.close();
 		}
 		if (p_v == sauvegardeBase) {
 			objBd = new BDAcces(this);
-			objBd.close();
+			//objBd.close();
 			String cheminBase = objBd.getPath();
 			File baseDansTel = new File(cheminBase);
 			String PATH = "/sdcard/ma_trousse/";
@@ -267,7 +267,7 @@ public class tab4 extends Activity implements OnClickListener {
 		if (p_v == importeBase) {
 
 			objBd = new BDAcces(this);
-			objBd.close();
+			//objBd.close();
 			String cheminBase = objBd.getPath();
 			baseDansTel = new File(cheminBase);
 

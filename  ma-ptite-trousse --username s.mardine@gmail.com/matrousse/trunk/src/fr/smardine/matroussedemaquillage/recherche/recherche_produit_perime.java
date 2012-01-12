@@ -184,10 +184,10 @@ public class recherche_produit_perime extends Activity implements
 	private void ChoisiLeTheme() {
 		// TODO Auto-generated method stub
 
-		objBd.open();
+		//objBd.open();
 		String[] champ = { "AfficheAlerte", "DureeViePeremp", "Theme" };
 		ArrayList[] Param = objBd.renvoi_param(champ);
-		objBd.close();
+		//objBd.close();
 
 		String nomThemeChoisi = Param[2].get(0).toString().trim();
 
@@ -330,7 +330,7 @@ public class recherche_produit_perime extends Activity implements
 	@SuppressWarnings("rawtypes")
 	protected void gotoCreateNewNote(String idProduit) {
 		// TODO Auto-generated method stub
-		objBd.open();
+		//objBd.open();
 		String[] colonne = { "nom_produit",// 0
 				"nom_souscatergorie",// 1
 				"nom_categorie",// 2
@@ -341,7 +341,7 @@ public class recherche_produit_perime extends Activity implements
 				"nom_marque" };// 7
 		ArrayList[] trousse_final = objBd.renvoi_liste_TrousseFinalComplete(
 				colonne, idProduit);
-		objBd.close();
+		//objBd.close();
 		String Nom_Produit = trousse_final[0].toString().replace("[", "")
 				.replace("]", "");
 		String SousCat = trousse_final[1].toString().replace("[", "")
@@ -367,9 +367,9 @@ public class recherche_produit_perime extends Activity implements
 				+ "Durée de vie du produit: " + DurreeVie + " mois\n"
 				+ "Date de péremption: " + DatePeremption + "\n");
 
-		objBd.open();
+		//objBd.open();
 		objBd.InsertDonnéedansTable("Notes", values);
-		objBd.close();
+		//objBd.close();
 
 	}
 
@@ -418,7 +418,7 @@ public class recherche_produit_perime extends Activity implements
 				String whereClause = "id_produits=?";
 				String[] WhereArgs = new String[] { IdProduit };
 
-				objBd.open();
+				//objBd.open();
 				int nbChampEffacé = objBd.deleteTable("produit_Enregistre",
 						whereClause, WhereArgs);
 				if (nbChampEffacé != 1) {
@@ -427,7 +427,7 @@ public class recherche_produit_perime extends Activity implements
 				}
 				filtreSelonSaisieEtBtActive(EtFiltrage.getText().toString(),
 						Cat.isChecked(), Marque.isChecked(), Tout.isChecked());
-				objBd.close();
+				//objBd.close();
 
 			}
 		});
@@ -501,7 +501,7 @@ public class recherche_produit_perime extends Activity implements
 			ArrayList<produitRecherche> produitFinal, ListView produitListView,
 			String p_Filtrage) {
 
-		objBd.open();
+		//objBd.open();
 
 		if (TypeRecherche.equals("TitreCat")) {
 			produitFinal.add(new produitRecherche("", "Date Peremp.",
@@ -636,7 +636,7 @@ public class recherche_produit_perime extends Activity implements
 		// }
 		// }
 
-		objBd.close();
+		//objBd.close();
 		// animation d'affichage cascade du haut vers le bas
 		AnimationSet set = new AnimationSet(true);
 		Animation animation = new AlphaAnimation(0.0f, 1.0f);
