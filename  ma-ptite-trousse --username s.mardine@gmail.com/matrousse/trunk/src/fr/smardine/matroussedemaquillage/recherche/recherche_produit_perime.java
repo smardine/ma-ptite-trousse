@@ -34,6 +34,9 @@ import fr.smardine.matroussedemaquillage.Main;
 import fr.smardine.matroussedemaquillage.R;
 import fr.smardine.matroussedemaquillage.base.BDAcces;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableParams;
+import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableProduitEnregistre;
+import fr.smardine.matroussedemaquillage.mdl.MlListeProduits;
+import fr.smardine.matroussedemaquillage.mdl.MlProduit;
 import fr.smardine.matroussedemaquillage.note.note_page1;
 import fr.smardine.matroussedemaquillage.param.tab_param;
 import fr.smardine.matroussedemaquillage.recherche.produitRechercheListAdapter.ViewHolder;
@@ -516,109 +519,131 @@ public class recherche_produit_perime extends Activity implements
 		// objBd.open();
 
 		if (TypeRecherche.equals("TitreCat")) {
-			produitFinal.add(new produitRecherche("", "Date Peremp.",
+			produitFinal.add(new produitRecherche(-1, "Date Peremp.",
 					"Produit", "Marque"));
 		}
 
 		if (TypeRecherche.equals("CatégorieAvecFiltrage")) {
+			AccesTableProduitEnregistre accesProduit = new AccesTableProduitEnregistre(
+					ctx);
+			MlListeProduits lstProduit = accesProduit
+					.getProduitsPerimeAvecFiltrageSurCategorie(p_Filtrage);
+			for (MlProduit p : lstProduit) {
+				produitFinal.add(new produitRecherche(p.getIdProduit(), p
+						.getNomCat(), p.getNomProduit(), p.getMarque()));
+			}
 
-			String[] Colonnes = { "id_produits", "nom_produit",
-					"Date_Peremption", "nom_marque" };
-
-			String SQL = "SELECT "
-					+ "id_produits,nom_produit,Date_Peremption,nom_marque "//
-					+ "FROM produit_Enregistre "//
-					+ "where " //
-					+ "(IS_PERIME='true' or IS_PRESQUE_PERIME='true') " //
-					+ "ORDER BY Date_Peremption";
-
-			ArrayList[] ListeProduits = objBd
-					.renvoi_liste_TrousseFinalAvecFiltrage(SQL, Colonnes);
-			int nbdobjet = ListeProduits[0].size();
-			if (nbdobjet != 0) {
-				for (int j = 0; j < nbdobjet; j++) {
-					String IdProduit = ListeProduits[0].get(j).toString()
-							.replace("[", "").replace("]", "");
-					String NomProduits = ListeProduits[1].get(j).toString()
-							.replace("[", "").replace("]", "");
-					String NomCatégorie = ListeProduits[2].get(j).toString()
-							.replace("[", "").replace("]", "");
-					String Marque = ListeProduits[3].get(j).toString()
-							.replace("[", "").replace("]", "");
-					produitFinal.add(new produitRecherche(IdProduit,
-							NomCatégorie.replaceAll("-", "/"), NomProduits,
-							Marque));
-				}
-			} // else {
-				// adAucunProduit.show();
-				// }
+			// String[] Colonnes = { "id_produits", "nom_produit",
+			// "Date_Peremption", "nom_marque" };
+			//
+			// String SQL = "SELECT "
+			// + "id_produits,nom_produit,Date_Peremption,nom_marque "//
+			// + "FROM produit_Enregistre "//
+			// + "where " //
+			// + "(IS_PERIME='true' or IS_PRESQUE_PERIME='true') " //
+			// + "ORDER BY Date_Peremption";
+			//
+			// ArrayList[] ListeProduits = objBd
+			// .renvoi_liste_TrousseFinalAvecFiltrage(SQL, Colonnes);
+			// int nbdobjet = ListeProduits[0].size();
+			// if (nbdobjet != 0) {
+			// for (int j = 0; j < nbdobjet; j++) {
+			// String IdProduit = ListeProduits[0].get(j).toString()
+			// .replace("[", "").replace("]", "");
+			// String NomProduits = ListeProduits[1].get(j).toString()
+			// .replace("[", "").replace("]", "");
+			// String NomCatégorie = ListeProduits[2].get(j).toString()
+			// .replace("[", "").replace("]", "");
+			// String Marque = ListeProduits[3].get(j).toString()
+			// .replace("[", "").replace("]", "");
+			// produitFinal.add(new produitRecherche(IdProduit,
+			// NomCatégorie.replaceAll("-", "/"), NomProduits,
+			// Marque));
+			// }
+			// } // else {
+			// adAucunProduit.show();
+			// }
 		}
 		if (TypeRecherche.equals("TitreMarque")) {
-			produitFinal.add(new produitRecherche("", "Date Peremp", "Produit",
+			produitFinal.add(new produitRecherche(-1, "Date Peremp", "Produit",
 					"Marque"));
 		}
 
 		if (TypeRecherche.equals("MarqueAvecFiltrage")) {
-
-			String[] Colonnes = { "id_produits", "nom_marque", "nom_produit",
-					"Date_Peremption" };
-			String SQL = "SELECT " //
-					+ "id_produits,nom_produit,nom_marque,Date_Peremption" //
-					+ " FROM produit_Enregistre"//
-					+ " where (nom_marque LIKE '%"
-					+ p_Filtrage
-					+ "%' and (IS_PERIME='true' or IS_PRESQUE_PERIME='true'))"
-					+ "ORDER BY nom_marque";
-			ArrayList[] ListeProduits = objBd
-					.renvoi_liste_TrousseFinalAvecFiltrage(SQL, Colonnes);
-			int nbdobjet = ListeProduits[0].size();
-			if (nbdobjet != 0) {
-				for (int j = 0; j < nbdobjet; j++) {
-					String idProduit = ListeProduits[0].get(j).toString();
-					String nomMarque = ListeProduits[1].get(j).toString();
-					String nomProduit = ListeProduits[2].get(j).toString();
-					String datePeremp = ListeProduits[3].get(j).toString();
-					produitFinal.add(new produitRecherche(idProduit, datePeremp
-							.replaceAll("-", "/"), nomProduit, nomMarque));
-				}
-			} // else {
-				// adAucunProduit.show();
-				// }
+			AccesTableProduitEnregistre accesProduit = new AccesTableProduitEnregistre(
+					ctx);
+			MlListeProduits lstProduit = accesProduit
+					.getProduitsPerimeAvecFiltrageSurMarque(p_Filtrage);
+			for (MlProduit p : lstProduit) {
+				produitFinal.add(new produitRecherche(p.getIdProduit(), p
+						.getNomCat(), p.getNomProduit(), p.getMarque()));
+			}
+			// String[] Colonnes = { "id_produits", "nom_marque", "nom_produit",
+			// "Date_Peremption" };
+			// String SQL = "SELECT " //
+			// + "id_produits,nom_produit,nom_marque,Date_Peremption" //
+			// + " FROM produit_Enregistre"//
+			// + " where (nom_marque LIKE '%"
+			// + p_Filtrage
+			// + "%' and (IS_PERIME='true' or IS_PRESQUE_PERIME='true'))"
+			// + "ORDER BY nom_marque";
+			// ArrayList[] ListeProduits = objBd
+			// .renvoi_liste_TrousseFinalAvecFiltrage(SQL, Colonnes);
+			// int nbdobjet = ListeProduits[0].size();
+			// if (nbdobjet != 0) {
+			// for (int j = 0; j < nbdobjet; j++) {
+			// String idProduit = ListeProduits[0].get(j).toString();
+			// String nomMarque = ListeProduits[1].get(j).toString();
+			// String nomProduit = ListeProduits[2].get(j).toString();
+			// String datePeremp = ListeProduits[3].get(j).toString();
+			// produitFinal.add(new produitRecherche(idProduit, datePeremp
+			// .replaceAll("-", "/"), nomProduit, nomMarque));
+			// }
+			// } // else {
+			// adAucunProduit.show();
+			// }
 		}
 		if (TypeRecherche.equals("TitreTout")) {
-			produitFinal.add(new produitRecherche("", "Date péremp.",
+			produitFinal.add(new produitRecherche(-1, "Date péremp.",
 					"Produit", "Marque"));
 		}
 
 		if (TypeRecherche.equals("ToutAvecFiltrage")) {
-
-			String[] Colonnes = { "id_produits", "Date_Peremption",
-					"nom_produit", "nom_marque" };
-
-			String SQL = "SELECT"
-					+ " id_produits,Date_Peremption,nom_produit,nom_marque "
-					+ "FROM produit_Enregistre "
-					+ "where ((nom_produit LIKE '%" + p_Filtrage + "%' "
-					+ "or nom_marque LIKE '%" + p_Filtrage + "%' "
-					+ "or Date_Peremption LIKE '%" + p_Filtrage
-					+ "%') and (IS_PERIME='true' or IS_PRESQUE_PERIME='true'))"
-					+ "ORDER BY id_produits";
-			ArrayList[] ListeProduits = objBd
-					.renvoi_liste_TrousseFinalAvecFiltrage(SQL, Colonnes);
-			int nbdobjet = ListeProduits[0].size();
-			if (nbdobjet != 0) {
-				for (int j = 0; j < nbdobjet; j++) {
-					String IdProduit = ListeProduits[0].get(j).toString();
-					String datePeremption = ListeProduits[1].get(j).toString();
-					String nomProduit = ListeProduits[2].get(j).toString();
-					String nomMarque = ListeProduits[3].get(j).toString();
-					produitFinal.add(new produitRecherche(IdProduit,
-							datePeremption.replaceAll("-", "/"), nomProduit,
-							nomMarque));
-				}
-			} // else {
-				// adAucunProduit.show();
-				// }
+			AccesTableProduitEnregistre accesProduit = new AccesTableProduitEnregistre(
+					ctx);
+			MlListeProduits lstProduit = accesProduit
+					.getProduitsPerimeAvecFiltrageSurTout(p_Filtrage);
+			for (MlProduit p : lstProduit) {
+				produitFinal.add(new produitRecherche(p.getIdProduit(), p
+						.getNomCat(), p.getNomProduit(), p.getMarque()));
+			}
+			// String[] Colonnes = { "id_produits", "Date_Peremption",
+			// "nom_produit", "nom_marque" };
+			//
+			// String SQL = "SELECT"
+			// + " id_produits,Date_Peremption,nom_produit,nom_marque "
+			// + "FROM produit_Enregistre "
+			// + "where ((nom_produit LIKE '%" + p_Filtrage + "%' "
+			// + "or nom_marque LIKE '%" + p_Filtrage + "%' "
+			// + "or Date_Peremption LIKE '%" + p_Filtrage
+			// + "%') and (IS_PERIME='true' or IS_PRESQUE_PERIME='true'))"
+			// + "ORDER BY id_produits";
+			// ArrayList[] ListeProduits = objBd
+			// .renvoi_liste_TrousseFinalAvecFiltrage(SQL, Colonnes);
+			// int nbdobjet = ListeProduits[0].size();
+			// if (nbdobjet != 0) {
+			// for (int j = 0; j < nbdobjet; j++) {
+			// String IdProduit = ListeProduits[0].get(j).toString();
+			// String datePeremption = ListeProduits[1].get(j).toString();
+			// String nomProduit = ListeProduits[2].get(j).toString();
+			// String nomMarque = ListeProduits[3].get(j).toString();
+			// produitFinal.add(new produitRecherche(IdProduit,
+			// datePeremption.replaceAll("-", "/"), nomProduit,
+			// nomMarque));
+			// }
+			// } // else {
+			// adAucunProduit.show();
+			// }
 		}
 		// if (TypeRecherche.equals("TitrePerime")) {
 		// produitFinal.add(new produitRecherche("", "Date péremp.", "Produit",

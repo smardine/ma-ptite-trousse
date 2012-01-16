@@ -340,12 +340,12 @@ public class modif_cat extends Activity implements OnClickListener {
 		int indiceProduitCoche = -1;
 		AccesTableTrousseProduits accesProduits = new AccesTableTrousseProduits(
 				this);
-		ArrayList[] ListeProduits = accesProduits
+		ArrayList<String> ListeProduits = accesProduits
 				.renvoi_liste_produits(p_categorie);
-		String[] NomProduits = new String[ListeProduits[0].size()];
-		for (int j = 0; j < ListeProduits[0].size(); j++) {
-			NomProduits[j] = ListeProduits[0].get(j).toString();
-			String isChecked = ListeProduits[1].get(j).toString();
+		String[] NomProduits = new String[ListeProduits.size()];
+		for (int j = 0; j < ListeProduits.size(); j++) {
+			NomProduits[j] = ListeProduits.get(j).toString();
+			String isChecked = ListeProduits.get(j).toString();
 			if ("true".equals(isChecked)) {
 				indiceProduitCoche = j;
 			}
@@ -361,11 +361,11 @@ public class modif_cat extends Activity implements OnClickListener {
 	private String[] recupereSousCategorie(String p_categorie) {
 		AccesTableTrousseProduits accesProduits = new AccesTableTrousseProduits(
 				this);
-		ArrayList[] ListeProduits = accesProduits
+		ArrayList<String> ListeProduits = accesProduits
 				.renvoi_liste_produits(p_categorie);
-		String[] NomProduits = new String[ListeProduits[0].size()];
-		for (int j = 0; j < ListeProduits[0].size(); j++) {
-			NomProduits[j] = ListeProduits[0].get(j).toString();
+		String[] NomProduits = new String[ListeProduits.size()];
+		for (int j = 0; j < ListeProduits.size(); j++) {
+			NomProduits[j] = ListeProduits.get(j).toString();
 		}
 		// objBd.close();
 		return NomProduits;

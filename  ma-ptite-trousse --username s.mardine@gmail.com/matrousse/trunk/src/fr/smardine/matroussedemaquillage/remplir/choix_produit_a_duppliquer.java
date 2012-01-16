@@ -26,8 +26,11 @@ import fr.smardine.matroussedemaquillage.Main;
 import fr.smardine.matroussedemaquillage.R;
 import fr.smardine.matroussedemaquillage.base.BDAcces;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableParams;
+import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableProduitEnregistre;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableTrousseMarque;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableTrousseProduits;
+import fr.smardine.matroussedemaquillage.mdl.MlListeProduits;
+import fr.smardine.matroussedemaquillage.mdl.MlProduit;
 import fr.smardine.matroussedemaquillage.note.note_page1;
 import fr.smardine.matroussedemaquillage.param.tab_param;
 import fr.smardine.matroussedemaquillage.recherche.Recherche;
@@ -214,29 +217,35 @@ public class choix_produit_a_duppliquer extends Activity implements
 
 		// objBd.open();
 		if (TypeRecherche.equals("Titre")) {
-			produitDuppliqueTitre.add(new produitRecherche("", "Marque",
+			produitDuppliqueTitre.add(new produitRecherche(-1, "Marque",
 					"Produit", "Catégorie"));
 		}
 		if (TypeRecherche.equals("Tout")) {
-
-			String[] Colonnes = { "id_produits", "nom_produit", "nom_marque",
-					"nom_souscatergorie" };
-
-			ArrayList[] ListeProduits = objBd.renvoi_liste_TrousseFinal(
-					Colonnes, "id_produits", "", "", null);
-			int nbdobjet = ListeProduits[0].size();
-			if (nbdobjet != 0) {
-				for (int j = 0; j < nbdobjet; j++) {
-					String IdProduit = ListeProduits[0].get(j).toString();
-					String NomProduits = ListeProduits[1].get(j).toString();
-					String NomMarque = ListeProduits[2].get(j).toString();
-					String NomSousCat = ListeProduits[3].get(j).toString();
-					produitDupplique.add(new produitRecherche(IdProduit,
-							NomMarque, NomProduits, NomSousCat));
-				}
-			} else {
-
+			AccesTableProduitEnregistre accesProduit = new AccesTableProduitEnregistre(
+					this);
+			MlListeProduits lstProduit = accesProduit.getListeProduits();
+			for (MlProduit p : lstProduit) {
+				produitDupplique.add(new produitRecherche(p.getIdProduit(), p
+						.getNomCat(), p.getNomProduit(), p.getMarque()));
 			}
+			// String[] Colonnes = { "id_produits", "nom_produit", "nom_marque",
+			// "nom_souscatergorie" };
+			//
+			// ArrayList[] ListeProduits = objBd.renvoi_liste_TrousseFinal(
+			// Colonnes, "id_produits", "", "", null);
+			// int nbdobjet = ListeProduits[0].size();
+			// if (nbdobjet != 0) {
+			// for (int j = 0; j < nbdobjet; j++) {
+			// String IdProduit = ListeProduits[0].get(j).toString();
+			// String NomProduits = ListeProduits[1].get(j).toString();
+			// String NomMarque = ListeProduits[2].get(j).toString();
+			// String NomSousCat = ListeProduits[3].get(j).toString();
+			// produitDupplique.add(new produitRecherche(IdProduit,
+			// NomMarque, NomProduits, NomSousCat));
+			// }
+			// } else {
+			//
+			// }
 		}
 		// objBd.close();
 

@@ -1,7 +1,5 @@
 package fr.smardine.matroussedemaquillage;
 
-import java.util.ArrayList;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -24,6 +22,7 @@ import com.example.android.apis.animation.Animlineaire;
 import fr.smardine.matroussedemaquillage.base.BDAcces;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableParams;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableProduitEnregistre;
+import fr.smardine.matroussedemaquillage.mdl.MlListeProduits;
 import fr.smardine.matroussedemaquillage.note.note_page1;
 import fr.smardine.matroussedemaquillage.param.tab_param;
 import fr.smardine.matroussedemaquillage.recherche.Recherche;
@@ -315,17 +314,22 @@ public class Main extends Activity implements OnClickListener {
 
 		}
 		if (v == BtPerimé) {
-			objBd = new BDAcces(ctx);
-			// objBd.open();
-			String[] Colonnes = { "id_produits", "nom_produit",
-					"Date_Peremption", "nom_marque" };
-			String condition = "IS_PERIME=? or IS_PRESQUE_PERIME=?";
-			String[] args = { "true", "true" };
 
-			ArrayList[] ListeProduits = objBd.renvoi_liste_TrousseFinal(
-					Colonnes, "id_produits", "", condition, args);
-			int nbdobjet = ListeProduits[0].size();
-			if (nbdobjet != 0) {
+			AccesTableProduitEnregistre accesProduit = new AccesTableProduitEnregistre(
+					ctx);
+			MlListeProduits lstProduit = accesProduit.getProduitsPerime();
+
+			// objBd = new BDAcces(ctx);
+			// // objBd.open();
+			// String[] Colonnes = { "id_produits", "nom_produit",
+			// "Date_Peremption", "nom_marque" };
+			// String condition = "IS_PERIME=? or IS_PRESQUE_PERIME=?";
+			// String[] args = { "true", "true" };
+			//
+			// ArrayList[] ListeProduits = objBd.renvoi_liste_TrousseFinal(
+			// Colonnes, "id_produits", "", condition, args);
+			// int nbdobjet = ListeProduits[0].size();
+			if (lstProduit.size() > 0) {
 				intentRecherche = new Intent(Main.this,
 						recherche_produit_perime.class);
 				intentRecherche.putExtra(ActivityParam.LaunchFromMain, true);
