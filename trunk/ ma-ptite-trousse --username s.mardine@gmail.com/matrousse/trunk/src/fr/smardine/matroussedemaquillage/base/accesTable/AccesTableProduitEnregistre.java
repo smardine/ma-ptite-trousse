@@ -227,4 +227,105 @@ public class AccesTableProduitEnregistre {
 				whereClause, whereArgs);
 
 	}
+
+	/**
+	 * @param p_filtrage
+	 * @return la liste des produits correspondant au filtrage
+	 */
+	public MlListeProduits getProduitsAvecFiltrageSurCategorie(String p_filtrage) {
+		MlListeProduits lst = new MlListeProduits();
+		String requete = "SELECT id_produits FROM produit_Enregistre where nom_souscatergorie LIKE '%"
+				+ p_filtrage + "%' ORDER BY nom_souscatergorie";
+		for (String s : requeteFact.getListeDeChamp(requete).get(0)) {
+			lst.add(new MlProduit(Integer.parseInt(s), this));
+		}
+		return lst;
+	}
+
+	public MlListeProduits getProduitsAvecFiltrageSurMarque(String p_Filtrage) {
+		MlListeProduits lst = new MlListeProduits();
+		String requete = "SELECT id_produits FROM produit_Enregistre where nom_marque LIKE '%"
+				+ p_Filtrage + "%' ORDER BY nom_marque";
+		for (String s : requeteFact.getListeDeChamp(requete).get(0)) {
+			lst.add(new MlProduit(Integer.parseInt(s), this));
+		}
+		return lst;
+	}
+
+	public MlListeProduits getProduitsAvecFiltrageSurTout(String p_Filtrage) {
+		MlListeProduits lst = new MlListeProduits();
+		String requete = "SELECT" + " id_produits "
+				+ "FROM produit_Enregistre " + "where nom_produit LIKE '%"
+				+ p_Filtrage + "%' " + "or nom_marque LIKE '%" + p_Filtrage
+				+ "%' " + "or nom_souscatergorie LIKE '%" + p_Filtrage
+				+ "%' ORDER BY id_produits";
+		for (String s : requeteFact.getListeDeChamp(requete).get(0)) {
+			lst.add(new MlProduit(Integer.parseInt(s), this));
+		}
+		return lst;
+	}
+
+	public MlListeProduits getProduitsPerime() {
+		MlListeProduits lst = new MlListeProduits();
+		String requete = "SELECT "
+				+ EnStructProduitEnregistre.ID.getNomChamp()
+				+ " FROM "
+				+ EnTable.PRODUIT_ENREGISTRE.getNomTable()
+				+ " WHERE "
+				+ //
+				"(" + EnStructProduitEnregistre.IS_PERIME.getNomChamp()
+				+ "='true'" + " or "
+				+ EnStructProduitEnregistre.IS_PRESQUE_PERIME.getNomChamp()
+				+ "='true') ";
+		for (String s : requeteFact.getListeDeChamp(requete).get(0)) {
+			lst.add(new MlProduit(Integer.parseInt(s), this));
+		}
+		return lst;
+	}
+
+	public MlListeProduits getProduitsPerimeAvecFiltrageSurCategorie(
+			String p_filtrage) {
+		MlListeProduits lst = new MlListeProduits();
+		String requete = "SELECT id_produits FROM produit_Enregistre where nom_souscatergorie LIKE '%"
+				+ p_filtrage
+				+ "%' and (IS_PERIME='true' or IS_PRESQUE_PERIME='true') " //
+				+ "ORDER BY Date_Peremption";
+		for (String s : requeteFact.getListeDeChamp(requete).get(0)) {
+			lst.add(new MlProduit(Integer.parseInt(s), this));
+		}
+		return lst;
+	}
+
+	public MlListeProduits getProduitsPerimeAvecFiltrageSurMarque(
+			String p_Filtrage) {
+		MlListeProduits lst = new MlListeProduits();
+		String requete = "SELECT id_produits FROM produit_Enregistre where nom_marque LIKE '%"
+				+ p_Filtrage
+				+ "%' and (IS_PERIME='true' or IS_PRESQUE_PERIME='true') ORDER BY nom_marque";
+		for (String s : requeteFact.getListeDeChamp(requete).get(0)) {
+			lst.add(new MlProduit(Integer.parseInt(s), this));
+		}
+		return lst;
+	}
+
+	public MlListeProduits getProduitsPerimeAvecFiltrageSurTout(
+			String p_Filtrage) {
+		MlListeProduits lst = new MlListeProduits();
+		String requete = "SELECT"
+				+ " id_produits "
+				+ "FROM produit_Enregistre "
+				+ "where nom_produit LIKE '%"
+				+ p_Filtrage
+				+ "%' "
+				+ "or nom_marque LIKE '%"
+				+ p_Filtrage
+				+ "%' "
+				+ "or nom_souscatergorie LIKE '%"
+				+ p_Filtrage
+				+ "%' and (IS_PERIME='true' or IS_PRESQUE_PERIME='true')  ORDER BY id_produits";
+		for (String s : requeteFact.getListeDeChamp(requete).get(0)) {
+			lst.add(new MlProduit(Integer.parseInt(s), this));
+		}
+		return lst;
+	}
 }

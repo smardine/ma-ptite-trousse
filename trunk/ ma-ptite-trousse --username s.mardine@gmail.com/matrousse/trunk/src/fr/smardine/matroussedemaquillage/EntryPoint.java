@@ -516,7 +516,7 @@ public class EntryPoint extends Activity implements ViewFactory {
 
 		@Override
 		protected Object doInBackground(Object... p_arg0) {
-			objBd = new BDAcces(ctx);
+			// objBd = new BDAcces(ctx);
 			// //objBd.open();
 			AccesTableProduitEnregistre accesProduits = new AccesTableProduitEnregistre(
 					ctx);

@@ -1,7 +1,6 @@
 package fr.smardine.matroussedemaquillage.base.accesTable;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -47,49 +46,15 @@ public class AccesTableTrousseProduits {
 	 * @param Catégorie
 	 * @return un tableau de liste de String
 	 */
-	public ArrayList<String>[] renvoi_liste_produits(String Catégorie) {
+	public ArrayList<String> renvoi_liste_produits(String Catégorie) {
 		String requete = "SELECT " + EnStructProduits.NOM_SOUSCAT.getNomChamp()
 				+ ", " + EnStructProduits.ISCHECKED.getNomChamp() + " FROM "
 				+ EnTable.TROUSSE_PRODUIT.getNomTable() + " WHERE "
 				+ EnStructProduits.NOM_CAT.getNomChamp() + "='" + Catégorie
 				+ "' ORDER BY " + EnStructProduits.NOM_SOUSCAT.getNomChamp();
 
-		List<ArrayList<String>> retour = requeteFact.getListeDeChamp(requete);
+		return requeteFact.getListeDeChamp(requete).get(0);
 
-		// String[] colonne = new String[] { "nom_souscatergorie", "ischecked"
-		// };
-		// String condition = "nom_categorie='" + Catégorie + "'";
-		// String[] conditionArgs = null;
-		// String groupby = "";
-		// String having = "";
-		// String orderby = "nom_souscatergorie";
-		//
-		// Cursor objCursor = mdb.query(EnTable.TROUSSE_PRODUIT.getNomTable(),
-		// colonne, condition, conditionArgs, groupby, having, orderby);
-		// int idxNomSousCat = objCursor.getColumnIndex("nom_souscatergorie");
-		// int idxIsChecked = objCursor.getColumnIndex("ischecked");
-		//
-		// ArrayList<String> aTableRetourNom = new ArrayList<String>();
-		// ArrayList<String> aTableRetourisChecked = new ArrayList<String>();
-		//
-		// objCursor.moveToFirst();
-		// @SuppressWarnings("unchecked")
-		ArrayList<String>[] aTableRetour = new ArrayList[25];
-
-		/* Check if our result was valid. */
-		// if (objCursor != null) {
-		// for (int i = 0; i < objCursor.getCount(); i++) {
-		// String resultnom_produits = objCursor.getString(idxNomSousCat);
-		// String resultischecked = objCursor.getString(idxIsChecked);
-		// aTableRetourNom.add(resultnom_produits);
-		// aTableRetourisChecked.add(resultischecked);
-		// objCursor.moveToNext();
-		// }
-		// }
-		// objCursor.close();
-		// aTableRetour[0] = aTableRetourNom;
-		// aTableRetour[1] = aTableRetourisChecked;
-		return aTableRetour;
 	}
 
 	/**
