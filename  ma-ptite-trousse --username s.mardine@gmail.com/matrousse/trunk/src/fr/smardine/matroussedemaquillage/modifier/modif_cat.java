@@ -101,26 +101,41 @@ public class modif_cat extends Activity implements OnClickListener {
 	 * 
 	 */
 	private void ChoisiLeTheme() {
-		objBd = new BDAcces(this);
-		// //objBd.open();
-		String[] champ = { "AfficheAlerte", "DureeViePeremp", "Theme" };
-		@SuppressWarnings("rawtypes")
-		ArrayList[] Param = objBd.renvoi_param(champ);
 
-		String nomThemeChoisi = Param[2].get(0).toString().trim();
-		if (EnTheme.Bisounours.getLib().equals(nomThemeChoisi)) {
-			setContentView(R.layout.theme_bisounours_modif_cat);
+		AccesTableParams accesParam = new AccesTableParams(this);
+		switch (accesParam.getThemeChoisi()) {
+			case Bisounours:
+				setContentView(R.layout.theme_bisounours_modif_cat);
+				break;
+			case Classique:
+				accesParam.majTheme(EnTheme.Fleur);
+				ChoisiLeTheme();
+				break;
+			case Fleur:
+				setContentView(R.layout.theme_fleur_modif_cat);
+				break;
+		}
 
-		}
-		if (EnTheme.Classique.getLib().equals(nomThemeChoisi)) {
-			AccesTableParams accesParam = new AccesTableParams(this);
-			accesParam.majTheme(EnTheme.Fleur);
-			ChoisiLeTheme();
-
-		}
-		if (EnTheme.Fleur.getLib().equals(nomThemeChoisi)) {
-			setContentView(R.layout.theme_fleur_modif_cat);
-		}
+		// objBd = new BDAcces(this);
+		// // //objBd.open();
+		// String[] champ = { "AfficheAlerte", "DureeViePeremp", "Theme" };
+		// @SuppressWarnings("rawtypes")
+		// ArrayList[] Param = objBd.renvoi_param(champ);
+		//
+		// String nomThemeChoisi = Param[2].get(0).toString().trim();
+		// if (EnTheme.Bisounours.getLib().equals(nomThemeChoisi)) {
+		// setContentView(R.layout.theme_bisounours_modif_cat);
+		//
+		// }
+		// if (EnTheme.Classique.getLib().equals(nomThemeChoisi)) {
+		// AccesTableParams accesParam = new AccesTableParams(this);
+		// accesParam.majTheme(EnTheme.Fleur);
+		// ChoisiLeTheme();
+		//
+		// }
+		// if (EnTheme.Fleur.getLib().equals(nomThemeChoisi)) {
+		// setContentView(R.layout.theme_fleur_modif_cat);
+		// }
 
 		// //objBd.close();
 	}

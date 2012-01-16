@@ -5,7 +5,6 @@ import helper.DateHelper;
 import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -190,22 +189,18 @@ public class EntryPoint extends Activity implements ViewFactory {
 	 * @param AuMoinsUnProduitPerimé - boolean
 	 * @param AuMoinsUnProduitPresquePermié - boolean
 	 */
-	@SuppressWarnings("rawtypes")
+
 	public void gotoPrevienUtilisateur(boolean AuMoinsUnProduitPerimé,
 			boolean AuMoinsUnProduitPresquePermié) {
+		AccesTableParams accesParam = new AccesTableParams(ctx);
 
-		// //objBd.open();
-		String[] champ = { "AfficheAlerte", "DureeViePeremp", "Theme" };
-		ArrayList[] Param = objBd.renvoi_param(champ);
-		// //objBd.close();
-		if ("true".equals(Param[0].get(0))) {
+		if (accesParam.getAfficheAlerte()) {
 			Intent intentRecherche = new Intent(EntryPoint.this, Main.class);
 			intentRecherche.putExtra(ActivityParam.LaunchFromEntryPoint, true);
 			intentRecherche.putExtra(ActivityParam.AfficheProduitPerime, true);
 			// on demarre la nouvelle activité
 			startActivity(intentRecherche);
 			termineActivity();
-
 		} else {
 			remplissageBase();
 			Intent intentMain = new Intent(EntryPoint.this, Main.class);
@@ -215,6 +210,27 @@ public class EntryPoint extends Activity implements ViewFactory {
 			startActivity(intentMain);
 			termineActivity();
 		}
+		// //objBd.open();
+		// String[] champ = { "AfficheAlerte", "DureeViePeremp", "Theme" };
+		// ArrayList[] Param = objBd.renvoi_param(champ);
+		// // //objBd.close();
+		// if ("true".equals(Param[0].get(0))) {
+		// Intent intentRecherche = new Intent(EntryPoint.this, Main.class);
+		// intentRecherche.putExtra(ActivityParam.LaunchFromEntryPoint, true);
+		// intentRecherche.putExtra(ActivityParam.AfficheProduitPerime, true);
+		// // on demarre la nouvelle activité
+		// startActivity(intentRecherche);
+		// termineActivity();
+		//
+		// } else {
+		// remplissageBase();
+		// Intent intentMain = new Intent(EntryPoint.this, Main.class);
+		// // on demarre la nouvelle activité
+		// intentMain.putExtra(ActivityParam.LaunchFromEntryPoint, true);
+		// intentMain.putExtra(ActivityParam.AfficheProduitPerime, false);
+		// startActivity(intentMain);
+		// termineActivity();
+		// }
 	}
 
 	/**

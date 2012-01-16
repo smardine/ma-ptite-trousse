@@ -197,10 +197,7 @@ public class BDAcces {
 	public int revoiNbProdPerimeOuPresquePerime(String ScriptSQL) {
 		RequeteFactory requeteFact = new RequeteFactory(mCtx);
 		return Integer.parseInt(requeteFact.get1Champ(ScriptSQL));
-		// Cursor objCursor = mDb.rawQuery(ScriptSQL, null);
-		// int itotal = objCursor.getCount();
-		// objCursor.close();
-		// return itotal;
+
 	}
 
 	/**
@@ -769,6 +766,9 @@ public class BDAcces {
 		String groupby = "";
 		String having = "";
 		String orderby = "";
+		if (mDb == null) {
+			open();
+		}
 		Cursor objCursor = mDb.query(Table, colonne, condition, conditionArgs,
 				groupby, having, orderby);
 		int iPostNomProduits = objCursor.getColumnIndex(Colonne);
@@ -938,7 +938,9 @@ public class BDAcces {
 	 * @return
 	 */
 	public int deleteTable(String table, String whereClause, String[] whereArgs) {
-
+		if (mDb == null) {
+			open();
+		}
 		int RowNumber = mDb.delete(table, whereClause, whereArgs);
 
 		return RowNumber;
@@ -1054,67 +1056,68 @@ public class BDAcces {
 	 * @return
 	 */
 
-	public ArrayList<String>[] renvoi_param(String[] colonne) {
-		// open();
-
-		// String[] colonne= new
-		// String[]{"nom_produit","DateAchat","Date_Peremption"};
-		// String condition = "id_produits='"+id+"'";
-		String condition = "";
-		String[] conditionArgs = null;
-
-		String having = "";
-
-		Cursor objCursor = mDb.query("Param", colonne, condition,
-				conditionArgs, "", having, "");
-		int iPostAfficheAlerte = objCursor.getColumnIndex(colonne[0]);
-		int iPostDureeViePeremp = objCursor.getColumnIndex(colonne[1]);
-		int PostTheme = objCursor.getColumnIndex(colonne[2]);
-
-		int itotal = objCursor.getCount();
-
-		ArrayList<String> aTableRetourAfficheAlerte = new ArrayList<String>();
-		ArrayList<String> aTableRetourDureeViePeremp = new ArrayList<String>();
-		ArrayList<String> aTableRetourTheme = new ArrayList<String>();
-
-		objCursor.moveToFirst();
-
-		ArrayList[] aTableRetour = new ArrayList[objCursor.getColumnCount() + 1];
-
-		/* Check if our result was valid. */
-		if (objCursor != null) {
-			for (int i = 0; i < itotal; i++) {
-				String resultDureeViePeremp = "", resultAfficheAlerte = "", resultTheme = "";
-				resultAfficheAlerte = objCursor.getString(iPostAfficheAlerte);
-				resultDureeViePeremp = objCursor.getString(iPostDureeViePeremp);
-				resultTheme = objCursor.getString(PostTheme);
-
-				if (!resultAfficheAlerte.equals(null)) {
-					aTableRetourAfficheAlerte.add(resultAfficheAlerte);
-				} else {
-					aTableRetourAfficheAlerte.add("vide");
-				}
-				if (!resultDureeViePeremp.equals(null)) {
-					aTableRetourDureeViePeremp.add(resultDureeViePeremp);
-				} else {
-					aTableRetourDureeViePeremp.add("vide");
-				}
-				if (!resultTheme.equals(null)) {
-					aTableRetourTheme.add(resultTheme);
-				} else {
-					aTableRetourTheme.add("vide");
-				}
-
-				objCursor.moveToNext();
-			}
-		}
-		objCursor.close();
-		aTableRetour[0] = aTableRetourAfficheAlerte;
-		aTableRetour[1] = aTableRetourDureeViePeremp;
-		aTableRetour[2] = aTableRetourTheme;
-
-		return aTableRetour;
-	}
+	// public ArrayList<String>[] renvoi_param(String[] colonne) {
+	// // open();
+	//
+	// // String[] colonne= new
+	// // String[]{"nom_produit","DateAchat","Date_Peremption"};
+	// // String condition = "id_produits='"+id+"'";
+	// String condition = "";
+	// String[] conditionArgs = null;
+	//
+	// String having = "";
+	//
+	// Cursor objCursor = mDb.query("Param", colonne, condition,
+	// conditionArgs, "", having, "");
+	// int iPostAfficheAlerte = objCursor.getColumnIndex(colonne[0]);
+	// int iPostDureeViePeremp = objCursor.getColumnIndex(colonne[1]);
+	// int PostTheme = objCursor.getColumnIndex(colonne[2]);
+	//
+	// int itotal = objCursor.getCount();
+	//
+	// ArrayList<String> aTableRetourAfficheAlerte = new ArrayList<String>();
+	// ArrayList<String> aTableRetourDureeViePeremp = new ArrayList<String>();
+	// ArrayList<String> aTableRetourTheme = new ArrayList<String>();
+	//
+	// objCursor.moveToFirst();
+	//
+	// ArrayList[] aTableRetour = new ArrayList[objCursor.getColumnCount() + 1];
+	//
+	// /* Check if our result was valid. */
+	// if (objCursor != null) {
+	// for (int i = 0; i < itotal; i++) {
+	// String resultDureeViePeremp = "", resultAfficheAlerte = "", resultTheme =
+	// "";
+	// resultAfficheAlerte = objCursor.getString(iPostAfficheAlerte);
+	// resultDureeViePeremp = objCursor.getString(iPostDureeViePeremp);
+	// resultTheme = objCursor.getString(PostTheme);
+	//
+	// if (!resultAfficheAlerte.equals(null)) {
+	// aTableRetourAfficheAlerte.add(resultAfficheAlerte);
+	// } else {
+	// aTableRetourAfficheAlerte.add("vide");
+	// }
+	// if (!resultDureeViePeremp.equals(null)) {
+	// aTableRetourDureeViePeremp.add(resultDureeViePeremp);
+	// } else {
+	// aTableRetourDureeViePeremp.add("vide");
+	// }
+	// if (!resultTheme.equals(null)) {
+	// aTableRetourTheme.add(resultTheme);
+	// } else {
+	// aTableRetourTheme.add("vide");
+	// }
+	//
+	// objCursor.moveToNext();
+	// }
+	// }
+	// objCursor.close();
+	// aTableRetour[0] = aTableRetourAfficheAlerte;
+	// aTableRetour[1] = aTableRetourDureeViePeremp;
+	// aTableRetour[2] = aTableRetourTheme;
+	//
+	// return aTableRetour;
+	// }
 
 	/**
 	 * @param ScriptSql

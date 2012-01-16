@@ -56,14 +56,14 @@ public class note_saisie extends Activity implements OnClickListener {
 
 		IdNote = getIntent().getStringExtra(ActivityParam.IdNote).trim();
 		objBd = new BDAcces(this);
-		//objBd.open();
+		// objBd.open();
 		String[] Colonnes = { "id_note", "Titre", "Message" };
 		String condition = "id_note=?";
 		String[] args = { IdNote };
 		ArrayList[] notes = objBd.renvoi_liste_NoteTotale(Colonnes, "", "",
 				condition, args);
 
-		//objBd.close();
+		// objBd.close();
 		int nbdobjet = notes[0].size();
 		if (nbdobjet != 0) {
 			for (int j = 0; j < nbdobjet; j++) {
@@ -85,29 +85,44 @@ public class note_saisie extends Activity implements OnClickListener {
 	 * 
 	 */
 	private void ChoisiLeTheme() {
-		objBd = new BDAcces(this);
-		//objBd.open();
-		String[] champ = { "AfficheAlerte", "DureeViePeremp", "Theme" };
-		@SuppressWarnings("rawtypes")
-		ArrayList[] Param = objBd.renvoi_param(champ);
+		AccesTableParams accesParam = new AccesTableParams(this);
+		switch (accesParam.getThemeChoisi()) {
+			case Bisounours:
+				setContentView(R.layout.theme_bisounours_note_saisie);
 
-		String nomThemeChoisi = Param[2].get(0).toString().trim();
-		if (EnTheme.Bisounours.getLib().equals(nomThemeChoisi)) {
-			setContentView(R.layout.theme_bisounours_note_saisie);
-
-		}
-		if (EnTheme.Classique.getLib().equals(nomThemeChoisi)) {
-			// setContentView(R.layout.note_saisie);
-			AccesTableParams accesParam = new AccesTableParams(this);
-			accesParam.majTheme(EnTheme.Fleur);
-			ChoisiLeTheme();
-
-		}
-		if (EnTheme.Fleur.getLib().equals(nomThemeChoisi)) {
-			setContentView(R.layout.theme_fleur_note_saisie);
+				break;
+			case Classique:
+				accesParam.majTheme(EnTheme.Fleur);
+				ChoisiLeTheme();
+				break;
+			case Fleur:
+				setContentView(R.layout.theme_fleur_note_saisie);
+				break;
 		}
 
-		//objBd.close();
+		// objBd = new BDAcces(this);
+		// //objBd.open();
+		// String[] champ = { "AfficheAlerte", "DureeViePeremp", "Theme" };
+		// @SuppressWarnings("rawtypes")
+		// ArrayList[] Param = objBd.renvoi_param(champ);
+		//
+		// String nomThemeChoisi = Param[2].get(0).toString().trim();
+		// if (EnTheme.Bisounours.getLib().equals(nomThemeChoisi)) {
+		// setContentView(R.layout.theme_bisounours_note_saisie);
+		//
+		// }
+		// if (EnTheme.Classique.getLib().equals(nomThemeChoisi)) {
+		// // setContentView(R.layout.note_saisie);
+		// AccesTableParams accesParam = new AccesTableParams(this);
+		// accesParam.majTheme(EnTheme.Fleur);
+		// ChoisiLeTheme();
+		//
+		// }
+		// if (EnTheme.Fleur.getLib().equals(nomThemeChoisi)) {
+		// setContentView(R.layout.theme_fleur_note_saisie);
+		// }
+
+		// objBd.close();
 	}
 
 	@Override

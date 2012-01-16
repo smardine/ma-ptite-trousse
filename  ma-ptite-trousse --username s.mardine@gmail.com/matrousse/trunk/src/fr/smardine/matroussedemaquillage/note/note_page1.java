@@ -85,29 +85,44 @@ public class note_page1 extends Activity implements OnItemClickListener,
 	 * 
 	 */
 	private void ChoisiLeTheme() {
-		objBd = new BDAcces(this);
-		//objBd.open();
-		String[] champ = { "AfficheAlerte", "DureeViePeremp", "Theme" };
-		@SuppressWarnings("rawtypes")
-		ArrayList[] Param = objBd.renvoi_param(champ);
 
-		String nomThemeChoisi = Param[2].get(0).toString().trim();
-		if (EnTheme.Bisounours.getLib().equals(nomThemeChoisi)) {
-			setContentView(R.layout.theme_bisounours_note_page1);
+		AccesTableParams accesParam = new AccesTableParams(this);
+		switch (accesParam.getThemeChoisi()) {
+			case Bisounours:
+				setContentView(R.layout.theme_bisounours_note_page1);
 
+				break;
+			case Classique:
+				accesParam.majTheme(EnTheme.Fleur);
+				ChoisiLeTheme();
+				break;
+			case Fleur:
+				setContentView(R.layout.theme_fleur_note_page1);
+				break;
 		}
-		if (EnTheme.Classique.getLib().equals(nomThemeChoisi)) {
-			// setContentView(R.layout.note_page1);
-			AccesTableParams accesParam = new AccesTableParams(this);
-			accesParam.majTheme(EnTheme.Fleur);
-			ChoisiLeTheme();
+		// objBd = new BDAcces(this);
+		// //objBd.open();
+		// String[] champ = { "AfficheAlerte", "DureeViePeremp", "Theme" };
+		// @SuppressWarnings("rawtypes")
+		// ArrayList[] Param = objBd.renvoi_param(champ);
+		//
+		// String nomThemeChoisi = Param[2].get(0).toString().trim();
+		// if (EnTheme.Bisounours.getLib().equals(nomThemeChoisi)) {
+		// setContentView(R.layout.theme_bisounours_note_page1);
+		//
+		// }
+		// if (EnTheme.Classique.getLib().equals(nomThemeChoisi)) {
+		// // setContentView(R.layout.note_page1);
+		// AccesTableParams accesParam = new AccesTableParams(this);
+		// accesParam.majTheme(EnTheme.Fleur);
+		// ChoisiLeTheme();
+		//
+		// }
+		// if (EnTheme.Fleur.getLib().equals(nomThemeChoisi)) {
+		// setContentView(R.layout.theme_fleur_note_page1);
+		// }
 
-		}
-		if (EnTheme.Fleur.getLib().equals(nomThemeChoisi)) {
-			setContentView(R.layout.theme_fleur_note_page1);
-		}
-
-		//objBd.close();
+		// objBd.close();
 	}
 
 	private void onCreateMenu(Menu menu) {
@@ -188,7 +203,7 @@ public class note_page1 extends Activity implements OnItemClickListener,
 	private void AfficheLeContenu(String TypeRecherche,
 			ArrayList<produitNote> produitNote2, ListView produitListView) {
 
-		//objBd.open();
+		// objBd.open();
 
 		if (TypeRecherche.equals("Tout")) {
 
@@ -217,7 +232,7 @@ public class note_page1 extends Activity implements OnItemClickListener,
 
 			}
 		}
-		//objBd.close();
+		// objBd.close();
 
 		// animation d'affichage cascade du haut vers le bas
 		AnimationSet set = new AnimationSet(true);
@@ -361,7 +376,7 @@ public class note_page1 extends Activity implements OnItemClickListener,
 						public void onClick(DialogInterface dialog,
 								int whichButton) {
 							String value = inputProduit.getText().toString();
-							//objBd.open();
+							// objBd.open();
 							ContentValues values = new ContentValues();
 							values.put("Titre", value);
 							values.put("Message", " ");
@@ -400,7 +415,7 @@ public class note_page1 extends Activity implements OnItemClickListener,
 						public void onClick(DialogInterface dialog,
 								int whichButton) {
 
-							//objBd.open();
+							// objBd.open();
 							int nbChanmpSupprime = objBd.deleteTable("Notes",
 									"1", null);
 
@@ -460,12 +475,12 @@ public class note_page1 extends Activity implements OnItemClickListener,
 		String whereClause = "id_note=?";
 		String[] WhereArgs = new String[] { idNote };
 
-		//objBd.open();
+		// objBd.open();
 		int nbChampEffacé = objBd.deleteTable("Notes", whereClause, WhereArgs);
 
 		produitNote.removeAll(produitNote);
 		AfficheLeContenu("Tout", produitNote, NoteListView);
-		//objBd.close();
+		// objBd.close();
 	}
 
 }

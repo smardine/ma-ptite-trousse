@@ -1,7 +1,5 @@
 package fr.smardine.matroussedemaquillage.param;
 
-import java.util.ArrayList;
-
 import widget.majWidget;
 import android.app.Activity;
 import android.content.Intent;
@@ -67,26 +65,36 @@ public class tab2 extends Activity implements OnItemSelectedListener,
 	 * 
 	 */
 	private void verifieLeThemeChoisi() {
-		objBd = new BDAcces(this);
-		//objBd.open();
-		String[] colonnes = { "AfficheAlerte", "DureeViePeremp", "Theme" };
-		@SuppressWarnings("rawtypes")
-		ArrayList[] Param = objBd.renvoi_param(colonnes);
 
-		String nomThemeChoisi = Param[2].get(0).toString().trim();
-		if (EnTheme.Bisounours.getLib().equals(nomThemeChoisi)) {
-
-			s1.setSelection(EnTheme.Bisounours.getCode());
+		AccesTableParams accesParam = new AccesTableParams(this);
+		switch (accesParam.getThemeChoisi()) {
+			case Bisounours:
+				s1.setSelection(EnTheme.Bisounours.getCode());
+				break;
+			case Fleur:
+				s1.setSelection(EnTheme.Fleur.getCode());
+				break;
 		}
-		// if (EnTheme.Classique.getLib().equals(nomThemeChoisi)) {
+		// objBd = new BDAcces(this);
+		// //objBd.open();
+		// String[] colonnes = { "AfficheAlerte", "DureeViePeremp", "Theme" };
+		// @SuppressWarnings("rawtypes")
+		// ArrayList[] Param = objBd.renvoi_param(colonnes);
 		//
-		// s1.setSelection(EnTheme.Classique.getCode());
+		// String nomThemeChoisi = Param[2].get(0).toString().trim();
+		// if (EnTheme.Bisounours.getLib().equals(nomThemeChoisi)) {
+		//
+		// s1.setSelection(EnTheme.Bisounours.getCode());
 		// }
-		if (EnTheme.Fleur.getLib().equals(nomThemeChoisi)) {
-
-			s1.setSelection(EnTheme.Fleur.getCode());
-		}
-		//objBd.close();
+		// // if (EnTheme.Classique.getLib().equals(nomThemeChoisi)) {
+		// //
+		// // s1.setSelection(EnTheme.Classique.getCode());
+		// // }
+		// if (EnTheme.Fleur.getLib().equals(nomThemeChoisi)) {
+		//
+		// s1.setSelection(EnTheme.Fleur.getCode());
+		// }
+		// objBd.close();
 	}
 
 	private static final String[] mStrings = { EnTheme.Fleur.getLib(),
