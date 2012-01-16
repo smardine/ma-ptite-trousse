@@ -3,7 +3,7 @@ package fr.smardine.matroussedemaquillage.variableglobale;
 public enum EnTheme {
 
 	Classique(0, "Classique"), //
-	Fleur(0, "Fleur"),//
+	Fleur(0, "Fleur"), //
 	Bisounours(1, "Bisounours");
 
 	int code;
@@ -28,6 +28,20 @@ public enum EnTheme {
 
 	public void setLib(String p_lib) {
 		lib = p_lib;
+	}
+
+	/**
+	 * Obtenir l'enumeration correspondante au theme
+	 * @param p_nomTheme
+	 * @return l'enum
+	 */
+	public static EnTheme getThemeFromValue(String p_nomTheme) {
+		for (EnTheme e : values()) {
+			if (((EnTheme) e).getLib().equals(p_nomTheme)) {
+				return e;
+			}
+		}
+		return null;
 	}
 
 }

@@ -85,4 +85,28 @@ public class AccesTableParams {
 		requeteFact.majTable(EnTable.PARAM, values, "", null);
 	}
 
+	/**
+	 * @return le theme choisi par l'utilisateur
+	 */
+	public EnTheme getThemeChoisi() {
+		String requete = "SELECT " + EnStructParam.THEME.getNomChamp()
+				+ " FROM " + EnTable.PARAM.getNomTable();
+		String nomTheme = requeteFact.get1Champ(requete);
+		return EnTheme.getThemeFromValue(nomTheme);
+
+	}
+
+	/**
+	 * @return l'etat d'affichage de l'alerte produit perime (true ou false)
+	 */
+	public boolean getAfficheAlerte() {
+		String requete = "SELECT " + EnStructParam.AFFICHE_ALERTE.getNomChamp()
+				+ " FROM " + EnTable.PARAM.getNomTable();
+		if ("true".equals(requeteFact.get1Champ(requete))) {
+			return true;
+		}
+		return false;
+
+	}
+
 }

@@ -170,12 +170,12 @@ public class formulaire_entree_page1bis extends Activity implements
 		popUp("OnCreate-page1");
 
 		objBd = new BDAcces(this);
-		//objBd.open();
+		// objBd.open();
 
 		Marque = objBd.renvoi_liste_ValeurDansString("trousse_marques",
 				"nom_marque");
 
-		//objBd.close();
+		// objBd.close();
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
 				R.layout.list_item_marque_auto, Marque);
 		textView.setAdapter(adapter);
@@ -186,35 +186,49 @@ public class formulaire_entree_page1bis extends Activity implements
 	 * 
 	 */
 	private void ChoisiLeTheme() {
-		objBd = new BDAcces(this);
-		//objBd.open();
-		String[] champ = { "AfficheAlerte", "DureeViePeremp", "Theme" };
-		@SuppressWarnings("rawtypes")
-		ArrayList[] Param = objBd.renvoi_param(champ);
 
-		String nomThemeChoisi = Param[2].get(0).toString().trim();
-		if (EnTheme.Bisounours.getLib().equals(nomThemeChoisi)) {
-			setContentView(R.layout.theme_bisounours_formulaire_entree_page1bis);
-
+		AccesTableParams accesParam = new AccesTableParams(this);
+		switch (accesParam.getThemeChoisi()) {
+			case Bisounours:
+				setContentView(R.layout.theme_bisounours_formulaire_entree_page1bis);
+				break;
+			case Classique:
+				accesParam.majTheme(EnTheme.Fleur);
+				ChoisiLeTheme();
+				break;
+			case Fleur:
+				setContentView(R.layout.theme_fleur_formulaire_entree_page1bis);
+				break;
 		}
-		if (EnTheme.Classique.getLib().equals(nomThemeChoisi)) {
-			// setContentView(R.layout.formulaire_entree_page1bis);
-			AccesTableParams accesParam = new AccesTableParams(this);
-			accesParam.majTheme(EnTheme.Fleur);
-			// ContentValues values = new ContentValues();
-			// values.put("Theme", EnTheme.Fleur.getLib());
-			//
-			// //objBd.open();
-			// objBd.majTable("Param", values, "", null);
-			// //objBd.close();
-			ChoisiLeTheme();
+		// objBd = new BDAcces(this);
+		// //objBd.open();
+		// String[] champ = { "AfficheAlerte", "DureeViePeremp", "Theme" };
+		// @SuppressWarnings("rawtypes")
+		// ArrayList[] Param = objBd.renvoi_param(champ);
+		//
+		// String nomThemeChoisi = Param[2].get(0).toString().trim();
+		// if (EnTheme.Bisounours.getLib().equals(nomThemeChoisi)) {
+		// setContentView(R.layout.theme_bisounours_formulaire_entree_page1bis);
+		//
+		// }
+		// if (EnTheme.Classique.getLib().equals(nomThemeChoisi)) {
+		// // setContentView(R.layout.formulaire_entree_page1bis);
+		// AccesTableParams accesParam = new AccesTableParams(this);
+		// accesParam.majTheme(EnTheme.Fleur);
+		// // ContentValues values = new ContentValues();
+		// // values.put("Theme", EnTheme.Fleur.getLib());
+		// //
+		// // //objBd.open();
+		// // objBd.majTable("Param", values, "", null);
+		// // //objBd.close();
+		// ChoisiLeTheme();
+		//
+		// }
+		// if (EnTheme.Fleur.getLib().equals(nomThemeChoisi)) {
+		// setContentView(R.layout.theme_fleur_formulaire_entree_page1bis);
+		// }
 
-		}
-		if (EnTheme.Fleur.getLib().equals(nomThemeChoisi)) {
-			setContentView(R.layout.theme_fleur_formulaire_entree_page1bis);
-		}
-
-		//objBd.close();
+		// objBd.close();
 	}
 
 	private void onCreateMenu(Menu menu) {
@@ -494,9 +508,9 @@ public class formulaire_entree_page1bis extends Activity implements
 						values.put("nom_marque", MarqueChoisie);
 						values.put("ischecked", "false");
 
-						//objBd.open();
+						// objBd.open();
 						objBd.InsertDonnéedansTable("trousse_marques", values);
-						//objBd.close();
+						// objBd.close();
 						adNouvelleMarque.show();
 					}
 
@@ -533,10 +547,10 @@ public class formulaire_entree_page1bis extends Activity implements
 	private boolean verifMarqueEnBase() {
 		MarqueChoisie = textView.getText().toString();
 		boolean MarqueenBase = false;
-		//objBd.open();
+		// objBd.open();
 		Marque = objBd.renvoi_liste_ValeurDansString("trousse_marques",
 				"nom_marque");
-		//objBd.close();
+		// objBd.close();
 		if (!MarqueChoisie.equals("")) {
 			// on le compare à la liste des marques enregistrée en base
 			for (int i = 0; i < Marque.length; i++) {
@@ -586,7 +600,7 @@ public class formulaire_entree_page1bis extends Activity implements
 		for (int j = 0; j < ListeProduits[0].size(); j++) {
 			NomProduits[j] = ListeProduits[0].get(j).toString();
 		}
-		//objBd.close();
+		// objBd.close();
 		return NomProduits;
 	}
 
@@ -604,14 +618,14 @@ public class formulaire_entree_page1bis extends Activity implements
 				indiceProduitCoche = j;
 			}
 		}
-		//objBd.close();
+		// objBd.close();
 		return indiceProduitCoche;
 	}
 
 	@SuppressWarnings("rawtypes")
 	private boolean VerfieAuMoinsUneCategorieSelectionnée() {
 
-		//objBd.open();
+		// objBd.open();
 		ArrayList[] ListeCategorieCochée = objBd.renvoiCategorieCochée();
 		int nbCategorieCochées = ListeCategorieCochée[0].size();
 		String NomProduits = "";
@@ -621,11 +635,11 @@ public class formulaire_entree_page1bis extends Activity implements
 
 		if ((nbCategorieCochées == 1) && (NomProduits.equals("aucun"))) {
 			// popUp ("Vous n'avez selectionné aucune catégorie");
-			//objBd.close();
+			// objBd.close();
 			return false;
 		} else {
 			// popUp("On Continue");
-			//objBd.close();
+			// objBd.close();
 			return true;
 		}
 
@@ -634,11 +648,11 @@ public class formulaire_entree_page1bis extends Activity implements
 	@SuppressWarnings("rawtypes")
 	private int NombreDeCategorieSelectionnée() {
 
-		//objBd.open();
+		// objBd.open();
 		ArrayList[] ListeCategorieCochée = objBd.renvoiCategorieCochée();
 		int nbCategorieCochées = ListeCategorieCochée[0].size();
 
-		//objBd.close();
+		// objBd.close();
 		return nbCategorieCochées;
 
 	}
@@ -753,12 +767,12 @@ public class formulaire_entree_page1bis extends Activity implements
 			// String whereClause = "ischecked=?";
 			// String[] whereArgs = new String[] { "true" };
 			objBd = new BDAcces(this);
-			//objBd.open();
+			// objBd.open();
 			// int nbdechamp = objBd.majTable(Table, modifiedValues,
 			// whereClause, whereArgs);
 			objBd.deleteTable("trousse_tempo", "1", null);
 			// System.out.println("Nombre de champ modifié : " + nbdechamp);
-			//objBd.close();
+			// objBd.close();
 
 		}
 

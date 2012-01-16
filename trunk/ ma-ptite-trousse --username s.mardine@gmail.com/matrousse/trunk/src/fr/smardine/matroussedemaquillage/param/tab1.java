@@ -1,7 +1,5 @@
 package fr.smardine.matroussedemaquillage.param;
 
-import java.util.ArrayList;
-
 import widget.majWidget;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -35,7 +33,6 @@ import fr.smardine.matroussedemaquillage.remplir.formulaire_entree_page1bis;
 import fr.smardine.matroussedemaquillage.remplir.formulaire_entree_page3;
 import fr.smardine.matroussedemaquillage.variableglobale.ActivityParam;
 import fr.smardine.matroussedemaquillage.variableglobale.EnActionParDefaut;
-import fr.smardine.matroussedemaquillage.variableglobale.EnTheme;
 import fr.smardine.matroussedemaquillage.variableglobale.ValeurParDefaut;
 
 public class tab1 extends Activity implements OnClickListener,
@@ -86,17 +83,24 @@ public class tab1 extends Activity implements OnClickListener,
 				sp.setSelection(act.getCode());
 			}
 		}
-		objBd = new BDAcces(this);
-		//objBd.open();
-		String[] colonnes = { "AfficheAlerte", "DureeViePeremp", "Theme" };
-		ArrayList[] Param = objBd.renvoi_param(colonnes);
 
-		if (Param[0].get(0).equals("true")) {
+		AccesTableParams accesParam = new AccesTableParams(this);
+
+		if (accesParam.getAfficheAlerte()) {
 			CbAfficheAlerte.setChecked(true);
 		}
-		textView.setText(Param[1].get(0).toString());
+		textView.setText(accesParam.getDureeViePeremption());
+		// objBd = new BDAcces(this);
+		// // objBd.open();
+		// String[] colonnes = { "AfficheAlerte", "DureeViePeremp", "Theme" };
+		// ArrayList[] Param = objBd.renvoi_param(colonnes);
+		//
+		// if (Param[0].get(0).equals("true")) {
+		// CbAfficheAlerte.setChecked(true);
+		// }
+		// textView.setText(Param[1].get(0).toString());
 
-		//objBd.close();
+		// objBd.close();
 		textView.addTextChangedListener(new TextWatcher() {
 
 			// int len=0;
@@ -146,22 +150,32 @@ public class tab1 extends Activity implements OnClickListener,
 	 * permet de changer l'icone du widget sur l'objet ImageView
 	 */
 	private void verifieLeThemeChoisi() {
-		objBd = new BDAcces(this);
-		//objBd.open();
-		String[] colonnes = { "AfficheAlerte", "DureeViePeremp", "Theme" };
-		@SuppressWarnings("rawtypes")
-		ArrayList[] Param = objBd.renvoi_param(colonnes);
-
-		String nomThemeChoisi = Param[2].get(0).toString().trim();
-		if (EnTheme.Bisounours.getLib().equals(nomThemeChoisi)) {
-			IvPreviewWidget.setImageResource(R.drawable.icone_bisounours);
-
+		AccesTableParams accesParam = new AccesTableParams(this);
+		switch (accesParam.getThemeChoisi()) {
+			case Bisounours:
+				IvPreviewWidget.setImageResource(R.drawable.icone_bisounours);
+				break;
+			case Fleur:
+				IvPreviewWidget.setImageResource(R.drawable.icone1);
+				break;
 		}
-		if (EnTheme.Fleur.getLib().equals(nomThemeChoisi)) {
 
-			IvPreviewWidget.setImageResource(R.drawable.icone1);
-		}
-		//objBd.close();
+		// objBd = new BDAcces(this);
+		// //objBd.open();
+		// String[] colonnes = { "AfficheAlerte", "DureeViePeremp", "Theme" };
+		// @SuppressWarnings("rawtypes")
+		// ArrayList[] Param = objBd.renvoi_param(colonnes);
+		//
+		// String nomThemeChoisi = Param[2].get(0).toString().trim();
+		// if (EnTheme.Bisounours.getLib().equals(nomThemeChoisi)) {
+		// IvPreviewWidget.setImageResource(R.drawable.icone_bisounours);
+		//
+		// }
+		// if (EnTheme.Fleur.getLib().equals(nomThemeChoisi)) {
+		//
+		// IvPreviewWidget.setImageResource(R.drawable.icone1);
+		// }
+		// objBd.close();
 	}
 
 	/**

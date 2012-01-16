@@ -39,7 +39,8 @@ import fr.smardine.matroussedemaquillage.variableglobale.EnTheme;
  */
 public class Main extends Activity implements OnClickListener {
 	ImageView BtRemplir, BtPerimé, BtDuppliquer, BtNotes;
-	Intent intentFormPage1, intentRecherche, intentDupplique, intentParametres, intentNote;
+	Intent intentFormPage1, intentRecherche, intentDupplique, intentParametres,
+			intentNote;
 	AlertDialog.Builder adSortie, adHelp, adInfoProduitPerimé;
 	BDAcces objBd;
 	Context ctx = Main.this;
@@ -50,11 +51,14 @@ public class Main extends Activity implements OnClickListener {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		// ExceptionHandler.register(this, "http://simon.mardine.free.fr/trousse_maquillage/test/server.php", "ma_ptite_trousse");
+		// ExceptionHandler.register(this,
+		// "http://simon.mardine.free.fr/trousse_maquillage/test/server.php",
+		// "ma_ptite_trousse");
 
 		adInfoProduitPerimé = new AlertDialog.Builder(this);
 
-		View v = LayoutInflater.from(this).inflate(R.layout.alerte_produit_perime, null);
+		View v = LayoutInflater.from(this).inflate(
+				R.layout.alerte_produit_perime, null);
 		cb = (CheckBox) v.findViewById(R.id.checkbox);
 
 		adInfoProduitPerimé.setView(v);
@@ -64,53 +68,65 @@ public class Main extends Activity implements OnClickListener {
 		adInfoProduitPerimé.setTitle("Alerte");
 		// adInfoProduitPerimé
 		// .setMessage("Un ou plusieur(s) produit(s) sont perimé(s) ou arrivent a leur date de permeption, voulez vous afficher ces produits?\n"
-		// + "Vous pouvez désactiver cette alerte en passant par le bouton \"menu\" puis \"parametre\"");
-		adInfoProduitPerimé.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
+		// +
+		// "Vous pouvez désactiver cette alerte en passant par le bouton \"menu\" puis \"parametre\"");
+		adInfoProduitPerimé.setPositiveButton("Oui",
+				new DialogInterface.OnClickListener() {
 
-			@Override
-			public void onClick(DialogInterface dialog, int id) {
-				System.out.println("etat de la coche " + cb.isChecked());
-				if (cb.isChecked()) {
-					// si la case est cochée par l'utilisateur , on met a jour la table "param"
-					AccesTableParams accesParam = new AccesTableParams(ctx);
-					accesParam.desactiveAlerte();
-				}
-				Intent intentRecherche = new Intent(Main.this, recherche_produit_perime.class);
-				intentRecherche.putExtra(ActivityParam.LaunchFromMain, true);
-				// on demarre la nouvelle activité
-				startActivity(intentRecherche);
-				termineActivity();
+					@Override
+					public void onClick(DialogInterface dialog, int id) {
+						System.out.println("etat de la coche " + cb.isChecked());
+						if (cb.isChecked()) {
+							// si la case est cochée par l'utilisateur , on met
+							// a jour la table "param"
+							AccesTableParams accesParam = new AccesTableParams(
+									ctx);
+							accesParam.desactiveAlerte();
+						}
+						Intent intentRecherche = new Intent(Main.this,
+								recherche_produit_perime.class);
+						intentRecherche.putExtra(ActivityParam.LaunchFromMain,
+								true);
+						// on demarre la nouvelle activité
+						startActivity(intentRecherche);
+						termineActivity();
 
-			}
-		});
-		adInfoProduitPerimé.setNegativeButton("Non", new DialogInterface.OnClickListener() {
+					}
+				});
+		adInfoProduitPerimé.setNegativeButton("Non",
+				new DialogInterface.OnClickListener() {
 
-			@Override
-			public void onClick(DialogInterface p_dialog, int p_which) {
-				if (cb.isChecked()) {
-					// si la case est cochée par l'utilisateur , on met a jour la table "param"
-					AccesTableParams accesParam = new AccesTableParams(ctx);
-					accesParam.desactiveAlerte();
-				}
+					@Override
+					public void onClick(DialogInterface p_dialog, int p_which) {
+						if (cb.isChecked()) {
+							// si la case est cochée par l'utilisateur , on met
+							// a jour la table "param"
+							AccesTableParams accesParam = new AccesTableParams(
+									ctx);
+							accesParam.desactiveAlerte();
+						}
 
-			}
-		});
+					}
+				});
 
 		adSortie = new AlertDialog.Builder(ctx);
 		adSortie.setTitle("Petite vérification");
 		adSortie.setIcon(R.drawable.ad_question);
 		adSortie.setMessage("Souhaitez vous quitter ma p'tite trousse?");
-		adSortie.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
+		adSortie.setPositiveButton("Oui",
+				new DialogInterface.OnClickListener() {
 
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				Intent intentEntry = new Intent(Main.this, EntryPoint.class);
-				intentEntry.putExtra(ActivityParam.LaunchFromMain, true);
-				// on demarre la nouvelle activité
-				startActivity(intentEntry);
-				termineActivity();
-			}
-		});
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						Intent intentEntry = new Intent(Main.this,
+								EntryPoint.class);
+						intentEntry
+								.putExtra(ActivityParam.LaunchFromMain, true);
+						// on demarre la nouvelle activité
+						startActivity(intentEntry);
+						termineActivity();
+					}
+				});
 		adSortie.setNegativeButton("Non", null);
 
 		this.setTitle("Ma p'tite trousse");
@@ -144,7 +160,8 @@ public class Main extends Activity implements OnClickListener {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// évènement appelé lorsqu'un menu est choisi
 		switch (item.getItemId()) {
-			// l'identifiant integer est moins gourmand en ressource que le string
+			// l'identifiant integer est moins gourmand en ressource que le
+			// string
 			case 2000:
 				// Toast.makeText(this, "Recherche", 1000).show();
 				intentRecherche = new Intent(Main.this, Recherche.class);
@@ -192,52 +209,63 @@ public class Main extends Activity implements OnClickListener {
 		if (v == BtRemplir) {
 			// objBd = new BDAcces(ctx);
 			// //objBd.open();
-			AccesTableProduitEnregistre accesProduit = new AccesTableProduitEnregistre(ctx);
+			AccesTableProduitEnregistre accesProduit = new AccesTableProduitEnregistre(
+					ctx);
 			int nbDenregistrement = accesProduit.getNbEnregistrement();
 			// = objBd.renvoi_nbChamp("produit_Enregistre");
 			// //objBd.close();
 			if (nbDenregistrement > 0) {
-				AlertDialog.Builder adChoixDupplique = new AlertDialog.Builder(this);
+				AlertDialog.Builder adChoixDupplique = new AlertDialog.Builder(
+						this);
 				adChoixDupplique.setTitle("Que voulez vous faire ?");
-				CharSequence[] items = { "Ajouter un produit", "Dupliquer un produit" };
-				adChoixDupplique.setSingleChoiceItems(items, -1, new DialogInterface.OnClickListener() {
+				CharSequence[] items = { "Ajouter un produit",
+						"Dupliquer un produit" };
+				adChoixDupplique.setSingleChoiceItems(items, -1,
+						new DialogInterface.OnClickListener() {
 
-					@Override
-					public void onClick(DialogInterface dialog, int item) {
-						/* User clicked on a radio button do some stuff */
-						if (item == 0) {// afficher les details
-							nouveau = true;
-						}
-						if (item == 1) {// supprimer le produit
-							dupplique = true;
-						}
+							@Override
+							public void onClick(DialogInterface dialog, int item) {
+								/* User clicked on a radio button do some stuff */
+								if (item == 0) {// afficher les details
+									nouveau = true;
+								}
+								if (item == 1) {// supprimer le produit
+									dupplique = true;
+								}
 
-					}
-				});
-				adChoixDupplique.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+							}
+						});
+				adChoixDupplique.setPositiveButton("Ok",
+						new DialogInterface.OnClickListener() {
 
-					@Override
-					public void onClick(DialogInterface dialog, int id) {
+							@Override
+							public void onClick(DialogInterface dialog, int id) {
 
-						if (nouveau) {// on rentre un nouveau produit
-							intentFormPage1 = new Intent(Main.this, formulaire_entree_page1bis.class);
-							intentFormPage1.putExtra(ActivityParam.LaunchFromMain, true);
-							// on demarre la nouvelle activité
-							startActivity(intentFormPage1);
-							termineActivity();
-						}
-						if (dupplique) {// on dupplique un produit existant
-							intentDupplique = new Intent(Main.this, choix_produit_a_duppliquer.class);
-							intentDupplique.putExtra(ActivityParam.LaunchFromMain, true);
-							// on demarre la nouvelle activité
-							startActivity(intentDupplique);
-							termineActivity();
-						}
-					}
-				});
+								if (nouveau) {// on rentre un nouveau produit
+									intentFormPage1 = new Intent(Main.this,
+											formulaire_entree_page1bis.class);
+									intentFormPage1.putExtra(
+											ActivityParam.LaunchFromMain, true);
+									// on demarre la nouvelle activité
+									startActivity(intentFormPage1);
+									termineActivity();
+								}
+								if (dupplique) {// on dupplique un produit
+												// existant
+									intentDupplique = new Intent(Main.this,
+											choix_produit_a_duppliquer.class);
+									intentDupplique.putExtra(
+											ActivityParam.LaunchFromMain, true);
+									// on demarre la nouvelle activité
+									startActivity(intentDupplique);
+									termineActivity();
+								}
+							}
+						});
 				adChoixDupplique.show();
 			} else {
-				intentFormPage1 = new Intent(Main.this, formulaire_entree_page1bis.class);
+				intentFormPage1 = new Intent(Main.this,
+						formulaire_entree_page1bis.class);
 				intentFormPage1.putExtra(ActivityParam.LaunchFromMain, true);
 				// on demarre la nouvelle activité
 				startActivity(intentFormPage1);
@@ -245,30 +273,38 @@ public class Main extends Activity implements OnClickListener {
 			}
 
 		}
-		if (v == BtDuppliquer) {// on verifie si on a au moins un enregistrement, si oui, on permet la dpplication,
-			// sinon, on indique a l'utilisateur que la dupplication est impossible
-			AccesTableProduitEnregistre accesProduit = new AccesTableProduitEnregistre(ctx);
+		if (v == BtDuppliquer) {// on verifie si on a au moins un
+								// enregistrement, si oui, on permet la
+								// dpplication,
+			// sinon, on indique a l'utilisateur que la dupplication est
+			// impossible
+			AccesTableProduitEnregistre accesProduit = new AccesTableProduitEnregistre(
+					ctx);
 			int nbDenregistrement = accesProduit.getNbEnregistrement();
-			// int nbDenregistrement = objBd.renvoi_nbChamp("produit_Enregistre");
+			// int nbDenregistrement =
+			// objBd.renvoi_nbChamp("produit_Enregistre");
 
 			if (nbDenregistrement <= 0) {
 
-				AlertDialog.Builder adAucunProduit = new AlertDialog.Builder(this);
+				AlertDialog.Builder adAucunProduit = new AlertDialog.Builder(
+						this);
 				adAucunProduit = new AlertDialog.Builder(this);
 				adAucunProduit.setTitle("Pour information");
-				adAucunProduit.setMessage("Il n' y a pas encore de produit enregistré dans Ma p'tite trousse.\n"
-						+ "Cette fonction sera accessible quand vous aurez rentré au moins un produit.");
+				adAucunProduit
+						.setMessage("Il n' y a pas encore de produit enregistré dans Ma p'tite trousse.\n"
+								+ "Cette fonction sera accessible quand vous aurez rentré au moins un produit.");
 				adAucunProduit.setPositiveButton("Ok", null);
 				adAucunProduit.show();
 
 			} else {
-				intentDupplique = new Intent(Main.this, choix_produit_a_duppliquer.class);
+				intentDupplique = new Intent(Main.this,
+						choix_produit_a_duppliquer.class);
 				intentDupplique.putExtra(ActivityParam.LaunchFromMain, true);
 				// on demarre la nouvelle activité
 				startActivity(intentDupplique);
 				termineActivity();
 			}
-			//objBd.close();
+			// objBd.close();
 
 		}
 		if (v == BtNotes) {
@@ -280,25 +316,31 @@ public class Main extends Activity implements OnClickListener {
 		}
 		if (v == BtPerimé) {
 			objBd = new BDAcces(ctx);
-			//objBd.open();
-			String[] Colonnes = { "id_produits", "nom_produit", "Date_Peremption", "nom_marque" };
+			// objBd.open();
+			String[] Colonnes = { "id_produits", "nom_produit",
+					"Date_Peremption", "nom_marque" };
 			String condition = "IS_PERIME=? or IS_PRESQUE_PERIME=?";
 			String[] args = { "true", "true" };
 
-			ArrayList[] ListeProduits = objBd.renvoi_liste_TrousseFinal(Colonnes, "id_produits", "", condition, args);
+			ArrayList[] ListeProduits = objBd.renvoi_liste_TrousseFinal(
+					Colonnes, "id_produits", "", condition, args);
 			int nbdobjet = ListeProduits[0].size();
 			if (nbdobjet != 0) {
-				intentRecherche = new Intent(Main.this, recherche_produit_perime.class);
+				intentRecherche = new Intent(Main.this,
+						recherche_produit_perime.class);
 				intentRecherche.putExtra(ActivityParam.LaunchFromMain, true);
-				intentRecherche.putExtra(ActivityParam.AfficheProduitPerime, true);
+				intentRecherche.putExtra(ActivityParam.AfficheProduitPerime,
+						true);
 				// on demarre la nouvelle activité
 				startActivity(intentRecherche);
 				termineActivity();
 			} else {
-				AlertDialog.Builder adAucunProduit = new AlertDialog.Builder(this);
+				AlertDialog.Builder adAucunProduit = new AlertDialog.Builder(
+						this);
 				adAucunProduit = new AlertDialog.Builder(this);
 				adAucunProduit.setTitle("Pour information");
-				adAucunProduit.setMessage("Aucun de vos produit n'est périmé actuellement");
+				adAucunProduit
+						.setMessage("Aucun de vos produit n'est périmé actuellement");
 				adAucunProduit.setPositiveButton("Ok", null);
 				adAucunProduit.show();
 
@@ -308,7 +350,8 @@ public class Main extends Activity implements OnClickListener {
 	}
 
 	/**
-	 * Exécuté que l'activité arrêtée via un "stop" redémarre. La fonction onRestart() est suivie de la fonction onStart().
+	 * Exécuté que l'activité arrêtée via un "stop" redémarre. La fonction
+	 * onRestart() est suivie de la fonction onStart().
 	 */
 	@Override
 	protected void onRestart() {
@@ -333,7 +376,8 @@ public class Main extends Activity implements OnClickListener {
 	}
 
 	/**
-	 * Exécuté lorsque l'activité devient visible à l'utilisateur. La fonction onStart() est suivie de la fonction onResume().
+	 * Exécuté lorsque l'activité devient visible à l'utilisateur. La fonction
+	 * onStart() est suivie de la fonction onResume().
 	 */
 	@Override
 	protected void onStart() {
@@ -344,109 +388,148 @@ public class Main extends Activity implements OnClickListener {
 	}
 
 	/**
-	 * Exécutée a chaque passage en premier plan de l'activité. Ou bien, si l'activité passe à nouveau en premier (si une autre activité
-	 * était passé en premier plan entre temps). La fonction onResume() est suivie de l'exécution de l'activité.
+	 * Exécutée a chaque passage en premier plan de l'activité. Ou bien, si
+	 * l'activité passe à nouveau en premier (si une autre activité était passé
+	 * en premier plan entre temps). La fonction onResume() est suivie de
+	 * l'exécution de l'activité.
 	 */
 	@Override
 	protected void onResume() {
 		super.onResume();
 		/*
-		 * handler.removeCallbacks(updateTimeTask); handler.postDelayed(updateTimeTask, 1000);
+		 * handler.removeCallbacks(updateTimeTask);
+		 * handler.postDelayed(updateTimeTask, 1000);
 		 */
 
 		ChoisiLeTheme();
 
-		boolean isLaunchFromEntrypoint = getIntent().getBooleanExtra(ActivityParam.LaunchFromEntryPoint, false);
+		boolean isLaunchFromEntrypoint = getIntent().getBooleanExtra(
+				ActivityParam.LaunchFromEntryPoint, false);
 		if (isLaunchFromEntrypoint) {
-			boolean isMessageAlerteAAfficher = getIntent().getBooleanExtra(ActivityParam.AfficheProduitPerime, false);
+			boolean isMessageAlerteAAfficher = getIntent().getBooleanExtra(
+					ActivityParam.AfficheProduitPerime, false);
 			if (isMessageAlerteAAfficher) {
 				adInfoProduitPerimé.show();
 			}
 		}
 
 		/*
-		 * AlphaAnimation anim11 = new AlphaAnimation(1, 0.2f); anim11.setDuration (5000); BtRemplir.startAnimation (anim11);
+		 * AlphaAnimation anim11 = new AlphaAnimation(1, 0.2f);
+		 * anim11.setDuration (5000); BtRemplir.startAnimation (anim11);
 		 */
 
 	}
 
-	@SuppressWarnings("rawtypes")
 	private void ChoisiLeTheme() {
-		// TODO Auto-generated method stub
-		objBd = new BDAcces(ctx);
-		//objBd.open();
-		String[] champ = { "AfficheAlerte", "DureeViePeremp", "Theme" };
-		ArrayList[] Param = objBd.renvoi_param(champ);
-		//objBd.close();
 
-		String nomThemeChoisi = Param[2].get(0).toString().trim();
-
-		if (EnTheme.Bisounours.getLib().equals(nomThemeChoisi)) {
-			setContentView(R.layout.theme_bisounours_main);
-			BtRemplir = (ImageView) ((Activity) ctx).findViewById(R.id.IvBouton1);
-			BtPerimé = (ImageView) ((Activity) ctx).findViewById(R.id.IvBouton2);
-			// BtDuppliquer=(ImageView)ctx.findViewById(R.id.IvBouton2);
-			BtNotes = (ImageView) ((Activity) ctx).findViewById(R.id.IvBouton3);
-
-			BtRemplir.setOnClickListener(this);
-			BtPerimé.setOnClickListener(this);
-			BtNotes.setOnClickListener(this);
-
-			Animlineaire anim = new Animlineaire();
-			anim.setDroiteversGauche(250);
-			Animlineaire anim1 = new Animlineaire();
-			anim1.setDroiteversGauche(750);
-			Animlineaire anim2 = new Animlineaire();
-			anim2.setDroiteversGauche(500);
-			Animlineaire anim3 = new Animlineaire();
-			anim3.setBasversHaut(400);
-
-			BtRemplir.startAnimation(anim.getAnim());
-			BtPerimé.startAnimation(anim1.getAnim());
-
-			BtNotes.startAnimation(anim3.getAnim());
+		AccesTableParams accesParam = new AccesTableParams(ctx);
+		switch (accesParam.getThemeChoisi()) {
+			case Bisounours:
+				setContentView(R.layout.theme_bisounours_main);
+				break;
+			case Classique:
+				accesParam.majTheme(EnTheme.Fleur);
+				ChoisiLeTheme();
+				break;
+			case Fleur:
+				setContentView(R.layout.theme_fleur_main);
+				break;
 		}
-		if (EnTheme.Classique.getLib().equals(nomThemeChoisi)) {
-			// on supprime le theme classique car trop buggué visuellement,
-			// dans le cas ou un utilisateur aurait gardé ce theme,
-			// on force l'application du theme "Fleur" et on relance la verification du theme
-			AccesTableParams accesParams = new AccesTableParams(ctx);
-			accesParams.majTheme(EnTheme.Fleur);
-			ChoisiLeTheme();
 
-		}
-		if (EnTheme.Fleur.getLib().equals(nomThemeChoisi)) {
-			setContentView(R.layout.theme_fleur_main);
-			BtRemplir = (ImageView) ((Activity) ctx).findViewById(R.id.IvBouton1);
-			BtPerimé = (ImageView) ((Activity) ctx).findViewById(R.id.IvBouton2);
-			// BtDuppliquer=(ImageView)ctx.findViewById(R.id.IvBouton2);
-			BtNotes = (ImageView) ((Activity) ctx).findViewById(R.id.IvBouton3);
+		BtRemplir = (ImageView) ((Activity) ctx).findViewById(R.id.IvBouton1);
+		BtPerimé = (ImageView) ((Activity) ctx).findViewById(R.id.IvBouton2);
+		BtNotes = (ImageView) ((Activity) ctx).findViewById(R.id.IvBouton3);
 
-			BtRemplir.setOnClickListener(this);
-			BtPerimé.setOnClickListener(this);
-			BtNotes.setOnClickListener(this);
+		BtRemplir.setOnClickListener(this);
+		BtPerimé.setOnClickListener(this);
+		BtNotes.setOnClickListener(this);
 
-			Animlineaire anim = new Animlineaire();
-			anim.setDroiteversGauche(250);
-			Animlineaire anim1 = new Animlineaire();
-			anim1.setDroiteversGauche(750);
-			Animlineaire anim2 = new Animlineaire();
-			anim2.setDroiteversGauche(500);
-			Animlineaire anim3 = new Animlineaire();
-			anim3.setBasversHaut(400);
+		Animlineaire anim = new Animlineaire();
+		anim.setDroiteversGauche(250);
+		Animlineaire anim1 = new Animlineaire();
+		anim1.setDroiteversGauche(750);
+		Animlineaire anim2 = new Animlineaire();
+		anim2.setDroiteversGauche(500);
+		Animlineaire anim3 = new Animlineaire();
+		anim3.setBasversHaut(400);
 
-			BtRemplir.startAnimation(anim.getAnim());
-			BtPerimé.startAnimation(anim1.getAnim());
+		BtRemplir.startAnimation(anim.getAnim());
+		BtPerimé.startAnimation(anim1.getAnim());
 
-			BtNotes.startAnimation(anim3.getAnim());
-		}
+		BtNotes.startAnimation(anim3.getAnim());
+		// if (EnTheme.Bisounours.getLib().equals(nomThemeChoisi)) {
+		// setContentView(R.layout.theme_bisounours_main);
+		// BtRemplir = (ImageView) ((Activity) ctx)
+		// .findViewById(R.id.IvBouton1);
+		// BtPerimé = (ImageView) ((Activity) ctx)
+		// .findViewById(R.id.IvBouton2);
+		// // BtDuppliquer=(ImageView)ctx.findViewById(R.id.IvBouton2);
+		// BtNotes = (ImageView) ((Activity) ctx).findViewById(R.id.IvBouton3);
+		//
+		// BtRemplir.setOnClickListener(this);
+		// BtPerimé.setOnClickListener(this);
+		// BtNotes.setOnClickListener(this);
+		//
+		// Animlineaire anim = new Animlineaire();
+		// anim.setDroiteversGauche(250);
+		// Animlineaire anim1 = new Animlineaire();
+		// anim1.setDroiteversGauche(750);
+		// Animlineaire anim2 = new Animlineaire();
+		// anim2.setDroiteversGauche(500);
+		// Animlineaire anim3 = new Animlineaire();
+		// anim3.setBasversHaut(400);
+		//
+		// BtRemplir.startAnimation(anim.getAnim());
+		// BtPerimé.startAnimation(anim1.getAnim());
+		//
+		// BtNotes.startAnimation(anim3.getAnim());
+		// }
+		// if (EnTheme.Classique.getLib().equals(nomThemeChoisi)) {
+		// // on supprime le theme classique car trop buggué visuellement,
+		// // dans le cas ou un utilisateur aurait gardé ce theme,
+		// // on force l'application du theme "Fleur" et on relance la
+		// // verification du theme
+		// AccesTableParams accesParams = new AccesTableParams(ctx);
+		// accesParams.majTheme(EnTheme.Fleur);
+		// ChoisiLeTheme();
+		//
+		// }
+		// if (EnTheme.Fleur.getLib().equals(nomThemeChoisi)) {
+		// setContentView(R.layout.theme_fleur_main);
+		// BtRemplir = (ImageView) ((Activity) ctx)
+		// .findViewById(R.id.IvBouton1);
+		// BtPerimé = (ImageView) ((Activity) ctx)
+		// .findViewById(R.id.IvBouton2);
+		// // BtDuppliquer=(ImageView)ctx.findViewById(R.id.IvBouton2);
+		// BtNotes = (ImageView) ((Activity) ctx).findViewById(R.id.IvBouton3);
+		//
+		// BtRemplir.setOnClickListener(this);
+		// BtPerimé.setOnClickListener(this);
+		// BtNotes.setOnClickListener(this);
+		//
+		// Animlineaire anim = new Animlineaire();
+		// anim.setDroiteversGauche(250);
+		// Animlineaire anim1 = new Animlineaire();
+		// anim1.setDroiteversGauche(750);
+		// Animlineaire anim2 = new Animlineaire();
+		// anim2.setDroiteversGauche(500);
+		// Animlineaire anim3 = new Animlineaire();
+		// anim3.setBasversHaut(400);
+		//
+		// BtRemplir.startAnimation(anim.getAnim());
+		// BtPerimé.startAnimation(anim1.getAnim());
+		//
+		// BtNotes.startAnimation(anim3.getAnim());
+		// }
 
 	}
 
 	/**
-	 * La fonction onStop() est exécutée : - lorsque l'activité n'est plus en premier plan - ou bien lorsque l'activité va être détruite
-	 * Cette fonction est suivie : - de la fonction onRestart() si l'activité passe à nouveau en premier plan - de la fonction onDestroy()
-	 * lorsque l'activité se termine ou bien lorsque le système décide de l'arrêter
+	 * La fonction onStop() est exécutée : - lorsque l'activité n'est plus en
+	 * premier plan - ou bien lorsque l'activité va être détruite Cette fonction
+	 * est suivie : - de la fonction onRestart() si l'activité passe à nouveau
+	 * en premier plan - de la fonction onDestroy() lorsque l'activité se
+	 * termine ou bien lorsque le système décide de l'arrêter
 	 */
 	@Override
 	protected void onStop() {
@@ -455,18 +538,22 @@ public class Main extends Activity implements OnClickListener {
 	}
 
 	/**
-	 * La fonction onPause() est suivie : - d'un onResume() si l'activité passe à nouveau en premier plan - d'un onStop() si elle devient
-	 * invisible à l'utilisateur L'exécution de la fonction onPause() doit être rapide, car la prochaine activité ne démarrera pas tant que
-	 * l'exécution de la fonction onPause() n'est pas terminée.
+	 * La fonction onPause() est suivie : - d'un onResume() si l'activité passe
+	 * à nouveau en premier plan - d'un onStop() si elle devient invisible à
+	 * l'utilisateur L'exécution de la fonction onPause() doit être rapide, car
+	 * la prochaine activité ne démarrera pas tant que l'exécution de la
+	 * fonction onPause() n'est pas terminée.
 	 */
 	@Override
 	protected void onPause() {
 		super.onPause();
 
-		if (isFinishing()) {// si le SYSTEME detecte que l'on sort de l'application
+		if (isFinishing()) {// si le SYSTEME detecte que l'on sort de
+							// l'application
 			popUp("onPause, l'utilisateur à demandé la fermeture via un finish()");
 
-		} else {// sinon, on pert juste le "focus sur l'appli (lors d'un appel telephonique entrant par exemple)
+		} else {// sinon, on pert juste le "focus sur l'appli (lors d'un appel
+				// telephonique entrant par exemple)
 
 		}
 	}
@@ -477,7 +564,8 @@ public class Main extends Activity implements OnClickListener {
 	public void OnDestroy() {
 		super.onDestroy();
 		/*
-		 * if ( handler != null ) handler.removeCallbacks(updateTimeTask); handler = null;
+		 * if ( handler != null ) handler.removeCallbacks(updateTimeTask);
+		 * handler = null;
 		 */
 
 	}

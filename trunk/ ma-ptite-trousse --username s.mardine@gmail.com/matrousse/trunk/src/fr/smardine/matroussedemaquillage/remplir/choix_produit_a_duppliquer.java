@@ -37,7 +37,8 @@ import fr.smardine.matroussedemaquillage.recherche.produitRechercheListAdapter.V
 import fr.smardine.matroussedemaquillage.variableglobale.ActivityParam;
 import fr.smardine.matroussedemaquillage.variableglobale.EnTheme;
 
-public class choix_produit_a_duppliquer extends Activity implements OnItemClickListener {
+public class choix_produit_a_duppliquer extends Activity implements
+		OnItemClickListener {
 
 	ArrayList<produitRecherche> produitDupplique = new ArrayList<produitRecherche>();
 	ArrayList<produitRecherche> produitDuppliqueTitre = new ArrayList<produitRecherche>();
@@ -60,11 +61,14 @@ public class choix_produit_a_duppliquer extends Activity implements OnItemClickL
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		// ExceptionHandler.register(this, "http://simon.mardine.free.fr/trousse_maquillage/test/server.php","ma_ptite_trousse");
+		// ExceptionHandler.register(this,
+		// "http://simon.mardine.free.fr/trousse_maquillage/test/server.php","ma_ptite_trousse");
 		ChoisiLeTheme();
 
-		ProduitListView1 = (ListView) this.findViewById(R.id.produitListViewDupplic);
-		ProduitListViewTitre = (ListView) this.findViewById(R.id.produitListViewDupplicTitre);
+		ProduitListView1 = (ListView) this
+				.findViewById(R.id.produitListViewDupplic);
+		ProduitListViewTitre = (ListView) this
+				.findViewById(R.id.produitListViewDupplicTitre);
 
 		ProduitListView1.setOnItemClickListener(this);
 
@@ -81,29 +85,43 @@ public class choix_produit_a_duppliquer extends Activity implements OnItemClickL
 	 * 
 	 */
 	private void ChoisiLeTheme() {
-		objBd = new BDAcces(this);
-		//objBd.open();
-		String[] champ = { "AfficheAlerte", "DureeViePeremp", "Theme" };
-		@SuppressWarnings("rawtypes")
-		ArrayList[] Param = objBd.renvoi_param(champ);
 
-		String nomThemeChoisi = Param[2].get(0).toString().trim();
-		if (EnTheme.Bisounours.getLib().equals(nomThemeChoisi)) {
-			setContentView(R.layout.theme_bisounours_affiche_liste_produit_a_duppliquer);
-
+		AccesTableParams accesParam = new AccesTableParams(this);
+		switch (accesParam.getThemeChoisi()) {
+			case Bisounours:
+				setContentView(R.layout.theme_bisounours_affiche_liste_produit_a_duppliquer);
+				break;
+			case Classique:
+				accesParam.majTheme(EnTheme.Fleur);
+				ChoisiLeTheme();
+				break;
+			case Fleur:
+				setContentView(R.layout.theme_fleur_affiche_liste_produit_a_duppliquer);
+				break;
 		}
-		if (EnTheme.Classique.getLib().equals(nomThemeChoisi)) {
-			// setContentView(R.layout.affiche_liste_produit_a_duppliquer);
-			AccesTableParams accesParams = new AccesTableParams(this);
-			accesParams.majTheme(EnTheme.Fleur);
-			ChoisiLeTheme();
+		// objBd = new BDAcces(this);
+		// //objBd.open();
+		// String[] champ = { "AfficheAlerte", "DureeViePeremp", "Theme" };
+		// @SuppressWarnings("rawtypes")
+		// ArrayList[] Param = objBd.renvoi_param(champ);
+		//
+		// String nomThemeChoisi = Param[2].get(0).toString().trim();
+		// if (EnTheme.Bisounours.getLib().equals(nomThemeChoisi)) {
+		// setContentView(R.layout.theme_bisounours_affiche_liste_produit_a_duppliquer);
+		//
+		// }
+		// if (EnTheme.Classique.getLib().equals(nomThemeChoisi)) {
+		// // setContentView(R.layout.affiche_liste_produit_a_duppliquer);
+		// AccesTableParams accesParams = new AccesTableParams(this);
+		// accesParams.majTheme(EnTheme.Fleur);
+		// ChoisiLeTheme();
+		//
+		// }
+		// if (EnTheme.Fleur.getLib().equals(nomThemeChoisi)) {
+		// setContentView(R.layout.theme_fleur_affiche_liste_produit_a_duppliquer);
+		// }
 
-		}
-		if (EnTheme.Fleur.getLib().equals(nomThemeChoisi)) {
-			setContentView(R.layout.theme_fleur_affiche_liste_produit_a_duppliquer);
-		}
-
-		//objBd.close();
+		// objBd.close();
 	}
 
 	private void onCreateMenu(Menu menu) {
@@ -140,7 +158,8 @@ public class choix_produit_a_duppliquer extends Activity implements OnItemClickL
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// évènement appelé lorsqu'un menu est choisi
 		switch (item.getItemId()) {
-			// l'identifiant integer est moins gourmand en ressource que le string
+			// l'identifiant integer est moins gourmand en ressource que le
+			// string
 			case 2000:
 				Toast.makeText(this, "Recherche", 1000).show();
 				Intent intentRecherche = new Intent(this, Recherche.class);
@@ -152,7 +171,8 @@ public class choix_produit_a_duppliquer extends Activity implements OnItemClickL
 			case 2001:
 				Toast.makeText(this, "Paramètres", 1000).show();
 				Intent intentParametres = new Intent(this, tab_param.class);
-				intentParametres.putExtra(ActivityParam.LaunchFromDuppliquer, true);
+				intentParametres.putExtra(ActivityParam.LaunchFromDuppliquer,
+						true);
 				// on demarre la nouvelle activité
 				startActivity(intentParametres);
 				termineActivity();
@@ -189,17 +209,21 @@ public class choix_produit_a_duppliquer extends Activity implements OnItemClickL
 	}
 
 	@SuppressWarnings("rawtypes")
-	private void AfficheLeContenu(String TypeRecherche, ArrayList<produitRecherche> produitFinal, ListView produitListView) {
+	private void AfficheLeContenu(String TypeRecherche,
+			ArrayList<produitRecherche> produitFinal, ListView produitListView) {
 
-		//objBd.open();
+		// objBd.open();
 		if (TypeRecherche.equals("Titre")) {
-			produitDuppliqueTitre.add(new produitRecherche("", "Marque", "Produit", "Catégorie"));
+			produitDuppliqueTitre.add(new produitRecherche("", "Marque",
+					"Produit", "Catégorie"));
 		}
 		if (TypeRecherche.equals("Tout")) {
 
-			String[] Colonnes = { "id_produits", "nom_produit", "nom_marque", "nom_souscatergorie" };
+			String[] Colonnes = { "id_produits", "nom_produit", "nom_marque",
+					"nom_souscatergorie" };
 
-			ArrayList[] ListeProduits = objBd.renvoi_liste_TrousseFinal(Colonnes, "id_produits", "", "", null);
+			ArrayList[] ListeProduits = objBd.renvoi_liste_TrousseFinal(
+					Colonnes, "id_produits", "", "", null);
 			int nbdobjet = ListeProduits[0].size();
 			if (nbdobjet != 0) {
 				for (int j = 0; j < nbdobjet; j++) {
@@ -207,24 +231,27 @@ public class choix_produit_a_duppliquer extends Activity implements OnItemClickL
 					String NomProduits = ListeProduits[1].get(j).toString();
 					String NomMarque = ListeProduits[2].get(j).toString();
 					String NomSousCat = ListeProduits[3].get(j).toString();
-					produitDupplique.add(new produitRecherche(IdProduit, NomMarque, NomProduits, NomSousCat));
+					produitDupplique.add(new produitRecherche(IdProduit,
+							NomMarque, NomProduits, NomSousCat));
 				}
 			} else {
 
 			}
 		}
-		//objBd.close();
+		// objBd.close();
 
 		// animation d'affichage cascade du haut vers le bas
 		AnimationSet set = new AnimationSet(true);
 		Animation animation = new AlphaAnimation(0.0f, 1.0f);
 		animation.setDuration(100);
 		set.addAnimation(animation);
-		animation = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF,
+		animation = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0.0f,
+				Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF,
 				-1.0f, Animation.RELATIVE_TO_SELF, 0.0f);
 		animation.setDuration(100);
 		set.addAnimation(animation);
-		LayoutAnimationController controller = new LayoutAnimationController(set, 0.5f);
+		LayoutAnimationController controller = new LayoutAnimationController(
+				set, 0.5f);
 		produitListView.setLayoutAnimation(controller);
 
 		// paramètrer l'adapteur correspondant
@@ -245,7 +272,8 @@ public class choix_produit_a_duppliquer extends Activity implements OnItemClickL
 	}
 
 	/**
-	 * Exécuté lorsque l'activité devient visible à l'utilisateur. La fonction onStart() est suivie de la fonction onResume().
+	 * Exécuté lorsque l'activité devient visible à l'utilisateur. La fonction
+	 * onStart() est suivie de la fonction onResume().
 	 */
 	@Override
 	protected void onStart() {
@@ -254,21 +282,29 @@ public class choix_produit_a_duppliquer extends Activity implements OnItemClickL
 	}
 
 	/**
-	 * Exécutée a chaque passage en premier plan de l'activité. Ou bien, si l'activité passe à nouveau en premier (si une autre activité
-	 * était passé en premier plan entre temps). La fonction onResume() est suivie de l'exécution de l'activité.
+	 * Exécutée a chaque passage en premier plan de l'activité. Ou bien, si
+	 * l'activité passe à nouveau en premier (si une autre activité était passé
+	 * en premier plan entre temps). La fonction onResume() est suivie de
+	 * l'exécution de l'activité.
 	 */
 	@Override
 	protected void onResume() {
 		super.onResume();
 
-		// boolean IsCalledFromMain = getIntent().getBooleanExtra(ActivityParam.LaunchFromMain, false);
-		// boolean IsCalledFromPageRecap = getIntent().getBooleanExtra(ActivityParam.LaunchFromPageRecap, false);
-		// boolean IsCalledFromDetail = getIntent().getBooleanExtra(ActivityParam.LaunchFromAfficheDetail, false);
+		// boolean IsCalledFromMain =
+		// getIntent().getBooleanExtra(ActivityParam.LaunchFromMain, false);
+		// boolean IsCalledFromPageRecap =
+		// getIntent().getBooleanExtra(ActivityParam.LaunchFromPageRecap,
+		// false);
+		// boolean IsCalledFromDetail =
+		// getIntent().getBooleanExtra(ActivityParam.LaunchFromAfficheDetail,
+		// false);
 
 		// if (IsCalledFromMain || IsCalledFromPageRecap) {
 		// popUp("IscreatFormRecap: " + IsCalledFromPageRecap);
 		// popUp("IscreatFormMain: " + IsCalledFromMain);
-		AccesTableTrousseProduits accesTrousse = new AccesTableTrousseProduits(this);
+		AccesTableTrousseProduits accesTrousse = new AccesTableTrousseProduits(
+				this);
 		accesTrousse.reinitProduitChoisi();
 		// String Table = "trousse_produits";
 		// ContentValues modifiedValues = new ContentValues();
@@ -276,14 +312,16 @@ public class choix_produit_a_duppliquer extends Activity implements OnItemClickL
 		// String whereClause = "ischecked=?";
 		// String[] whereArgs = new String[] { "true" };
 		objBd = new BDAcces(this);
-		//objBd.open();
-		// int nbdechamp = objBd.majTable(Table, modifiedValues, whereClause, whereArgs);
+		// objBd.open();
+		// int nbdechamp = objBd.majTable(Table, modifiedValues, whereClause,
+		// whereArgs);
 
 		objBd.deleteTable("trousse_tempo", "1", null);
 		// System.out.println("Nombre de champ modifié : " + nbdechamp);
-		//objBd.close();
+		// objBd.close();
 		// }
-		// boolean IsCalledFromPage2 = getIntent().getBooleanExtra("LaunchByPage2", false);
+		// boolean IsCalledFromPage2 =
+		// getIntent().getBooleanExtra("LaunchByPage2", false);
 		// if (IsCalledFromPage2) {
 		// MarqueChoisie = getIntent().getStringExtra("MarqueChoisie").trim();
 		// DureeVie = getIntent().getStringExtra("DurreeDeVie").trim();
@@ -292,19 +330,26 @@ public class choix_produit_a_duppliquer extends Activity implements OnItemClickL
 		// nomProduitRecup = getIntent().getStringExtra("NomProduit").trim();
 		// }
 		// if (IsCalledFromDetail) {
-		// MarqueChoisie = getIntent().getStringExtra(ActivityParam.Marque).trim();
-		// DureeVie = getIntent().getStringExtra(ActivityParam.DurreeDeVie).trim();
-		// DateChoisie = getIntent().getStringExtra(ActivityParam.DateAchat).trim();
-		// numTeinte = getIntent().getStringExtra(ActivityParam.NumeroDeTeinte).trim();
-		// nomProduitRecup = getIntent().getStringExtra(ActivityParam.NomProduit).trim();
+		// MarqueChoisie =
+		// getIntent().getStringExtra(ActivityParam.Marque).trim();
+		// DureeVie =
+		// getIntent().getStringExtra(ActivityParam.DurreeDeVie).trim();
+		// DateChoisie =
+		// getIntent().getStringExtra(ActivityParam.DateAchat).trim();
+		// numTeinte =
+		// getIntent().getStringExtra(ActivityParam.NumeroDeTeinte).trim();
+		// nomProduitRecup =
+		// getIntent().getStringExtra(ActivityParam.NomProduit).trim();
 		// }
 
 	}
 
 	/**
-	 * La fonction onStop() est exécutée : - lorsque l'activité n'est plus en premier plan - ou bien lorsque l'activité va être détruite
-	 * Cette fonction est suivie : - de la fonction onRestart() si l'activité passe à nouveau en premier plan - de la fonction onDestroy()
-	 * lorsque l'activité se termine ou bien lorsque le système décide de l'arrêter
+	 * La fonction onStop() est exécutée : - lorsque l'activité n'est plus en
+	 * premier plan - ou bien lorsque l'activité va être détruite Cette fonction
+	 * est suivie : - de la fonction onRestart() si l'activité passe à nouveau
+	 * en premier plan - de la fonction onDestroy() lorsque l'activité se
+	 * termine ou bien lorsque le système décide de l'arrêter
 	 */
 	@Override
 	protected void onStop() {
@@ -313,9 +358,11 @@ public class choix_produit_a_duppliquer extends Activity implements OnItemClickL
 	}
 
 	/**
-	 * La fonction onPause() est suivie : - d'un onResume() si l'activité passe à nouveau en premier plan - d'un onStop() si elle devient
-	 * invisible à l'utilisateur L'exécution de la fonction onPause() doit être rapide, car la prochaine activité ne démarrera pas tant que
-	 * l'exécution de la fonction onPause() n'est pas terminée.
+	 * La fonction onPause() est suivie : - d'un onResume() si l'activité passe
+	 * à nouveau en premier plan - d'un onStop() si elle devient invisible à
+	 * l'utilisateur L'exécution de la fonction onPause() doit être rapide, car
+	 * la prochaine activité ne démarrera pas tant que l'exécution de la
+	 * fonction onPause() n'est pas terminée.
 	 */
 	@Override
 	protected void onPause() {
@@ -350,7 +397,8 @@ public class choix_produit_a_duppliquer extends Activity implements OnItemClickL
 
 	@Override
 	@SuppressWarnings("unused")
-	public void onItemClick(AdapterView<?> Parent, View view, int position, long id) {
+	public void onItemClick(AdapterView<?> Parent, View view, int position,
+			long id) {
 		// TODO Auto-generated method stub
 		int Itemposition = Parent.getSelectedItemPosition();
 
@@ -366,7 +414,8 @@ public class choix_produit_a_duppliquer extends Activity implements OnItemClickL
 		final AlertDialog.Builder dial = new AlertDialog.Builder(this);
 		dial.setTitle("Que voulez vous faire?");
 		dial.setIcon(R.drawable.ad_question);
-		dial.setMessage("Confirmez vous la dupplication du produit suivant: " + "" + Txt03);
+		dial.setMessage("Confirmez vous la dupplication du produit suivant: "
+				+ "" + Txt03);
 
 		dial.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 
@@ -384,22 +433,30 @@ public class choix_produit_a_duppliquer extends Activity implements OnItemClickL
 	@SuppressWarnings("rawtypes")
 	protected void gotoDuppliqueEtLanceFormPage3(String IdProduit) {
 		// TODO Auto-generated method stub
-		//objBd.open();
+		// objBd.open();
 		// IdProduit=getIntent().getStringExtra("IDProduit").trim();
-		String[] Colonnes = { "nom_produit", "nom_souscatergorie", "nom_categorie", "numero_Teinte", "Duree_Vie", "Date_Peremption",
-				"DateAchat", "nom_marque" };
+		String[] Colonnes = { "nom_produit", "nom_souscatergorie",
+				"nom_categorie", "numero_Teinte", "Duree_Vie",
+				"Date_Peremption", "DateAchat", "nom_marque" };
 
-		ArrayList[] trousse_final = objBd.renvoi_liste_TrousseFinalComplete(Colonnes, IdProduit);
-		nomProduitRecup = trousse_final[0].toString().replace("[", "").replace("]", "");
+		ArrayList[] trousse_final = objBd.renvoi_liste_TrousseFinalComplete(
+				Colonnes, IdProduit);
+		nomProduitRecup = trousse_final[0].toString().replace("[", "")
+				.replace("]", "");
 		SousCat = trousse_final[1].toString().replace("[", "").replace("]", "");
-		numTeinte = trousse_final[3].toString().replace("[", "").replace("]", "");
-		DureeVie = trousse_final[4].toString().replace("[", "").replace("]", "");
-		DateChoisie = trousse_final[6].toString().replace("[", "").replace("]", "");
-		MarqueChoisie = trousse_final[7].toString().replace("[", "").replace("]", "");
+		numTeinte = trousse_final[3].toString().replace("[", "")
+				.replace("]", "");
+		DureeVie = trousse_final[4].toString().replace("[", "")
+				.replace("]", "");
+		DateChoisie = trousse_final[6].toString().replace("[", "")
+				.replace("]", "");
+		MarqueChoisie = trousse_final[7].toString().replace("[", "")
+				.replace("]", "");
 
-		//objBd.close();
+		// objBd.close();
 
-		// on rempli "trousse tempo" avec les valeurs de Categories et sous categorie afin que cescase soient cochée lors de l'affichage de
+		// on rempli "trousse tempo" avec les valeurs de Categories et sous
+		// categorie afin que cescase soient cochée lors de l'affichage de
 		// la page1 du formulaire
 		AccesTableTrousseMarque accesMarque = new AccesTableTrousseMarque(this);
 		accesMarque.majMarqueChoisi(MarqueChoisie);
@@ -409,11 +466,13 @@ public class choix_produit_a_duppliquer extends Activity implements OnItemClickL
 		// String whereClause = "nom_marque=?";
 		// String[] whereArgs = new String[] { MarqueChoisie };
 		// //objBd.open();
-		// int nbdechamp = objBd.majTable(Table, modifiedValues, whereClause, whereArgs);
+		// int nbdechamp = objBd.majTable(Table, modifiedValues, whereClause,
+		// whereArgs);
 		//
 		// System.out.println("Nombre de champ modifié : " + nbdechamp);
 		// //objBd.close();
-		AccesTableTrousseProduits accesTrousse = new AccesTableTrousseProduits(this);
+		AccesTableTrousseProduits accesTrousse = new AccesTableTrousseProduits(
+				this);
 		accesTrousse.majSouscatChoisie(SousCat);
 		// String Table1 = "trousse_produits";
 		// ContentValues modifiedValues1 = new ContentValues();
@@ -422,18 +481,25 @@ public class choix_produit_a_duppliquer extends Activity implements OnItemClickL
 		// String[] whereArgs1 = new String[] { SousCat };
 		//
 		// //objBd.open();
-		// int nbdechamp1 = objBd.majTable(Table1, modifiedValues1, whereClause1, whereArgs1);
+		// int nbdechamp1 = objBd.majTable(Table1, modifiedValues1,
+		// whereClause1, whereArgs1);
 		//
 		// System.out.println("Nombre de champ modifié : " + nbdechamp1);
 		// //objBd.close();
 		//
-		Intent intentPage3Dupplique = new Intent(this, formulaire_entree_page3.class);
+		Intent intentPage3Dupplique = new Intent(this,
+				formulaire_entree_page3.class);
 		// on demarre la nouvelle activité
-		intentPage3Dupplique.putExtra(ActivityParam.Marque, MarqueChoisie.trim());
-		intentPage3Dupplique.putExtra(ActivityParam.DurreeDeVie, DureeVie.trim());
-		intentPage3Dupplique.putExtra(ActivityParam.DateAchat, DateChoisie.trim());
-		intentPage3Dupplique.putExtra(ActivityParam.NumeroDeTeinte, numTeinte.trim());
-		intentPage3Dupplique.putExtra(ActivityParam.NomProduit, nomProduitRecup.trim());
+		intentPage3Dupplique.putExtra(ActivityParam.Marque,
+				MarqueChoisie.trim());
+		intentPage3Dupplique.putExtra(ActivityParam.DurreeDeVie,
+				DureeVie.trim());
+		intentPage3Dupplique.putExtra(ActivityParam.DateAchat,
+				DateChoisie.trim());
+		intentPage3Dupplique.putExtra(ActivityParam.NumeroDeTeinte,
+				numTeinte.trim());
+		intentPage3Dupplique.putExtra(ActivityParam.NomProduit,
+				nomProduitRecup.trim());
 
 		intentPage3Dupplique.putExtra(ActivityParam.LaunchFromDuppliquer, true);
 

@@ -31,9 +31,14 @@ public class RequeteFactory {
 	 *         [where...]
 	 */
 	public String get1Champ(String p_requete) {
+		String result = "";
 		bdAcces.open();
 		Cursor objCursor = bdAcces.getMdb().rawQuery(p_requete, null);
-		String result = objCursor.getString(0);
+		if (objCursor.getCount() > 0) {
+			objCursor.moveToFirst();
+			result = objCursor.getString(0);
+		}
+
 		objCursor.close();
 		bdAcces.close();
 		return result;

@@ -1,5 +1,7 @@
 package fr.smardine.matroussedemaquillage.base.accesTable;
 
+import java.util.ArrayList;
+
 import android.content.ContentValues;
 import android.content.Context;
 import fr.smardine.matroussedemaquillage.base.RequeteFactory;
@@ -44,5 +46,14 @@ public class AccesTableTrousseMarque {
 				+ EnStructMarque.ID.getNomChamp() + "=" + p_idMarque;
 
 		return requeteFact.get1Champ(requete);
+	}
+
+	/**
+	 * @return la liste complete des marques enregstrée en base
+	 */
+	public ArrayList<String> getListeMarques() {
+		String requete = "SELECT " + EnStructMarque.NOM.getNomChamp()
+				+ " FROM " + EnTable.TROUSSE_MARQUE.getNomTable();
+		return requeteFact.getListeDeChamp(requete).get(0);
 	}
 }

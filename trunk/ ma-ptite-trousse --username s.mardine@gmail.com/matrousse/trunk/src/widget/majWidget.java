@@ -4,7 +4,6 @@ import helper.DateHelper;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 
 import android.app.PendingIntent;
@@ -188,37 +187,53 @@ public class majWidget {
 
 	@SuppressWarnings("rawtypes")
 	private void VerifLeTheme(RemoteViews remoteView) {
+
+		AccesTableParams accesParam = new AccesTableParams(ctx);
+		switch (accesParam.getThemeChoisi()) {
+			case Bisounours:
+				remoteView.setImageViewResource(R.id.WidgetImageView,
+						R.drawable.icone_bisounours);
+				break;
+
+			case Classique:
+				accesParam.majTheme(EnTheme.Fleur);
+			case Fleur:
+				remoteView.setImageViewResource(R.id.WidgetImageView,
+						R.drawable.icone1);
+				break;
+		}
+
 		// objBd.open();
-		String[] champ = { "AfficheAlerte", "DureeViePeremp", "Theme" };
-		ArrayList<String>[] Param = objBd.renvoi_param(champ);
-		// objBd.close();
-
-		String nomThemeChoisi = Param[2].get(0).toString().trim();
-
-		if (EnTheme.Bisounours.getLib().equals(nomThemeChoisi)) {
-			remoteView.setImageViewResource(R.id.WidgetImageView,
-					R.drawable.icone_bisounours);
-		}
-		if (EnTheme.Classique.getLib().equals(nomThemeChoisi)) {
-			// on supprime le theme classique car trop buggué visuellement,
-			// dans le cas ou un utilisateur aurait gardé ce theme,
-			// on force l'application du theme "Fleur" et on relance la
-			// verification du theme
-			AccesTableParams accesParam = new AccesTableParams(ctx);
-			accesParam.majTheme(EnTheme.Fleur);
-			// ContentValues values = new ContentValues();
-			// values.put("Theme", EnTheme.Fleur.getLib());
-			//
-			// //objBd.open();
-			// objBd.majTable("Param", values, "", null);
-			// //objBd.close();
-			remoteView.setImageViewResource(R.id.WidgetImageView,
-					R.drawable.icone1);
-		}
-		if (EnTheme.Fleur.getLib().equals(nomThemeChoisi)) {
-			remoteView.setImageViewResource(R.id.WidgetImageView,
-					R.drawable.icone1);
-		}
+		// String[] champ = { "AfficheAlerte", "DureeViePeremp", "Theme" };
+		// ArrayList<String>[] Param = objBd.renvoi_param(champ);
+		// // objBd.close();
+		//
+		// String nomThemeChoisi = Param[2].get(0).toString().trim();
+		//
+		// if (EnTheme.Bisounours.getLib().equals(nomThemeChoisi)) {
+		// remoteView.setImageViewResource(R.id.WidgetImageView,
+		// R.drawable.icone_bisounours);
+		// }
+		// if (EnTheme.Classique.getLib().equals(nomThemeChoisi)) {
+		// // on supprime le theme classique car trop buggué visuellement,
+		// // dans le cas ou un utilisateur aurait gardé ce theme,
+		// // on force l'application du theme "Fleur" et on relance la
+		// // verification du theme
+		// AccesTableParams accesParam = new AccesTableParams(ctx);
+		// accesParam.majTheme(EnTheme.Fleur);
+		// // ContentValues values = new ContentValues();
+		// // values.put("Theme", EnTheme.Fleur.getLib());
+		// //
+		// // //objBd.open();
+		// // objBd.majTable("Param", values, "", null);
+		// // //objBd.close();
+		// remoteView.setImageViewResource(R.id.WidgetImageView,
+		// R.drawable.icone1);
+		// }
+		// if (EnTheme.Fleur.getLib().equals(nomThemeChoisi)) {
+		// remoteView.setImageViewResource(R.id.WidgetImageView,
+		// R.drawable.icone1);
+		// }
 
 	}
 
