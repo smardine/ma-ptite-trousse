@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
 <project default="javadoc">
 	<property name="doc.dir" value="../build/javadocs"/>
 		<target name="clean">
@@ -16,8 +16,12 @@
         	notree="false"
         	packagenames="fr.smardine.matroussedemaquillage,
         	fr.smardine.matroussedemaquillage.base,
+        	fr.smardine.matroussedemaquillage.base.accesTable,
+        	fr.smardine.matroussedemaquillage.base.structure,
         	fr.smardine.matroussedemaquillage.crashreport,
+        	fr.smardine.matroussedemaquillage.factory,
         	fr.smardine.matroussedemaquillage.ftp,
+        	fr.smardine.matroussedemaquillage.mdl,
         	fr.smardine.matroussedemaquillage.modifier,
         	fr.smardine.matroussedemaquillage.note,
         	fr.smardine.matroussedemaquillage.param,
