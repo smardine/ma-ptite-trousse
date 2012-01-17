@@ -14,6 +14,11 @@
 	</condition>
 	
 	<property file="build.properties" />
+	<!-- Define the Sonar task if this hasn't been done in a common script -->
+	 
+	<taskdef uri="antlib:org.sonar.ant" resource="org/sonar/ant/antlib.xml">
+	    <classpath path="./etc" />
+	</taskdef>
 	<!--
 	=======================================================================
 	   Tache de lecture du numéro de révision de la copie de travail.
