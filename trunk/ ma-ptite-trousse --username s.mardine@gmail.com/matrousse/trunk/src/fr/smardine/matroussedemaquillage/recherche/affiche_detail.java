@@ -335,9 +335,9 @@ public class affiche_detail extends Activity implements OnClickListener {
 
 		AccesTableProduitEnregistre accesProduit = new AccesTableProduitEnregistre(
 				this);
-		accesProduit.majProduitComplet(IdProduit, Nom_Produit, SousCat, Cat,
-				Numeroteinte, DurreeVie, DatePeremption, DateAchat, NomMarque,
-				DatePeremtInMilli);
+		accesProduit.majProduitComplet(Integer.parseInt(IdProduit),
+				Nom_Produit, SousCat, Cat, Numeroteinte, DurreeVie,
+				DatePeremption, DateAchat, NomMarque, DatePeremtInMilli);
 
 		// ContentValues modifiedValues = new ContentValues();
 		// modifiedValues.put("nom_produit", Nom_Produit);

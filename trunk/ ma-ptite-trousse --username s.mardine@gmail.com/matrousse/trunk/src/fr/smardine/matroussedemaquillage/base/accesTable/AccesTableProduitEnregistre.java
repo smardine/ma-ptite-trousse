@@ -69,7 +69,7 @@ public class AccesTableProduitEnregistre {
 	 * @param p_idProduits
 	 * @return une liste de tableau de string
 	 */
-	public ArrayList<String> getTrousseComplete(int p_idProduits) {
+	public ArrayList<String> getDefProduitById(int p_idProduits) {
 		String requete = "Select "
 				+ EnStructProduitEnregistre.NOM_PRODUIT.getNomChamp()
 				+ " ,"
@@ -117,7 +117,7 @@ public class AccesTableProduitEnregistre {
 	 * @param p_idProduit le produit a corriger
 	 */
 	public void CorrigeProduitsEnregistre(int p_idProduit) {
-		ArrayList<String> defProduit = getTrousseComplete(p_idProduit);
+		ArrayList<String> defProduit = getDefProduitById(p_idProduit);
 
 		String Nom_Produit = defProduit.get(0);
 		String SousCat = defProduit.get(1);
@@ -206,7 +206,7 @@ public class AccesTableProduitEnregistre {
 	 * @param p_nomMarque
 	 * @param p_datePeremtInMilli
 	 */
-	public void majProduitComplet(String p_idProduit, String p_nomProduit,
+	public void majProduitComplet(int p_idProduit, String p_nomProduit,
 			String p_sousCat, String p_cat, String p_numeroTeinte,
 			String p_durreeVie, String p_datePeremption, String p_dateAchat,
 			String p_nomMarque, long p_datePeremtInMilli) {
@@ -222,7 +222,7 @@ public class AccesTableProduitEnregistre {
 		modifiedValues.put("Date_Peremption_milli", p_datePeremtInMilli);
 
 		String whereClause = "id_produits=?";
-		String[] whereArgs = new String[] { p_idProduit };
+		String[] whereArgs = new String[] { "" + p_idProduit + "" };
 		requeteFact.majTable(EnTable.PRODUIT_ENREGISTRE, modifiedValues,
 				whereClause, whereArgs);
 

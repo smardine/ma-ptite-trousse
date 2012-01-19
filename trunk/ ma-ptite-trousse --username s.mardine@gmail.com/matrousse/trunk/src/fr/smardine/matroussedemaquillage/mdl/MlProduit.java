@@ -44,20 +44,20 @@ public class MlProduit {
 	public MlProduit(int p_idProduit,
 			AccesTableProduitEnregistre p_accesTableProduitEnregistre) {
 		this.idProduit = p_idProduit;
-		ArrayList<String> listProduit = p_accesTableProduitEnregistre
-				.getTrousseComplete(idProduit);
-		this.nomProduit = listProduit.get(0);
-		this.nomSousCat = listProduit.get(1);
-		this.nomCat = listProduit.get(2);
-		this.teinte = listProduit.get(3);
-		this.dureeVie = Integer.parseInt(listProduit.get(4));
-		this.datePeremption = Date.valueOf(listProduit.get(5));
-		this.dateAchat = Date.valueOf(listProduit.get(6));
-		this.marque = listProduit.get(7);
-		this.datePeremMilli = Long.parseLong(listProduit.get(8));
-		this.isPerime = Boolean.getBoolean(listProduit.get(9));
-		this.isPresquePerime = Boolean.getBoolean(listProduit.get(10));
-		this.nbJourAvantPeremp = Integer.parseInt(listProduit.get(11));
+		ArrayList<String> defProduit = p_accesTableProduitEnregistre
+				.getDefProduitById(idProduit);
+		this.nomProduit = defProduit.get(0);
+		this.nomSousCat = defProduit.get(1);
+		this.nomCat = defProduit.get(2);
+		this.teinte = defProduit.get(3);
+		this.dureeVie = Integer.parseInt(defProduit.get(4));
+		this.datePeremption = Date.valueOf(defProduit.get(5));
+		this.dateAchat = Date.valueOf(defProduit.get(6));
+		this.marque = defProduit.get(7);
+		this.datePeremMilli = Long.parseLong(defProduit.get(8));
+		this.isPerime = Boolean.getBoolean(defProduit.get(9));
+		this.isPresquePerime = Boolean.getBoolean(defProduit.get(10));
+		this.nbJourAvantPeremp = Integer.parseInt(defProduit.get(11));
 
 	}
 
