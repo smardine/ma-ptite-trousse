@@ -3,6 +3,7 @@ package fr.smardine.matroussedemaquillage.mdl;
 import java.sql.Date;
 import java.util.ArrayList;
 
+import android.content.Context;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableProduitEnregistre;
 import fr.smardine.matroussedemaquillage.variableglobale.EnCategorie;
 
@@ -28,23 +29,19 @@ public class MlProduit {
 	private String nomCat;
 	private int dureeVie;
 	private long datePeremMilli;
-
-	/**
-	 * 
-	 */
-	public MlProduit() {
-
-	}
+	private final Context ctx;
 
 	/**
 	 * Constructeur permettant la valorisation complete d'un MlProduit
 	 * @param p_idProduit
-	 * @param p_accesTableProduitEnregistre
+	 * @param p_ctx
 	 */
-	public MlProduit(int p_idProduit,
-			AccesTableProduitEnregistre p_accesTableProduitEnregistre) {
+	public MlProduit(int p_idProduit, Context p_ctx) {
 		this.idProduit = p_idProduit;
-		ArrayList<String> defProduit = p_accesTableProduitEnregistre
+		this.ctx = p_ctx;
+		AccesTableProduitEnregistre accesProduit = new AccesTableProduitEnregistre(
+				ctx);
+		ArrayList<String> defProduit = accesProduit
 				.getDefProduitById(idProduit);
 		this.nomProduit = defProduit.get(0);
 		this.nomSousCat = defProduit.get(1);

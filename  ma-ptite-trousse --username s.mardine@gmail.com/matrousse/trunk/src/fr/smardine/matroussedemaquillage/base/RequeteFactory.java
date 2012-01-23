@@ -110,4 +110,23 @@ public class RequeteFactory {
 		bdAcces.close();
 		return nb;
 	}
+
+	/**
+	 * @param p_table
+	 * @param p_values
+	 * @return true ou false
+	 */
+	public boolean insertDansTable(EnTable p_table, ContentValues p_values) {
+		bdAcces.open();
+		long RowNumber = bdAcces.getMdb().insert(p_table.getNomTable(), null,
+				p_values);
+		if (RowNumber == -1) {
+			bdAcces.close();
+			return false;
+		} else {
+			bdAcces.close();
+			return true;
+		}
+
+	}
 }

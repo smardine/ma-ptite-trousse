@@ -26,9 +26,9 @@ public class BDAcces {
 
 	private static final String PRODUITS_TABLE = "trousse_produits";
 
-	private static final String MARQUES_TABLE = "trousse_marques";
+	// private static final String MARQUES_TABLE = "trousse_marques";
 
-	private static final String TEMPO_TABLE = "trousse_tempo";
+	// private static final String TEMPO_TABLE = "trousse_tempo";
 
 	private static final String DATABASE_NAME = "trousse_base";
 
@@ -77,10 +77,6 @@ public class BDAcces {
 			for (String s : maj.getAllVersion()) {
 				db.execSQL(s);
 			}
-
-			// Log.e(TAG, "erreur application script: " + Script);
-			// Log.e(TAG, "erreur: " + Message_Erreur);
-
 		}
 
 		@Override
@@ -168,381 +164,385 @@ public class BDAcces {
 		mDbHelper.close();
 	}
 
-	/**
-	 * @param colonne
-	 * @param OrderBy
-	 * @param GroupBy
-	 * @param condition
-	 * @param conditionArgs
-	 * @return la liste des notes enregistrees en base
-	 */
-	public ArrayList<String>[] renvoi_liste_Note(String[] colonne,
-			String OrderBy, String GroupBy, String condition,
-			String[] conditionArgs) {
+	// /**
+	// * @param colonne
+	// * @param OrderBy
+	// * @param GroupBy
+	// * @param condition
+	// * @param conditionArgs
+	// * @return la liste des notes enregistrees en base
+	// */
+	// public ArrayList<String>[] renvoi_liste_Note(String[] colonne,
+	// String OrderBy, String GroupBy, String condition,
+	// String[] conditionArgs) {
+	//
+	// String having = "";
+	//
+	// Cursor objCursor = mDb.query("Notes", colonne, condition,
+	// conditionArgs, GroupBy, having, OrderBy);
+	// int iPostidProduit = objCursor.getColumnIndex(colonne[0]);
+	// int iPostnomProduit = objCursor.getColumnIndex(colonne[1]);
+	//
+	// int itotal = objCursor.getCount();
+	// ArrayList<String> aTableRetourId = new ArrayList<String>();
+	// ArrayList<String> aTableRetourNom = new ArrayList<String>();
+	//
+	// objCursor.moveToFirst();
+	// ArrayList<String>[] aTableRetour = new ArrayList[3];
+	//
+	// /* Check if our result was valid. */
+	// if (objCursor != null) {
+	// for (int i = 0; i < itotal; i++) {
+	// String resultId = "", resultnom_produits = "";
+	// resultId = objCursor.getString(iPostidProduit);
+	// resultnom_produits = objCursor.getString(iPostnomProduit);
+	//
+	// if (!resultId.equals(null)) {
+	// aTableRetourId.add(resultId);
+	// } else {
+	// aTableRetourId.add("vide");
+	// }
+	// if (!resultnom_produits.equals(null)) {
+	// aTableRetourNom.add(resultnom_produits);
+	// } else {
+	// aTableRetourNom.add("vide");
+	// }
+	//
+	// objCursor.moveToNext();
+	// }
+	// }
+	// objCursor.close();
+	// aTableRetour[0] = aTableRetourId;
+	// aTableRetour[1] = aTableRetourNom;
+	//
+	// return aTableRetour;
+	// }
 
-		String having = "";
+	// /**
+	// * @param colonne
+	// * @param OrderBy
+	// * @param GroupBy
+	// * @param condition
+	// * @param conditionArgs
+	// * @return la liste complete des notes en base.
+	// */
+	// public ArrayList<String>[] renvoi_liste_NoteTotale(String[] colonne,
+	// String OrderBy, String GroupBy, String condition,
+	// String[] conditionArgs) {
+	//
+	// String having = "";
+	//
+	// Cursor objCursor = mDb.query("Notes", colonne, condition,
+	// conditionArgs, GroupBy, having, OrderBy);
+	// int iPostidProduit = objCursor.getColumnIndex(colonne[0]);
+	// int iPostnomProduit = objCursor.getColumnIndex(colonne[1]);
+	// int iPostMessage = objCursor.getColumnIndex(colonne[2]);
+	//
+	// int itotal = objCursor.getCount();
+	// ArrayList<String> aTableRetourId = new ArrayList<String>();
+	// ArrayList<String> aTableRetourNom = new ArrayList<String>();
+	// ArrayList<String> aTableRetourMessage = new ArrayList<String>();
+	//
+	// objCursor.moveToFirst();
+	// ArrayList<String>[] aTableRetour = new ArrayList[4];
+	//
+	// /* Check if our result was valid. */
+	// if (objCursor != null) {
+	// for (int i = 0; i < itotal; i++) {
+	// String resultId = "", resultnom_produits = "", resultMessage = "";
+	// resultId = objCursor.getString(iPostidProduit);
+	// resultnom_produits = objCursor.getString(iPostnomProduit);
+	// resultMessage = objCursor.getString(iPostMessage);
+	//
+	// if (!resultId.equals(null)) {
+	// aTableRetourId.add(resultId);
+	// } else {
+	// aTableRetourId.add("vide");
+	// }
+	// if (!resultnom_produits.equals(null)) {
+	// aTableRetourNom.add(resultnom_produits);
+	// } else {
+	// aTableRetourNom.add("vide");
+	// }
+	// if (!resultMessage.equals(null)) {
+	// aTableRetourMessage.add(resultMessage);
+	// } else {
+	// aTableRetourMessage.add("vide");
+	// }
+	// objCursor.moveToNext();
+	// }
+	// }
+	// objCursor.close();
+	// aTableRetour[0] = aTableRetourId;
+	// aTableRetour[1] = aTableRetourNom;
+	// aTableRetour[2] = aTableRetourMessage;
+	//
+	// return aTableRetour;
+	// }
 
-		Cursor objCursor = mDb.query("Notes", colonne, condition,
-				conditionArgs, GroupBy, having, OrderBy);
-		int iPostidProduit = objCursor.getColumnIndex(colonne[0]);
-		int iPostnomProduit = objCursor.getColumnIndex(colonne[1]);
+	// /**
+	// * @param colonne
+	// * @param OrderBy
+	// * @param GroupBy
+	// * @return la liste des dates de peremptions
+	// */
+	//
+	// public ArrayList<String>[] VerifAuDemarrage(String[] colonne,
+	// String OrderBy, String GroupBy) {
+	//
+	// String condition = "";
+	// String[] conditionArgs = null;
+	//
+	// String having = "";
+	//
+	// Cursor objCursor = mDb.query("produit_Enregistre", colonne, condition,
+	// conditionArgs, GroupBy, having, OrderBy);
+	// int iPostDatePermemp = objCursor.getColumnIndex(colonne[0]);
+	// int iPostIdProduit = objCursor.getColumnIndex(colonne[1]);
+	// int iPostDateAchat = objCursor.getColumnIndex(colonne[2]);
+	// int iPostDureeVie = objCursor.getColumnIndex(colonne[3]);
+	//
+	// int itotal = objCursor.getCount();
+	// ArrayList<String> aTableRetourId = new ArrayList<String>();
+	// ArrayList<String> aTableRetourNom = new ArrayList<String>();
+	// ArrayList<String> aTableRetourDateAchat = new ArrayList<String>();
+	// ArrayList<String> aTableRetourDureeVie = new ArrayList<String>();
+	//
+	// objCursor.moveToFirst();
+	// ArrayList<String>[] aTableRetour = new ArrayList[5];
+	//
+	// /* Check if our result was valid. */
+	// if (objCursor != null) {
+	// for (int i = 0; i < itotal; i++) {
+	// String resultDatePeremption = "", resultId_produits = "", resultDateAchat
+	// = "", resultDureeVie = "";// ,resultDatePeremption="";
+	// resultDatePeremption = objCursor.getString(iPostDatePermemp);
+	// resultId_produits = objCursor.getString(iPostIdProduit);
+	// resultDateAchat = objCursor.getString(iPostDateAchat);
+	// resultDureeVie = objCursor.getString(iPostDureeVie);
+	//
+	// if (resultDatePeremption != null) {
+	// aTableRetourId.add(resultDatePeremption);
+	// } else {
+	// aTableRetourId.add(null);
+	// }
+	// if (resultId_produits != null) {
+	// aTableRetourNom.add(resultId_produits);
+	// } else {
+	// aTableRetourNom.add("vide");
+	// }
+	//
+	// if (resultDateAchat != null) {
+	// aTableRetourDateAchat.add(resultDateAchat);
+	// } else {
+	// aTableRetourDateAchat.add("vide");
+	// }
+	// if (resultDureeVie != null) {
+	// aTableRetourDureeVie.add(resultDureeVie);
+	// } else {
+	// aTableRetourDureeVie.add(null);
+	// }
+	//
+	// objCursor.moveToNext();
+	// }
+	// }
+	// objCursor.close();
+	// aTableRetour[0] = aTableRetourId;
+	// aTableRetour[1] = aTableRetourNom;
+	// aTableRetour[2] = aTableRetourDateAchat;
+	// aTableRetour[3] = aTableRetourDureeVie;
+	//
+	// return aTableRetour;
+	// }
 
-		int itotal = objCursor.getCount();
-		ArrayList<String> aTableRetourId = new ArrayList<String>();
-		ArrayList<String> aTableRetourNom = new ArrayList<String>();
+	// /**
+	// * @param colonne
+	// * @param id
+	// * @return la liste complete
+	// */
+	// public ArrayList<String>[] renvoi_liste_TrousseFinalComplete(
+	// String[] colonne, String id) {
+	//
+	// // String[] colonne= new
+	// // String[]{"nom_produit","DateAchat","Date_Peremption"};
+	// String condition = "id_produits='" + id + "'";
+	// // String condition = "";
+	// String[] conditionArgs = null;
+	//
+	// String having = "";
+	//
+	// Cursor objCursor = mDb.query("produit_Enregistre", colonne, condition,
+	// conditionArgs, "", having, "");
+	// int iPostNomProduit = objCursor.getColumnIndex(colonne[0]);
+	// int iPostNomSousCat = objCursor.getColumnIndex(colonne[1]);
+	// int iPostNomCat = objCursor.getColumnIndex(colonne[2]);
+	// int iPostNumTeinte = objCursor.getColumnIndex(colonne[3]);
+	// int iPostDurreeVie = objCursor.getColumnIndex(colonne[4]);
+	// int iPostDatePeremption = objCursor.getColumnIndex(colonne[5]);
+	// int iPostDateAchat = objCursor.getColumnIndex(colonne[6]);
+	// int iPostMarque = objCursor.getColumnIndex(colonne[7]);
+	//
+	// int itotal = objCursor.getCount();
+	//
+	// ArrayList<String> aTableRetourNomProduit = new ArrayList<String>();
+	// ArrayList<String> aTableRetourNomSousCat = new ArrayList<String>();
+	// ArrayList<String> aTableRetourNomCat = new ArrayList<String>();
+	// ArrayList<String> aTableRetourNumTeinte = new ArrayList<String>();
+	// ArrayList<String> aTableRetourDureeVie = new ArrayList<String>();
+	// ArrayList<String> aTableRetourDatePeremp = new ArrayList<String>();
+	// ArrayList<String> aTableRetourDateAchat = new ArrayList<String>();
+	// ArrayList<String> aTableRetourMarque = new ArrayList<String>();
+	//
+	// objCursor.moveToFirst();
+	//
+	// ArrayList<String>[] aTableRetour = new ArrayList[objCursor
+	// .getColumnCount() + 1];
+	//
+	// /* Check if our result was valid. */
+	// if (objCursor != null) {
+	// for (int i = 0; i < itotal; i++) {
+	// String resultNomProduit = "", resultNomSousCat = "", resultNomCat = "",
+	// resultNumTeinte = "", resultDureeVie = "", resultDatePeremp = "",
+	// resultDateAchat = "", resultMarque = "";
+	// resultNomProduit = objCursor.getString(iPostNomProduit);
+	// resultNomSousCat = objCursor.getString(iPostNomSousCat);
+	// resultNomCat = objCursor.getString(iPostNomCat);
+	// resultNumTeinte = objCursor.getString(iPostNumTeinte);
+	// resultDureeVie = objCursor.getString(iPostDurreeVie);
+	// resultDatePeremp = objCursor.getString(iPostDatePeremption);
+	// resultDateAchat = objCursor.getString(iPostDateAchat);
+	// resultMarque = objCursor.getString(iPostMarque);
+	//
+	// if (resultNomProduit != null) {
+	// aTableRetourNomProduit.add(resultNomProduit);
+	// } else {
+	// aTableRetourNomProduit.add("vide");
+	// }
+	// if (resultNomSousCat != null) {
+	// aTableRetourNomSousCat.add(resultNomSousCat);
+	// } else {
+	// aTableRetourNomSousCat.add("vide");
+	// }
+	//
+	// if (resultNomCat != null) {
+	// aTableRetourNomCat.add(resultNomCat);
+	// } else {
+	// aTableRetourNomCat.add("vide");
+	// }
+	// if (resultNumTeinte != null) {
+	// aTableRetourNumTeinte.add(resultNumTeinte);
+	// } else {
+	// aTableRetourNumTeinte.add("vide");
+	// }
+	// if (resultDureeVie != null) {
+	// aTableRetourDureeVie.add(resultDureeVie);
+	// } else {
+	// aTableRetourDureeVie.add("vide");
+	// }
+	// if (resultDatePeremp != null) {
+	// aTableRetourDatePeremp.add(resultDatePeremp);
+	// } else {
+	// aTableRetourDatePeremp.add("vide");
+	// }
+	// if (resultDateAchat != null) {
+	// aTableRetourDateAchat.add(resultDateAchat);
+	// } else {
+	// aTableRetourDateAchat.add("vide");
+	// }
+	// if (resultMarque != null) {
+	// aTableRetourMarque.add(resultMarque);
+	// } else {
+	// aTableRetourMarque.add("vide");
+	// }
+	// objCursor.moveToNext();
+	// }
+	// }
+	// objCursor.close();
+	// aTableRetour[0] = aTableRetourNomProduit;
+	// aTableRetour[1] = aTableRetourNomSousCat;
+	// aTableRetour[2] = aTableRetourNomCat;
+	// aTableRetour[3] = aTableRetourNumTeinte;
+	// aTableRetour[4] = aTableRetourDureeVie;
+	// aTableRetour[5] = aTableRetourDatePeremp;
+	// aTableRetour[6] = aTableRetourDateAchat;
+	// aTableRetour[7] = aTableRetourMarque;
+	//
+	// return aTableRetour;
+	// }
 
-		objCursor.moveToFirst();
-		ArrayList<String>[] aTableRetour = new ArrayList[3];
-
-		/* Check if our result was valid. */
-		if (objCursor != null) {
-			for (int i = 0; i < itotal; i++) {
-				String resultId = "", resultnom_produits = "";
-				resultId = objCursor.getString(iPostidProduit);
-				resultnom_produits = objCursor.getString(iPostnomProduit);
-
-				if (!resultId.equals(null)) {
-					aTableRetourId.add(resultId);
-				} else {
-					aTableRetourId.add("vide");
-				}
-				if (!resultnom_produits.equals(null)) {
-					aTableRetourNom.add(resultnom_produits);
-				} else {
-					aTableRetourNom.add("vide");
-				}
-
-				objCursor.moveToNext();
-			}
-		}
-		objCursor.close();
-		aTableRetour[0] = aTableRetourId;
-		aTableRetour[1] = aTableRetourNom;
-
-		return aTableRetour;
-	}
-
-	/**
-	 * @param colonne
-	 * @param OrderBy
-	 * @param GroupBy
-	 * @param condition
-	 * @param conditionArgs
-	 * @return la liste complete des notes en base.
-	 */
-	public ArrayList<String>[] renvoi_liste_NoteTotale(String[] colonne,
-			String OrderBy, String GroupBy, String condition,
-			String[] conditionArgs) {
-
-		String having = "";
-
-		Cursor objCursor = mDb.query("Notes", colonne, condition,
-				conditionArgs, GroupBy, having, OrderBy);
-		int iPostidProduit = objCursor.getColumnIndex(colonne[0]);
-		int iPostnomProduit = objCursor.getColumnIndex(colonne[1]);
-		int iPostMessage = objCursor.getColumnIndex(colonne[2]);
-
-		int itotal = objCursor.getCount();
-		ArrayList<String> aTableRetourId = new ArrayList<String>();
-		ArrayList<String> aTableRetourNom = new ArrayList<String>();
-		ArrayList<String> aTableRetourMessage = new ArrayList<String>();
-
-		objCursor.moveToFirst();
-		ArrayList<String>[] aTableRetour = new ArrayList[4];
-
-		/* Check if our result was valid. */
-		if (objCursor != null) {
-			for (int i = 0; i < itotal; i++) {
-				String resultId = "", resultnom_produits = "", resultMessage = "";
-				resultId = objCursor.getString(iPostidProduit);
-				resultnom_produits = objCursor.getString(iPostnomProduit);
-				resultMessage = objCursor.getString(iPostMessage);
-
-				if (!resultId.equals(null)) {
-					aTableRetourId.add(resultId);
-				} else {
-					aTableRetourId.add("vide");
-				}
-				if (!resultnom_produits.equals(null)) {
-					aTableRetourNom.add(resultnom_produits);
-				} else {
-					aTableRetourNom.add("vide");
-				}
-				if (!resultMessage.equals(null)) {
-					aTableRetourMessage.add(resultMessage);
-				} else {
-					aTableRetourMessage.add("vide");
-				}
-				objCursor.moveToNext();
-			}
-		}
-		objCursor.close();
-		aTableRetour[0] = aTableRetourId;
-		aTableRetour[1] = aTableRetourNom;
-		aTableRetour[2] = aTableRetourMessage;
-
-		return aTableRetour;
-	}
-
-	/**
-	 * @param colonne
-	 * @param OrderBy
-	 * @param GroupBy
-	 * @return la liste des dates de peremptions
-	 */
-
-	public ArrayList<String>[] VerifAuDemarrage(String[] colonne,
-			String OrderBy, String GroupBy) {
-
-		String condition = "";
-		String[] conditionArgs = null;
-
-		String having = "";
-
-		Cursor objCursor = mDb.query("produit_Enregistre", colonne, condition,
-				conditionArgs, GroupBy, having, OrderBy);
-		int iPostDatePermemp = objCursor.getColumnIndex(colonne[0]);
-		int iPostIdProduit = objCursor.getColumnIndex(colonne[1]);
-		int iPostDateAchat = objCursor.getColumnIndex(colonne[2]);
-		int iPostDureeVie = objCursor.getColumnIndex(colonne[3]);
-
-		int itotal = objCursor.getCount();
-		ArrayList<String> aTableRetourId = new ArrayList<String>();
-		ArrayList<String> aTableRetourNom = new ArrayList<String>();
-		ArrayList<String> aTableRetourDateAchat = new ArrayList<String>();
-		ArrayList<String> aTableRetourDureeVie = new ArrayList<String>();
-
-		objCursor.moveToFirst();
-		ArrayList<String>[] aTableRetour = new ArrayList[5];
-
-		/* Check if our result was valid. */
-		if (objCursor != null) {
-			for (int i = 0; i < itotal; i++) {
-				String resultDatePeremption = "", resultId_produits = "", resultDateAchat = "", resultDureeVie = "";// ,resultDatePeremption="";
-				resultDatePeremption = objCursor.getString(iPostDatePermemp);
-				resultId_produits = objCursor.getString(iPostIdProduit);
-				resultDateAchat = objCursor.getString(iPostDateAchat);
-				resultDureeVie = objCursor.getString(iPostDureeVie);
-
-				if (resultDatePeremption != null) {
-					aTableRetourId.add(resultDatePeremption);
-				} else {
-					aTableRetourId.add(null);
-				}
-				if (resultId_produits != null) {
-					aTableRetourNom.add(resultId_produits);
-				} else {
-					aTableRetourNom.add("vide");
-				}
-
-				if (resultDateAchat != null) {
-					aTableRetourDateAchat.add(resultDateAchat);
-				} else {
-					aTableRetourDateAchat.add("vide");
-				}
-				if (resultDureeVie != null) {
-					aTableRetourDureeVie.add(resultDureeVie);
-				} else {
-					aTableRetourDureeVie.add(null);
-				}
-
-				objCursor.moveToNext();
-			}
-		}
-		objCursor.close();
-		aTableRetour[0] = aTableRetourId;
-		aTableRetour[1] = aTableRetourNom;
-		aTableRetour[2] = aTableRetourDateAchat;
-		aTableRetour[3] = aTableRetourDureeVie;
-
-		return aTableRetour;
-	}
-
-	/**
-	 * @param colonne
-	 * @param id
-	 * @return la liste complete
-	 */
-	public ArrayList<String>[] renvoi_liste_TrousseFinalComplete(
-			String[] colonne, String id) {
-
-		// String[] colonne= new
-		// String[]{"nom_produit","DateAchat","Date_Peremption"};
-		String condition = "id_produits='" + id + "'";
-		// String condition = "";
-		String[] conditionArgs = null;
-
-		String having = "";
-
-		Cursor objCursor = mDb.query("produit_Enregistre", colonne, condition,
-				conditionArgs, "", having, "");
-		int iPostNomProduit = objCursor.getColumnIndex(colonne[0]);
-		int iPostNomSousCat = objCursor.getColumnIndex(colonne[1]);
-		int iPostNomCat = objCursor.getColumnIndex(colonne[2]);
-		int iPostNumTeinte = objCursor.getColumnIndex(colonne[3]);
-		int iPostDurreeVie = objCursor.getColumnIndex(colonne[4]);
-		int iPostDatePeremption = objCursor.getColumnIndex(colonne[5]);
-		int iPostDateAchat = objCursor.getColumnIndex(colonne[6]);
-		int iPostMarque = objCursor.getColumnIndex(colonne[7]);
-
-		int itotal = objCursor.getCount();
-
-		ArrayList<String> aTableRetourNomProduit = new ArrayList<String>();
-		ArrayList<String> aTableRetourNomSousCat = new ArrayList<String>();
-		ArrayList<String> aTableRetourNomCat = new ArrayList<String>();
-		ArrayList<String> aTableRetourNumTeinte = new ArrayList<String>();
-		ArrayList<String> aTableRetourDureeVie = new ArrayList<String>();
-		ArrayList<String> aTableRetourDatePeremp = new ArrayList<String>();
-		ArrayList<String> aTableRetourDateAchat = new ArrayList<String>();
-		ArrayList<String> aTableRetourMarque = new ArrayList<String>();
-
-		objCursor.moveToFirst();
-
-		ArrayList<String>[] aTableRetour = new ArrayList[objCursor
-				.getColumnCount() + 1];
-
-		/* Check if our result was valid. */
-		if (objCursor != null) {
-			for (int i = 0; i < itotal; i++) {
-				String resultNomProduit = "", resultNomSousCat = "", resultNomCat = "", resultNumTeinte = "", resultDureeVie = "", resultDatePeremp = "", resultDateAchat = "", resultMarque = "";
-				resultNomProduit = objCursor.getString(iPostNomProduit);
-				resultNomSousCat = objCursor.getString(iPostNomSousCat);
-				resultNomCat = objCursor.getString(iPostNomCat);
-				resultNumTeinte = objCursor.getString(iPostNumTeinte);
-				resultDureeVie = objCursor.getString(iPostDurreeVie);
-				resultDatePeremp = objCursor.getString(iPostDatePeremption);
-				resultDateAchat = objCursor.getString(iPostDateAchat);
-				resultMarque = objCursor.getString(iPostMarque);
-
-				if (resultNomProduit != null) {
-					aTableRetourNomProduit.add(resultNomProduit);
-				} else {
-					aTableRetourNomProduit.add("vide");
-				}
-				if (resultNomSousCat != null) {
-					aTableRetourNomSousCat.add(resultNomSousCat);
-				} else {
-					aTableRetourNomSousCat.add("vide");
-				}
-
-				if (resultNomCat != null) {
-					aTableRetourNomCat.add(resultNomCat);
-				} else {
-					aTableRetourNomCat.add("vide");
-				}
-				if (resultNumTeinte != null) {
-					aTableRetourNumTeinte.add(resultNumTeinte);
-				} else {
-					aTableRetourNumTeinte.add("vide");
-				}
-				if (resultDureeVie != null) {
-					aTableRetourDureeVie.add(resultDureeVie);
-				} else {
-					aTableRetourDureeVie.add("vide");
-				}
-				if (resultDatePeremp != null) {
-					aTableRetourDatePeremp.add(resultDatePeremp);
-				} else {
-					aTableRetourDatePeremp.add("vide");
-				}
-				if (resultDateAchat != null) {
-					aTableRetourDateAchat.add(resultDateAchat);
-				} else {
-					aTableRetourDateAchat.add("vide");
-				}
-				if (resultMarque != null) {
-					aTableRetourMarque.add(resultMarque);
-				} else {
-					aTableRetourMarque.add("vide");
-				}
-				objCursor.moveToNext();
-			}
-		}
-		objCursor.close();
-		aTableRetour[0] = aTableRetourNomProduit;
-		aTableRetour[1] = aTableRetourNomSousCat;
-		aTableRetour[2] = aTableRetourNomCat;
-		aTableRetour[3] = aTableRetourNumTeinte;
-		aTableRetour[4] = aTableRetourDureeVie;
-		aTableRetour[5] = aTableRetourDatePeremp;
-		aTableRetour[6] = aTableRetourDateAchat;
-		aTableRetour[7] = aTableRetourMarque;
-
-		return aTableRetour;
-	}
-
-	/**
-	 * @return la liste des produits temporaire
-	 */
-	public ArrayList<String>[] renvoi_liste_TrousseTempo() {
-
-		String[] colonne = new String[] { "nom_produit", "numero_Teinte",
-				"DateAchat", "Duree_Vie" };
-		// String condition = "nom_categorie='"+Catégorie+"'";
-		String condition = "";
-		String[] conditionArgs = null;
-		String groupby = "";
-		String having = "";
-		String orderby = "";
-		Cursor objCursor = mDb.query("trousse_tempo", colonne, condition,
-				conditionArgs, groupby, having, orderby);
-		int iPostnomProduit = objCursor.getColumnIndex("nom_produit");
-		int iPostTeinte = objCursor.getColumnIndex("numero_Teinte");
-		int iPostDateAchat = objCursor.getColumnIndex("DateAchat");
-		int iPostDureeVie = objCursor.getColumnIndex("Duree_Vie");
-
-		int itotal = objCursor.getCount();
-		ArrayList<String> aTableRetourNom = new ArrayList<String>();
-		ArrayList<String> aTableRetourTeinte = new ArrayList<String>();
-		ArrayList<String> aTableRetourDateAchat = new ArrayList<String>();
-		ArrayList<String> aTableRetourDureeVie = new ArrayList<String>();
-
-		objCursor.moveToFirst();
-		ArrayList<String>[] aTableRetour = new ArrayList[4];
-
-		/* Check if our result was valid. */
-		if (objCursor != null) {
-			for (int i = 0; i < itotal; i++) {
-				String resultnom_produits = "", resultTeinte = "", resultDateAchat = "", resultDureeVie = "";
-				resultnom_produits = objCursor.getString(iPostnomProduit);
-				resultTeinte = objCursor.getString(iPostTeinte);
-				resultDateAchat = objCursor.getString(iPostDateAchat);
-				resultDureeVie = objCursor.getString(iPostDureeVie);
-
-				if (resultnom_produits.equals(null)) {
-					aTableRetourNom.add(resultnom_produits);
-				} else {
-					aTableRetourNom.add("vide");
-				}
-
-				if (!resultTeinte.equals(null)) {
-					aTableRetourTeinte.add(resultTeinte);
-				} else {
-					aTableRetourTeinte.add("vide");
-				}
-
-				if (!resultDateAchat.equals(null)) {
-					aTableRetourDateAchat.add(resultDateAchat);
-				} else {
-					aTableRetourDateAchat.add("vide");
-				}
-
-				if (!resultDureeVie.equals(null)) {
-					aTableRetourDureeVie.add(resultDureeVie);
-				} else {
-					aTableRetourDureeVie.add("vide");
-				}
-				objCursor.moveToNext();
-			}
-		}
-		objCursor.close();
-		aTableRetour[0] = aTableRetourNom;
-		aTableRetour[1] = aTableRetourTeinte;
-		aTableRetour[2] = aTableRetourDateAchat;
-		aTableRetour[3] = aTableRetourDureeVie;
-
-		return aTableRetour;
-	}
+	// /**
+	// * @return la liste des produits temporaire
+	// */
+	// public ArrayList<String>[] renvoi_liste_TrousseTempo() {
+	//
+	// String[] colonne = new String[] { "nom_produit", "numero_Teinte",
+	// "DateAchat", "Duree_Vie" };
+	// // String condition = "nom_categorie='"+Catégorie+"'";
+	// String condition = "";
+	// String[] conditionArgs = null;
+	// String groupby = "";
+	// String having = "";
+	// String orderby = "";
+	// Cursor objCursor = mDb.query("trousse_tempo", colonne, condition,
+	// conditionArgs, groupby, having, orderby);
+	// int iPostnomProduit = objCursor.getColumnIndex("nom_produit");
+	// int iPostTeinte = objCursor.getColumnIndex("numero_Teinte");
+	// int iPostDateAchat = objCursor.getColumnIndex("DateAchat");
+	// int iPostDureeVie = objCursor.getColumnIndex("Duree_Vie");
+	//
+	// int itotal = objCursor.getCount();
+	// ArrayList<String> aTableRetourNom = new ArrayList<String>();
+	// ArrayList<String> aTableRetourTeinte = new ArrayList<String>();
+	// ArrayList<String> aTableRetourDateAchat = new ArrayList<String>();
+	// ArrayList<String> aTableRetourDureeVie = new ArrayList<String>();
+	//
+	// objCursor.moveToFirst();
+	// ArrayList<String>[] aTableRetour = new ArrayList[4];
+	//
+	// /* Check if our result was valid. */
+	// if (objCursor != null) {
+	// for (int i = 0; i < itotal; i++) {
+	// String resultnom_produits = "", resultTeinte = "", resultDateAchat = "",
+	// resultDureeVie = "";
+	// resultnom_produits = objCursor.getString(iPostnomProduit);
+	// resultTeinte = objCursor.getString(iPostTeinte);
+	// resultDateAchat = objCursor.getString(iPostDateAchat);
+	// resultDureeVie = objCursor.getString(iPostDureeVie);
+	//
+	// if (resultnom_produits.equals(null)) {
+	// aTableRetourNom.add(resultnom_produits);
+	// } else {
+	// aTableRetourNom.add("vide");
+	// }
+	//
+	// if (!resultTeinte.equals(null)) {
+	// aTableRetourTeinte.add(resultTeinte);
+	// } else {
+	// aTableRetourTeinte.add("vide");
+	// }
+	//
+	// if (!resultDateAchat.equals(null)) {
+	// aTableRetourDateAchat.add(resultDateAchat);
+	// } else {
+	// aTableRetourDateAchat.add("vide");
+	// }
+	//
+	// if (!resultDureeVie.equals(null)) {
+	// aTableRetourDureeVie.add(resultDureeVie);
+	// } else {
+	// aTableRetourDureeVie.add("vide");
+	// }
+	// objCursor.moveToNext();
+	// }
+	// }
+	// objCursor.close();
+	// aTableRetour[0] = aTableRetourNom;
+	// aTableRetour[1] = aTableRetourTeinte;
+	// aTableRetour[2] = aTableRetourDateAchat;
+	// aTableRetour[3] = aTableRetourDureeVie;
+	//
+	// return aTableRetour;
+	// }
 
 	/**
 	 * @param Table

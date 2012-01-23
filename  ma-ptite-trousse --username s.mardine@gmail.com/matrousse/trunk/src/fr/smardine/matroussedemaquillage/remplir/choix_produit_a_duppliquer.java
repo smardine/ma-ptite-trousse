@@ -431,7 +431,7 @@ public class choix_produit_a_duppliquer extends Activity implements
 			@Override
 			public void onClick(DialogInterface dialog, int id) {
 
-				gotoDuppliqueEtLanceFormPage3(Txt01);
+				gotoDuppliqueEtLanceFormPage3(Integer.parseInt(Txt01));
 
 			}
 		});
@@ -440,27 +440,30 @@ public class choix_produit_a_duppliquer extends Activity implements
 	}
 
 	@SuppressWarnings("rawtypes")
-	protected void gotoDuppliqueEtLanceFormPage3(String IdProduit) {
+	protected void gotoDuppliqueEtLanceFormPage3(int p_idProduit) {
 		// TODO Auto-generated method stub
 		// objBd.open();
 		// IdProduit=getIntent().getStringExtra("IDProduit").trim();
-		String[] Colonnes = { "nom_produit", "nom_souscatergorie",
-				"nom_categorie", "numero_Teinte", "Duree_Vie",
-				"Date_Peremption", "DateAchat", "nom_marque" };
+		// String[] Colonnes = { "nom_produit", "nom_souscatergorie",
+		// "nom_categorie", "numero_Teinte", "Duree_Vie",
+		// "Date_Peremption", "DateAchat", "nom_marque" };
+		//
+		// ArrayList[] trousse_final = objBd.renvoi_liste_TrousseFinalComplete(
+		// Colonnes, IdProduit);
+		// nomProduitRecup = trousse_final[0].toString().replace("[", "")
+		// .replace("]", "");
+		// SousCat = trousse_final[1].toString().replace("[", "").replace("]",
+		// "");
+		// numTeinte = trousse_final[3].toString().replace("[", "")
+		// .replace("]", "");
+		// DureeVie = trousse_final[4].toString().replace("[", "")
+		// .replace("]", "");
+		// DateChoisie = trousse_final[6].toString().replace("[", "")
+		// .replace("]", "");
+		// MarqueChoisie = trousse_final[7].toString().replace("[", "")
+		// .replace("]", "");
 
-		ArrayList[] trousse_final = objBd.renvoi_liste_TrousseFinalComplete(
-				Colonnes, IdProduit);
-		nomProduitRecup = trousse_final[0].toString().replace("[", "")
-				.replace("]", "");
-		SousCat = trousse_final[1].toString().replace("[", "").replace("]", "");
-		numTeinte = trousse_final[3].toString().replace("[", "")
-				.replace("]", "");
-		DureeVie = trousse_final[4].toString().replace("[", "")
-				.replace("]", "");
-		DateChoisie = trousse_final[6].toString().replace("[", "")
-				.replace("]", "");
-		MarqueChoisie = trousse_final[7].toString().replace("[", "")
-				.replace("]", "");
+		MlProduit p = new MlProduit(p_idProduit, getApplicationContext());
 
 		// objBd.close();
 
@@ -468,7 +471,7 @@ public class choix_produit_a_duppliquer extends Activity implements
 		// categorie afin que cescase soient cochée lors de l'affichage de
 		// la page1 du formulaire
 		AccesTableTrousseMarque accesMarque = new AccesTableTrousseMarque(this);
-		accesMarque.majMarqueChoisi(MarqueChoisie);
+		accesMarque.majMarqueChoisi(p.getMarque(), true);
 		// String Table = "trousse_marques";
 		// ContentValues modifiedValues = new ContentValues();
 		// modifiedValues.put("ischecked", "true");
@@ -482,7 +485,7 @@ public class choix_produit_a_duppliquer extends Activity implements
 		// //objBd.close();
 		AccesTableTrousseProduits accesTrousse = new AccesTableTrousseProduits(
 				this);
-		accesTrousse.majSouscatChoisie(SousCat);
+		accesTrousse.majSouscatChoisie(p.getNomSousCat());
 		// String Table1 = "trousse_produits";
 		// ContentValues modifiedValues1 = new ContentValues();
 		// modifiedValues1.put("ischecked", "true");
@@ -499,16 +502,15 @@ public class choix_produit_a_duppliquer extends Activity implements
 		Intent intentPage3Dupplique = new Intent(this,
 				formulaire_entree_page3.class);
 		// on demarre la nouvelle activité
-		intentPage3Dupplique.putExtra(ActivityParam.Marque,
-				MarqueChoisie.trim());
+		intentPage3Dupplique.putExtra(ActivityParam.Marque, p.getMarque());
 		intentPage3Dupplique.putExtra(ActivityParam.DurreeDeVie,
-				DureeVie.trim());
-		intentPage3Dupplique.putExtra(ActivityParam.DateAchat,
-				DateChoisie.trim());
+				p.getDureeVie());
+		intentPage3Dupplique
+				.putExtra(ActivityParam.DateAchat, p.getDateAchat());
 		intentPage3Dupplique.putExtra(ActivityParam.NumeroDeTeinte,
-				numTeinte.trim());
+				p.getTeinte());
 		intentPage3Dupplique.putExtra(ActivityParam.NomProduit,
-				nomProduitRecup.trim());
+				p.getNomProduit());
 
 		intentPage3Dupplique.putExtra(ActivityParam.LaunchFromDuppliquer, true);
 

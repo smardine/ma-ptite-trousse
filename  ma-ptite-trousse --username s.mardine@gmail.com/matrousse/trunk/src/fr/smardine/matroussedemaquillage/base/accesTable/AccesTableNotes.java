@@ -7,6 +7,9 @@ import android.content.Context;
 import fr.smardine.matroussedemaquillage.base.RequeteFactory;
 import fr.smardine.matroussedemaquillage.base.structure.EnStructNotes;
 import fr.smardine.matroussedemaquillage.base.structure.EnTable;
+import fr.smardine.matroussedemaquillage.mdl.MlListeNote;
+import fr.smardine.matroussedemaquillage.mdl.MlNote;
+import fr.smardine.matroussedemaquillage.mdl.MlProduit;
 
 /**
  * @author smardine Acces a la table des Notes enregistré en base
@@ -14,11 +17,13 @@ import fr.smardine.matroussedemaquillage.base.structure.EnTable;
 public class AccesTableNotes {
 
 	private final RequeteFactory requeteFact;
+	private final Context ctx;
 
 	/**
 	 * @param p_ctx le contexte
 	 */
 	public AccesTableNotes(Context p_ctx) {
+		this.ctx = p_ctx;
 		requeteFact = new RequeteFactory(p_ctx);
 	}
 
@@ -39,15 +44,64 @@ public class AccesTableNotes {
 	}
 
 	/**
-	 * @param p_idProduits
+	 * @param p_idNote
 	 * @return une liste de tableau de string
 	 */
-	public ArrayList<String> getDefNoteById(int p_idProduits) {
+	public ArrayList<String> getDefNoteById(int p_idNote) {
 		String requete = "Select " + EnStructNotes.MESSAGE.getNomChamp() + " ,"
 				+ EnStructNotes.TITRE.getNomChamp() + //
 				" From " + EnTable.NOTES.getNomTable() + //
-				" Where " + EnStructNotes.ID.getNomChamp() + "=" + p_idProduits;
+				" Where " + EnStructNotes.ID.getNomChamp() + "=" + p_idNote;
 		return requeteFact.getListeDeChamp(requete).get(0);
 
+	}
+
+	/**
+	 * @return une liste de MlProduit
+	 */
+	public MlListeNote getListeNote() {
+		MlListeNote listeNote = new MlListeNote();
+		String requete = "SELECT " + EnStructNotes.ID.getNomChamp() + " FROM "
+				+ EnTable.NOTES.getNomTable() + " ORDER BY "
+				+ EnStructNotes.ID.getNomChamp();
+		if (requeteFact.getListeDeChamp(requete).size() > 0) {
+			ArrayList<String> defNotes = requeteFact.getListeDeChamp(requete)
+					.get(0);
+			for (String s : defNotes) {
+				MlNote n = new MlNote(Integer.parseInt(s), ctx);
+				listeNote.add(n);
+			}
+		}
+
+		return listeNote;
+	}
+
+	/**
+	 * @param p_produit
+	 */
+	public void createNewNoteDepuisProduit(MlProduit p_produit) {
+		ContentValues values = new ContentValues();
+		values.put("Titre", "[Auto] " + p_produit.getNomProduit() + " "
+				+ p_produit.getMarque());
+		values.put(
+				"Message",
+				"Produit acheté le: " + p_produit.getDateAchat() + "\n"
+						+ "Catégorie du produit: " + p_produit.getNomSousCat()
+						+ "\n" + "Numéro de teinte: " + p_produit.getTeinte()
+						+ "\n" + "Durée de vie du produit: "
+						+ p_produit.getDureeVie() + " mois\n"
+						+ "Date de péremption: "
+						+ p_produit.getDatePeremption() + "\n");
+
+		// objBd.open();
+		requeteFact.insertDansTable(EnTable.NOTES, values);
+
+	}
+
+	public boolean createNewNote(String p_titre, String p_message) {
+		ContentValues values = new ContentValues();
+		values.put("Titre", p_titre);
+		values.put("Message", p_message);
+		return requeteFact.insertDansTable(EnTable.NOTES, values);
 	}
 }

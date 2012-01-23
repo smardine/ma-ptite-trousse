@@ -1,7 +1,5 @@
 package fr.smardine.matroussedemaquillage.note;
 
-import java.util.ArrayList;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -22,6 +20,7 @@ import fr.smardine.matroussedemaquillage.R;
 import fr.smardine.matroussedemaquillage.base.BDAcces;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableNotes;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableParams;
+import fr.smardine.matroussedemaquillage.mdl.MlNote;
 import fr.smardine.matroussedemaquillage.param.tab_param;
 import fr.smardine.matroussedemaquillage.recherche.Recherche;
 import fr.smardine.matroussedemaquillage.variableglobale.ActivityParam;
@@ -55,26 +54,33 @@ public class note_saisie extends Activity implements OnClickListener {
 		ChangerMessage.setOnClickListener(this);
 
 		IdNote = getIntent().getStringExtra(ActivityParam.IdNote).trim();
-		objBd = new BDAcces(this);
-		// objBd.open();
-		String[] Colonnes = { "id_note", "Titre", "Message" };
-		String condition = "id_note=?";
-		String[] args = { IdNote };
-		ArrayList[] notes = objBd.renvoi_liste_NoteTotale(Colonnes, "", "",
-				condition, args);
 
-		// objBd.close();
-		int nbdobjet = notes[0].size();
-		if (nbdobjet != 0) {
-			for (int j = 0; j < nbdobjet; j++) {
-				// IdProduit = notes[0].get(j).toString();
-				Titre = notes[1].get(j).toString();
-				Message = notes[2].get(j).toString();
+		MlNote n = new MlNote(Integer.parseInt(IdNote), this);
 
-				txtTitre.setText(Titre);
-				editMessage.setText(Message);
-			}
-		}
+		Titre = n.getTitre();
+		Message = n.getMessage();
+		txtTitre.setText(Titre);
+		editMessage.setText(Message);
+		// objBd = new BDAcces(this);
+		// // objBd.open();
+		// String[] Colonnes = { "id_note", "Titre", "Message" };
+		// String condition = "id_note=?";
+		// String[] args = { IdNote };
+		// ArrayList[] notes = objBd.renvoi_liste_NoteTotale(Colonnes, "", "",
+		// condition, args);
+		//
+		// // objBd.close();
+		// int nbdobjet = notes[0].size();
+		// if (nbdobjet != 0) {
+		// for (int j = 0; j < nbdobjet; j++) {
+		// // IdProduit = notes[0].get(j).toString();
+		// Titre = notes[1].get(j).toString();
+		// Message = notes[2].get(j).toString();
+		//
+		// txtTitre.setText(Titre);
+		// editMessage.setText(Message);
+		// }
+		// }
 
 		this.setTitle("Saisie de la note");
 		// popUp("OnCreate-page2");

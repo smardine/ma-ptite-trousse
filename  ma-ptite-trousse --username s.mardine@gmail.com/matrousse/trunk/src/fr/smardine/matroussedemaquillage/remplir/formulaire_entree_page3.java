@@ -521,14 +521,15 @@ public class formulaire_entree_page3 extends Activity implements
 		// objBd.open();
 		// **
 		// Remplissage de la table temporaire
-		ContentValues values = new ContentValues();
-		values.put("nom_marque_choisie", MarqueChoisie);
-		values.put("nom_produit", nomDuProduit);
-		values.put("numero_teinte", numeroDeTeinte);
-		values.put("DateAchat", DateAchat.replaceAll("/", "-").trim());
-		values.put("Duree_Vie", DureeVie);
-		objBd.deleteTable("trousse_tempo", "1", null);
-		boolean insertOk = objBd.InsertDonnéedansTable("trousse_tempo", values);
+		// ContentValues values = new ContentValues();
+		// values.put("nom_marque_choisie", MarqueChoisie);
+		// values.put("nom_produit", nomDuProduit);
+		// values.put("numero_teinte", numeroDeTeinte);
+		// values.put("DateAchat", DateAchat.replaceAll("/", "-").trim());
+		// values.put("Duree_Vie", DureeVie);
+		// objBd.deleteTable("trousse_tempo", "1", null);
+		// boolean insertOk = objBd.InsertDonnéedansTable("trousse_tempo",
+		// values);
 		// fin du remplissage de la table temporaire.
 		// recuperation des infos dans la table temporaires et insertion dans la
 		// table produit finale.
@@ -540,29 +541,23 @@ public class formulaire_entree_page3 extends Activity implements
 				"trousse_tempo", Colonnes);
 
 		ContentValues valuesProduitsFinal = new ContentValues();
-		valuesProduitsFinal.put("nom_produit", trousse_tempo[1].toString()
-				.replace("[", "").replace("]", ""));
-		valuesProduitsFinal.put("nom_marque", trousse_tempo[0].toString()
-				.replace("[", "").replace("]", ""));
+		valuesProduitsFinal.put("nom_produit", nomDuProduit);
+		valuesProduitsFinal.put("nom_marque", MarqueChoisie);
 		valuesProduitsFinal.put("nom_souscatergorie", Categorie_Cochée[0]
 				.toString().replace("[", "").replace("]", ""));
 		valuesProduitsFinal.put("nom_categorie", Categorie_Cochée[1].toString()
 				.replace("[", "").replace("]", ""));
-		valuesProduitsFinal.put("numero_Teinte", trousse_tempo[2].toString()
-				.replace("[", "").replace("]", ""));
-		valuesProduitsFinal.put("DateAchat", trousse_tempo[3].toString()
-				.replace("[", "").replace("]", ""));
-		valuesProduitsFinal.put("Duree_Vie", trousse_tempo[4].toString()
-				.replace("[", "").replace("]", ""));
+		valuesProduitsFinal.put("numero_Teinte", numeroDeTeinte);
+		valuesProduitsFinal.put("DateAchat", DateAchat.replaceAll("/", "-")
+				.trim());
+		valuesProduitsFinal.put("Duree_Vie", DureeVie);
 		// calcul de la date de peremption problable
 
-		int nbMoisDurreeDeVie = Integer.parseInt(trousse_tempo[4].toString()
-				.replace("[", "").replace("]", ""));
+		int nbMoisDurreeDeVie = Integer.parseInt(DureeVie);
 		int nbJours = nbMoisDurreeDeVie * 30;
 
-		String DateAchat = trousse_tempo[3].toString().replace("[", "")
-				.replace("]", "");
-		String tabAchat[] = DateAchat.split("-");
+		String DateAchat1 = DateAchat.replaceAll("/", "-").trim();
+		String tabAchat[] = DateAchat1.split("-");
 		int jourAchat = Integer.parseInt(tabAchat[0]);
 		int mois = Integer.parseInt(tabAchat[1]) - 1;// les mois commence à 0
 														// (janvier) et se
@@ -623,7 +618,7 @@ public class formulaire_entree_page3 extends Activity implements
 																			// base
 		// ////////////////////////////////////////////////////////
 		valuesProduitsFinal.put("Date_Peremption", Date_Peremption);
-		insertOk = objBd.InsertDonnéedansTable("produit_Enregistre",
+		boolean insertOk = objBd.InsertDonnéedansTable("produit_Enregistre",
 				valuesProduitsFinal);
 		if (insertOk) {
 			popUp("Insert Ok");
