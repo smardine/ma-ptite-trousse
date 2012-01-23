@@ -16,11 +16,13 @@ import fr.smardine.matroussedemaquillage.mdl.MlProduit;
 public class AccesTableProduitEnregistre {
 
 	private final RequeteFactory requeteFact;
+	private final Context ctx;
 
 	/**
 	 * @param p_ctx le contexte
 	 */
 	public AccesTableProduitEnregistre(Context p_ctx) {
+		this.ctx = p_ctx;
 		requeteFact = new RequeteFactory(p_ctx);
 
 	}
@@ -41,7 +43,7 @@ public class AccesTableProduitEnregistre {
 				+ " FROM " + EnTable.PRODUIT_ENREGISTRE.getNomTable();
 		ArrayList<String> lstId = requeteFact.getListeDeChamp(requete).get(0);
 		for (String anId : lstId) {
-			MlProduit prod = new MlProduit(Integer.parseInt(anId), this);
+			MlProduit prod = new MlProduit(Integer.parseInt(anId), ctx);
 			lstProds.add(prod);
 		}
 		return lstProds;
@@ -206,23 +208,23 @@ public class AccesTableProduitEnregistre {
 	 * @param p_nomMarque
 	 * @param p_datePeremtInMilli
 	 */
-	public void majProduitComplet(int p_idProduit, String p_nomProduit,
-			String p_sousCat, String p_cat, String p_numeroTeinte,
-			String p_durreeVie, String p_datePeremption, String p_dateAchat,
-			String p_nomMarque, long p_datePeremtInMilli) {
+	public void majProduitComplet(MlProduit p_produit) {
 		ContentValues modifiedValues = new ContentValues();
-		modifiedValues.put("nom_produit", p_nomProduit);
-		modifiedValues.put("nom_souscatergorie", p_sousCat);
-		modifiedValues.put("nom_categorie", p_cat);
-		modifiedValues.put("numero_Teinte", p_numeroTeinte);
-		modifiedValues.put("Duree_Vie", p_durreeVie);
-		modifiedValues.put("Date_Peremption", p_datePeremption);
-		modifiedValues.put("DateAchat", p_dateAchat);
-		modifiedValues.put("nom_marque", p_nomMarque);
-		modifiedValues.put("Date_Peremption_milli", p_datePeremtInMilli);
+		modifiedValues.put("nom_produit", p_produit.getNomProduit());
+		modifiedValues.put("nom_souscatergorie", p_produit.getNomSousCat());
+		modifiedValues.put("nom_categorie", p_produit.getNomCat());
+		modifiedValues.put("numero_Teinte", p_produit.getTeinte());
+		modifiedValues.put("Duree_Vie", p_produit.getDureeVie());
+		modifiedValues.put("Date_Peremption", p_produit.getDatePeremption()
+				.toLocaleString());
+		modifiedValues.put("DateAchat", p_produit.getDateAchat()
+				.toLocaleString());
+		modifiedValues.put("nom_marque", p_produit.getMarque());
+		modifiedValues.put("Date_Peremption_milli",
+				p_produit.getDatePeremMilli());
 
 		String whereClause = "id_produits=?";
-		String[] whereArgs = new String[] { "" + p_idProduit + "" };
+		String[] whereArgs = new String[] { "" + p_produit.getIdProduit() + "" };
 		requeteFact.majTable(EnTable.PRODUIT_ENREGISTRE, modifiedValues,
 				whereClause, whereArgs);
 
@@ -237,21 +239,29 @@ public class AccesTableProduitEnregistre {
 		String requete = "SELECT id_produits FROM produit_Enregistre where nom_souscatergorie LIKE '%"
 				+ p_filtrage + "%' ORDER BY nom_souscatergorie";
 		for (String s : requeteFact.getListeDeChamp(requete).get(0)) {
-			lst.add(new MlProduit(Integer.parseInt(s), this));
+			lst.add(new MlProduit(Integer.parseInt(s), ctx));
 		}
 		return lst;
 	}
 
+	/**
+	 * @param p_Filtrage
+	 * @return
+	 */
 	public MlListeProduits getProduitsAvecFiltrageSurMarque(String p_Filtrage) {
 		MlListeProduits lst = new MlListeProduits();
 		String requete = "SELECT id_produits FROM produit_Enregistre where nom_marque LIKE '%"
 				+ p_Filtrage + "%' ORDER BY nom_marque";
 		for (String s : requeteFact.getListeDeChamp(requete).get(0)) {
-			lst.add(new MlProduit(Integer.parseInt(s), this));
+			lst.add(new MlProduit(Integer.parseInt(s), ctx));
 		}
 		return lst;
 	}
 
+	/**
+	 * @param p_Filtrage
+	 * @return
+	 */
 	public MlListeProduits getProduitsAvecFiltrageSurTout(String p_Filtrage) {
 		MlListeProduits lst = new MlListeProduits();
 		String requete = "SELECT" + " id_produits "
@@ -260,11 +270,14 @@ public class AccesTableProduitEnregistre {
 				+ "%' " + "or nom_souscatergorie LIKE '%" + p_Filtrage
 				+ "%' ORDER BY id_produits";
 		for (String s : requeteFact.getListeDeChamp(requete).get(0)) {
-			lst.add(new MlProduit(Integer.parseInt(s), this));
+			lst.add(new MlProduit(Integer.parseInt(s), ctx));
 		}
 		return lst;
 	}
 
+	/**
+	 * @return
+	 */
 	public MlListeProduits getProduitsPerime() {
 		MlListeProduits lst = new MlListeProduits();
 		String requete = "SELECT "
@@ -278,11 +291,15 @@ public class AccesTableProduitEnregistre {
 				+ EnStructProduitEnregistre.IS_PRESQUE_PERIME.getNomChamp()
 				+ "='true') ";
 		for (String s : requeteFact.getListeDeChamp(requete).get(0)) {
-			lst.add(new MlProduit(Integer.parseInt(s), this));
+			lst.add(new MlProduit(Integer.parseInt(s), ctx));
 		}
 		return lst;
 	}
 
+	/**
+	 * @param p_filtrage
+	 * @return
+	 */
 	public MlListeProduits getProduitsPerimeAvecFiltrageSurCategorie(
 			String p_filtrage) {
 		MlListeProduits lst = new MlListeProduits();
@@ -291,11 +308,15 @@ public class AccesTableProduitEnregistre {
 				+ "%' and (IS_PERIME='true' or IS_PRESQUE_PERIME='true') " //
 				+ "ORDER BY Date_Peremption";
 		for (String s : requeteFact.getListeDeChamp(requete).get(0)) {
-			lst.add(new MlProduit(Integer.parseInt(s), this));
+			lst.add(new MlProduit(Integer.parseInt(s), ctx));
 		}
 		return lst;
 	}
 
+	/**
+	 * @param p_Filtrage
+	 * @return
+	 */
 	public MlListeProduits getProduitsPerimeAvecFiltrageSurMarque(
 			String p_Filtrage) {
 		MlListeProduits lst = new MlListeProduits();
@@ -303,11 +324,15 @@ public class AccesTableProduitEnregistre {
 				+ p_Filtrage
 				+ "%' and (IS_PERIME='true' or IS_PRESQUE_PERIME='true') ORDER BY nom_marque";
 		for (String s : requeteFact.getListeDeChamp(requete).get(0)) {
-			lst.add(new MlProduit(Integer.parseInt(s), this));
+			lst.add(new MlProduit(Integer.parseInt(s), ctx));
 		}
 		return lst;
 	}
 
+	/**
+	 * @param p_Filtrage
+	 * @return
+	 */
 	public MlListeProduits getProduitsPerimeAvecFiltrageSurTout(
 			String p_Filtrage) {
 		MlListeProduits lst = new MlListeProduits();
@@ -324,7 +349,7 @@ public class AccesTableProduitEnregistre {
 				+ p_Filtrage
 				+ "%' and (IS_PERIME='true' or IS_PRESQUE_PERIME='true')  ORDER BY id_produits";
 		for (String s : requeteFact.getListeDeChamp(requete).get(0)) {
-			lst.add(new MlProduit(Integer.parseInt(s), this));
+			lst.add(new MlProduit(Integer.parseInt(s), ctx));
 		}
 		return lst;
 	}

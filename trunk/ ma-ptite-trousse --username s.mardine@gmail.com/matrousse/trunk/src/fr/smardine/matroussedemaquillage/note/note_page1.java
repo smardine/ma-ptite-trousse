@@ -1,10 +1,7 @@
 package fr.smardine.matroussedemaquillage.note;
 
-import java.util.ArrayList;
-
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -30,7 +27,9 @@ import android.widget.Toast;
 import fr.smardine.matroussedemaquillage.Main;
 import fr.smardine.matroussedemaquillage.R;
 import fr.smardine.matroussedemaquillage.base.BDAcces;
+import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableNotes;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableParams;
+import fr.smardine.matroussedemaquillage.mdl.MlListeNote;
 import fr.smardine.matroussedemaquillage.note.noteListAdapter.ViewHolder;
 import fr.smardine.matroussedemaquillage.param.tab_param;
 import fr.smardine.matroussedemaquillage.recherche.Recherche;
@@ -40,7 +39,7 @@ import fr.smardine.matroussedemaquillage.variableglobale.EnTheme;
 public class note_page1 extends Activity implements OnItemClickListener,
 		OnClickListener, OnItemLongClickListener {
 
-	ArrayList<produitNote> produitNote = new ArrayList<produitNote>();
+	// ArrayList<produitNote> produitNote = new ArrayList<produitNote>();
 	ImageView BtAddNote, BtSupprTtteNote;
 	ListView NoteListView;
 	AlertDialog.Builder adTitre, adSupprNote, adHelp;
@@ -77,7 +76,7 @@ public class note_page1 extends Activity implements OnItemClickListener,
 		this.setTitle("Notes");
 
 		// popUp("OnCreate-pageDupplique");
-		AfficheLeContenu("Tout", produitNote, NoteListView);
+		AfficheLeContenu("Tout", NoteListView);
 
 	}
 
@@ -199,27 +198,15 @@ public class note_page1 extends Activity implements OnItemClickListener,
 		finish();
 	}
 
-	@SuppressWarnings("rawtypes")
-	private void AfficheLeContenu(String TypeRecherche,
-			ArrayList<produitNote> produitNote2, ListView produitListView) {
-
+	private void AfficheLeContenu(String TypeRecherche, ListView produitListView) {
+		MlListeNote lstNote = null;
 		// objBd.open();
 
 		if (TypeRecherche.equals("Tout")) {
-
-			String[] Colonnes = { "id_note", "Titre" };
-
-			ArrayList[] ListeProduits = objBd.renvoi_liste_Note(Colonnes,
-					"id_note", "", "", null);
-			int nbdobjet = ListeProduits[0].size();
-			if (nbdobjet != 0) {
-				for (int j = 0; j < nbdobjet; j++) {
-					String IdProduit = ListeProduits[0].get(j).toString();
-					String NomProduits = ListeProduits[1].get(j).toString();
-					produitNote2.add(new produitNote(IdProduit, NomProduits));
-				}
-				BtSupprTtteNote.setVisibility(VISIBLE);
-			} else {
+			AccesTableNotes accesNote = new AccesTableNotes(
+					getApplicationContext());
+			lstNote = accesNote.getListeNote();
+			if (lstNote.size() == 0) {
 				AlertDialog.Builder adAlertNoNotes = new AlertDialog.Builder(
 						this);
 				adAlertNoNotes.setTitle("Pour Information");
@@ -229,8 +216,34 @@ public class note_page1 extends Activity implements OnItemClickListener,
 				adAlertNoNotes.setNegativeButton("Ok", null);
 				adAlertNoNotes.show();
 				BtSupprTtteNote.setVisibility(INVISIBLE);
-
+			} else {
+				BtSupprTtteNote.setVisibility(VISIBLE);
 			}
+
+			// String[] Colonnes = { "id_note", "Titre" };
+			//
+			// ArrayList[] ListeProduits = objBd.renvoi_liste_Note(Colonnes,
+			// "id_note", "", "", null);
+			// int nbdobjet = ListeProduits[0].size();
+			// if (nbdobjet != 0) {
+			// for (int j = 0; j < nbdobjet; j++) {
+			// String IdProduit = ListeProduits[0].get(j).toString();
+			// String NomProduits = ListeProduits[1].get(j).toString();
+			// produitNote2.add(new produitNote(IdProduit, NomProduits));
+			// }
+			// BtSupprTtteNote.setVisibility(VISIBLE);
+			// } else {
+			// AlertDialog.Builder adAlertNoNotes = new AlertDialog.Builder(
+			// this);
+			// adAlertNoNotes.setTitle("Pour Information");
+			// adAlertNoNotes
+			// .setMessage("Aucune note n'est encore enregistrée");
+			// adAlertNoNotes.setIcon(R.drawable.ad_attention);
+			// adAlertNoNotes.setNegativeButton("Ok", null);
+			// adAlertNoNotes.show();
+			// BtSupprTtteNote.setVisibility(INVISIBLE);
+			//
+			// }
 		}
 		// objBd.close();
 
@@ -249,7 +262,7 @@ public class note_page1 extends Activity implements OnItemClickListener,
 		produitListView.setLayoutAnimation(controller);
 
 		// paramètrer l'adapteur correspondant
-		adpt = new noteListAdapter(this, produitNote2);
+		adpt = new noteListAdapter(this, lstNote);
 		// paramèter l'adapter sur la listview
 		produitListView.setAdapter(adpt);
 
@@ -364,6 +377,7 @@ public class note_page1 extends Activity implements OnItemClickListener,
 		// TODO Auto-generated method stub
 		if (v == BtAddNote) {
 			popUp("Ajouter note");
+
 			final EditText inputProduit = new EditText(this);
 			adTitre = new AlertDialog.Builder(this);
 			adTitre.setTitle("Titre");
@@ -377,16 +391,23 @@ public class note_page1 extends Activity implements OnItemClickListener,
 								int whichButton) {
 							String value = inputProduit.getText().toString();
 							// objBd.open();
-							ContentValues values = new ContentValues();
-							values.put("Titre", value);
-							values.put("Message", " ");
-							boolean succes = objBd.InsertDonnéedansTable(
-									"Notes", values);
+							// MlNote note = new MlNote();
+							// note.setTitre(value);
+							// note.setMessage("");
+							AccesTableNotes accesNotes = new AccesTableNotes(
+									getApplicationContext());
+							boolean succes = accesNotes
+									.createNewNote(value, "");
+							// ContentValues values = new ContentValues();
+							// values.put("Titre", value);
+							// values.put("Message", " ");
+							// boolean succes = objBd.InsertDonnéedansTable(
+							// "Notes", values);
 							if (succes) {
 								popUp("insertReussi");
 							}
-							produitNote.removeAll(produitNote);
-							AfficheLeContenu("Tout", produitNote, NoteListView);
+							// produitNote.removeAll(produitNote);
+							AfficheLeContenu("Tout", NoteListView);
 						}
 					});
 			adTitre.setNegativeButton("Annuler",
@@ -423,8 +444,8 @@ public class note_page1 extends Activity implements OnItemClickListener,
 								popUp("nb de notes supprimees: "
 										+ nbChanmpSupprime);
 							}
-							produitNote.removeAll(produitNote);
-							AfficheLeContenu("Tout", produitNote, NoteListView);
+							// produitNote.removeAll(produitNote);
+							AfficheLeContenu("Tout", NoteListView);
 						}
 					});
 			adSupprNote.setNegativeButton("Annuler",
@@ -478,8 +499,8 @@ public class note_page1 extends Activity implements OnItemClickListener,
 		// objBd.open();
 		int nbChampEffacé = objBd.deleteTable("Notes", whereClause, WhereArgs);
 
-		produitNote.removeAll(produitNote);
-		AfficheLeContenu("Tout", produitNote, NoteListView);
+		// produitNote.removeAll(produitNote);
+		AfficheLeContenu("Tout", NoteListView);
 		// objBd.close();
 	}
 

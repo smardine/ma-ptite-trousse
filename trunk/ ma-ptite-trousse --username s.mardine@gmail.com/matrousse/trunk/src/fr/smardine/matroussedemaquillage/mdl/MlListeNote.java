@@ -24,7 +24,7 @@ public class MlListeNote extends ArrayList<MlNote> {
 	/**
 	 * @return une liste de MlProduit
 	 */
-	public List<MlNote> getListProduit() {
+	public List<MlNote> getListeNote() {
 		return list;
 	}
 

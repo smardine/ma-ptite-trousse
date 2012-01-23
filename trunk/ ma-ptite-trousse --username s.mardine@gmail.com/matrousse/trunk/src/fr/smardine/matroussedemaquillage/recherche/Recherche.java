@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -33,6 +32,7 @@ import android.widget.Toast;
 import fr.smardine.matroussedemaquillage.Main;
 import fr.smardine.matroussedemaquillage.R;
 import fr.smardine.matroussedemaquillage.base.BDAcces;
+import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableNotes;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableParams;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableProduitEnregistre;
 import fr.smardine.matroussedemaquillage.mdl.MlListeProduits;
@@ -379,55 +379,59 @@ public class Recherche extends Activity implements OnClickListener,
 				}
 				if (newNote) {// on supprime le produit
 					// gotoSupprDetail(Txt01,Txt03);
-					gotoCreateNewNote(Txt01);
+					gotoCreateNewNote(Integer.parseInt(Txt01));
 				}
 			}
 		});
 		dial.show();
 	}
 
-	@SuppressWarnings("rawtypes")
-	protected void gotoCreateNewNote(String idProduit) {
+	protected void gotoCreateNewNote(int p_idProduit) {
+
+		MlProduit p = new MlProduit(p_idProduit, this);
+		AccesTableNotes accesNote = new AccesTableNotes(ctx);
+		accesNote.createNewNoteDepuisProduit(p);
 
 		// objBd.open();
-		String[] colonne = { "nom_produit",// 0
-				"nom_souscatergorie",// 1
-				"nom_categorie",// 2
-				"numero_Teinte",// 3
-				"DateAchat",// 4
-				"Duree_Vie",// 5
-				"Date_Peremption",// 6
-				"nom_marque" };// 7
-		ArrayList[] trousse_final = objBd.renvoi_liste_TrousseFinalComplete(
-				colonne, idProduit);
-		// objBd.close();
-		String Nom_Produit = trousse_final[0].toString().replace("[", "")
-				.replace("]", "");
-		String SousCat = trousse_final[1].toString().replace("[", "")
-				.replace("]", "");
-		// String Cat = trousse_final[2].toString().replace("[",
-		// "").replace("]","");
-		String Numeroteinte = trousse_final[3].toString().replace("[", "")
-				.replace("]", "");
-		String DateAchat = trousse_final[4].toString().replace("[", "")
-				.replace("]", "");
-		String DurreeVie = trousse_final[5].toString().replace("[", "")
-				.replace("]", "");
-		String DatePeremption = trousse_final[6].toString().replace("[", "")
-				.replace("]", "");
-		String NomMarque = trousse_final[7].toString().replace("[", "")
-				.replace("]", "");
+		// String[] colonne = { "nom_produit",// 0
+		// "nom_souscatergorie",// 1
+		// "nom_categorie",// 2
+		// "numero_Teinte",// 3
+		// "DateAchat",// 4
+		// "Duree_Vie",// 5
+		// "Date_Peremption",// 6
+		// "nom_marque" };// 7
+		// ArrayList[] trousse_final = objBd.renvoi_liste_TrousseFinalComplete(
+		// colonne, idProduit);
+		// // objBd.close();
+		// String Nom_Produit = trousse_final[0].toString().replace("[", "")
+		// .replace("]", "");
+		// String SousCat = trousse_final[1].toString().replace("[", "")
+		// .replace("]", "");
+		// // String Cat = trousse_final[2].toString().replace("[",
+		// // "").replace("]","");
+		// String Numeroteinte = trousse_final[3].toString().replace("[", "")
+		// .replace("]", "");
+		// String DateAchat = trousse_final[4].toString().replace("[", "")
+		// .replace("]", "");
+		// String DurreeVie = trousse_final[5].toString().replace("[", "")
+		// .replace("]", "");
+		// String DatePeremption = trousse_final[6].toString().replace("[", "")
+		// .replace("]", "");
+		// String NomMarque = trousse_final[7].toString().replace("[", "")
+		// .replace("]", "");
 
-		ContentValues values = new ContentValues();
-		values.put("Titre", "[Auto] " + Nom_Produit + " " + NomMarque);
-		values.put("Message", "Produit acheté le: " + DateAchat + "\n"
-				+ "Catégorie du produit: " + SousCat + "\n"
-				+ "Numéro de teinte: " + Numeroteinte + "\n"
-				+ "Durée de vie du produit: " + DurreeVie + " mois\n"
-				+ "Date de péremption: " + DatePeremption + "\n");
-
-		// objBd.open();
-		objBd.InsertDonnéedansTable("Notes", values);
+		// ContentValues values = new ContentValues();
+		// values.put("Titre", "[Auto] " + p.getNomProduit() + " " +
+		// p.getMarque());
+		// values.put("Message", "Produit acheté le: " + p.getDateAchat() + "\n"
+		// + "Catégorie du produit: " + p.getNomSousCat() + "\n"
+		// + "Numéro de teinte: " + p.getTeinte() + "\n"
+		// + "Durée de vie du produit: " + p.getDureeVie() + " mois\n"
+		// + "Date de péremption: " + p.getDatePeremption() + "\n");
+		//
+		// // objBd.open();
+		// objBd.InsertDonnéedansTable("Notes", values);
 		// objBd.close();
 
 	}

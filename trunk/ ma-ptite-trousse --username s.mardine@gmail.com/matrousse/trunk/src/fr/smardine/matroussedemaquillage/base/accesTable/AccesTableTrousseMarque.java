@@ -27,9 +27,14 @@ public class AccesTableTrousseMarque {
 	 * mets a jour la marque choisie par l'utilisateur
 	 * @param p_marqueChoisie
 	 */
-	public void majMarqueChoisi(String p_marqueChoisie) {
+	public void majMarqueChoisi(String p_marqueChoisie, boolean p_isChecked) {
 		ContentValues modifiedValues = new ContentValues();
-		modifiedValues.put("ischecked", "true");
+		if (p_isChecked) {
+			modifiedValues.put("ischecked", "true");
+		} else {
+			modifiedValues.put("ischecked", "false");
+		}
+
 		String whereClause = "nom_marque=?";
 		String[] whereArgs = new String[] { p_marqueChoisie };
 		requeteFact.majTable(EnTable.TROUSSE_MARQUE, modifiedValues,
@@ -55,5 +60,12 @@ public class AccesTableTrousseMarque {
 		String requete = "SELECT " + EnStructMarque.NOM.getNomChamp()
 				+ " FROM " + EnTable.TROUSSE_MARQUE.getNomTable();
 		return requeteFact.getListeDeChamp(requete).get(0);
+	}
+
+	public boolean createNewMarque(String p_nomMarque) {
+		ContentValues values = new ContentValues();
+		values.put("nom_marque", p_nomMarque);
+		values.put("ischecked", "false");
+		return requeteFact.insertDansTable(EnTable.TROUSSE_MARQUE, values);
 	}
 }

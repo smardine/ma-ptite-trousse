@@ -2,6 +2,7 @@ package fr.smardine.matroussedemaquillage.mdl;
 
 import java.util.ArrayList;
 
+import android.content.Context;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableNotes;
 
 /**
@@ -9,19 +10,24 @@ import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableNotes;
  */
 public class MlNote {
 
-	private final int idNote;
-	private final String message;
-	private final String titre;
+	private int idNote;
+	private String message;
+	private String titre;
 
 	/**
 	 * @param p_idNote
-	 * @param p_accesTableNote
+	 * @param p_ctx
 	 */
-	public MlNote(int p_idNote, AccesTableNotes p_accesTableNote) {
+	public MlNote(int p_idNote, Context p_ctx) {
 		this.idNote = p_idNote;
-		ArrayList<String> defProduit = p_accesTableNote.getDefNoteById(idNote);
+		AccesTableNotes accesNote = new AccesTableNotes(p_ctx);
+		ArrayList<String> defProduit = accesNote.getDefNoteById(idNote);
 		this.message = defProduit.get(0);
 		this.titre = defProduit.get(1);
+	}
+
+	public MlNote() {
+
 	}
 
 	/**
@@ -43,6 +49,18 @@ public class MlNote {
 	 */
 	public String getTitre() {
 		return titre;
+	}
+
+	public void setIdNote(int p_idNote) {
+		idNote = p_idNote;
+	}
+
+	public void setMessage(String p_message) {
+		message = p_message;
+	}
+
+	public void setTitre(String p_titre) {
+		titre = p_titre;
 	}
 
 }

@@ -18,7 +18,6 @@ import org.apache.http.protocol.HTTP;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.SQLException;
@@ -42,6 +41,7 @@ import fr.smardine.matroussedemaquillage.Main;
 import fr.smardine.matroussedemaquillage.R;
 import fr.smardine.matroussedemaquillage.base.BDAcces;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableParams;
+import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableTrousseMarque;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableTrousseProduits;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableTrousseTempo;
 import fr.smardine.matroussedemaquillage.note.note_page1;
@@ -504,12 +504,18 @@ public class formulaire_entree_page1bis extends Activity implements
 					if (MarqueChoisie.equals("")) {
 						adAucuneMarque.show();
 					} else {
-						ContentValues values = new ContentValues();
-						values.put("nom_marque", MarqueChoisie);
-						values.put("ischecked", "false");
+						AccesTableTrousseMarque accesMarque = new AccesTableTrousseMarque(
+								getApplicationContext());
+						accesMarque.majMarqueChoisi(MarqueChoisie, false);
+						accesMarque.createNewMarque(MarqueChoisie);
 
-						// objBd.open();
-						objBd.InsertDonnéedansTable("trousse_marques", values);
+						// ContentValues values = new ContentValues();
+						// values.put("nom_marque", MarqueChoisie);
+						// values.put("ischecked", "false");
+						//
+						// // objBd.open();
+						// objBd.InsertDonnéedansTable("trousse_marques",
+						// values);
 						// objBd.close();
 						adNouvelleMarque.show();
 					}
@@ -574,7 +580,7 @@ public class formulaire_entree_page1bis extends Activity implements
 		// //objBd.open();
 		AccesTableTrousseProduits accesTrousseProds = new AccesTableTrousseProduits(
 				this);
-		;
+
 		accesTrousseProds.majSouscatChoisie(categorieChoisie);
 		AccesTableTrousseTempo accestempo = new AccesTableTrousseTempo(this);
 		accestempo.deleteTable();

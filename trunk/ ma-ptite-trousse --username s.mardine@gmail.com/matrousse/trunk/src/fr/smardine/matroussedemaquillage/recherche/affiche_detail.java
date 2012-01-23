@@ -35,6 +35,7 @@ import fr.smardine.matroussedemaquillage.base.BDAcces;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableParams;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableProduitEnregistre;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableTrousseProduits;
+import fr.smardine.matroussedemaquillage.mdl.MlProduit;
 import fr.smardine.matroussedemaquillage.modifier.modif_cat;
 import fr.smardine.matroussedemaquillage.note.note_page1;
 import fr.smardine.matroussedemaquillage.param.tab_param;
@@ -269,75 +270,86 @@ public class affiche_detail extends Activity implements OnClickListener {
 	private void updateDisplay() {
 		// objBd.open();
 		IdProduit = getIntent().getStringExtra(ActivityParam.IdProduit).trim();
+		MlProduit p = new MlProduit(Integer.parseInt(IdProduit), this);
+
 		String[] Colonnes = { "nom_produit", "nom_souscatergorie",
 				"nom_categorie", "numero_Teinte", "Duree_Vie",
 				"Date_Peremption", "DateAchat", "nom_marque" };
 
-		trousse_final = objBd.renvoi_liste_TrousseFinalComplete(Colonnes,
-				IdProduit);
-		categorie = new StringBuilder().append(trousse_final[1].toString()
-				.replace("[", "").replace("]", ""));
-		CategorieDetail.setText(categorie);
-		MarqueDetail.setText(new StringBuilder().append(trousse_final[7]
-				.toString().replace("[", "").replace("]", "")));
-		nomProduitDetail.setText(new StringBuilder().append(trousse_final[0]
-				.toString().replace("[", "").replace("]", "")));
-		numeroTeinteDetail.setText(new StringBuilder().append(trousse_final[3]
-				.toString().replace("[", "").replace("]", "")));
-		DateAchatDetail.setText(new StringBuilder()
-				.append(trousse_final[6].toString().replace("[", "")
-						.replace("]", "").replace("-", "/")));
-		DatePeremtionDetail.setText(new StringBuilder()
-				.append(trousse_final[5].toString().replace("[", "")
-						.replace("]", "").replace("-", "/")));
+		// trousse_final = objBd.renvoi_liste_TrousseFinalComplete(Colonnes,
+		// IdProduit);
 
-		DuréeVie = trousse_final[4].toString().replace("[", "")
-				.replace("]", "");
+		CategorieDetail.setText(p.getNomCat());
+		MarqueDetail.setText(p.getMarque());
+		nomProduitDetail.setText(p.getNomProduit());
+		numeroTeinteDetail.setText(p.getTeinte());
+		DateAchatDetail.setText(p.getDateAchat().toLocaleString());
+		DatePeremtionDetail.setText(p.getDatePeremption().toLocaleString());
+
+		DuréeVie = "" + p.getDureeVie();
 		// objBd.close();
 	}
 
 	private void majTableProduit() {
 		// TODO Auto-generated method stub
 
-		String[] Colonnes = { "nom_produit", "nom_souscatergorie",
-				"nom_categorie", "numero_Teinte", "Duree_Vie",
-				"Date_Peremption", "DateAchat", "nom_marque" };
-
+		// String[] Colonnes = { "nom_produit", "nom_souscatergorie",
+		// "nom_categorie", "numero_Teinte", "Duree_Vie",
+		// "Date_Peremption", "DateAchat", "nom_marque" };
+		MlProduit p = new MlProduit(Integer.parseInt(IdProduit),
+				getApplicationContext());
 		// objBd.open();
-		trousse_final = objBd.renvoi_liste_TrousseFinalComplete(Colonnes,
-				IdProduit);
-		// objBd.close();
-		String Table = "produit_Enregistre";
-		String Nom_Produit = nomProduitDetail.getText().toString().trim()
-				.replace("[", "").replace("]", "");
-		String SousCat = trousse_final[1].toString().replace("[", "")
-				.replace("]", "");
-		String Cat = trousse_final[2].toString().replace("[", "")
-				.replace("]", "");
-		String Numeroteinte = numeroTeinteDetail.getText().toString().trim()
-				.replace("[", "").replace("]", "");
-		String DurreeVie = "";
-		if (nbMoisDurreeDeVie == 0) {// aucun changement apporté par
-										// l'utilisateur, on garde la valeur en
-										// base
-			DurreeVie = trousse_final[4].toString().replace("[", "")
-					.replace("]", "");
-		} else {
-			DurreeVie = "" + nbMoisDurreeDeVie + "";
-		}
 
-		String DatePeremption = DatePeremtionDetail.getText().toString().trim()
-				.replace("[", "").replace("]", "").replace("/", "-");
-		String DateAchat = DateAchatDetail.getText().toString().trim()
-				.replace("[", "").replace("]", "").replace("/", "-");
-		String NomMarque = MarqueDetail.getText().toString().trim()
-				.replace("[", "").replace("]", "");
+		p.setNomProduit(nomProduitDetail.getText().toString().trim()
+				.replace("[", "").replace("]", ""));
+		p.setTeinte(numeroTeinteDetail.getText().toString().trim()
+				.replace("[", "").replace("]", ""));
+		if (nbMoisDurreeDeVie != 0) {
+			p.setDureeVie(nbMoisDurreeDeVie);
+		}
+		p.setDatePeremption((java.sql.Date) new Date(DatePeremtionDetail
+				.getText().toString().trim().replace("[", "").replace("]", "")
+				.replace("/", "-")));
+
+		p.setDateAchat((java.sql.Date) new Date(DateAchatDetail.getText()
+				.toString().trim().replace("[", "").replace("]", "")
+				.replace("/", "-")));
+		p.setMarque(MarqueDetail.getText().toString().trim().replace("[", "")
+				.replace("]", ""));
+
+		// trousse_final = objBd.renvoi_liste_TrousseFinalComplete(Colonnes,
+		// IdProduit);
+		// // objBd.close();
+		// String Table = "produit_Enregistre";
+		// String Nom_Produit = nomProduitDetail.getText().toString().trim()
+		// .replace("[", "").replace("]", "");
+		// String SousCat = trousse_final[1].toString().replace("[", "")
+		// .replace("]", "");
+		// String Cat = trousse_final[2].toString().replace("[", "")
+		// .replace("]", "");
+		// String Numeroteinte = numeroTeinteDetail.getText().toString().trim()
+		// .replace("[", "").replace("]", "");
+		// String DurreeVie = "";
+		// if (nbMoisDurreeDeVie == 0) {// aucun changement apporté par
+		// // l'utilisateur, on garde la valeur en
+		// // base
+		// DurreeVie = trousse_final[4].toString().replace("[", "")
+		// .replace("]", "");
+		// } else {
+		// DurreeVie = "" + nbMoisDurreeDeVie + "";
+		// }
+		//
+		// String DatePeremption =
+		// DatePeremtionDetail.getText().toString().trim()
+		// .replace("[", "").replace("]", "").replace("/", "-");
+		// String DateAchat = DateAchatDetail.getText().toString().trim()
+		// .replace("[", "").replace("]", "").replace("/", "-");
+		// String NomMarque = MarqueDetail.getText().toString().trim()
+		// .replace("[", "").replace("]", "");
 
 		AccesTableProduitEnregistre accesProduit = new AccesTableProduitEnregistre(
 				this);
-		accesProduit.majProduitComplet(Integer.parseInt(IdProduit),
-				Nom_Produit, SousCat, Cat, Numeroteinte, DurreeVie,
-				DatePeremption, DateAchat, NomMarque, DatePeremtInMilli);
+		accesProduit.majProduitComplet(p);
 
 		// ContentValues modifiedValues = new ContentValues();
 		// modifiedValues.put("nom_produit", Nom_Produit);
