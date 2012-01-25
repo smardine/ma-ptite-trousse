@@ -169,11 +169,18 @@ public class formulaire_entree_page1bis extends Activity implements
 
 		popUp("OnCreate-page1");
 
-		objBd = new BDAcces(this);
+		// objBd = new BDAcces(this);
 		// objBd.open();
 
-		Marque = objBd.renvoi_liste_ValeurDansString("trousse_marques",
-				"nom_marque");
+		// Marque = objBd.renvoi_liste_ValeurDansString("trousse_marques",
+		// "nom_marque");
+
+		AccesTableTrousseMarque accesMarque = new AccesTableTrousseMarque(this);
+		ArrayList<String> lstMarque = accesMarque.getListeMarques();
+		Marque = new String[lstMarque.size()];
+		for (int i = 0; i < lstMarque.size(); i++) {
+			Marque[i] = lstMarque.get(i);
+		}
 
 		// objBd.close();
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
@@ -489,10 +496,17 @@ public class formulaire_entree_page1bis extends Activity implements
 		if (v == BoutonValider) {
 			// majTable();
 			// on recupere le nom de marque choisi par l'utilisateur
-			boolean isMarqueEnbase = verifMarqueEnBase();
+			AccesTableTrousseMarque accesMarque = new AccesTableTrousseMarque(
+					this);
+
+			boolean isMarqueEnbase = accesMarque.isMarqueExist(textView
+					.getText().toString());
 			// on verifie qu'au moins une categorie est cochée.
 			boolean isOk = VerfieAuMoinsUneCategorieSelectionnée();
-			int nbCatCochee = NombreDeCategorieSelectionnée();
+			AccesTableTrousseProduits accesProduit = new AccesTableTrousseProduits(
+					this);
+
+			int nbCatCochee = accesProduit.getNbProduitCochee();
 			if (!isOk || nbCatCochee > 1 || !isMarqueEnbase) {
 				if (!isOk) {
 					adAucuneCat.show();
@@ -504,8 +518,7 @@ public class formulaire_entree_page1bis extends Activity implements
 					if (MarqueChoisie.equals("")) {
 						adAucuneMarque.show();
 					} else {
-						AccesTableTrousseMarque accesMarque = new AccesTableTrousseMarque(
-								getApplicationContext());
+
 						accesMarque.majMarqueChoisi(MarqueChoisie, false);
 						accesMarque.createNewMarque(MarqueChoisie);
 
@@ -545,32 +558,6 @@ public class formulaire_entree_page1bis extends Activity implements
 	 */
 	private void termineActivity() {
 		finish();
-	}
-
-	/**
- * 
- */
-	private boolean verifMarqueEnBase() {
-		MarqueChoisie = textView.getText().toString();
-		boolean MarqueenBase = false;
-		// objBd.open();
-		Marque = objBd.renvoi_liste_ValeurDansString("trousse_marques",
-				"nom_marque");
-		// objBd.close();
-		if (!MarqueChoisie.equals("")) {
-			// on le compare à la liste des marques enregistrée en base
-			for (int i = 0; i < Marque.length; i++) {
-				if (Marque[i].contains(MarqueChoisie)) {
-					MarqueenBase = true;
-				}
-			}
-		} else {
-			if (MarqueChoisie.equals("")) {
-				return false;
-			}
-
-		}
-		return MarqueenBase;
 	}
 
 	/**
@@ -630,16 +617,22 @@ public class formulaire_entree_page1bis extends Activity implements
 	}
 
 	private boolean VerfieAuMoinsUneCategorieSelectionnée() {
+		AccesTableTrousseProduits accesProduit = new AccesTableTrousseProduits(
+				this);
 
+		ArrayList<String> lstCatCochee = accesProduit.getListeProduitCochee();
 		// objBd.open();
-		ArrayList[] ListeCategorieCochée = objBd.renvoiCategorieCochée();
-		int nbCategorieCochées = ListeCategorieCochée[0].size();
+		// ArrayList[] ListeCategorieCochée = objBd.renvoiCategorieCochée();
+		// int nbCategorieCochées = ListeCategorieCochée[0].size();
 		String NomProduits = "";
-		for (int j = 0; j < nbCategorieCochées; j++) {
-			NomProduits = ListeCategorieCochée[0].get(j).toString();
+		for (String s : lstCatCochee) {
+			NomProduits = s;
 		}
+		// for (int j = 0; j < nbCatCochee; j++) {
+		// NomProduits = ListeCategorieCochée[0].get(j).toString();
+		// }
 
-		if ((nbCategorieCochées == 1) && (NomProduits.equals("aucun"))) {
+		if ((lstCatCochee.size() == 1) && (NomProduits.equals("aucun"))) {
 			// popUp ("Vous n'avez selectionné aucune catégorie");
 			// objBd.close();
 			return false;
@@ -648,18 +641,6 @@ public class formulaire_entree_page1bis extends Activity implements
 			// objBd.close();
 			return true;
 		}
-
-	}
-
-	@SuppressWarnings("rawtypes")
-	private int NombreDeCategorieSelectionnée() {
-
-		// objBd.open();
-		ArrayList[] ListeCategorieCochée = objBd.renvoiCategorieCochée();
-		int nbCategorieCochées = ListeCategorieCochée[0].size();
-
-		// objBd.close();
-		return nbCategorieCochées;
 
 	}
 

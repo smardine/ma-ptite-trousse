@@ -80,4 +80,17 @@ public class AccesTableTrousseProduits {
 		requeteFact.majTable(EnTable.TROUSSE_PRODUIT, modifiedValues,
 				whereClause, whereArgs);
 	}
+
+	public ArrayList<String> getListeProduitCochee() {
+		String requete = "SELECT " + EnStructProduits.NOM_SOUSCAT.getNomChamp()
+				+ ", " + EnStructProduits.ISCHECKED.getNomChamp() + " FROM "
+				+ EnTable.TROUSSE_PRODUIT.getNomTable() + " WHERE "
+				+ EnStructProduits.ISCHECKED.getNomChamp() + "='true'";
+
+		return requeteFact.getListeDeChamp(requete).get(0);
+	}
+
+	public int getNbProduitCochee() {
+		return getListeProduitCochee().size();
+	}
 }
