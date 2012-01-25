@@ -34,6 +34,7 @@ import fr.smardine.matroussedemaquillage.R;
 import fr.smardine.matroussedemaquillage.base.BDAcces;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableParams;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableProduitEnregistre;
+import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableTrousseMarque;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableTrousseProduits;
 import fr.smardine.matroussedemaquillage.mdl.MlProduit;
 import fr.smardine.matroussedemaquillage.modifier.modif_cat;
@@ -680,9 +681,16 @@ public class affiche_detail extends Activity implements OnClickListener {
 			inputMarque.setText(MarqueDetail.getText().toString());
 			adMarque.setView(inputMarque);
 			// objBd.open();
-			String[] Marque = objBd.renvoi_liste_ValeurDansString(
-					"trousse_marques", "nom_marque");
+			// STRING[] MARQUE = OBJBD.RENVOI_LISTE_VALEURDANSSTRING(
+			// "trousse_marques", "nom_marque");
 
+			AccesTableTrousseMarque accesMarque = new AccesTableTrousseMarque(
+					this);
+			ArrayList<String> lstMarque = accesMarque.getListeMarques();
+			String[] Marque = new String[lstMarque.size()];
+			for (int i = 0; i < lstMarque.size(); i++) {
+				Marque[i] = lstMarque.get(i);
+			}
 			// objBd.close();
 			ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
 					R.layout.list_item_marque_auto, Marque);

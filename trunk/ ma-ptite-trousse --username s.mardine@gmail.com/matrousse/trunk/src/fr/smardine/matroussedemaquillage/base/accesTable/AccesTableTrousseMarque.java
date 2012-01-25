@@ -68,4 +68,14 @@ public class AccesTableTrousseMarque {
 		values.put("ischecked", "false");
 		return requeteFact.insertDansTable(EnTable.TROUSSE_MARQUE, values);
 	}
+
+	public boolean isMarqueExist(String p_nomMarque) {
+		ArrayList<String> lstMarque = getListeMarques();
+		for (String s : lstMarque) {
+			if (s.equals(p_nomMarque)) {
+				return true;
+			}
+		}
+		return false;
+	}
 }
