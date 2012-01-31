@@ -39,11 +39,13 @@ import com.example.android.apis.animation.Animlineaire;
 
 import fr.smardine.matroussedemaquillage.Main;
 import fr.smardine.matroussedemaquillage.R;
-import fr.smardine.matroussedemaquillage.base.BDAcces;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableParams;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableTrousseMarque;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableTrousseProduits;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableTrousseTempo;
+import fr.smardine.matroussedemaquillage.mdl.MlListeMarque;
+import fr.smardine.matroussedemaquillage.mdl.MlListeTrousseProduit;
+import fr.smardine.matroussedemaquillage.mdl.MlTrousseProduit;
 import fr.smardine.matroussedemaquillage.note.note_page1;
 import fr.smardine.matroussedemaquillage.param.tab_param;
 import fr.smardine.matroussedemaquillage.recherche.Recherche;
@@ -54,6 +56,9 @@ import fr.smardine.matroussedemaquillage.variableglobale.EnCategorieVisage;
 import fr.smardine.matroussedemaquillage.variableglobale.EnCategorieYeux;
 import fr.smardine.matroussedemaquillage.variableglobale.EnTheme;
 
+/**
+ * @author smardine
+ */
 public class formulaire_entree_page1bis extends Activity implements
 		OnClickListener {
 
@@ -61,7 +66,7 @@ public class formulaire_entree_page1bis extends Activity implements
 	ImageView BtVisage, BtYeux, BtLevres, BtAutres;
 	AutoCompleteTextView textView;
 
-	private BDAcces objBd;
+	// private BDAcces objBd;
 	AlertDialog.Builder adPlusieurCat, adAucuneCat, adNouvelleMarque,
 			adAucuneMarque;;
 	String MarqueChoisie = "";
@@ -176,10 +181,10 @@ public class formulaire_entree_page1bis extends Activity implements
 		// "nom_marque");
 
 		AccesTableTrousseMarque accesMarque = new AccesTableTrousseMarque(this);
-		ArrayList<String> lstMarque = accesMarque.getListeMarques();
+		MlListeMarque lstMarque = accesMarque.getListeMarques();
 		Marque = new String[lstMarque.size()];
 		for (int i = 0; i < lstMarque.size(); i++) {
-			Marque[i] = lstMarque.get(i);
+			Marque[i] = lstMarque.get(i).getNomMarque();
 		}
 
 		// objBd.close();
@@ -587,14 +592,14 @@ public class formulaire_entree_page1bis extends Activity implements
 
 		AccesTableTrousseProduits accesProduits = new AccesTableTrousseProduits(
 				this);
-		ArrayList<String> ListeProduits = accesProduits
-				.renvoi_liste_produits(p_categorie);
+		MlListeTrousseProduit ListeProduits = accesProduits
+				.getListeTrousseProduit(p_categorie);
 		String[] NomProduits = new String[ListeProduits.size()];
 
 		for (int j = 0; j < ListeProduits.size(); j++) {
-			NomProduits[j] = ListeProduits.get(j).toString();
+			NomProduits[j] = ListeProduits.get(j).getNomSousCat();
 		}
-		// objBd.close();
+
 		return NomProduits;
 	}
 
@@ -602,14 +607,15 @@ public class formulaire_entree_page1bis extends Activity implements
 		int indiceProduitCoche = -1;
 		AccesTableTrousseProduits accesProduits = new AccesTableTrousseProduits(
 				this);
-		ArrayList<String> ListeProduits = accesProduits
-				.renvoi_liste_produits(p_categorie);
-		String[] NomProduits = new String[ListeProduits.size()];
+		MlListeTrousseProduit ListeProduits = accesProduits
+				.getListeTrousseProduit(p_categorie);
+
 		for (int j = 0; j < ListeProduits.size(); j++) {
-			NomProduits[j] = ListeProduits.get(j).toString();
-			String isChecked = ListeProduits.get(j).toString();
-			if ("true".equals(isChecked)) {
+			// NomProduits[j] = ListeProduits.get(j).toString();
+			boolean isChecked = ListeProduits.get(j).isChecked();
+			if (isChecked) {
 				indiceProduitCoche = j;
+				break;
 			}
 		}
 		// objBd.close();
@@ -620,13 +626,14 @@ public class formulaire_entree_page1bis extends Activity implements
 		AccesTableTrousseProduits accesProduit = new AccesTableTrousseProduits(
 				this);
 
-		ArrayList<String> lstCatCochee = accesProduit.getListeProduitCochee();
+		MlListeTrousseProduit lstCatCochee = accesProduit
+				.getListeProduitCochee();
 		// objBd.open();
 		// ArrayList[] ListeCategorieCochée = objBd.renvoiCategorieCochée();
 		// int nbCategorieCochées = ListeCategorieCochée[0].size();
 		String NomProduits = "";
-		for (String s : lstCatCochee) {
-			NomProduits = s;
+		for (MlTrousseProduit tp : lstCatCochee) {
+			NomProduits = tp.getNomSousCat();
 		}
 		// for (int j = 0; j < nbCatCochee; j++) {
 		// NomProduits = ListeCategorieCochée[0].get(j).toString();
@@ -644,45 +651,9 @@ public class formulaire_entree_page1bis extends Activity implements
 
 	}
 
-	// private void AfficheLeContenu(String Catégorie,ArrayList<produit>
-	// produits,
-	// ListView produitListView ) {
-	//
-	// if (!Catégorie.equals("")){
-	// //objBd.open();
-	// @SuppressWarnings("rawtypes")
-	// ArrayList[] ListeProduits = objBd.renvoi_liste_produits(Catégorie);
-	// int nbdobjet = ListeProduits[0].size();
-	// for (int j=0;j<nbdobjet;j++){
-	// String NomProduits = ListeProduits[0].get(j).toString();
-	// String IsChecked = ListeProduits[1].get(j).toString();
-	// produits.add (new produit (NomProduits,IsChecked));
-	// }
-	// //objBd.close();
-	// }
-	//
-	//
-	// //animation d'affichage cascade du haut vers le bas
-	// AnimationSet set = new AnimationSet(true);
-	// Animation animation = new AlphaAnimation(0.0f, 1.0f);
-	// animation.setDuration(100);
-	// set.addAnimation(animation);
-	// animation = new TranslateAnimation(
-	// Animation.RELATIVE_TO_SELF, 0.0f,Animation.RELATIVE_TO_SELF, 0.0f,
-	// Animation.RELATIVE_TO_SELF, -1.0f,Animation.RELATIVE_TO_SELF, 0.0f
-	// );
-	// animation.setDuration(100);
-	// set.addAnimation(animation);
-	// LayoutAnimationController controller = new LayoutAnimationController(set,
-	// 0.5f);
-	// produitListView.setLayoutAnimation(controller);
-	//
-	// //paramètrer l'adapteur correspondant
-	// adpt = new produitListAdapter(this, produits);
-	// //paramèter l'adapter sur la listview
-	// produitListView.setAdapter(adpt);
-	//
-	// }
+	/**
+	 * @param message
+	 */
 	public void popUp(String message) {
 		// Toast.makeText(this, message, 1).show();
 	}
@@ -748,16 +719,18 @@ public class formulaire_entree_page1bis extends Activity implements
 			AccesTableTrousseProduits accesTrousse = new AccesTableTrousseProduits(
 					this);
 			accesTrousse.reinitProduitChoisi();
+			AccesTableTrousseTempo accesTempo = new AccesTableTrousseTempo(this);
+			accesTempo.deleteTable();
 			// String Table = "trousse_produits";
 			// ContentValues modifiedValues = new ContentValues();
 			// modifiedValues.put("ischecked", "false");
 			// String whereClause = "ischecked=?";
 			// String[] whereArgs = new String[] { "true" };
-			objBd = new BDAcces(this);
+			// objBd = new BDAcces(this);
 			// objBd.open();
 			// int nbdechamp = objBd.majTable(Table, modifiedValues,
 			// whereClause, whereArgs);
-			objBd.deleteTable("trousse_tempo", "1", null);
+			// objBd.deleteTable("trousse_tempo", "1", null);
 			// System.out.println("Nombre de champ modifié : " + nbdechamp);
 			// objBd.close();
 
@@ -838,6 +811,9 @@ public class formulaire_entree_page1bis extends Activity implements
 		return super.onKeyDown(keyCode, event);
 	}
 
+	/**
+	 * 
+	 */
 	public void OnDestroy() {
 		popUp("OnDestroy-Page1");
 		super.onDestroy();

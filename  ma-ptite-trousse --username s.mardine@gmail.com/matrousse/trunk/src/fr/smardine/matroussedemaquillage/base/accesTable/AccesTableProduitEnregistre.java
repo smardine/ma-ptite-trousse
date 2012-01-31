@@ -1,5 +1,6 @@
 package fr.smardine.matroussedemaquillage.base.accesTable;
 
+import java.sql.Date;
 import java.util.ArrayList;
 
 import android.content.ContentValues;
@@ -119,34 +120,28 @@ public class AccesTableProduitEnregistre {
 	 * @param p_idProduit le produit a corriger
 	 */
 	public void CorrigeProduitsEnregistre(int p_idProduit) {
-		ArrayList<String> defProduit = getDefProduitById(p_idProduit);
+		MlProduit p = new MlProduit(p_idProduit, ctx);
 
-		String Nom_Produit = defProduit.get(0);
-		String SousCat = defProduit.get(1);
-		String Cat = defProduit.get(2);
-		String Numeroteinte = defProduit.get(3);
-		String DurreeVie = defProduit.get(4);
-		String DatePeremption = defProduit.get(5);
-		String DateAchat = defProduit.get(6);
-		String NomMarque = defProduit.get(7);
+		// ArrayList<String> defProduit = getDefProduitById(p_idProduit);
+
+		String Nom_Produit = p.getNomProduit();
+		String SousCat = p.getNomSousCat();// defProduit.get(1);
+		String Cat = p.getNomCat();// defProduit.get(2);
+		String Numeroteinte = p.getTeinte();// defProduit.get(3);
+		int DurreeVie = p.getDureeVie();// defProduit.get(4);
+		Date DatePeremption = p.getDatePeremption();// defProduit.get(5);
+		Date DateAchat = p.getDateAchat();// defProduit.get(6);
+		String NomMarque = p.getMarque();// defProduit.get(7);
 
 		ContentValues modifiedValues = new ContentValues();
-		modifiedValues.put("nom_produit", Nom_Produit.trim().replace("[", "")
-				.replace("]", ""));
-		modifiedValues.put("nom_souscatergorie", SousCat.trim()
-				.replace("[", "").replace("]", ""));
-		modifiedValues.put("nom_categorie", Cat.trim().replace("[", "")
-				.replace("]", ""));
-		modifiedValues.put("numero_Teinte", Numeroteinte.trim()
-				.replace("[", "").replace("]", ""));
-		modifiedValues.put("Duree_Vie", DurreeVie.trim().replace("[", "")
-				.replace("]", ""));
-		modifiedValues.put("Date_Peremption",
-				DatePeremption.trim().replace("[", "").replace("]", ""));
-		modifiedValues.put("DateAchat", DateAchat.trim().replace("[", "")
-				.replace("]", ""));
-		modifiedValues.put("nom_marque", NomMarque.trim().replace("[", "")
-				.replace("]", ""));
+		modifiedValues.put("nom_produit", Nom_Produit);
+		modifiedValues.put("nom_souscatergorie", SousCat);
+		modifiedValues.put("nom_categorie", Cat);
+		modifiedValues.put("numero_Teinte", Numeroteinte);
+		modifiedValues.put("Duree_Vie", "" + DurreeVie);
+		modifiedValues.put("Date_Peremption", DatePeremption.toLocaleString());
+		modifiedValues.put("DateAchat", DateAchat.toLocaleString());
+		modifiedValues.put("nom_marque", NomMarque);
 
 		String whereClause = "id_produits=?";
 		String[] whereArgs = new String[] { "" + p_idProduit + "" };
@@ -352,5 +347,29 @@ public class AccesTableProduitEnregistre {
 			lst.add(new MlProduit(Integer.parseInt(s), ctx));
 		}
 		return lst;
+	}
+
+	/**
+	 * @param p_idProduit
+	 * @return true ou false
+	 */
+	public boolean deleteProduit(int p_idProduit) {
+		String whereClause = "id_produits=?";
+		String[] WhereArgs = new String[] { "" + p_idProduit };
+
+		int nbChampEffacé = requeteFact.deleteTable(EnTable.PRODUIT_ENREGISTRE,
+				whereClause, WhereArgs);
+		if (nbChampEffacé != 1) {
+			return false;
+		}
+		return true;
+
+	}
+
+	/**
+	 * 
+	 */
+	public void deleteTable() {
+		requeteFact.deleteTable(EnTable.PRODUIT_ENREGISTRE, "1", null);
 	}
 }

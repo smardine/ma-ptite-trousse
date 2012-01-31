@@ -1,19 +1,9 @@
 package fr.smardine.matroussedemaquillage.base;
 
-import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -25,10 +15,6 @@ import android.util.Log;
 public class BDAcces {
 
 	private static final String PRODUITS_TABLE = "trousse_produits";
-
-	// private static final String MARQUES_TABLE = "trousse_marques";
-
-	// private static final String TEMPO_TABLE = "trousse_tempo";
 
 	private static final String DATABASE_NAME = "trousse_base";
 
@@ -46,12 +32,9 @@ public class BDAcces {
 	/**
 	 * 
 	 */
-	// private SQLiteQueryBuilder mbbuilder;
 
 	private static final String TAG = "BDAcces";
 	private static final int DATABASE_VERSION = 14;
-
-	// private static String Message_Erreur = "";
 
 	/**
 	 * @param ctx
@@ -217,7 +200,7 @@ public class BDAcces {
 	/**
 	 * @param Table
 	 * @param values
-	 * @return
+	 * @return true ou false
 	 */
 	public boolean InsertDonnéedansTable(String Table, ContentValues values) {
 
@@ -229,125 +212,126 @@ public class BDAcces {
 		}
 	}
 
-	/**
-	 * @param table
-	 * @param whereClause
-	 * @param whereArgs
-	 * @return
-	 */
-	public int deleteTable(String table, String whereClause, String[] whereArgs) {
-		if (mDb == null) {
-			open();
-		}
-		int RowNumber = mDb.delete(table, whereClause, whereArgs);
+	// /**
+	// * @param table
+	// * @param whereClause
+	// * @param whereArgs
+	// * @return le nombre de champ effacé
+	// */
+	// public int deleteTable(String table, String whereClause, String[]
+	// whereArgs) {
+	// if (mDb == null) {
+	// open();
+	// }
+	// int RowNumber = mDb.delete(table, whereClause, whereArgs);
+	//
+	// return RowNumber;
+	//
+	// }
 
-		return RowNumber;
-		// TODO Auto-generated method stub
+	// /**
+	// * @param Table
+	// * @param Colonnes
+	// * @return
+	// */
+	//
+	// public ArrayList[] renvoi_liste_ValeurTroussetempo(String Table,
+	// String[] Colonnes) {
+	// String[] colonne = Colonnes;
+	// // String condition = "nom_categorie='"+Catégorie+"'";
+	// String condition = "";
+	// String[] conditionArgs = null;
+	// String groupby = "";
+	// String having = "";
+	// String orderby = "";
+	// Cursor objCursor = mDb.query(Table, colonne, condition, conditionArgs,
+	// groupby, having, orderby);
+	// int iPostNomMarques = objCursor.getColumnIndex(Colonnes[0]);
+	// int iPostNomProduit = objCursor.getColumnIndex(Colonnes[1]);
+	// int iPostNumeroTeinte = objCursor.getColumnIndex(Colonnes[2]);
+	// int iPostDateAchat = objCursor.getColumnIndex(Colonnes[3]);
+	// int iPostDureeVie = objCursor.getColumnIndex(Colonnes[4]);
+	//
+	// int itotal = objCursor.getCount();
+	// ArrayList<String> aTableRetourNomMarque = new ArrayList<String>();
+	// ArrayList<String> aTableRetourNomProduit = new ArrayList<String>();
+	// ArrayList<String> aTableRetourNumeroTeinte = new ArrayList<String>();
+	// ArrayList<String> aTableRetourDateAchat = new ArrayList<String>();
+	// ArrayList<String> aTableRetourDureeVie = new ArrayList<String>();
+	//
+	// objCursor.moveToFirst();
+	// ArrayList<?> aTableRetour[] = new ArrayList[5];
+	//
+	// /* Check if our result was valid. */
+	// if (objCursor != null) {
+	// for (int i = 0; i < itotal; i++) {
+	// String Nom_marque = objCursor.getString(iPostNomMarques);
+	// String Nom_Produit = objCursor.getString(iPostNomProduit);
+	// String Num_Teinte = objCursor.getString(iPostNumeroTeinte);
+	// String DateAchat = objCursor.getString(iPostDateAchat);
+	// String DureeVie = objCursor.getString(iPostDureeVie);
+	//
+	// aTableRetourNomMarque.add(Nom_marque);
+	// aTableRetourNomProduit.add(Nom_Produit);
+	// aTableRetourNumeroTeinte.add(Num_Teinte);
+	// aTableRetourDateAchat.add(DateAchat);
+	// aTableRetourDureeVie.add(DureeVie);
+	//
+	// objCursor.moveToNext();
+	// }
+	// }
+	// objCursor.close();
+	// aTableRetour[0] = aTableRetourNomMarque;
+	// aTableRetour[1] = aTableRetourNomProduit;
+	// aTableRetour[2] = aTableRetourNumeroTeinte;
+	// aTableRetour[3] = aTableRetourDateAchat;
+	// aTableRetour[4] = aTableRetourDureeVie;
+	//
+	// return aTableRetour;
+	// }
 
-	}
-
-	/**
-	 * @param Table
-	 * @param Colonnes
-	 * @return
-	 */
-
-	public ArrayList[] renvoi_liste_ValeurTroussetempo(String Table,
-			String[] Colonnes) {
-		String[] colonne = Colonnes;
-		// String condition = "nom_categorie='"+Catégorie+"'";
-		String condition = "";
-		String[] conditionArgs = null;
-		String groupby = "";
-		String having = "";
-		String orderby = "";
-		Cursor objCursor = mDb.query(Table, colonne, condition, conditionArgs,
-				groupby, having, orderby);
-		int iPostNomMarques = objCursor.getColumnIndex(Colonnes[0]);
-		int iPostNomProduit = objCursor.getColumnIndex(Colonnes[1]);
-		int iPostNumeroTeinte = objCursor.getColumnIndex(Colonnes[2]);
-		int iPostDateAchat = objCursor.getColumnIndex(Colonnes[3]);
-		int iPostDureeVie = objCursor.getColumnIndex(Colonnes[4]);
-
-		int itotal = objCursor.getCount();
-		ArrayList<String> aTableRetourNomMarque = new ArrayList<String>();
-		ArrayList<String> aTableRetourNomProduit = new ArrayList<String>();
-		ArrayList<String> aTableRetourNumeroTeinte = new ArrayList<String>();
-		ArrayList<String> aTableRetourDateAchat = new ArrayList<String>();
-		ArrayList<String> aTableRetourDureeVie = new ArrayList<String>();
-
-		objCursor.moveToFirst();
-		ArrayList<?> aTableRetour[] = new ArrayList[5];
-
-		/* Check if our result was valid. */
-		if (objCursor != null) {
-			for (int i = 0; i < itotal; i++) {
-				String Nom_marque = objCursor.getString(iPostNomMarques);
-				String Nom_Produit = objCursor.getString(iPostNomProduit);
-				String Num_Teinte = objCursor.getString(iPostNumeroTeinte);
-				String DateAchat = objCursor.getString(iPostDateAchat);
-				String DureeVie = objCursor.getString(iPostDureeVie);
-
-				aTableRetourNomMarque.add(Nom_marque);
-				aTableRetourNomProduit.add(Nom_Produit);
-				aTableRetourNumeroTeinte.add(Num_Teinte);
-				aTableRetourDateAchat.add(DateAchat);
-				aTableRetourDureeVie.add(DureeVie);
-
-				objCursor.moveToNext();
-			}
-		}
-		objCursor.close();
-		aTableRetour[0] = aTableRetourNomMarque;
-		aTableRetour[1] = aTableRetourNomProduit;
-		aTableRetour[2] = aTableRetourNumeroTeinte;
-		aTableRetour[3] = aTableRetourDateAchat;
-		aTableRetour[4] = aTableRetourDureeVie;
-
-		return aTableRetour;
-	}
-
-	public ArrayList[] renvoiCategorieEtProduitCochée() {
-		String[] colonne = new String[] { "nom_souscatergorie", "nom_categorie" };
-		String condition = "ischecked='true'";
-		String[] conditionArgs = null;
-		String groupby = "";
-		String having = "";
-		String orderby = "";
-		Cursor objCursor = mDb.query(PRODUITS_TABLE, colonne, condition,
-				conditionArgs, groupby, having, orderby);
-		int iPostNomProduits = objCursor.getColumnIndex("nom_souscatergorie");
-		int iPostNomCatégories = objCursor.getColumnIndex("nom_categorie");
-
-		int itotal = objCursor.getCount();
-		ArrayList[] aTableRetour = new ArrayList[2];
-		ArrayList<String> aTableRetourNom = new ArrayList<String>();
-		ArrayList<String> aTableRetourCatégorie = new ArrayList<String>();
-		if (itotal != 0) {
-
-			objCursor.moveToFirst();
-			/* Check if our result was valid. */
-			if (objCursor != null) {
-				for (int i = 0; i < itotal; i++) {
-					String NomProduits = objCursor.getString(iPostNomProduits);
-					String NomCategorie = objCursor
-							.getString(iPostNomCatégories);
-
-					aTableRetourNom.add(NomProduits);
-					aTableRetourCatégorie.add(NomCategorie);
-					objCursor.moveToNext();
-				}
-			}
-			objCursor.close();
-			aTableRetour[0] = aTableRetourNom;
-			aTableRetour[1] = aTableRetourCatégorie;
-		} else {
-			aTableRetourNom.add("aucun");
-			aTableRetour[0] = aTableRetourNom;
-		}
-		// aTableRetour[1]=aTableRetourisChecked;
-		return aTableRetour;
-	}
+	// public ArrayList[] renvoiCategorieEtProduitCochée() {
+	// String[] colonne = new String[] { "nom_souscatergorie", "nom_categorie"
+	// };
+	// String condition = "ischecked='true'";
+	// String[] conditionArgs = null;
+	// String groupby = "";
+	// String having = "";
+	// String orderby = "";
+	// Cursor objCursor = mDb.query(PRODUITS_TABLE, colonne, condition,
+	// conditionArgs, groupby, having, orderby);
+	// int iPostNomProduits = objCursor.getColumnIndex("nom_souscatergorie");
+	// int iPostNomCatégories = objCursor.getColumnIndex("nom_categorie");
+	//
+	// int itotal = objCursor.getCount();
+	// ArrayList[] aTableRetour = new ArrayList[2];
+	// ArrayList<String> aTableRetourNom = new ArrayList<String>();
+	// ArrayList<String> aTableRetourCatégorie = new ArrayList<String>();
+	// if (itotal != 0) {
+	//
+	// objCursor.moveToFirst();
+	// /* Check if our result was valid. */
+	// if (objCursor != null) {
+	// for (int i = 0; i < itotal; i++) {
+	// String NomProduits = objCursor.getString(iPostNomProduits);
+	// String NomCategorie = objCursor
+	// .getString(iPostNomCatégories);
+	//
+	// aTableRetourNom.add(NomProduits);
+	// aTableRetourCatégorie.add(NomCategorie);
+	// objCursor.moveToNext();
+	// }
+	// }
+	// objCursor.close();
+	// aTableRetour[0] = aTableRetourNom;
+	// aTableRetour[1] = aTableRetourCatégorie;
+	// } else {
+	// aTableRetourNom.add("aucun");
+	// aTableRetour[0] = aTableRetourNom;
+	// }
+	// // aTableRetour[1]=aTableRetourisChecked;
+	// return aTableRetour;
+	// }
 
 	/**
 	 * @param colonne
@@ -417,87 +401,88 @@ public class BDAcces {
 	// return aTableRetour;
 	// }
 
-	/**
-	 * @param ScriptSql
-	 */
-	public void execSQL(String ScriptSql) {
-		// TODO Auto-generated method stub
-		mDb.execSQL(ScriptSql);
+	// /**
+	// * @param ScriptSql
+	// */
+	// public void execSQL(String ScriptSql) {
+	// // TODO Auto-generated method stub
+	// mDb.execSQL(ScriptSql);
+	//
+	// }
 
-	}
+	// /**
+	// * @param Element
+	// * @return
+	// * @throws Exception
+	// */
+	// public static ArrayList<ArrayList> renvoi_liste_script_xml(String
+	// Element)
+	// throws Exception {
+	//
+	// // ***********************création de notre tableau dinamique
+	// ArrayList<ArrayList> aTableRetour = new ArrayList<ArrayList>();
+	//
+	// // ************************récupération du flux wml
+	// URL myURL = new URL(
+	// "http://simon.mardine.free.fr/trousse_maquillage/bdd.xml");
+	// DocumentBuilderFactory fabrique = DocumentBuilderFactory.newInstance();
+	// // création d'un constructeur de documents
+	// DocumentBuilder constructeur = fabrique.newDocumentBuilder();
+	// // *****************lecture du flux xml**************
+	// Document document = constructeur.parse(myURL.openStream());
+	// Element racine = document.getDocumentElement();
+	// NodeList liste = racine.getElementsByTagName(Element);
+	// // remplissage de mon tableau
+	// for (int i = 0; i < liste.getLength(); i++) {
+	// ArrayList<String> aTableauTmp = new ArrayList<String>();
+	// Element E1 = (Element) liste.item(i);
+	// // aTableRetour[i]= "";
+	// aTableauTmp.add(E1.getAttribute("SCRIPT"));
+	// // aTableauTmp.add(E1.getAttribute("ordre"));
+	// aTableRetour.add(aTableauTmp);
+	// }
+	//
+	// return aTableRetour;
+	//
+	// }
 
-	/**
-	 * @param Element
-	 * @return
-	 * @throws Exception
-	 */
-	public static ArrayList<ArrayList> renvoi_liste_script_xml(String Element)
-			throws Exception {
-
-		// ***********************création de notre tableau dinamique
-		ArrayList<ArrayList> aTableRetour = new ArrayList<ArrayList>();
-
-		// ************************récupération du flux wml
-		URL myURL = new URL(
-				"http://simon.mardine.free.fr/trousse_maquillage/bdd.xml");
-		DocumentBuilderFactory fabrique = DocumentBuilderFactory.newInstance();
-		// création d'un constructeur de documents
-		DocumentBuilder constructeur = fabrique.newDocumentBuilder();
-		// *****************lecture du flux xml**************
-		Document document = constructeur.parse(myURL.openStream());
-		Element racine = document.getDocumentElement();
-		NodeList liste = racine.getElementsByTagName(Element);
-		// remplissage de mon tableau
-		for (int i = 0; i < liste.getLength(); i++) {
-			ArrayList<String> aTableauTmp = new ArrayList<String>();
-			Element E1 = (Element) liste.item(i);
-			// aTableRetour[i]= "";
-			aTableauTmp.add(E1.getAttribute("SCRIPT"));
-			// aTableauTmp.add(E1.getAttribute("ordre"));
-			aTableRetour.add(aTableauTmp);
-		}
-
-		return aTableRetour;
-
-	}
-
-	/**
-	 * @param Element
-	 * @return
-	 * @throws Exception
-	 */
-	public static ArrayList<ArrayList> renvoi_liste_script_maj_xml(
-			String Element) throws Exception {
-
-		// ***********************création de notre tableau dinamique
-		ArrayList<ArrayList> aTableRetour = new ArrayList<ArrayList>();
-
-		// ************************récupération du flux wml
-		URL myURL = new URL(
-				"http://simon.mardine.free.fr/trousse_maquillage/maj_bdd.xml");
-		DocumentBuilderFactory fabrique = DocumentBuilderFactory.newInstance();
-		// création d'un constructeur de documents
-		DocumentBuilder constructeur = fabrique.newDocumentBuilder();
-		// *****************lecture du flux xml**************
-		// Document document = constructeur.parse(myURL.openStream());
-		// String cheminXml = "./data/data/"+PackageName;
-		// File chemin = new File (cheminXml);
-		Document document = constructeur.parse(myURL.openStream());
-		Element racine = document.getDocumentElement();
-		NodeList liste = racine.getElementsByTagName(Element);
-		// remplissage de mon tableau
-		for (int i = 0; i < liste.getLength(); i++) {
-			ArrayList<String> aTableauTmp = new ArrayList<String>();
-			Element E1 = (Element) liste.item(i);
-			// aTableRetour[i]= "";
-			aTableauTmp.add(E1.getAttribute("SCRIPT"));
-			// aTableauTmp.add(E1.getAttribute("ordre"));
-			aTableRetour.add(aTableauTmp);
-		}
-
-		return aTableRetour;
-
-	}
+	// /**
+	// * @param Element
+	// * @return
+	// * @throws Exception
+	// */
+	// public static ArrayList<ArrayList> renvoi_liste_script_maj_xml(
+	// String Element) throws Exception {
+	//
+	// // ***********************création de notre tableau dinamique
+	// ArrayList<ArrayList> aTableRetour = new ArrayList<ArrayList>();
+	//
+	// // ************************récupération du flux wml
+	// URL myURL = new URL(
+	// "http://simon.mardine.free.fr/trousse_maquillage/maj_bdd.xml");
+	// DocumentBuilderFactory fabrique = DocumentBuilderFactory.newInstance();
+	// // création d'un constructeur de documents
+	// DocumentBuilder constructeur = fabrique.newDocumentBuilder();
+	// // *****************lecture du flux xml**************
+	// // Document document = constructeur.parse(myURL.openStream());
+	// // String cheminXml = "./data/data/"+PackageName;
+	// // File chemin = new File (cheminXml);
+	// Document document = constructeur.parse(myURL.openStream());
+	// Element racine = document.getDocumentElement();
+	// NodeList liste = racine.getElementsByTagName(Element);
+	// // remplissage de mon tableau
+	// for (int i = 0; i < liste.getLength(); i++) {
+	// ArrayList<String> aTableauTmp = new ArrayList<String>();
+	// Element E1 = (Element) liste.item(i);
+	// // aTableRetour[i]= "";
+	// aTableauTmp.add(E1.getAttribute("SCRIPT"));
+	// // aTableauTmp.add(E1.getAttribute("ordre"));
+	// aTableRetour.add(aTableauTmp);
+	// }
+	//
+	// return aTableRetour;
+	//
+	// }
 
 	/**
 	 * @return l'instance de connexion a la database

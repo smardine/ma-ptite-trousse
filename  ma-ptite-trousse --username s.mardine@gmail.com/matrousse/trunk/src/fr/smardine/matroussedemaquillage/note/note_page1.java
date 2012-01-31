@@ -373,7 +373,7 @@ public class note_page1 extends Activity implements OnItemClickListener,
 	}
 
 	@Override
-	public void onClick(View v) {
+	public void onClick(final View v) {
 		// TODO Auto-generated method stub
 		if (v == BtAddNote) {
 			popUp("Ajouter note");
@@ -435,15 +435,17 @@ public class note_page1 extends Activity implements OnItemClickListener,
 						@Override
 						public void onClick(DialogInterface dialog,
 								int whichButton) {
-
+							AccesTableNotes accesNote = new AccesTableNotes(v
+									.getContext());
+							accesNote.deleteTable();
 							// objBd.open();
-							int nbChanmpSupprime = objBd.deleteTable("Notes",
-									"1", null);
-
-							if (nbChanmpSupprime > 0) {
-								popUp("nb de notes supprimees: "
-										+ nbChanmpSupprime);
-							}
+							// int nbChanmpSupprime = objBd.deleteTable("Notes",
+							// "1", null);
+							//
+							// if (nbChanmpSupprime > 0) {
+							// popUp("nb de notes supprimees: "
+							// + nbChanmpSupprime);
+							// }
 							// produitNote.removeAll(produitNote);
 							AfficheLeContenu("Tout", NoteListView);
 						}
@@ -490,14 +492,16 @@ public class note_page1 extends Activity implements OnItemClickListener,
 		return false;
 	}
 
-	@SuppressWarnings("unused")
 	protected void gotoSupprNote(String idNote) {
+		AccesTableNotes accesNote = new AccesTableNotes(this);
+		accesNote.deleteNote(Integer.parseInt(idNote));
 		// TODO Auto-generated method stub
-		String whereClause = "id_note=?";
-		String[] WhereArgs = new String[] { idNote };
-
-		// objBd.open();
-		int nbChampEffacé = objBd.deleteTable("Notes", whereClause, WhereArgs);
+		// String whereClause = "id_note=?";
+		// String[] WhereArgs = new String[] { idNote };
+		//
+		// // objBd.open();
+		// int nbChampEffacé = objBd.deleteTable("Notes", whereClause,
+		// WhereArgs);
 
 		// produitNote.removeAll(produitNote);
 		AfficheLeContenu("Tout", NoteListView);
