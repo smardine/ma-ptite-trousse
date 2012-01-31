@@ -17,7 +17,6 @@ public class MlListeProduits extends ArrayList<MlProduit> {
 	 * @return une liste de MlProduit
 	 */
 	public List<MlProduit> getListProduit() {
-
 		return list;
 	}
 }

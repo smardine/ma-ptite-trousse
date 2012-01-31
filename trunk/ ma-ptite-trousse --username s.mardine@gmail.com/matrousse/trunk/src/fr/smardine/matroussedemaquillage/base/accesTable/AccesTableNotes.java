@@ -98,10 +98,40 @@ public class AccesTableNotes {
 
 	}
 
+	/**
+	 * @param p_titre
+	 * @param p_message
+	 * @return true ou false
+	 */
 	public boolean createNewNote(String p_titre, String p_message) {
 		ContentValues values = new ContentValues();
 		values.put("Titre", p_titre);
 		values.put("Message", p_message);
 		return requeteFact.insertDansTable(EnTable.NOTES, values);
+	}
+
+	/**
+	 * @param p_idNote
+	 * @return true ou false
+	 */
+	public boolean deleteNote(int p_idNote) {
+		String whereClause = "id_note=?";
+		String[] WhereArgs = new String[] { "" + p_idNote };
+
+		// objBd.open();
+		int nbChampEffacé = requeteFact.deleteTable(EnTable.NOTES, whereClause,
+				WhereArgs);
+		if (nbChampEffacé == 1) {
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * 
+	 */
+	public void deleteTable() {
+		requeteFact.deleteTable(EnTable.NOTES, "1", null);
+
 	}
 }

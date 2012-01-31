@@ -1,7 +1,5 @@
 package fr.smardine.matroussedemaquillage.modifier;
 
-import java.util.ArrayList;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ContentValues;
@@ -17,6 +15,8 @@ import fr.smardine.matroussedemaquillage.base.BDAcces;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableParams;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableProduitEnregistre;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableTrousseProduits;
+import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableTrousseTempo;
+import fr.smardine.matroussedemaquillage.mdl.MlListeTrousseProduit;
 import fr.smardine.matroussedemaquillage.recherche.Recherche;
 import fr.smardine.matroussedemaquillage.recherche.affiche_detail;
 import fr.smardine.matroussedemaquillage.variableglobale.ActivityParam;
@@ -340,14 +340,15 @@ public class modif_cat extends Activity implements OnClickListener {
 		int indiceProduitCoche = -1;
 		AccesTableTrousseProduits accesProduits = new AccesTableTrousseProduits(
 				this);
-		ArrayList<String> ListeProduits = accesProduits
-				.renvoi_liste_produits(p_categorie);
+		MlListeTrousseProduit ListeProduits = accesProduits
+				.getListeTrousseProduit(p_categorie);
 		String[] NomProduits = new String[ListeProduits.size()];
 		for (int j = 0; j < ListeProduits.size(); j++) {
-			NomProduits[j] = ListeProduits.get(j).toString();
-			String isChecked = ListeProduits.get(j).toString();
-			if ("true".equals(isChecked)) {
+			NomProduits[j] = ListeProduits.get(j).getNomCat();
+			boolean isChecked = ListeProduits.get(j).isChecked();
+			if (isChecked) {
 				indiceProduitCoche = j;
+				break;
 			}
 		}
 		// objBd.close();
@@ -361,11 +362,11 @@ public class modif_cat extends Activity implements OnClickListener {
 	private String[] recupereSousCategorie(String p_categorie) {
 		AccesTableTrousseProduits accesProduits = new AccesTableTrousseProduits(
 				this);
-		ArrayList<String> ListeProduits = accesProduits
-				.renvoi_liste_produits(p_categorie);
+		MlListeTrousseProduit ListeProduits = accesProduits
+				.getListeTrousseProduit(p_categorie);
 		String[] NomProduits = new String[ListeProduits.size()];
 		for (int j = 0; j < ListeProduits.size(); j++) {
-			NomProduits[j] = ListeProduits.get(j).toString();
+			NomProduits[j] = ListeProduits.get(j).getNomSousCat();
 		}
 		// objBd.close();
 		return NomProduits;
@@ -398,22 +399,24 @@ public class modif_cat extends Activity implements OnClickListener {
 		// int nbdechamp = objBd.majTable("trousse_produits", modifiedValues,
 		// whereClause, whereArgs);
 		// System.out.println("Nombre de champ modifié : " + nbdechamp);
-		objBd.deleteTable("trousse_tempo", "1", null);
+		// objBd.deleteTable("trousse_tempo", "1", null);
 		// objBd.close();
-
+		AccesTableTrousseTempo accesTempo = new AccesTableTrousseTempo(this);
+		accesTempo.deleteTable();
 		// popUp("On Continue");
 		// on créer une nouvelle activité avec comme point de depart "Main" et
 		// comme destination "FicheClient"
 		Intent intent = new Intent(modif_cat.this, affiche_detail.class);
 		// on demarre la nouvelle activité
-		objBd = new BDAcces(this);
+		// objBd = new BDAcces(this);
 		// objBd.open();
-		@SuppressWarnings("rawtypes")
-		ArrayList[] Categorie_Cochée = objBd.renvoiCategorieEtProduitCochée();
-		String SousCat = Categorie_Cochée[0].toString().replace("[", "")
-				.replace("]", "");
-		String Cat = Categorie_Cochée[1].toString().replace("[", "")
-				.replace("]", "");
+		MlListeTrousseProduit lstProdsCoche = accesProduit
+				.getListeProduitCochee();
+
+		// ArrayList[] Categorie_Cochée =
+		// objBd.renvoiCategorieEtProduitCochée();
+		String SousCat = lstProdsCoche.get(0).getNomSousCat();
+		String Cat = lstProdsCoche.get(1).getNomCat();
 
 		intent.putExtra(ActivityParam.IdProduit, Id_Produit);
 		intent.putExtra(ActivityParam.LaunchFromModfiCat, true);
@@ -451,11 +454,13 @@ public class modif_cat extends Activity implements OnClickListener {
 		// modifiedValues.put("ischecked", "false");
 		// String whereClause = "ischecked=?";
 		// String[] whereArgs = new String[] { "true" };
-		objBd = new BDAcces(this);
+		// objBd = new BDAcces(this);
 		// objBd.open();
 		// int nbdechamp = objBd.majTable(Table, modifiedValues, whereClause,
 		// whereArgs);
-		objBd.deleteTable("trousse_tempo", "1", null);
+		// objBd.deleteTable("trousse_tempo", "1", null);
+		AccesTableTrousseTempo accesTempo = new AccesTableTrousseTempo(this);
+		accesTempo.deleteTable();
 		// System.out.println("Nombre de champ modifié : " + nbdechamp);
 		// objBd.close();
 	}

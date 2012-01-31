@@ -1,12 +1,15 @@
 package fr.smardine.matroussedemaquillage.base.accesTable;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import android.content.ContentValues;
 import android.content.Context;
 import fr.smardine.matroussedemaquillage.base.RequeteFactory;
 import fr.smardine.matroussedemaquillage.base.structure.EnStructMarque;
 import fr.smardine.matroussedemaquillage.base.structure.EnTable;
+import fr.smardine.matroussedemaquillage.mdl.MlListeMarque;
+import fr.smardine.matroussedemaquillage.mdl.MlMarque;
 
 /**
  * @author smardine
@@ -14,11 +17,13 @@ import fr.smardine.matroussedemaquillage.base.structure.EnTable;
 public class AccesTableTrousseMarque {
 
 	private final RequeteFactory requeteFact;
+	private final Context ctx;
 
 	/**
 	 * @param p_ctx le contexte
 	 */
 	public AccesTableTrousseMarque(Context p_ctx) {
+		this.ctx = p_ctx;
 		requeteFact = new RequeteFactory(p_ctx);
 
 	}
@@ -56,10 +61,25 @@ public class AccesTableTrousseMarque {
 	/**
 	 * @return la liste complete des marques enregstrée en base
 	 */
-	public ArrayList<String> getListeMarques() {
-		String requete = "SELECT " + EnStructMarque.NOM.getNomChamp()
-				+ " FROM " + EnTable.TROUSSE_MARQUE.getNomTable();
-		return requeteFact.getListeDeChamp(requete).get(0);
+	public MlListeMarque getListeMarques() {
+		MlListeMarque lstRetour = new MlListeMarque();
+		String requete = "SELECT " + EnStructMarque.ID.getNomChamp() + " FROM "
+				+ EnTable.TROUSSE_MARQUE.getNomTable();
+
+		// return requeteFact.getListeDeChamp(requete).get(0);
+
+		List<ArrayList<String>> lstResult = requeteFact
+				.getListeDeChamp(requete);
+		for (int i = 0; i < lstResult.size(); i++) {
+			ArrayList<String> unEnsemble = lstResult.get(i);
+			for (String s : unEnsemble) {
+				int idMarque = Integer.parseInt(s);
+				MlMarque m = new MlMarque(idMarque, ctx);
+				lstRetour.add(m);
+			}
+
+		}
+		return lstRetour;
 	}
 
 	public boolean createNewMarque(String p_nomMarque) {
@@ -70,9 +90,9 @@ public class AccesTableTrousseMarque {
 	}
 
 	public boolean isMarqueExist(String p_nomMarque) {
-		ArrayList<String> lstMarque = getListeMarques();
-		for (String s : lstMarque) {
-			if (s.equals(p_nomMarque)) {
+		MlListeMarque lstMarque = getListeMarques();
+		for (MlMarque m : lstMarque) {
+			if (m.getNomMarque().equals(p_nomMarque)) {
 				return true;
 			}
 		}

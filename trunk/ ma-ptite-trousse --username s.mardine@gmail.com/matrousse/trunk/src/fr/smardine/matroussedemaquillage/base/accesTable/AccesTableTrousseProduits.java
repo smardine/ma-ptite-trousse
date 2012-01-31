@@ -1,12 +1,15 @@
 package fr.smardine.matroussedemaquillage.base.accesTable;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import android.content.ContentValues;
 import android.content.Context;
 import fr.smardine.matroussedemaquillage.base.RequeteFactory;
 import fr.smardine.matroussedemaquillage.base.structure.EnStructProduits;
 import fr.smardine.matroussedemaquillage.base.structure.EnTable;
+import fr.smardine.matroussedemaquillage.mdl.MlListeTrousseProduit;
+import fr.smardine.matroussedemaquillage.mdl.MlTrousseProduit;
 
 /**
  * @author smardine Acces a la table "Trousse produits" Contient les categories
@@ -46,14 +49,26 @@ public class AccesTableTrousseProduits {
 	 * @param Catégorie
 	 * @return un tableau de liste de String
 	 */
-	public ArrayList<String> renvoi_liste_produits(String Catégorie) {
-		String requete = "SELECT " + EnStructProduits.NOM_SOUSCAT.getNomChamp()
-				+ ", " + EnStructProduits.ISCHECKED.getNomChamp() + " FROM "
-				+ EnTable.TROUSSE_PRODUIT.getNomTable() + " WHERE "
+	public MlListeTrousseProduit getListeTrousseProduit(String Catégorie) {
+		MlListeTrousseProduit lstRetour = new MlListeTrousseProduit();
+		String requete = "SELECT " + EnStructProduits.ID.getNomChamp()
+				+ " FROM " + EnTable.TROUSSE_PRODUIT.getNomTable() + " WHERE "
 				+ EnStructProduits.NOM_CAT.getNomChamp() + "='" + Catégorie
 				+ "' ORDER BY " + EnStructProduits.NOM_SOUSCAT.getNomChamp();
 
-		return requeteFact.getListeDeChamp(requete).get(0);
+		List<ArrayList<String>> lstResult = requeteFact
+				.getListeDeChamp(requete);
+		for (int i = 0; i < lstResult.size(); i++) {
+			ArrayList<String> unEnsemble = lstResult.get(i);
+			for (String s : unEnsemble) {
+				int idTrousseProduit = Integer.parseInt(s);
+				MlTrousseProduit p = new MlTrousseProduit(idTrousseProduit, ctx);
+				lstRetour.add(p);
+			}
+
+		}
+
+		return lstRetour;
 
 	}
 
@@ -73,6 +88,7 @@ public class AccesTableTrousseProduits {
 	 * @param p_sousCat
 	 */
 	public void majSouscatChoisie(String p_sousCat) {
+		reinitProduitChoisi();
 		ContentValues modifiedValues = new ContentValues();
 		modifiedValues.put("ischecked", "true");
 		String whereClause = "nom_souscatergorie=?";
@@ -81,15 +97,46 @@ public class AccesTableTrousseProduits {
 				whereClause, whereArgs);
 	}
 
-	public ArrayList<String> getListeProduitCochee() {
-		String requete = "SELECT " + EnStructProduits.NOM_SOUSCAT.getNomChamp()
-				+ ", " + EnStructProduits.ISCHECKED.getNomChamp() + " FROM "
-				+ EnTable.TROUSSE_PRODUIT.getNomTable() + " WHERE "
+	/**
+	 * @return la liste des TrousseProduit coché
+	 */
+	public MlListeTrousseProduit getListeProduitCochee() {
+		MlListeTrousseProduit lstRetour = new MlListeTrousseProduit();
+		String requete = "SELECT " + EnStructProduits.ID.getNomChamp()
+				+ " FROM " + EnTable.TROUSSE_PRODUIT.getNomTable() + " WHERE "
 				+ EnStructProduits.ISCHECKED.getNomChamp() + "='true'";
 
+		List<ArrayList<String>> lstResult = requeteFact
+				.getListeDeChamp(requete);
+		for (int i = 0; i < lstResult.size(); i++) {
+			ArrayList<String> unEnsemble = lstResult.get(i);
+			for (String s : unEnsemble) {
+				int idTrousseProduit = Integer.parseInt(s);
+				MlTrousseProduit p = new MlTrousseProduit(idTrousseProduit, ctx);
+				lstRetour.add(p);
+			}
+
+		}
+		return lstRetour;
+	}
+
+	/**
+	 * @param p_idTrousseProduit
+	 * @return la definition d'un TrousseProduit
+	 */
+	public ArrayList<String> getTrousseProduitById(int p_idTrousseProduit) {
+		String requete = "SELECT " + EnStructProduits.NOM_SOUSCAT.getNomChamp()
+				+ ", " + EnStructProduits.NOM_CAT.getNomChamp()
+				+ ", "
+				+ EnStructProduits.ISCHECKED.getNomChamp()//
+				+ " FROM " + EnTable.TROUSSE_PRODUIT.getNomTable() + " WHERE "
+				+ EnStructProduits.ID.getNomChamp() + "=" + p_idTrousseProduit;
 		return requeteFact.getListeDeChamp(requete).get(0);
 	}
 
+	/**
+	 * @return le nombre de produit coché.
+	 */
 	public int getNbProduitCochee() {
 		return getListeProduitCochee().size();
 	}

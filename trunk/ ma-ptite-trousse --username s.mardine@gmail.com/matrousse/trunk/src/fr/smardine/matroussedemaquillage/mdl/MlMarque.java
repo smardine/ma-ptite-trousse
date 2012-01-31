@@ -1,5 +1,6 @@
 package fr.smardine.matroussedemaquillage.mdl;
 
+import android.content.Context;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableTrousseMarque;
 
 /**
@@ -14,8 +15,9 @@ public class MlMarque {
 	/**
 	 * @param p_idMarque
 	 */
-	public MlMarque(int p_idMarque) {
-		AccesTableTrousseMarque accesTrousse = new AccesTableTrousseMarque(null);
+	public MlMarque(int p_idMarque, Context p_ctx) {
+		AccesTableTrousseMarque accesTrousse = new AccesTableTrousseMarque(
+				p_ctx);
 		this.idMarque = p_idMarque;
 		this.nomMarque = accesTrousse.getNomMarque(idMarque);
 	}

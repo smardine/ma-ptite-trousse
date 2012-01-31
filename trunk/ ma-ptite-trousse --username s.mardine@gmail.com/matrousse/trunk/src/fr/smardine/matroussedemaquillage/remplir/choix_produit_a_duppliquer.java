@@ -29,6 +29,7 @@ import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableParams;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableProduitEnregistre;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableTrousseMarque;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableTrousseProduits;
+import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableTrousseTempo;
 import fr.smardine.matroussedemaquillage.mdl.MlListeProduits;
 import fr.smardine.matroussedemaquillage.mdl.MlProduit;
 import fr.smardine.matroussedemaquillage.note.note_page1;
@@ -320,12 +321,13 @@ public class choix_produit_a_duppliquer extends Activity implements
 		// modifiedValues.put("ischecked", "false");
 		// String whereClause = "ischecked=?";
 		// String[] whereArgs = new String[] { "true" };
-		objBd = new BDAcces(this);
+		// objBd = new BDAcces(this);
 		// objBd.open();
 		// int nbdechamp = objBd.majTable(Table, modifiedValues, whereClause,
 		// whereArgs);
-
-		objBd.deleteTable("trousse_tempo", "1", null);
+		AccesTableTrousseTempo accesTempo = new AccesTableTrousseTempo(this);
+		accesTempo.deleteTable();
+		// objBd.deleteTable("trousse_tempo", "1", null);
 		// System.out.println("Nombre de champ modifié : " + nbdechamp);
 		// objBd.close();
 		// }

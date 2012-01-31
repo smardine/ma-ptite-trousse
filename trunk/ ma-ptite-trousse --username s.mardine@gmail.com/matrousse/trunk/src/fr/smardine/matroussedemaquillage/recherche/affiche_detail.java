@@ -36,6 +36,8 @@ import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableParams;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableProduitEnregistre;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableTrousseMarque;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableTrousseProduits;
+import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableTrousseTempo;
+import fr.smardine.matroussedemaquillage.mdl.MlListeMarque;
 import fr.smardine.matroussedemaquillage.mdl.MlProduit;
 import fr.smardine.matroussedemaquillage.modifier.modif_cat;
 import fr.smardine.matroussedemaquillage.note.note_page1;
@@ -504,7 +506,10 @@ public class affiche_detail extends Activity implements OnClickListener {
 			// modifiedValues,
 			// whereClause, whereArgs);
 			// System.out.println("Nombre de champ modifié : " + nbdechamp);
-			objBd.deleteTable("trousse_tempo", "1", null);
+			AccesTableTrousseTempo accesTempo = new AccesTableTrousseTempo(
+					getApplicationContext());
+			accesTempo.deleteTable();
+			// objBd.deleteTable("trousse_tempo", "1", null);
 			// objBd.close();
 
 			Intent modifcat = new Intent(this, modif_cat.class);
@@ -686,10 +691,10 @@ public class affiche_detail extends Activity implements OnClickListener {
 
 			AccesTableTrousseMarque accesMarque = new AccesTableTrousseMarque(
 					this);
-			ArrayList<String> lstMarque = accesMarque.getListeMarques();
+			MlListeMarque lstMarque = accesMarque.getListeMarques();
 			String[] Marque = new String[lstMarque.size()];
 			for (int i = 0; i < lstMarque.size(); i++) {
-				Marque[i] = lstMarque.get(i);
+				Marque[i] = lstMarque.get(i).getNomMarque();
 			}
 			// objBd.close();
 			ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,

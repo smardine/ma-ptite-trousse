@@ -478,13 +478,11 @@ public class Recherche extends Activity implements OnClickListener,
 
 			@Override
 			public void onClick(DialogInterface dialog, int id) {
-				String whereClause = "id_produits=?";
-				String[] WhereArgs = new String[] { IdProduit };
-
-				// objBd.open();
-				int nbChampEffacé = objBd.deleteTable("produit_Enregistre",
-						whereClause, WhereArgs);
-				if (nbChampEffacé != 1) {
+				AccesTableProduitEnregistre accesProd = new AccesTableProduitEnregistre(
+						ctx);
+				boolean succes = accesProd.deleteProduit(Integer
+						.parseInt(IdProduit));
+				if (!succes) {
 					ProduitSuppr.setMessage("Erreur lors de la suppression");
 					ProduitSuppr.show();
 				}
