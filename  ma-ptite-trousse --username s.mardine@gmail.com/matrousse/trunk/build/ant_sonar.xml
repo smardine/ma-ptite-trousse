@@ -5,6 +5,7 @@
 	
 	<property name="classes.dir" value="../bin"/>
 	<property name="jars.dir" value="../libs"/>
+	<property name="antask.dir" value="${basedir}/etc"/>
 
 		<property name="majornum" value="0"/>
 	<!-- Propriete exclusive a svn  -->
@@ -14,11 +15,9 @@
 	</condition>
 	
 	<property file="build.properties" />
-	<!-- Define the Sonar task if this hasn't been done in a common script -->
+	
 	 
-	<taskdef uri="antlib:org.sonar.ant" resource="org/sonar/ant/antlib.xml">
-	    <classpath path="./etc" />
-	</taskdef>
+	 
 	<!--
 	=======================================================================
 	   Tache de lecture du numéro de révision de la copie de travail.
@@ -43,16 +42,21 @@
 
 		<!-- extraire le numéro de version  du fichier XML -->
 		<xmlproperty file=".svnInfo.xml"/>
-		<property name="svn.revision" value="${info.entry.commit(revision)}" />
+		<property name="svn.revision" value="${info.entry(revision)}" />
 		<echo message="Version de la copie de travail:${svn.revision}"/>
 		<delete file=".svnInfo.xml" />
 	</target>
+
 	
-  
+	
+	<!-- Define the Sonar task if this hasn't been done in a common script -->
+	  <taskdef uri="antlib:org.sonar.ant" resource="org/sonar/ant/antlib.xml">
+	    <classpath path="${antask.dir}" />
+	  </taskdef>  
   <!-- Add the target -->
   <target name="sonar" depends="svnrevision" description="lancer l'analyse sonar">
   	<buildnumber/>
-  	  
+  	
     <!-- The workDir directory is used by Sonar to store temporary files -->
     <sonar:sonar workDir="./" key="fr.simscorps:androidproject" version="2.3-SNAPSHOT" xmlns:sonar="antlib:org.sonar.ant">
 	<property key="sonar.host.url" value="http://172.30.3.55:1234/sonar/" />
