@@ -51,7 +51,7 @@
 	
 	<!-- Define the Sonar task if this hasn't been done in a common script -->
 	  <taskdef uri="antlib:org.sonar.ant" resource="org/sonar/ant/antlib.xml">
-	    <classpath path="${antask.dir}" />
+	    <classpath path="${antask.dir}/sonar-ant-task-1.2.jar" />
 	  </taskdef>  
   <!-- Add the target -->
   <target name="sonar" depends="svnrevision" description="lancer l'analyse sonar">
