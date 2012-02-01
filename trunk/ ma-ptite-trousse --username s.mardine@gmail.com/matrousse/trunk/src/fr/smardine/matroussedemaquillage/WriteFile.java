@@ -6,6 +6,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Vector;
 
+/**
+ * @author smardine
+ */
 public class WriteFile {
 
 	/**
@@ -37,8 +40,10 @@ public class WriteFile {
 	 * Ecrire une ligne dans un fichier
 	 * @param ligneAEcrire -String ce qu'il faut ecrire
 	 * @param CheminDuFichier -String le chemin du fichier
+	 * @throws IOException
 	 */
-	public static void WriteLine(String ligneAEcrire, String CheminDuFichier) throws IOException {
+	public static void WriteLine(String ligneAEcrire, String CheminDuFichier)
+			throws IOException {
 		FileWriter writer = null;
 		String texte = (ligneAEcrire + "\n");
 
@@ -55,7 +60,13 @@ public class WriteFile {
 		}
 	}
 
-	public static void WriteLineVector(Vector<String> ligneAEcrire, String CheminDuFichier) throws IOException {
+	/**
+	 * @param ligneAEcrire
+	 * @param CheminDuFichier
+	 * @throws IOException
+	 */
+	public static void WriteLineVector(Vector<String> ligneAEcrire,
+			String CheminDuFichier) throws IOException {
 		FileWriter writer = null;
 		String texte = (ligneAEcrire + "\n");
 

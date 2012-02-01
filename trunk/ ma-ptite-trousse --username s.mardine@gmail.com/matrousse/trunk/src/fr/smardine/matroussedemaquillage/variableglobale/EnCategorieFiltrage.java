@@ -1,5 +1,8 @@
 package fr.smardine.matroussedemaquillage.variableglobale;
 
+/**
+ * @author smardine
+ */
 public enum EnCategorieFiltrage {
 	/**
 	 * 
@@ -23,38 +26,24 @@ public enum EnCategorieFiltrage {
 	}
 
 	/**
-	 * @return
+	 * @return l'ident
 	 */
 	public Long getIdent() {
 		return Long.valueOf(ordinal());
 	}
 
 	/**
-	 * @return
+	 * @return le code
 	 */
 	public int getCode() {
 		return code;
 	}
 
 	/**
-	 * @param p_code
-	 */
-	public void setCode(int p_code) {
-		code = p_code;
-	}
-
-	/**
-	 * @return
+	 * @return the lib
 	 */
 	public String getLib() {
 		return lib;
-	}
-
-	/**
-	 * @param p_lib
-	 */
-	public void setLib(String p_lib) {
-		lib = p_lib;
 	}
 
 }

@@ -31,7 +31,6 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 import fr.smardine.matroussedemaquillage.Main;
 import fr.smardine.matroussedemaquillage.R;
-import fr.smardine.matroussedemaquillage.base.BDAcces;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableNotes;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableParams;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableProduitEnregistre;
@@ -43,6 +42,9 @@ import fr.smardine.matroussedemaquillage.recherche.produitRechercheListAdapter.V
 import fr.smardine.matroussedemaquillage.variableglobale.ActivityParam;
 import fr.smardine.matroussedemaquillage.variableglobale.EnTheme;
 
+/**
+ * @author smardine
+ */
 public class recherche_produit_perime extends Activity implements
 		OnClickListener, OnItemClickListener, OnItemLongClickListener {
 	ToggleButton Cat, Marque, Tout;
@@ -52,7 +54,7 @@ public class recherche_produit_perime extends Activity implements
 	int VISIBLE = 1, INVISIBLE = 4, GONE = 8;
 	ListView ProduitListView1, ProduitListViewTitre;
 	produitRechercheListAdapter adpt;
-	BDAcces objBd;
+	// BDAcces objBd;
 	AlertDialog.Builder adAucunProduit;
 	Context ctx = recherche_produit_perime.this;
 	// TextView RechercheTxt1;
@@ -77,7 +79,7 @@ public class recherche_produit_perime extends Activity implements
 		IsCalledFromMain = getIntent().getBooleanExtra(
 				ActivityParam.LaunchFromMain, false);
 
-		objBd = new BDAcces(this);
+		// objBd = new BDAcces(this);
 
 		ChoisiLeTheme();
 
@@ -183,7 +185,6 @@ public class recherche_produit_perime extends Activity implements
 
 	}
 
-	@SuppressWarnings("rawtypes")
 	private void ChoisiLeTheme() {
 		AccesTableParams accesParam = new AccesTableParams(this);
 		switch (accesParam.getThemeChoisi()) {
@@ -519,7 +520,6 @@ public class recherche_produit_perime extends Activity implements
 
 	}
 
-	@SuppressWarnings("rawtypes")
 	private void AfficheLeContenu(String TypeRecherche,
 			ArrayList<produitRecherche> produitFinal, ListView produitListView,
 			String p_Filtrage) {
@@ -535,7 +535,7 @@ public class recherche_produit_perime extends Activity implements
 			AccesTableProduitEnregistre accesProduit = new AccesTableProduitEnregistre(
 					ctx);
 			MlListeProduits lstProduit = accesProduit
-					.getProduitsPerimeAvecFiltrageSurCategorie(p_Filtrage);
+					.getListeProduitsPerimeAvecFiltrageSurCategorie(p_Filtrage);
 			for (MlProduit p : lstProduit) {
 				produitFinal.add(new produitRecherche(p.getIdProduit(), p
 						.getNomCat(), p.getNomProduit(), p.getMarque()));
@@ -581,7 +581,7 @@ public class recherche_produit_perime extends Activity implements
 			AccesTableProduitEnregistre accesProduit = new AccesTableProduitEnregistre(
 					ctx);
 			MlListeProduits lstProduit = accesProduit
-					.getProduitsPerimeAvecFiltrageSurMarque(p_Filtrage);
+					.getListeProduitsPerimeAvecFiltrageSurMarque(p_Filtrage);
 			for (MlProduit p : lstProduit) {
 				produitFinal.add(new produitRecherche(p.getIdProduit(), p
 						.getNomCat(), p.getNomProduit(), p.getMarque()));
@@ -620,7 +620,7 @@ public class recherche_produit_perime extends Activity implements
 			AccesTableProduitEnregistre accesProduit = new AccesTableProduitEnregistre(
 					ctx);
 			MlListeProduits lstProduit = accesProduit
-					.getProduitsPerimeAvecFiltrageSurTout(p_Filtrage);
+					.getListeProduitsPerimeAvecFiltrageSurTout(p_Filtrage);
 			for (MlProduit p : lstProduit) {
 				produitFinal.add(new produitRecherche(p.getIdProduit(), p
 						.getNomCat(), p.getNomProduit(), p.getMarque()));
@@ -703,6 +703,9 @@ public class recherche_produit_perime extends Activity implements
 
 	}
 
+	/**
+	 * @param message
+	 */
 	public void popUp(String message) {
 		// Toast.makeText(this, message, 1).show();
 	}
@@ -780,6 +783,9 @@ public class recherche_produit_perime extends Activity implements
 		return super.onKeyDown(keyCode, event);
 	}
 
+	/**
+	 * 
+	 */
 	public void OnDestroy() {
 		popUp("OnDestroy-Page1");
 		super.onDestroy();

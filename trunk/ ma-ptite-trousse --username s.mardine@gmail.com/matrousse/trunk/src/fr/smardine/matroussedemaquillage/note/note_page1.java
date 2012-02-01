@@ -26,7 +26,6 @@ import android.widget.ListView;
 import android.widget.Toast;
 import fr.smardine.matroussedemaquillage.Main;
 import fr.smardine.matroussedemaquillage.R;
-import fr.smardine.matroussedemaquillage.base.BDAcces;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableNotes;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableParams;
 import fr.smardine.matroussedemaquillage.mdl.MlListeNote;
@@ -36,6 +35,9 @@ import fr.smardine.matroussedemaquillage.recherche.Recherche;
 import fr.smardine.matroussedemaquillage.variableglobale.ActivityParam;
 import fr.smardine.matroussedemaquillage.variableglobale.EnTheme;
 
+/**
+ * @author smardine
+ */
 public class note_page1 extends Activity implements OnItemClickListener,
 		OnClickListener, OnItemLongClickListener {
 
@@ -45,7 +47,7 @@ public class note_page1 extends Activity implements OnItemClickListener,
 	AlertDialog.Builder adTitre, adSupprNote, adHelp;
 	Intent intentSaisieNote;
 	noteListAdapter adpt;
-	private BDAcces objBd;
+	// private BDAcces objBd;
 	// AlertDialog.Builder adPlusieurCat,adAucuneCat;
 	String Txt01, Txt02;
 	String Id = "";
@@ -72,7 +74,7 @@ public class note_page1 extends Activity implements OnItemClickListener,
 		BtAddNote.setOnClickListener(this);
 		BtSupprTtteNote.setOnClickListener(this);
 
-		objBd = new BDAcces(this);
+		// objBd = new BDAcces(this);
 		this.setTitle("Notes");
 
 		// popUp("OnCreate-pageDupplique");
@@ -268,6 +270,9 @@ public class note_page1 extends Activity implements OnItemClickListener,
 
 	}
 
+	/**
+	 * @param message
+	 */
 	public void popUp(String message) {
 		// Toast.makeText(this, message, 1).show();
 	}
@@ -345,6 +350,9 @@ public class note_page1 extends Activity implements OnItemClickListener,
 		return super.onKeyDown(keyCode, event);
 	}
 
+	/**
+	 * 
+	 */
 	public void OnDestroy() {
 		// popUp("OnDestroy-Page1");
 		super.onDestroy();

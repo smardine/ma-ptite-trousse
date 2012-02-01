@@ -17,7 +17,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import fr.smardine.matroussedemaquillage.R;
-import fr.smardine.matroussedemaquillage.base.BDAcces;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableNotes;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableParams;
 import fr.smardine.matroussedemaquillage.mdl.MlNote;
@@ -26,9 +25,12 @@ import fr.smardine.matroussedemaquillage.recherche.Recherche;
 import fr.smardine.matroussedemaquillage.variableglobale.ActivityParam;
 import fr.smardine.matroussedemaquillage.variableglobale.EnTheme;
 
+/**
+ * @author smardine
+ */
 public class note_saisie extends Activity implements OnClickListener {
 
-	private BDAcces objBd;
+	// private BDAcces objBd;
 	String IdNote = "", Titre = "", Message = "";
 	TextView txtTitre;
 	TextView editMessage;
@@ -37,7 +39,6 @@ public class note_saisie extends Activity implements OnClickListener {
 
 	/** Called when the activity is first created. */
 
-	@SuppressWarnings({ "rawtypes" })
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -189,6 +190,9 @@ public class note_saisie extends Activity implements OnClickListener {
 
 	}
 
+	/**
+	 * @param message
+	 */
 	public void popUp(String message) {
 		// Toast.makeText(this, message, 1).show();
 	}
@@ -337,6 +341,9 @@ public class note_saisie extends Activity implements OnClickListener {
 		return super.onKeyDown(keyCode, event);
 	}
 
+	/**
+	 * 
+	 */
 	public void OnDestroy() {
 		super.onDestroy();
 		popUp("OnDestroy-Page2");

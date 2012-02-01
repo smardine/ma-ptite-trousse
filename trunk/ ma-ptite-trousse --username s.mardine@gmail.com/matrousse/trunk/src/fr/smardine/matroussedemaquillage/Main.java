@@ -37,10 +37,10 @@ import fr.smardine.matroussedemaquillage.variableglobale.EnTheme;
  * @author sims
  */
 public class Main extends Activity implements OnClickListener {
-	ImageView BtRemplir, BtPerimé, BtDuppliquer, BtNotes;
+	ImageView btRemplir, btPerime, btDuppliquer, btNotes;
 	Intent intentFormPage1, intentRecherche, intentDupplique, intentParametres,
 			intentNote;
-	AlertDialog.Builder adSortie, adHelp, adInfoProduitPerimé;
+	AlertDialog.Builder adSortie, adHelp, adInfoProduitPerime;
 	BDAcces objBd;
 	Context ctx = Main.this;
 	private CheckBox cb;
@@ -54,22 +54,22 @@ public class Main extends Activity implements OnClickListener {
 		// "http://simon.mardine.free.fr/trousse_maquillage/test/server.php",
 		// "ma_ptite_trousse");
 
-		adInfoProduitPerimé = new AlertDialog.Builder(this);
+		adInfoProduitPerime = new AlertDialog.Builder(this);
 
 		View v = LayoutInflater.from(this).inflate(
 				R.layout.alerte_produit_perime, null);
 		cb = (CheckBox) v.findViewById(R.id.checkbox);
 
-		adInfoProduitPerimé.setView(v);
+		adInfoProduitPerime.setView(v);
 
 		// adInfoProduitPerimé.setView(findViewById(R.layout.alerte_produit_perime));
 
-		adInfoProduitPerimé.setTitle("Alerte");
+		adInfoProduitPerime.setTitle("Alerte");
 		// adInfoProduitPerimé
 		// .setMessage("Un ou plusieur(s) produit(s) sont perimé(s) ou arrivent a leur date de permeption, voulez vous afficher ces produits?\n"
 		// +
 		// "Vous pouvez désactiver cette alerte en passant par le bouton \"menu\" puis \"parametre\"");
-		adInfoProduitPerimé.setPositiveButton("Oui",
+		adInfoProduitPerime.setPositiveButton("Oui",
 				new DialogInterface.OnClickListener() {
 
 					@Override
@@ -92,7 +92,7 @@ public class Main extends Activity implements OnClickListener {
 
 					}
 				});
-		adInfoProduitPerimé.setNegativeButton("Non",
+		adInfoProduitPerime.setNegativeButton("Non",
 				new DialogInterface.OnClickListener() {
 
 					@Override
@@ -202,10 +202,9 @@ public class Main extends Activity implements OnClickListener {
 	}
 
 	@Override
-	@SuppressWarnings("rawtypes")
 	public void onClick(View v) {
 
-		if (v == BtRemplir) {
+		if (v == btRemplir) {
 			// objBd = new BDAcces(ctx);
 			// //objBd.open();
 			AccesTableProduitEnregistre accesProduit = new AccesTableProduitEnregistre(
@@ -272,7 +271,7 @@ public class Main extends Activity implements OnClickListener {
 			}
 
 		}
-		if (v == BtDuppliquer) {// on verifie si on a au moins un
+		if (v == btDuppliquer) {// on verifie si on a au moins un
 								// enregistrement, si oui, on permet la
 								// dpplication,
 			// sinon, on indique a l'utilisateur que la dupplication est
@@ -306,18 +305,18 @@ public class Main extends Activity implements OnClickListener {
 			// objBd.close();
 
 		}
-		if (v == BtNotes) {
+		if (v == btNotes) {
 			intentNote = new Intent(Main.this, note_page1.class);
 			intentNote.putExtra(ActivityParam.LaunchFromMain, true);
 			startActivity(intentNote);
 			termineActivity();
 
 		}
-		if (v == BtPerimé) {
+		if (v == btPerime) {
 
 			AccesTableProduitEnregistre accesProduit = new AccesTableProduitEnregistre(
 					ctx);
-			MlListeProduits lstProduit = accesProduit.getProduitsPerime();
+			MlListeProduits lstProduit = accesProduit.getListeProduitsPerime();
 
 			// objBd = new BDAcces(ctx);
 			// // objBd.open();
@@ -413,7 +412,7 @@ public class Main extends Activity implements OnClickListener {
 			boolean isMessageAlerteAAfficher = getIntent().getBooleanExtra(
 					ActivityParam.AfficheProduitPerime, false);
 			if (isMessageAlerteAAfficher) {
-				adInfoProduitPerimé.show();
+				adInfoProduitPerime.show();
 			}
 		}
 
@@ -440,13 +439,13 @@ public class Main extends Activity implements OnClickListener {
 				break;
 		}
 
-		BtRemplir = (ImageView) ((Activity) ctx).findViewById(R.id.IvBouton1);
-		BtPerimé = (ImageView) ((Activity) ctx).findViewById(R.id.IvBouton2);
-		BtNotes = (ImageView) ((Activity) ctx).findViewById(R.id.IvBouton3);
+		btRemplir = (ImageView) ((Activity) ctx).findViewById(R.id.IvBouton1);
+		btPerime = (ImageView) ((Activity) ctx).findViewById(R.id.IvBouton2);
+		btNotes = (ImageView) ((Activity) ctx).findViewById(R.id.IvBouton3);
 
-		BtRemplir.setOnClickListener(this);
-		BtPerimé.setOnClickListener(this);
-		BtNotes.setOnClickListener(this);
+		btRemplir.setOnClickListener(this);
+		btPerime.setOnClickListener(this);
+		btNotes.setOnClickListener(this);
 
 		Animlineaire anim = new Animlineaire();
 		anim.setDroiteversGauche(250);
@@ -457,10 +456,10 @@ public class Main extends Activity implements OnClickListener {
 		Animlineaire anim3 = new Animlineaire();
 		anim3.setBasversHaut(400);
 
-		BtRemplir.startAnimation(anim.getAnim());
-		BtPerimé.startAnimation(anim1.getAnim());
+		btRemplir.startAnimation(anim.getAnim());
+		btPerime.startAnimation(anim1.getAnim());
 
-		BtNotes.startAnimation(anim3.getAnim());
+		btNotes.startAnimation(anim3.getAnim());
 		// if (EnTheme.Bisounours.getLib().equals(nomThemeChoisi)) {
 		// setContentView(R.layout.theme_bisounours_main);
 		// BtRemplir = (ImageView) ((Activity) ctx)

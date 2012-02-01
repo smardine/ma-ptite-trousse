@@ -30,6 +30,9 @@ import fr.smardine.matroussedemaquillage.remplir.formulaire_entree_page3;
 import fr.smardine.matroussedemaquillage.variableglobale.ActivityParam;
 import fr.smardine.matroussedemaquillage.variableglobale.EnTheme;
 
+/**
+ * @author smardine
+ */
 public class tab2 extends Activity implements OnItemSelectedListener,
 		ViewFactory {
 	ImageSwitcher mSwitcher;

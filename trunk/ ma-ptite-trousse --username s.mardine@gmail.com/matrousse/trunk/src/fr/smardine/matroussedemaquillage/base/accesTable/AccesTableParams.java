@@ -22,7 +22,7 @@ public class AccesTableParams {
 	}
 
 	/**
-	 * 
+	 * Si les params de durre de vie sont >99 ou <0 => on fixe la valeur à 30
 	 */
 	public void CorrigeTableParam() {
 		ContentValues modifiedValues = new ContentValues();
@@ -49,7 +49,7 @@ public class AccesTableParams {
 	}
 
 	/**
-	 * 
+	 * desactiver l'aletre sur les message perimé au demarrage de l'appli
 	 */
 	public void desactiveAlerte() {
 		ContentValues values = new ContentValues();
@@ -58,6 +58,7 @@ public class AccesTableParams {
 	}
 
 	/**
+	 * Mettre a jour le theme de l'appli
 	 * @param p_theme
 	 */
 	public void majTheme(EnTheme p_theme) {
@@ -70,10 +71,16 @@ public class AccesTableParams {
 	/**
 	 * @param p_affiche
 	 */
-	public void majAfficheAlerte(String p_affiche) {
+	public void majAfficheAlerte(boolean p_affiche) {
 		ContentValues values = new ContentValues();
-		values.put("AfficheAlerte", p_affiche);
+		if (p_affiche) {
+			values.put("AfficheAlerte", "true");
+		} else {
+			values.put("AfficheAlerte", "false");
+		}
+
 		requeteFact.majTable(EnTable.PARAM, values, "", null);
+
 	}
 
 	/**
@@ -107,6 +114,13 @@ public class AccesTableParams {
 		}
 		return false;
 
+	}
+
+	/**
+	 * @return le chemin de la bdd
+	 */
+	public String getDatabasePath() {
+		return requeteFact.getDatabasePath();
 	}
 
 }

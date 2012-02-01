@@ -22,7 +22,13 @@ public class RequeteFactory {
 	public RequeteFactory(Context p_ctx) {
 		this.ctx = p_ctx;
 		this.bdAcces = new BDAcces(ctx);
+	}
 
+	/**
+	 * @return le chemin de la bdd
+	 */
+	public String getDatabasePath() {
+		return bdAcces.getPath();
 	}
 
 	/**
@@ -70,6 +76,7 @@ public class RequeteFactory {
 		while (c.moveToNext()) {
 			ArrayList<String> lstIntermediaire = new ArrayList<String>();
 			for (int i = 0; i < c.getColumnCount(); i++) {
+
 				lstIntermediaire.add(c.getString(i));
 			}
 			lstRetour.add(lstIntermediaire);

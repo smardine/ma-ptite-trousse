@@ -1,16 +1,14 @@
 package fr.smardine.matroussedemaquillage.remplir;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+import helper.DateHelper;
+
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -31,11 +29,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 import fr.smardine.matroussedemaquillage.Main;
 import fr.smardine.matroussedemaquillage.R;
-import fr.smardine.matroussedemaquillage.base.BDAcces;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableParams;
+import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableProduitEnregistre;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableTrousseProduits;
-import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableTrousseTempo;
 import fr.smardine.matroussedemaquillage.mdl.MlListeTrousseProduit;
+import fr.smardine.matroussedemaquillage.mdl.MlProduit;
 import fr.smardine.matroussedemaquillage.mdl.MlTrousseProduit;
 import fr.smardine.matroussedemaquillage.note.note_page1;
 import fr.smardine.matroussedemaquillage.param.tab_param;
@@ -43,11 +41,14 @@ import fr.smardine.matroussedemaquillage.recherche.Recherche;
 import fr.smardine.matroussedemaquillage.variableglobale.ActivityParam;
 import fr.smardine.matroussedemaquillage.variableglobale.EnTheme;
 
+/**
+ * @author smardine
+ */
 public class formulaire_entree_page3 extends Activity implements
 		OnClickListener {
 	Button BoutonValider3;
 
-	private BDAcces objBd;
+	// private BDAcces objBd;
 	@SuppressWarnings("rawtypes")
 	ArrayList[] TrousseTempo;
 	// ////////////////////
@@ -149,9 +150,10 @@ public class formulaire_entree_page3 extends Activity implements
 						// objBd.open();
 						// int nbdechamp = objBd.majTable(Table, modifiedValues,
 						// whereClause, whereArgs);
-						AccesTableTrousseTempo accesTempo = new AccesTableTrousseTempo(
-								getApplicationContext());
-						accesTempo.deleteTable();
+						// AccesTableTrousseTempo accesTempo = new
+						// AccesTableTrousseTempo(
+						// getApplicationContext());
+						// accesTempo.deleteTable();
 						// objBd.deleteTable("trousse_tempo", "1", null);
 						// System.out.println("Nombre de champ modifié : " +
 						// nbdechamp);
@@ -199,11 +201,11 @@ public class formulaire_entree_page3 extends Activity implements
 			public void afterTextChanged(Editable s) {
 				String str = dureeVie.getText().toString();
 				if (!str.equals("")) {
-					int ValeurRentrée = Integer.parseInt(str);
-					if (ValeurRentrée > 99) {
+					int valeurRentree = Integer.parseInt(str);
+					if (valeurRentree > 99) {
 						dureeVie.setText("99");
 					}
-					if (ValeurRentrée <= 0) {
+					if (valeurRentree <= 0) {
 						dureeVie.setText("1");
 					}
 				} else {
@@ -303,7 +305,7 @@ public class formulaire_entree_page3 extends Activity implements
 		mMonth = c.get(Calendar.MONTH);
 		mDay = c.get(Calendar.DAY_OF_MONTH);
 
-		objBd = new BDAcces(this);
+		// objBd = new BDAcces(this);
 		BoutonValider3.setOnClickListener(this);
 
 		adManqueInfo = new AlertDialog.Builder(this);
@@ -524,7 +526,6 @@ public class formulaire_entree_page3 extends Activity implements
 		}
 	}
 
-	@SuppressWarnings("rawtypes")
 	protected void insereProduitDansTableEtPrposeLaSuite() {
 		// objBd.open();
 		// **
@@ -548,62 +549,80 @@ public class formulaire_entree_page3 extends Activity implements
 		// "numero_Teinte", "DateAchat", "Duree_Vie" };
 		// ArrayList[] trousse_tempo = objBd.renvoi_liste_ValeurTroussetempo(
 		// "trousse_tempo", Colonnes);
-		AccesTableTrousseProduits accesProduit = new AccesTableTrousseProduits(
+		AccesTableTrousseProduits accesTrousseProduit = new AccesTableTrousseProduits(
 				this);
-		MlListeTrousseProduit lstProduitCoche = accesProduit
+		MlListeTrousseProduit lstProduitCoche = accesTrousseProduit
 				.getListeProduitCochee();
+		MlProduit p = new MlProduit(this);
+		p.setNomProduit(nomDuProduit);
+		p.setMarque(MarqueChoisie);
+		p.setNomSousCat(lstProduitCoche.get(0).getNomSousCat());
 
-		ContentValues valuesProduitsFinal = new ContentValues();
-		valuesProduitsFinal.put("nom_produit", nomDuProduit);
-		valuesProduitsFinal.put("nom_marque", MarqueChoisie);
-		valuesProduitsFinal.put("nom_souscatergorie", lstProduitCoche.get(0)
-				.getNomSousCat());
-		valuesProduitsFinal.put("nom_categorie", lstProduitCoche.get(1)
-				.getNomCat());
-		valuesProduitsFinal.put("numero_Teinte", numeroDeTeinte);
-		valuesProduitsFinal.put("DateAchat", DateAchat.replaceAll("/", "-")
-				.trim());
-		valuesProduitsFinal.put("Duree_Vie", DureeVie);
-		// calcul de la date de peremption problable
+		p.setNomCat(lstProduitCoche.get(0).getNomCat());
+		p.setTeinte(numeroDeTeinte);
+		p.setDateAchat(DateHelper.getDateFromDatabase(DateAchat.replaceAll("/",
+				"-").trim()));
+		p.setDureeVie(Integer.parseInt(DureeVie));
 
-		int nbMoisDurreeDeVie = Integer.parseInt(DureeVie);
-		int nbJours = nbMoisDurreeDeVie * 30;
+		AccesTableProduitEnregistre accesProduit = new AccesTableProduitEnregistre(
+				this);
+		boolean insertOk = accesProduit.insertProduit(p);
 
-		String DateAchat1 = DateAchat.replaceAll("/", "-").trim();
-		String tabAchat[] = DateAchat1.split("-");
-		int jourAchat = Integer.parseInt(tabAchat[0]);
-		// les mois commence à 0 (janvier) et se termine à 11 (decembre)
-		int mois = Integer.parseInt(tabAchat[1]) - 1;
-		// les années commence à 0(1900), pour avoir l'année exacte a partir
-		// d'une
-		// valeur contenu dans un string, il faut retrancher 1900 a la valeur de
-		// l'année. exemple, l'année 2010 est considérée comme 2010-1900 = 110
-		int annee = Integer.parseInt(tabAchat[2]) - 1900;
-
-		Date DateAchatAuformatDate = new Date(annee, mois, jourAchat);
-		// on recupere la date d'achat au format milliseconde
-		long DateAchatEnMilli = DateAchatAuformatDate.getTime();
-		// on calcule la date de permetpion en fonction de la date d'achat+nb de
-		// jour donné par l'utilisateur
-		Date DatePeremption = getDateAfterDays(DateAchatEnMilli, nbJours);
-		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-		// date de peremtion au format jj/mm/aaaa
-		String Date_Peremption = dateFormat.format(DatePeremption);
-		// on converti la date de permeption en milliseconde
-		long DatePeremtInMilli = DatePeremption.getTime();
-		// et on le stocke en base
-		valuesProduitsFinal.put("Date_Peremption_milli", DatePeremtInMilli);
-		// ////////////////////////////////////////////////////////
-		valuesProduitsFinal.put("Date_Peremption", Date_Peremption);
-		boolean insertOk = objBd.InsertDonnéedansTable("produit_Enregistre",
-				valuesProduitsFinal);
+		// ContentValues valuesProduitsFinal = new ContentValues();
+		// valuesProduitsFinal.put("nom_produit", nomDuProduit);
+		// valuesProduitsFinal.put("nom_marque", MarqueChoisie);
+		// valuesProduitsFinal.put("nom_souscatergorie", lstProduitCoche.get(0)
+		// .getNomSousCat());
+		// valuesProduitsFinal.put("nom_categorie", lstProduitCoche.get(0)
+		// .getNomCat());
+		// valuesProduitsFinal.put("numero_Teinte", numeroDeTeinte);
+		// valuesProduitsFinal.put("DateAchat", DateAchat.replaceAll("/", "-")
+		// .trim());
+		// valuesProduitsFinal.put("Duree_Vie", DureeVie);
+		// // calcul de la date de peremption problable
+		//
+		// int nbMoisDurreeDeVie = Integer.parseInt(DureeVie);
+		// int nbJours = nbMoisDurreeDeVie * 30;
+		//
+		// String DateAchat1 = DateAchat.replaceAll("/", "-").trim();
+		// String tabAchat[] = DateAchat1.split("-");
+		// int jourAchat = Integer.parseInt(tabAchat[0]);
+		// // les mois commence à 0 (janvier) et se termine à 11 (decembre)
+		// int mois = Integer.parseInt(tabAchat[1]) - 1;
+		// // les années commence à 0(1900), pour avoir l'année exacte a partir
+		// // d'une
+		// // valeur contenu dans un string, il faut retrancher 1900 a la valeur
+		// de
+		// // l'année. exemple, l'année 2010 est considérée comme 2010-1900 =
+		// 110
+		// int annee = Integer.parseInt(tabAchat[2]) - 1900;
+		//
+		// Date DateAchatAuformatDate = new Date(annee, mois, jourAchat);
+		// // on recupere la date d'achat au format milliseconde
+		// long DateAchatEnMilli = DateAchatAuformatDate.getTime();
+		// // on calcule la date de permetpion en fonction de la date d'achat+nb
+		// de
+		// // jour donné par l'utilisateur
+		// Date DatePeremption = getDateAfterDays(DateAchatEnMilli, nbJours);
+		// DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+		// // date de peremtion au format jj/mm/aaaa
+		// String Date_Peremption = dateFormat.format(DatePeremption);
+		// // on converti la date de permeption en milliseconde
+		// long DatePeremtInMilli = DatePeremption.getTime();
+		// // et on le stocke en base
+		// valuesProduitsFinal.put("Date_Peremption_milli", DatePeremtInMilli);
+		// // ////////////////////////////////////////////////////////
+		// valuesProduitsFinal.put("Date_Peremption", Date_Peremption);
+		// boolean insertOk = objBd.InsertDonnéedansTable("produit_Enregistre",
+		// valuesProduitsFinal);
 		if (insertOk) {
 			popUp("Insert Ok");
 			AccesTableTrousseProduits accesTrousse = new AccesTableTrousseProduits(
 					this);
 			accesTrousse.reinitProduitChoisi();
-			AccesTableTrousseTempo accesTempo = new AccesTableTrousseTempo(this);
-			accesTempo.deleteTable();
+			// AccesTableTrousseTempo accesTempo = new
+			// AccesTableTrousseTempo(this);
+			// accesTempo.deleteTable();
 			// String Table = "trousse_produits";
 			// ContentValues modifiedValues = new ContentValues();
 			// modifiedValues.put("ischecked", "false");
@@ -640,13 +659,9 @@ public class formulaire_entree_page3 extends Activity implements
 
 	}
 
-	public static Date getDateAfterDays(long dateEnMilli, int days) {
-		long backDateMS = dateEnMilli + ((long) days) * 24 * 60 * 60 * 1000;
-		Date backDate = new Date();
-		backDate.setTime(backDateMS);
-		return backDate;
-	}
-
+	/**
+	 * @param message
+	 */
 	public void popUp(String message) {
 		// Toast.makeText(this, message, 1).show();
 	}
@@ -783,6 +798,9 @@ public class formulaire_entree_page3 extends Activity implements
 		return super.onKeyDown(keyCode, event);
 	}
 
+	/**
+	 * 
+	 */
 	public void OnDestroy() {
 		// popUp("OnDestroy");
 		super.onDestroy();

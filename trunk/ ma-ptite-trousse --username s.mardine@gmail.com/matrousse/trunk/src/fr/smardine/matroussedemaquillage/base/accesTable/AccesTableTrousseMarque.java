@@ -31,6 +31,7 @@ public class AccesTableTrousseMarque {
 	/**
 	 * mets a jour la marque choisie par l'utilisateur
 	 * @param p_marqueChoisie
+	 * @param p_isChecked
 	 */
 	public void majMarqueChoisi(String p_marqueChoisie, boolean p_isChecked) {
 		ContentValues modifiedValues = new ContentValues();
@@ -82,6 +83,10 @@ public class AccesTableTrousseMarque {
 		return lstRetour;
 	}
 
+	/**
+	 * @param p_nomMarque
+	 * @return true ou false
+	 */
 	public boolean createNewMarque(String p_nomMarque) {
 		ContentValues values = new ContentValues();
 		values.put("nom_marque", p_nomMarque);
@@ -89,6 +94,10 @@ public class AccesTableTrousseMarque {
 		return requeteFact.insertDansTable(EnTable.TROUSSE_MARQUE, values);
 	}
 
+	/**
+	 * @param p_nomMarque
+	 * @return true ou false
+	 */
 	public boolean isMarqueExist(String p_nomMarque) {
 		MlListeMarque lstMarque = getListeMarques();
 		for (MlMarque m : lstMarque) {

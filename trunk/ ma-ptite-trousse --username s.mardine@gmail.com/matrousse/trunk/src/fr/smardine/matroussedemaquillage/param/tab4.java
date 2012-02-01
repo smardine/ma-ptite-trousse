@@ -16,7 +16,7 @@ import android.widget.Button;
 import fr.smardine.matroussedemaquillage.Main;
 import fr.smardine.matroussedemaquillage.ManipFichier;
 import fr.smardine.matroussedemaquillage.R;
-import fr.smardine.matroussedemaquillage.base.BDAcces;
+import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableParams;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableProduitEnregistre;
 import fr.smardine.matroussedemaquillage.note.note_page1;
 import fr.smardine.matroussedemaquillage.note.note_saisie;
@@ -32,7 +32,7 @@ import fr.smardine.matroussedemaquillage.variableglobale.ActivityParam;
  * @author smardine
  */
 public class tab4 extends Activity implements OnClickListener {
-	BDAcces objBd;
+	// BDAcces objBd;
 	Button videBase, sauvegardeBase, importeBase;
 	AlertDialog.Builder adSauvegarde, adImport, adImportResult;
 	private int itemChoisi;
@@ -263,9 +263,11 @@ public class tab4 extends Activity implements OnClickListener {
 			// objBd.close();
 		}
 		if (p_v == sauvegardeBase) {
-			objBd = new BDAcces(this);
+			// objBd = new BDAcces(this);
 			// objBd.close();
-			String cheminBase = objBd.getPath();
+			AccesTableParams accesParam = new AccesTableParams(this);
+			String cheminBase = accesParam.getDatabasePath();
+			// String cheminBase = objBd.getPath();
 			File baseDansTel = new File(cheminBase);
 			String PATH = "/sdcard/ma_trousse/";
 			File path = new File(PATH);
@@ -309,9 +311,10 @@ public class tab4 extends Activity implements OnClickListener {
 		}
 		if (p_v == importeBase) {
 
-			objBd = new BDAcces(this);
+			// objBd = new BDAcces(this);
 			// objBd.close();
-			String cheminBase = objBd.getPath();
+			AccesTableParams accesParam = new AccesTableParams(this);
+			String cheminBase = accesParam.getDatabasePath();
 			baseDansTel = new File(cheminBase);
 
 			File path = new File(PATH);

@@ -10,12 +10,19 @@ import android.widget.TextView;
 import fr.smardine.matroussedemaquillage.R;
 import fr.smardine.matroussedemaquillage.mdl.MlListeNote;
 
+/**
+ * @author smardine
+ */
 public class noteListAdapter extends BaseAdapter {
 
 	private final MlListeNote lstNotes;
 	// créer un layoutinflater pour intégrer la listview dedans
 	private final LayoutInflater myInflater;
 
+	/**
+	 * @param p_ctx
+	 * @param p_lstnotes
+	 */
 	public noteListAdapter(Context p_ctx, MlListeNote p_lstnotes) {
 		// paramètrer le layout en prenant celui du context
 		this.myInflater = LayoutInflater.from(p_ctx);
@@ -48,6 +55,9 @@ public class noteListAdapter extends BaseAdapter {
 	 * réutilisée
 	 * @see android.widget.Adapter#getView(int, android.view.View,
 	 * android.view.ViewGroup)
+	 */
+	/**
+	 * @author smardine
 	 */
 	public static class ViewHolder {
 		// TextView text01;

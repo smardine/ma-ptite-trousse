@@ -1,5 +1,7 @@
 package fr.smardine.matroussedemaquillage.recherche;
 
+import helper.DateHelper;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -31,12 +33,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import fr.smardine.matroussedemaquillage.R;
-import fr.smardine.matroussedemaquillage.base.BDAcces;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableParams;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableProduitEnregistre;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableTrousseMarque;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableTrousseProduits;
-import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableTrousseTempo;
 import fr.smardine.matroussedemaquillage.mdl.MlListeMarque;
 import fr.smardine.matroussedemaquillage.mdl.MlProduit;
 import fr.smardine.matroussedemaquillage.modifier.modif_cat;
@@ -45,6 +45,9 @@ import fr.smardine.matroussedemaquillage.param.tab_param;
 import fr.smardine.matroussedemaquillage.variableglobale.ActivityParam;
 import fr.smardine.matroussedemaquillage.variableglobale.EnTheme;
 
+/**
+ * @author smardine
+ */
 public class affiche_detail extends Activity implements OnClickListener {
 
 	long DatePeremtInMilli = 0;
@@ -54,15 +57,15 @@ public class affiche_detail extends Activity implements OnClickListener {
 
 	ImageView BTChangerCat, BTChangerMarque, BTChangerNom, BTChangerTeinte,
 			BTChangerDateAchat, BTChangerDatePermeption;
-	private BDAcces objBd;
-	String DuréeVie = "";
+	// private BDAcces objBd;
+	String dureeVie = "";
 	String IdProduit;
 
 	@SuppressWarnings("rawtypes")
 	ArrayList[] trousse_final;
 	boolean Continue;
-	boolean IsCalledFromMain;
-	boolean IsAffichageProduitPerimé;
+	boolean isCalledFromMain;
+	boolean isAffichageProduitPerime;
 	AlertDialog.Builder adChoixNbMois, adMarque, adProduit, adTeinte;
 	int nbMoisDurreeDeVie = 0;
 	int RequestCodePage1 = 1, RequestCodePage2 = 2, RequestCodePage3 = 3,
@@ -99,7 +102,7 @@ public class affiche_detail extends Activity implements OnClickListener {
 		BTChangerDateAchat = (ImageView) findViewById(R.id.IvChangerDateAchat);
 		BTChangerDatePermeption = (ImageView) findViewById(R.id.IvChangerDatePeremption);
 
-		objBd = new BDAcces(this);
+		// objBd = new BDAcces(this);
 
 		updateDisplay();
 
@@ -111,9 +114,9 @@ public class affiche_detail extends Activity implements OnClickListener {
 		BTChangerDateAchat.setOnClickListener(this);
 		BTChangerDatePermeption.setOnClickListener(this);
 
-		IsCalledFromMain = getIntent().getBooleanExtra(
+		isCalledFromMain = getIntent().getBooleanExtra(
 				ActivityParam.LaunchFromMain, false);
-		IsAffichageProduitPerimé = getIntent().getBooleanExtra(
+		isAffichageProduitPerime = getIntent().getBooleanExtra(
 				ActivityParam.LaunchFromRechercheProduitPerime, false);
 
 		popUp("OnCreate-pageDetail");
@@ -258,8 +261,9 @@ public class affiche_detail extends Activity implements OnClickListener {
 
 	/**
 	 * This utility method returns a future date after number of days.
+	 * @param dateEnMilli
 	 * @param days
-	 * @return
+	 * @return nouvelle date APRES un nombre de jour
 	 */
 	public static Date getDateAfterDays(long dateEnMilli, int days) {
 		long backDateMS = dateEnMilli + ((long) days) * 24 * 60 * 60 * 1000;
@@ -275,9 +279,9 @@ public class affiche_detail extends Activity implements OnClickListener {
 		IdProduit = getIntent().getStringExtra(ActivityParam.IdProduit).trim();
 		MlProduit p = new MlProduit(Integer.parseInt(IdProduit), this);
 
-		String[] Colonnes = { "nom_produit", "nom_souscatergorie",
-				"nom_categorie", "numero_Teinte", "Duree_Vie",
-				"Date_Peremption", "DateAchat", "nom_marque" };
+		// String[] Colonnes = { "nom_produit", "nom_souscatergorie",
+		// "nom_categorie", "numero_Teinte", "Duree_Vie",
+		// "Date_Peremption", "DateAchat", "nom_marque" };
 
 		// trousse_final = objBd.renvoi_liste_TrousseFinalComplete(Colonnes,
 		// IdProduit);
@@ -286,10 +290,12 @@ public class affiche_detail extends Activity implements OnClickListener {
 		MarqueDetail.setText(p.getMarque());
 		nomProduitDetail.setText(p.getNomProduit());
 		numeroTeinteDetail.setText(p.getTeinte());
-		DateAchatDetail.setText(p.getDateAchat().toLocaleString());
-		DatePeremtionDetail.setText(p.getDatePeremption().toLocaleString());
+		DateAchatDetail
+				.setText(DateHelper.getDateforDatabase(p.getDateAchat()));
+		DatePeremtionDetail.setText(DateHelper.getDateforDatabase(p
+				.getDatePeremption()));
 
-		DuréeVie = "" + p.getDureeVie();
+		dureeVie = "" + p.getDureeVie();
 		// objBd.close();
 	}
 
@@ -393,6 +399,9 @@ public class affiche_detail extends Activity implements OnClickListener {
 		}
 	};
 
+	/**
+	 * @param message
+	 */
 	public void popUp(String message) {
 		// Toast.makeText(this, message, 1).show();
 	}
@@ -456,7 +465,7 @@ public class affiche_detail extends Activity implements OnClickListener {
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
 			Intent recherche;
-			if (IsCalledFromMain && IsAffichageProduitPerimé) {
+			if (isCalledFromMain && isAffichageProduitPerime) {
 				recherche = new Intent(this, recherche_produit_perime.class);
 				recherche.putExtra(ActivityParam.LaunchFromMain, true);
 				recherche.putExtra(ActivityParam.AfficheProduitPerime, true);
@@ -506,9 +515,9 @@ public class affiche_detail extends Activity implements OnClickListener {
 			// modifiedValues,
 			// whereClause, whereArgs);
 			// System.out.println("Nombre de champ modifié : " + nbdechamp);
-			AccesTableTrousseTempo accesTempo = new AccesTableTrousseTempo(
-					getApplicationContext());
-			accesTempo.deleteTable();
+			// AccesTableTrousseTempo accesTempo = new AccesTableTrousseTempo(
+			// getApplicationContext());
+			// accesTempo.deleteTable();
 			// objBd.deleteTable("trousse_tempo", "1", null);
 			// objBd.close();
 
@@ -533,11 +542,11 @@ public class affiche_detail extends Activity implements OnClickListener {
 				public void afterTextChanged(Editable s) {
 					String str = inputDurreeVie.getText().toString();
 					if (!str.equals("")) {
-						int ValeurRentrée = Integer.parseInt(str);
-						if (ValeurRentrée > 99) {
+						int valeurRentree = Integer.parseInt(str);
+						if (valeurRentree > 99) {
 							inputDurreeVie.setText("99");
 						}
-						if (ValeurRentrée <= 0) {
+						if (valeurRentree <= 0) {
 							inputDurreeVie.setText("1");
 						}
 					} else {
@@ -566,7 +575,7 @@ public class affiche_detail extends Activity implements OnClickListener {
 			adChoixNbMois
 					.setMessage("Merci de renseigner la durée de vie de votre produit\n(en nombre de mois) ");
 			// Set an EditText view to get user input
-			inputDurreeVie.setText(DuréeVie);
+			inputDurreeVie.setText(dureeVie);
 			inputDurreeVie.setInputType(InputType.TYPE_CLASS_NUMBER);
 			adChoixNbMois.setView(inputDurreeVie);
 			adChoixNbMois.setPositiveButton("Ok",

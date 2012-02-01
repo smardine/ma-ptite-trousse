@@ -20,7 +20,6 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.SQLException;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -42,7 +41,6 @@ import fr.smardine.matroussedemaquillage.R;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableParams;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableTrousseMarque;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableTrousseProduits;
-import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableTrousseTempo;
 import fr.smardine.matroussedemaquillage.mdl.MlListeMarque;
 import fr.smardine.matroussedemaquillage.mdl.MlListeTrousseProduit;
 import fr.smardine.matroussedemaquillage.mdl.MlTrousseProduit;
@@ -507,7 +505,7 @@ public class formulaire_entree_page1bis extends Activity implements
 			boolean isMarqueEnbase = accesMarque.isMarqueExist(textView
 					.getText().toString());
 			// on verifie qu'au moins une categorie est cochée.
-			boolean isOk = VerfieAuMoinsUneCategorieSelectionnée();
+			boolean isOk = verfieAuMoinsUneCategorieSelectionnee();
 			AccesTableTrousseProduits accesProduit = new AccesTableTrousseProduits(
 					this);
 
@@ -566,16 +564,16 @@ public class formulaire_entree_page1bis extends Activity implements
 	}
 
 	/**
-	 * @throws SQLException
+	 * 
 	 */
-	public void majTable() throws SQLException {
+	public void majTable() {
 		// //objBd.open();
 		AccesTableTrousseProduits accesTrousseProds = new AccesTableTrousseProduits(
 				this);
 
 		accesTrousseProds.majSouscatChoisie(categorieChoisie);
-		AccesTableTrousseTempo accestempo = new AccesTableTrousseTempo(this);
-		accestempo.deleteTable();
+		// AccesTableTrousseTempo accestempo = new AccesTableTrousseTempo(this);
+		// accestempo.deleteTable();
 		// int nbdechamp = objBd.majTable("trousse_produits", modifiedValues,
 		// whereClause, categorieChoisie);
 		// System.out.println("Nombre de champ modifié : " + nbdechamp);
@@ -622,7 +620,7 @@ public class formulaire_entree_page1bis extends Activity implements
 		return indiceProduitCoche;
 	}
 
-	private boolean VerfieAuMoinsUneCategorieSelectionnée() {
+	private boolean verfieAuMoinsUneCategorieSelectionnee() {
 		AccesTableTrousseProduits accesProduit = new AccesTableTrousseProduits(
 				this);
 
@@ -719,8 +717,9 @@ public class formulaire_entree_page1bis extends Activity implements
 			AccesTableTrousseProduits accesTrousse = new AccesTableTrousseProduits(
 					this);
 			accesTrousse.reinitProduitChoisi();
-			AccesTableTrousseTempo accesTempo = new AccesTableTrousseTempo(this);
-			accesTempo.deleteTable();
+			// AccesTableTrousseTempo accesTempo = new
+			// AccesTableTrousseTempo(this);
+			// accesTempo.deleteTable();
 			// String Table = "trousse_produits";
 			// ContentValues modifiedValues = new ContentValues();
 			// modifiedValues.put("ischecked", "false");

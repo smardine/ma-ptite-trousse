@@ -11,11 +11,9 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import fr.smardine.matroussedemaquillage.R;
-import fr.smardine.matroussedemaquillage.base.BDAcces;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableParams;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableProduitEnregistre;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableTrousseProduits;
-import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableTrousseTempo;
 import fr.smardine.matroussedemaquillage.mdl.MlListeTrousseProduit;
 import fr.smardine.matroussedemaquillage.recherche.Recherche;
 import fr.smardine.matroussedemaquillage.recherche.affiche_detail;
@@ -32,7 +30,7 @@ import fr.smardine.matroussedemaquillage.variableglobale.EnTheme;
 public class modif_cat extends Activity implements OnClickListener {
 
 	ImageView BtVisage, BtYeux, BtLevres, BtAutres;
-	private BDAcces objBd;
+	// private BDAcces objBd;
 
 	String MarqueChoisie = "";
 	String DureeVie = "";
@@ -41,7 +39,9 @@ public class modif_cat extends Activity implements OnClickListener {
 	String nomProduitRecup = "";
 	String Id_Produit;
 	private ContentValues modifiedValues;
+	@SuppressWarnings("unused")
 	private String whereClause;
+	@SuppressWarnings("unused")
 	private String[] whereArgs;
 
 	/** Called when the activity is first created. */
@@ -90,7 +90,7 @@ public class modif_cat extends Activity implements OnClickListener {
 		// +
 		// "Merci d'en choisir au moins une.");
 		// adAucuneCat.setPositiveButton("Ok",null);
-		objBd = new BDAcces(this);
+		// objBd = new BDAcces(this);
 		this.setTitle("Choix de la catégorie");
 
 		popUp("OnCreate-page1");
@@ -401,8 +401,8 @@ public class modif_cat extends Activity implements OnClickListener {
 		// System.out.println("Nombre de champ modifié : " + nbdechamp);
 		// objBd.deleteTable("trousse_tempo", "1", null);
 		// objBd.close();
-		AccesTableTrousseTempo accesTempo = new AccesTableTrousseTempo(this);
-		accesTempo.deleteTable();
+		// AccesTableTrousseTempo accesTempo = new AccesTableTrousseTempo(this);
+		// accesTempo.deleteTable();
 		// popUp("On Continue");
 		// on créer une nouvelle activité avec comme point de depart "Main" et
 		// comme destination "FicheClient"
@@ -459,8 +459,8 @@ public class modif_cat extends Activity implements OnClickListener {
 		// int nbdechamp = objBd.majTable(Table, modifiedValues, whereClause,
 		// whereArgs);
 		// objBd.deleteTable("trousse_tempo", "1", null);
-		AccesTableTrousseTempo accesTempo = new AccesTableTrousseTempo(this);
-		accesTempo.deleteTable();
+		// AccesTableTrousseTempo accesTempo = new AccesTableTrousseTempo(this);
+		// accesTempo.deleteTable();
 		// System.out.println("Nombre de champ modifié : " + nbdechamp);
 		// objBd.close();
 	}
@@ -543,6 +543,7 @@ public class modif_cat extends Activity implements OnClickListener {
 	// }
 	/**
 	 * affiche un message a l'utilisateur
+	 * @param message
 	 */
 	public void popUp(String message) {
 		// Toast.makeText(this, message, 1).show();

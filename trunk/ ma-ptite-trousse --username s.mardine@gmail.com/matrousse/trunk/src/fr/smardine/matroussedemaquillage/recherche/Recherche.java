@@ -31,7 +31,6 @@ import android.widget.ListView;
 import android.widget.Toast;
 import fr.smardine.matroussedemaquillage.Main;
 import fr.smardine.matroussedemaquillage.R;
-import fr.smardine.matroussedemaquillage.base.BDAcces;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableNotes;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableParams;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableProduitEnregistre;
@@ -57,7 +56,7 @@ public class Recherche extends Activity implements OnClickListener,
 	int VISIBLE = 1, INVISIBLE = 4, GONE = 8;
 	ListView ProduitListView1, ProduitListViewTitre;
 	produitRechercheListAdapter adpt;
-	BDAcces objBd;
+	// BDAcces objBd;
 	AlertDialog.Builder adAucunProduit, adChoixFiltrage;
 	Context ctx = Recherche.this;
 	// TextView RechercheTxt1;
@@ -83,7 +82,7 @@ public class Recherche extends Activity implements OnClickListener,
 		IsCalledFromMain = getIntent().getBooleanExtra(
 				ActivityParam.LaunchFromMain, false);
 
-		objBd = new BDAcces(this);
+		// objBd = new BDAcces(this);
 
 		ChoisiLeTheme();
 		BtFiltrerPar = (Button) findViewById(R.id.BtFiltrerPar);
@@ -228,7 +227,6 @@ public class Recherche extends Activity implements OnClickListener,
 
 	}
 
-	@SuppressWarnings("rawtypes")
 	private void ChoisiLeTheme() {
 
 		AccesTableParams accesParam = new AccesTableParams(this);
@@ -545,7 +543,6 @@ public class Recherche extends Activity implements OnClickListener,
 
 	}
 
-	@SuppressWarnings("rawtypes")
 	private void AfficheLeContenu(String TypeRecherche,
 			ArrayList<produitRecherche> produitFinal, ListView produitListView,
 			String p_Filtrage) {
@@ -570,7 +567,7 @@ public class Recherche extends Activity implements OnClickListener,
 			AccesTableProduitEnregistre accesProduit = new AccesTableProduitEnregistre(
 					ctx);
 			MlListeProduits lstProduit = accesProduit
-					.getProduitsAvecFiltrageSurCategorie(p_Filtrage);
+					.getListeProduitsAvecFiltrageSurCategorie(p_Filtrage);
 			for (MlProduit p : lstProduit) {
 				produitFinal.add(new produitRecherche(p.getIdProduit(), p
 						.getNomCat(), p.getNomProduit(), p.getMarque()));
@@ -602,7 +599,7 @@ public class Recherche extends Activity implements OnClickListener,
 			AccesTableProduitEnregistre accesProduit = new AccesTableProduitEnregistre(
 					ctx);
 			MlListeProduits lstProduit = accesProduit
-					.getProduitsAvecFiltrageSurMarque(p_Filtrage);
+					.getListeProduitsAvecFiltrageSurMarque(p_Filtrage);
 			for (MlProduit p : lstProduit) {
 				produitFinal.add(new produitRecherche(p.getIdProduit(), p
 						.getNomCat(), p.getNomProduit(), p.getMarque()));
@@ -658,7 +655,7 @@ public class Recherche extends Activity implements OnClickListener,
 			AccesTableProduitEnregistre accesProduit = new AccesTableProduitEnregistre(
 					ctx);
 			MlListeProduits lstProduit = accesProduit
-					.getProduitsAvecFiltrageSurTout(p_Filtrage);
+					.getListeProduitsAvecFiltrageSurTout(p_Filtrage);
 			for (MlProduit p : lstProduit) {
 				produitFinal.add(new produitRecherche(p.getIdProduit(), p
 						.getNomCat(), p.getNomProduit(), p.getMarque()));
@@ -696,7 +693,7 @@ public class Recherche extends Activity implements OnClickListener,
 		if (TypeRecherche.equals("Perimé")) {
 			AccesTableProduitEnregistre accesProduit = new AccesTableProduitEnregistre(
 					ctx);
-			MlListeProduits lstProduit = accesProduit.getProduitsPerime();
+			MlListeProduits lstProduit = accesProduit.getListeProduitsPerime();
 			if (lstProduit.size() == 0) {
 				adAucunProduit.show();
 			}

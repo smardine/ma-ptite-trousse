@@ -14,6 +14,7 @@ public class MlMarque {
 
 	/**
 	 * @param p_idMarque
+	 * @param p_ctx
 	 */
 	public MlMarque(int p_idMarque, Context p_ctx) {
 		AccesTableTrousseMarque accesTrousse = new AccesTableTrousseMarque(
