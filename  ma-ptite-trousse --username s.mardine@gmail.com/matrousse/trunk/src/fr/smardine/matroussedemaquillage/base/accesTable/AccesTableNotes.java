@@ -1,6 +1,7 @@
 package fr.smardine.matroussedemaquillage.base.accesTable;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -57,22 +58,19 @@ public class AccesTableNotes {
 	}
 
 	/**
-	 * @return une liste de MlProduit
+	 * @return une liste de MlNote
 	 */
 	public MlListeNote getListeNote() {
 		MlListeNote listeNote = new MlListeNote();
 		String requete = "SELECT " + EnStructNotes.ID.getNomChamp() + " FROM "
 				+ EnTable.NOTES.getNomTable() + " ORDER BY "
 				+ EnStructNotes.ID.getNomChamp();
-		if (requeteFact.getListeDeChamp(requete).size() > 0) {
-			ArrayList<String> defNotes = requeteFact.getListeDeChamp(requete)
-					.get(0);
-			for (String s : defNotes) {
-				MlNote n = new MlNote(Integer.parseInt(s), ctx);
-				listeNote.add(n);
-			}
-		}
 
+		List<ArrayList<String>> lstId = requeteFact.getListeDeChamp(requete);
+		for (ArrayList<String> anId : lstId) {
+			MlNote n = new MlNote(Integer.parseInt(anId.get(0)), ctx);
+			listeNote.add(n);
+		}
 		return listeNote;
 	}
 
@@ -93,7 +91,6 @@ public class AccesTableNotes {
 						+ "Date de péremption: "
 						+ p_produit.getDatePeremption() + "\n");
 
-		// objBd.open();
 		requeteFact.insertDansTable(EnTable.NOTES, values);
 
 	}
@@ -119,9 +116,9 @@ public class AccesTableNotes {
 		String[] WhereArgs = new String[] { "" + p_idNote };
 
 		// objBd.open();
-		int nbChampEffacé = requeteFact.deleteTable(EnTable.NOTES, whereClause,
+		int nbChampEfface = requeteFact.deleteTable(EnTable.NOTES, whereClause,
 				WhereArgs);
-		if (nbChampEffacé == 1) {
+		if (nbChampEfface == 1) {
 			return true;
 		}
 		return false;

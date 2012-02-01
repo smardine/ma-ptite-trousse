@@ -1,5 +1,8 @@
 package helper;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -94,7 +97,7 @@ public class DateHelper {
 
 		// definition de la date d'achat au format "Calendar"
 		Calendar cDateAchat = Calendar.getInstance();
-		cDateAchat.set(Calendar.YEAR, annee);
+		cDateAchat.set(Calendar.YEAR, annee + 1900);
 		// les mois sont en base 0 (JANVIER=0, FEVRIER=1.....DECEMBRE=11)
 		cDateAchat.set(Calendar.MONTH, mois - 1);
 		cDateAchat.set(Calendar.DAY_OF_MONTH, jourAchat);
@@ -106,6 +109,32 @@ public class DateHelper {
 		cDatePeremption.add(Calendar.MONTH, p_durreeVie);
 		// Date dtPermp = cDatePeremption.getTime();
 		return cDatePeremption.getTime();
+	}
+
+	/**
+	 * @param p_date
+	 * @return chaine de caractere au bon format pour la bdd
+	 */
+	public static String getDateforDatabase(Date p_date) {
+		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+		// date de peremtion au format jj/mm/aaaa
+		return dateFormat.format(p_date);
+	}
+
+	/**
+	 * @param p_dateDatabase
+	 * @return obtenir une Java.Util.Date au format jjMMyyyy
+	 */
+	public static Date getDateFromDatabase(String p_dateDatabase) {
+		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+
+		try {
+			return dateFormat.parse(p_dateDatabase);
+		} catch (ParseException e) {
+
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 }

@@ -56,18 +56,12 @@ public class AccesTableTrousseProduits {
 				+ EnStructProduits.NOM_CAT.getNomChamp() + "='" + Catégorie
 				+ "' ORDER BY " + EnStructProduits.NOM_SOUSCAT.getNomChamp();
 
-		List<ArrayList<String>> lstResult = requeteFact
-				.getListeDeChamp(requete);
-		for (int i = 0; i < lstResult.size(); i++) {
-			ArrayList<String> unEnsemble = lstResult.get(i);
-			for (String s : unEnsemble) {
-				int idTrousseProduit = Integer.parseInt(s);
-				MlTrousseProduit p = new MlTrousseProduit(idTrousseProduit, ctx);
-				lstRetour.add(p);
-			}
-
+		List<ArrayList<String>> lstId = requeteFact.getListeDeChamp(requete);
+		for (ArrayList<String> anId : lstId) {
+			MlTrousseProduit p = new MlTrousseProduit(Integer.parseInt(anId
+					.get(0)), ctx);
+			lstRetour.add(p);
 		}
-
 		return lstRetour;
 
 	}
@@ -106,16 +100,11 @@ public class AccesTableTrousseProduits {
 				+ " FROM " + EnTable.TROUSSE_PRODUIT.getNomTable() + " WHERE "
 				+ EnStructProduits.ISCHECKED.getNomChamp() + "='true'";
 
-		List<ArrayList<String>> lstResult = requeteFact
-				.getListeDeChamp(requete);
-		for (int i = 0; i < lstResult.size(); i++) {
-			ArrayList<String> unEnsemble = lstResult.get(i);
-			for (String s : unEnsemble) {
-				int idTrousseProduit = Integer.parseInt(s);
-				MlTrousseProduit p = new MlTrousseProduit(idTrousseProduit, ctx);
-				lstRetour.add(p);
-			}
-
+		List<ArrayList<String>> lstId = requeteFact.getListeDeChamp(requete);
+		for (ArrayList<String> anId : lstId) {
+			MlTrousseProduit p = new MlTrousseProduit(Integer.parseInt(anId
+					.get(0)), ctx);
+			lstRetour.add(p);
 		}
 		return lstRetour;
 	}

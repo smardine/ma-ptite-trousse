@@ -6,4 +6,25 @@ package fr.smardine.matroussedemaquillage.variableglobale;
  */
 public interface EnCategorie {
 
+	/**
+	 * @return the lib
+	 */
+	String getLib();
+
+	/**
+	 * @return the code
+	 */
+	int getCode();
+
+	/**
+	 * @return the ident
+	 */
+	Long getIdent();
+
+	/**
+	 * @param p_value
+	 * @return Enum correspondant ou null
+	 */
+	EnCategorie getCategorieFromValue(String p_value);
+
 }

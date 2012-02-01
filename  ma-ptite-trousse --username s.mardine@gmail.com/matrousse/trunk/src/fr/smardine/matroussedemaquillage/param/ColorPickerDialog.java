@@ -1,11 +1,14 @@
 package fr.smardine.matroussedemaquillage.param;
 
 /*
- * Copyright (C) 2007 The Android Open Source Project Licensed under the Apache License, Version 2.0 (the "License"); you may not use this
- * file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless
- * required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and
- * limitations under the License.
+ * Copyright (C) 2007 The Android Open Source Project Licensed under the Apache
+ * License, Version 2.0 (the "License"); you may not use this file except in
+ * compliance with the License. You may obtain a copy of the License at
+ * http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law
+ * or agreed to in writing, software distributed under the License is
+ * distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
  */
 
 import android.app.Dialog;
@@ -21,9 +24,18 @@ import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 
+/**
+ * @author smardine
+ */
 public class ColorPickerDialog extends Dialog {
 
+	/**
+	 * @author smardine
+	 */
 	public interface OnColorChangedListener {
+		/**
+		 * @param color
+		 */
 		void colorChanged(int color);
 	}
 
@@ -39,7 +51,8 @@ public class ColorPickerDialog extends Dialog {
 		ColorPickerView(Context c, OnColorChangedListener l, int color) {
 			super(c);
 			mListener = l;
-			mColors = new int[] { 0xFFFF0000, 0xFFFF00FF, 0xFF0000FF, 0xFF00FFFF, 0xFF00FF00, 0xFFFFFF00, 0xFFFF0000 };
+			mColors = new int[] { 0xFFFF0000, 0xFFFF00FF, 0xFF0000FF,
+					0xFF00FFFF, 0xFF00FF00, 0xFFFFFF00, 0xFFFF0000 };
 			Shader s = new SweepGradient(0, 0, mColors, null);
 
 			mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -73,7 +86,9 @@ public class ColorPickerDialog extends Dialog {
 				} else {
 					mCenterPaint.setAlpha(0x80);
 				}
-				canvas.drawCircle(0, 0, CENTER_RADIUS + mCenterPaint.getStrokeWidth(), mCenterPaint);
+				canvas.drawCircle(0, 0,
+						CENTER_RADIUS + mCenterPaint.getStrokeWidth(),
+						mCenterPaint);
 
 				mCenterPaint.setStyle(Paint.Style.FILL);
 				mCenterPaint.setColor(c);
@@ -130,6 +145,7 @@ public class ColorPickerDialog extends Dialog {
 			return Color.argb(a, r, g, b);
 		}
 
+		@SuppressWarnings("unused")
 		private int rotateColor(int color, float rad) {
 			float deg = rad * 180 / 3.1415927f;
 			int r = Color.red(color);
@@ -151,7 +167,8 @@ public class ColorPickerDialog extends Dialog {
 			int ig = floatToByte(a[5] * r + a[6] * g + a[7] * b);
 			int ib = floatToByte(a[10] * r + a[11] * g + a[12] * b);
 
-			return Color.argb(Color.alpha(color), pinToByte(ir), pinToByte(ig), pinToByte(ib));
+			return Color.argb(Color.alpha(color), pinToByte(ir), pinToByte(ig),
+					pinToByte(ib));
 		}
 
 		private static final float PI = 3.1415926f;
@@ -201,7 +218,13 @@ public class ColorPickerDialog extends Dialog {
 		}
 	}
 
-	public ColorPickerDialog(Context context, OnColorChangedListener listener, int initialColor) {
+	/**
+	 * @param context
+	 * @param listener
+	 * @param initialColor
+	 */
+	public ColorPickerDialog(Context context, OnColorChangedListener listener,
+			int initialColor) {
 		super(context);
 
 		mListener = listener;

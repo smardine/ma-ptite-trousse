@@ -1,7 +1,9 @@
 package fr.smardine.matroussedemaquillage.mdl;
 
-import java.sql.Date;
+import helper.DateHelper;
+
 import java.util.ArrayList;
+import java.util.Date;
 
 import android.content.Context;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableProduitEnregistre;
@@ -15,8 +17,8 @@ public class MlProduit {
 	private int idProduit;
 	private String nomProduit;
 
-	private Date dateAchat;
-	private Date datePeremption;
+	// private Date dateAchat;
+	// private Date datePeremption;
 	private int nbJourDureeVie;
 	private EnCategorie categorie;
 
@@ -30,6 +32,8 @@ public class MlProduit {
 	private int dureeVie;
 	private long datePeremMilli;
 	private final Context ctx;
+	private java.util.Date dateAchat;
+	private java.util.Date datePeremption;
 
 	/**
 	 * Constructeur permettant la valorisation complete d'un MlProduit
@@ -48,13 +52,22 @@ public class MlProduit {
 		this.nomCat = defProduit.get(2);
 		this.teinte = defProduit.get(3);
 		this.dureeVie = Integer.parseInt(defProduit.get(4));
-		this.datePeremption = Date.valueOf(defProduit.get(5));
-		this.dateAchat = Date.valueOf(defProduit.get(6));
+		this.datePeremption = DateHelper.getDateFromDatabase(defProduit.get(5));
+		this.dateAchat = DateHelper.getDateFromDatabase(defProduit.get(6));
+
 		this.marque = defProduit.get(7);
 		this.datePeremMilli = Long.parseLong(defProduit.get(8));
 		this.isPerime = Boolean.getBoolean(defProduit.get(9));
 		this.isPresquePerime = Boolean.getBoolean(defProduit.get(10));
 		this.nbJourAvantPeremp = Integer.parseInt(defProduit.get(11));
+
+	}
+
+	/**
+	 * @param p_ctx
+	 */
+	public MlProduit(Context p_ctx) {
+		this.ctx = p_ctx;
 
 	}
 
@@ -89,7 +102,7 @@ public class MlProduit {
 	/**
 	 * @return la date d'achat
 	 */
-	public Date getDateAchat() {
+	public java.util.Date getDateAchat() {
 		return dateAchat;
 	}
 
@@ -103,7 +116,7 @@ public class MlProduit {
 	/**
 	 * @return la date de peremption
 	 */
-	public Date getDatePeremption() {
+	public java.util.Date getDatePeremption() {
 		return datePeremption;
 	}
 

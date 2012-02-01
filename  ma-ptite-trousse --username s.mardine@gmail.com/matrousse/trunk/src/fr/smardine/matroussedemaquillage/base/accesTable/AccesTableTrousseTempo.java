@@ -2,7 +2,6 @@ package fr.smardine.matroussedemaquillage.base.accesTable;
 
 import android.content.Context;
 import fr.smardine.matroussedemaquillage.base.RequeteFactory;
-import fr.smardine.matroussedemaquillage.base.structure.EnTable;
 
 /**
  * @author smardine Acces a la table des Produit temporaires
@@ -22,7 +21,7 @@ public class AccesTableTrousseTempo {
 	 * Suppression complte du contenu de la table
 	 */
 	public void deleteTable() {
-		requeteFact.deleteTable(EnTable.TROUSSE_TEMPO, "1", null);
+		 requeteFact.deleteTable(EnTable.TROUSSE_TEMPO, "1", null);
 	}
 
 }

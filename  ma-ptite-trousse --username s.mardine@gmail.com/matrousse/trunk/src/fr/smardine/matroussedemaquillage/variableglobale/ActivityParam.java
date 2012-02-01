@@ -1,10 +1,15 @@
 package fr.smardine.matroussedemaquillage.variableglobale;
 
 /**
- * cette classes gere tout les parametres que l'on peut passer d'une activité a une autre.
+ * cette classes gere tout les parametres que l'on peut passer d'une activité a
+ * une autre.
  * @author smardine
  */
-public class ActivityParam {
+public final class ActivityParam {
+
+	private ActivityParam() {
+
+	}
 
 	/**
 	 * d'ou vient le lancement de l'activity
@@ -14,43 +19,91 @@ public class ActivityParam {
 	 * EntryPoint.class
 	 */
 
-	public static String LaunchFromEntryPoint = "LaunchFromEntryPoint";
-	public static String AfficheProduitPerime = "AfficheProduitPerime";
+	public static final String LaunchFromEntryPoint = "LaunchFromEntryPoint";
+	/**
+	 * AfficheProduitPerime.class
+	 */
+	public static final String AfficheProduitPerime = "AfficheProduitPerime";
 
 	/**
 	 * Main.class
 	 */
-	public static String LaunchFromMain = "LaunchFromMain";
+	public static final String LaunchFromMain = "LaunchFromMain";
 
 	/**
 	 * package remplir - donnees du produit a faire naviguer entre les activity.
 	 */
 
-	public static String Marque = "Marque du produit";
-	public static String DurreeDeVie = "Durree de vie";
-	public static String DateAchat = "Date d'achat";
-	public static String NumeroDeTeinte = "Numero de teinte";
-	public static String NomProduit = "Nom du produit";
+	public static final String Marque = "Marque du produit";
+	/**
+	 * 
+	 */
+	public static final String DurreeDeVie = "Durree de vie";
+	/**
+	 * 
+	 */
+	public static final String DateAchat = "Date d'achat";
+	/**
+	 * 
+	 */
+	public static final String NumeroDeTeinte = "Numero de teinte";
+	/**
+	 * 
+	 */
+	public static final String NomProduit = "Nom du produit";
 
-	public static String LaunchFromPage1 = "LaunchFromPage1";
-	public static String LaunchFromPageRecap = "LaunchFromrecap";
-	public static String LaunchFromPageRecapBack = "LaunchFromRecapBack";
+	/**
+	 * 
+	 */
+	public static final String LaunchFromPage1 = "LaunchFromPage1";
+	/**
+	 * 
+	 */
+	public static final String LaunchFromPageRecap = "LaunchFromrecap";
+	/**
+	 * 
+	 */
+	public static final String LaunchFromPageRecapBack = "LaunchFromRecapBack";
 
-	public static String LaunchFromDuppliquer = "LaunchFromDupplique";
-	public static String LaunchFromAfficheDetail = "LaunchFromDetail";
-	public static String LaunchFromRecherche = "LaunchFromRecherche";
-	public static String LaunchFromRechercheProduitPerime = "LaunchFromrechercheProduitPerime";
-	public static String LaunchFromParam = "LaunchFromParam";
-	public static String LaunchFromNoteSaisie = "LaunchFromNoteSaisie";
-	public static String LaunchFromNotePage1 = "LaunchFromNotePage1";
+	/**
+	 * 
+	 */
+	public static final String LaunchFromDuppliquer = "LaunchFromDupplique";
+	/**
+	 * 
+	 */
+	public static final String LaunchFromAfficheDetail = "LaunchFromDetail";
+	/**
+	 * 
+	 */
+	public static final String LaunchFromRecherche = "LaunchFromRecherche";
+	/**
+	 * 
+	 */
+	public static final String LaunchFromRechercheProduitPerime = "LaunchFromrechercheProduitPerime";
+	/**
+	 * 
+	 */
+	public static final String LaunchFromParam = "LaunchFromParam";
+	/**
+	 * 
+	 */
+	public static final String LaunchFromNoteSaisie = "LaunchFromNoteSaisie";
+	/**
+	 * 
+	 */
+	public static final String LaunchFromNotePage1 = "LaunchFromNotePage1";
 	/**
 	 * modif_cat.class
 	 */
-	public static String LaunchFromModfiCat = "LaunchFromModifCat";
-	public static String IdProduit = "IdProduit";
+	public static final String LaunchFromModfiCat = "LaunchFromModifCat";
+	/**
+	 * 
+	 */
+	public static final String IdProduit = "IdProduit";
 
 	/**
 	 * note_page1.class
 	 */
-	public static String IdNote = "IdNote";
+	public static final String IdNote = "IdNote";
 }

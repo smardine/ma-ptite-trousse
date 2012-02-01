@@ -3,8 +3,6 @@ package fr.smardine.matroussedemaquillage;
 import helper.DateHelper;
 
 import java.io.File;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -20,7 +18,6 @@ import android.widget.Gallery.LayoutParams;
 import android.widget.ImageSwitcher;
 import android.widget.ImageView;
 import android.widget.ViewSwitcher.ViewFactory;
-import fr.smardine.matroussedemaquillage.base.BDAcces;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableParams;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableProduitEnregistre;
 import fr.smardine.matroussedemaquillage.mdl.MlListeProduits;
@@ -39,11 +36,11 @@ public class EntryPoint extends Activity implements ViewFactory {
 	private boolean isLaunchFromMain = false;
 	long timeToSleep = 500L;
 
-	BDAcces objBd;
+	// BDAcces objBd;
 	Context ctx = null;
 
-	boolean auMoinsUnProduitPermié = false,
-			auMoinsUnProduitPresquePermié = false;
+	boolean auMoinsUnProduitPerime = false,
+			auMoinsUnProduitPresquePerime = false;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -362,7 +359,7 @@ public class EntryPoint extends Activity implements ViewFactory {
 			String perime;
 			if (isPerime) {
 				perime = "true";
-				auMoinsUnProduitPermié = true;
+				auMoinsUnProduitPerime = true;
 			} else {
 				perime = "false";
 			}
@@ -373,17 +370,18 @@ public class EntryPoint extends Activity implements ViewFactory {
 			String presqueperime;
 			if (isPresquePerime) {
 				presqueperime = "true";
-				auMoinsUnProduitPresquePermié = true;
+				auMoinsUnProduitPresquePerime = true;
 			} else {
 				presqueperime = "false";
 			}
 			// on calcule la date de permetpion en fonction de la
 			// date d'achat+nb de jour donné par l'utilisateur
-			DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-			String Date_Peremption = dateFormat.format(datePeremp);// date de
-																	// peremtion
-																	// au format
-																	// jj/mm/aaaa
+			String Date_Peremption = DateHelper.getDateforDatabase(datePeremp);
+			// DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+			// String Date_Peremption = dateFormat.format(datePeremp);// date de
+			// // peremtion
+			// // au format
+			// // jj/mm/aaaa
 
 			long DatePeremtInMilli = datePeremp.getTime(); // on converti la
 															// date de
@@ -405,14 +403,14 @@ public class EntryPoint extends Activity implements ViewFactory {
 	/**
 	 * suite a un bug => correction des champs en base pour enlever les
 	 * caractere "[" et "]"
-	 * @param p_idProduit int => necessaire a la mise a jour de la table
+	 * @param p_produit int => necessaire a la mise a jour de la table
 	 */
 
-	public void verifErreurEnregistrementDsBase(int p_idProduit) {
+	public void verifErreurEnregistrementDsBase(MlProduit p_produit) {
 
 		AccesTableProduitEnregistre accesProduit = new AccesTableProduitEnregistre(
 				ctx);
-		accesProduit.CorrigeProduitsEnregistre(p_idProduit);
+		accesProduit.CorrigeProduitsEnregistre(p_produit);
 
 	}
 
@@ -532,23 +530,23 @@ public class EntryPoint extends Activity implements ViewFactory {
 				for (MlProduit p : lstProds) {
 					count++;
 					total = (100 * count) / nbDenregistrement;
-					verifErreurEnregistrementDsBase(p.getIdProduit());
+					verifErreurEnregistrementDsBase(p);
 					CalculDatePeremtionEtMajDansBase(p.getDateAchat(),
 							p.getDureeVie(), p.getIdProduit());
 				}
 
 			}
 
-			if (auMoinsUnProduitPermié == true
-					|| auMoinsUnProduitPresquePermié == true) {
-				gotoPrevienUtilisateur(auMoinsUnProduitPermié,
-						auMoinsUnProduitPresquePermié);
+			if (auMoinsUnProduitPerime == true
+					|| auMoinsUnProduitPresquePerime == true) {
+				gotoPrevienUtilisateur(auMoinsUnProduitPerime,
+						auMoinsUnProduitPresquePerime);
 			} else {
 				gotoLancePageMain();
 
 			}
 
-			return auMoinsUnProduitPermié;
+			return auMoinsUnProduitPerime;
 		}
 
 	}
@@ -577,9 +575,8 @@ public class EntryPoint extends Activity implements ViewFactory {
 			// TODO Auto-generated catch block
 			System.out.println(e);
 		}
-		objBd = new BDAcces(p_ctx);
-		// //objBd.close();
-		String cheminBase = objBd.getPath();
+		AccesTableParams accesParam = new AccesTableParams(this);
+		String cheminBase = accesParam.getDatabasePath();
 		File baseDansTel = new File(cheminBase);
 		String PATH = "/sdcard/ma_trousse/";
 		File path = new File(PATH);

@@ -5,6 +5,9 @@ import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
 
+/**
+ * @author smardine
+ */
 public class CountdownWidget extends AppWidgetProvider {
 
 	@Override

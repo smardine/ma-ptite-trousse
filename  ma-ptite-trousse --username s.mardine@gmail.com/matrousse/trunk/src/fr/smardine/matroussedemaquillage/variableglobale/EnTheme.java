@@ -1,9 +1,21 @@
 package fr.smardine.matroussedemaquillage.variableglobale;
 
+/**
+ * @author smardine
+ */
 public enum EnTheme {
 
+	/**
+	 * 
+	 */
 	Classique(0, "Classique"), //
+	/**
+	 * 
+	 */
 	Fleur(0, "Fleur"), //
+	/**
+	 * 
+	 */
 	Bisounours(1, "Bisounours");
 
 	int code;
@@ -14,20 +26,25 @@ public enum EnTheme {
 		lib = p_lib;
 	}
 
+	/**
+	 * @return l'ident
+	 */
+	public Long getIdent() {
+		return Long.valueOf(ordinal());
+	}
+
+	/**
+	 * @return le code
+	 */
 	public int getCode() {
 		return code;
 	}
 
-	public void setCode(int p_code) {
-		code = p_code;
-	}
-
+	/**
+	 * @return the lib
+	 */
 	public String getLib() {
 		return lib;
-	}
-
-	public void setLib(String p_lib) {
-		lib = p_lib;
 	}
 
 	/**

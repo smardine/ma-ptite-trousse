@@ -8,7 +8,7 @@ public enum EnStructParam implements StructureTable {
 	 * Doit on afficher l'alerte de peremption au demarrage, prend "ture" ou
 	 * "false"
 	 */
-	AFFICHE_ALERTE("AfficheAletre", String.class, 255), //
+	AFFICHE_ALERTE("AfficheAlerte", String.class, 255), //
 	/**
 	 * le nb de jour a partir duquel un produit est considere comme perime
 	 */

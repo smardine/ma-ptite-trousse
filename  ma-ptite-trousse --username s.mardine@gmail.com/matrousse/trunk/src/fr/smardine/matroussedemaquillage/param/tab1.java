@@ -35,6 +35,9 @@ import fr.smardine.matroussedemaquillage.variableglobale.ActivityParam;
 import fr.smardine.matroussedemaquillage.variableglobale.EnActionParDefaut;
 import fr.smardine.matroussedemaquillage.variableglobale.ValeurParDefaut;
 
+/**
+ * @author smardine
+ */
 public class tab1 extends Activity implements OnClickListener,
 		ColorPickerDialog.OnColorChangedListener, OnItemSelectedListener {
 	EditText textView;
@@ -50,7 +53,6 @@ public class tab1 extends Activity implements OnClickListener,
 			EnActionParDefaut.PAGE_PRINC.getLib(),
 			EnActionParDefaut.PERIME.getLib() };
 
-	@SuppressWarnings("rawtypes")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -86,10 +88,9 @@ public class tab1 extends Activity implements OnClickListener,
 
 		AccesTableParams accesParam = new AccesTableParams(this);
 
-		if (accesParam.getAfficheAlerte()) {
-			CbAfficheAlerte.setChecked(true);
-		}
-		textView.setText(accesParam.getDureeViePeremption());
+		CbAfficheAlerte.setChecked(accesParam.getAfficheAlerte());
+
+		textView.setText("" + accesParam.getDureeViePeremption());
 		// objBd = new BDAcces(this);
 		// // objBd.open();
 		// String[] colonnes = { "AfficheAlerte", "DureeViePeremp", "Theme" };
@@ -108,11 +109,11 @@ public class tab1 extends Activity implements OnClickListener,
 			public void afterTextChanged(Editable s) {
 				String str = textView.getText().toString();
 				if (!str.equals("")) {
-					int ValeurRentrée = Integer.parseInt(str);
-					if (ValeurRentrée > 99) {
+					int valeurRentree = Integer.parseInt(str);
+					if (valeurRentree > 99) {
 						textView.setText("99");
 					}
-					if (ValeurRentrée <= 0) {
+					if (valeurRentree <= 0) {
 						textView.setText("1");
 					}
 				}
@@ -233,16 +234,11 @@ public class tab1 extends Activity implements OnClickListener,
 		if (DurreeViePeremp.equals("")) {
 			ad.show();
 		} else {
-			String AfficheAlerte = "";
 
 			boolean IsChecked = CbAfficheAlerte.isChecked();
-			if (IsChecked) {
-				AfficheAlerte = "true";
-			} else {
-				AfficheAlerte = "false";
-			}
+
 			AccesTableParams accesParam = new AccesTableParams(this);
-			accesParam.majAfficheAlerte(AfficheAlerte);
+			accesParam.majAfficheAlerte(IsChecked);
 			accesParam.majDureeVie(DurreeViePeremp);
 			// ContentValues values = new ContentValues();
 			// values.put("AfficheAlerte", AfficheAlerte);
@@ -378,6 +374,9 @@ public class tab1 extends Activity implements OnClickListener,
 		finish();
 	}
 
+	/**
+	 * 
+	 */
 	public void OnDestroy() {
 		super.onDestroy();
 		// popUp("OnDestroy-Page2");

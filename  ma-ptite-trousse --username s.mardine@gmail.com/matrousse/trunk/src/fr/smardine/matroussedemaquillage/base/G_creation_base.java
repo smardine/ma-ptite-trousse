@@ -1,13 +1,20 @@
 /*
- * Copyright (c) 2009 nullwire aps Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
- * associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to
- * use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software
- * is furnished to do so, subject to the following conditions: The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software. THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
- * INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
- * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
- * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. Contributors: Mads
- * Kristiansen, mads.kristiansen@nullwire.com Glen Humphrey Evan Charlton Peter Hewitt
+ * Copyright (c) 2009 nullwire aps Permission is hereby granted, free of charge,
+ * to any person obtaining a copy of this software and associated documentation
+ * files (the "Software"), to deal in the Software without restriction,
+ * including without limitation the rights to use, copy, modify, merge, publish,
+ * distribute, sublicense, and/or sell copies of the Software, and to permit
+ * persons to whom the Software is furnished to do so, subject to the following
+ * conditions: The above copyright notice and this permission notice shall be
+ * included in all copies or substantial portions of the Software. THE SOFTWARE
+ * IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+ * INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A
+ * PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+ * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+ * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR
+ * IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ * Contributors: Mads Kristiansen, mads.kristiansen@nullwire.com Glen Humphrey
+ * Evan Charlton Peter Hewitt
  */
 
 package fr.smardine.matroussedemaquillage.base;
@@ -44,6 +51,7 @@ public class G_creation_base {
 
 	/**
 	 * Creation des tables
+	 * @return liste de scripts
 	 */
 	public List<String> getCreationTable() {
 		creationtable = new ArrayList<String>();
@@ -57,7 +65,8 @@ public class G_creation_base {
 				.add("CREATE TABLE IF NOT EXISTS produit_Enregistre ( id_produits INTEGER PRIMARY KEY  AUTOINCREMENT,nom_produit VARCHAR(255) NULL, nom_souscatergorie VARCHAR(250) NULL, nom_categorie VARCHAR (250) NULL,numero_Teinte VARCHAR (255) NULL,DateAchat VARCHAR (255) NULL,Duree_Vie VARCHAR (255) NULL,Date_Peremption VARCHAR (255))");
 		creationtable
 				.add("CREATE TABLE IF NOT EXISTS Notes ( id_note INTEGER PRIMARY KEY  AUTOINCREMENT,Titre VARCHAR(255) NULL, Message VARCHAR (9999) NULL)");
-		creationtable.add("CREATE TABLE IF NOT EXISTS Param ( AfficheAlerte VARCHAR(255) NULL, DureeViePeremp VARCHAR (255) NULL)");
+		creationtable
+				.add("CREATE TABLE IF NOT EXISTS Param ( AfficheAlerte VARCHAR(255) NULL, DureeViePeremp VARCHAR (255) NULL)");
 		return creationtable;
 	}
 
@@ -76,8 +85,10 @@ public class G_creation_base {
 				.add("INSERT INTO trousse_produits (nom_souscatergorie,nom_categorie,ISCHECKED) VALUES ('Poudres','Visage','false')");
 		creationCategorie
 				.add("INSERT INTO trousse_produits (nom_souscatergorie,nom_categorie,ISCHECKED) VALUES ('Crayons - Eyliners','Yeux','false')");
-		creationCategorie.add("INSERT INTO trousse_produits (nom_souscatergorie,nom_categorie,ISCHECKED) VALUES ('Bases','Yeux','false')");
-		creationCategorie.add("INSERT INTO trousse_produits (nom_souscatergorie,nom_categorie,ISCHECKED) VALUES ('Fards','Yeux','false')");
+		creationCategorie
+				.add("INSERT INTO trousse_produits (nom_souscatergorie,nom_categorie,ISCHECKED) VALUES ('Bases','Yeux','false')");
+		creationCategorie
+				.add("INSERT INTO trousse_produits (nom_souscatergorie,nom_categorie,ISCHECKED) VALUES ('Fards','Yeux','false')");
 		creationCategorie
 				.add("INSERT INTO trousse_produits (nom_souscatergorie,nom_categorie,ISCHECKED) VALUES ('Mascaras','Yeux','false')");
 		creationCategorie
@@ -103,7 +114,8 @@ public class G_creation_base {
 	/**
 	 * 
 	 */
-	private final String[] SCRIPT_INSERT_MARQUE = { "INSERT INTO trousse_marques (nom_marque,ISCHECKED) VALUES ('2B','false')",
+	private final String[] SCRIPT_INSERT_MARQUE = {
+			"INSERT INTO trousse_marques (nom_marque,ISCHECKED) VALUES ('2B','false')",
 			"INSERT INTO trousse_marques (nom_marque,ISCHECKED) VALUES ('Agnès b.','false')",
 			"INSERT INTO trousse_marques (nom_marque,ISCHECKED) VALUES ('Alverde','false')",
 			"INSERT INTO trousse_marques (nom_marque,ISCHECKED) VALUES ('Annabelle','false')",

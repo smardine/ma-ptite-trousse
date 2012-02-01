@@ -3,6 +3,9 @@ package fr.smardine.matroussedemaquillage;
 import java.io.File;
 import java.io.FilenameFilter;
 
+/**
+ * @author smardine
+ */
 public class ManipFichier {
 
 	/**
@@ -44,7 +47,8 @@ public class ManipFichier {
 		java.io.FileOutputStream destinationFile = null;
 
 		try {
-			// Création du fichier destination (si le fichier existe deja, on le supprime):
+			// Création du fichier destination (si le fichier existe deja, on le
+			// supprime):
 			if (destination.exists()) {
 				destination.delete();
 			}
@@ -92,7 +96,8 @@ public class ManipFichier {
 	 * @param RepAVider - File repertoire à vider.
 	 * @param extension -Final String extension sous la forme ".eml"
 	 */
-	public static void DeleteContenuRepertoireAvecFiltre(File RepAVider, final String extension) {
+	public static void DeleteContenuRepertoireAvecFiltre(File RepAVider,
+			final String extension) {
 		if (RepAVider.isDirectory()) {
 			File[] list = RepAVider.listFiles(new FilenameFilter() {
 				@Override

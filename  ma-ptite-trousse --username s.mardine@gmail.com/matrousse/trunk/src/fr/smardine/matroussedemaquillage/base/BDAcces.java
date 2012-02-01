@@ -2,9 +2,7 @@ package fr.smardine.matroussedemaquillage.base;
 
 import java.util.List;
 
-import android.content.ContentValues;
 import android.content.Context;
-import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
@@ -13,8 +11,6 @@ import android.util.Log;
  * @author smardine
  */
 public class BDAcces {
-
-	private static final String PRODUITS_TABLE = "trousse_produits";
 
 	private static final String DATABASE_NAME = "trousse_base";
 
@@ -39,7 +35,7 @@ public class BDAcces {
 	/**
 	 * @param ctx
 	 */
-	public BDAcces(Context ctx) {
+	protected BDAcces(Context ctx) {
 		this.mCtx = ctx;
 	}
 
@@ -104,14 +100,13 @@ public class BDAcces {
 			for (String s : p_lstScripts) {
 				p_db.execSQL(s);
 			}
-
 		}
 	}
 
 	/**
 	 * @throws SQLException
 	 */
-	protected void open() throws SQLException {
+	protected void open() {
 		// si la base est deja ouverte, on la ferme.
 		if (mDb != null && mDb.isOpen()) {
 			close();
@@ -136,7 +131,7 @@ public class BDAcces {
 	 * ferme la connexion a la database
 	 * @throws SQLException
 	 */
-	protected void close() throws SQLException {
+	protected void close() {
 		// si il reste des transaction active, on les ferme.
 		if (mDb.inTransaction()) {
 			mDb.endTransaction();
@@ -197,20 +192,21 @@ public class BDAcces {
 	//
 	// }
 
-	/**
-	 * @param Table
-	 * @param values
-	 * @return true ou false
-	 */
-	public boolean InsertDonnéedansTable(String Table, ContentValues values) {
-
-		long RowNumber = mDb.insert(Table, null, values);
-		if (RowNumber == -1) {
-			return false;
-		} else {
-			return true;
-		}
-	}
+	// /**
+	// * @param Table
+	// * @param values
+	// * @return true ou false
+	// */
+	// public boolean InsertDonnéedansTable(String Table, ContentValues values)
+	// {
+	//
+	// long RowNumber = mDb.insert(Table, null, values);
+	// if (RowNumber == -1) {
+	// return false;
+	// } else {
+	// return true;
+	// }
+	// }
 
 	// /**
 	// * @param table
@@ -405,7 +401,7 @@ public class BDAcces {
 	// * @param ScriptSql
 	// */
 	// public void execSQL(String ScriptSql) {
-	// // TODO Auto-generated method stub
+	//
 	// mDb.execSQL(ScriptSql);
 	//
 	// }

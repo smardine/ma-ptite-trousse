@@ -24,12 +24,10 @@ import android.widget.ListView;
 import android.widget.Toast;
 import fr.smardine.matroussedemaquillage.Main;
 import fr.smardine.matroussedemaquillage.R;
-import fr.smardine.matroussedemaquillage.base.BDAcces;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableParams;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableProduitEnregistre;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableTrousseMarque;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableTrousseProduits;
-import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableTrousseTempo;
 import fr.smardine.matroussedemaquillage.mdl.MlListeProduits;
 import fr.smardine.matroussedemaquillage.mdl.MlProduit;
 import fr.smardine.matroussedemaquillage.note.note_page1;
@@ -41,6 +39,9 @@ import fr.smardine.matroussedemaquillage.recherche.produitRechercheListAdapter.V
 import fr.smardine.matroussedemaquillage.variableglobale.ActivityParam;
 import fr.smardine.matroussedemaquillage.variableglobale.EnTheme;
 
+/**
+ * @author smardine
+ */
 public class choix_produit_a_duppliquer extends Activity implements
 		OnItemClickListener {
 
@@ -49,7 +50,7 @@ public class choix_produit_a_duppliquer extends Activity implements
 	ListView ProduitListView1, ProduitListViewTitre;
 
 	produitRechercheListAdapter adpt;
-	private BDAcces objBd;
+	// private BDAcces objBd;
 	// AlertDialog.Builder adPlusieurCat,adAucuneCat;
 	String Txt01, Txt02, Txt03;
 	String MarqueChoisie = "";
@@ -76,7 +77,7 @@ public class choix_produit_a_duppliquer extends Activity implements
 
 		ProduitListView1.setOnItemClickListener(this);
 
-		objBd = new BDAcces(this);
+		// objBd = new BDAcces(this);
 		this.setTitle("Choix du produit à duppliquer");
 
 		popUp("OnCreate-pageDupplique");
@@ -212,7 +213,6 @@ public class choix_produit_a_duppliquer extends Activity implements
 		finish();
 	}
 
-	@SuppressWarnings("rawtypes")
 	private void AfficheLeContenu(String TypeRecherche,
 			ArrayList<produitRecherche> produitFinal, ListView produitListView) {
 
@@ -271,6 +271,9 @@ public class choix_produit_a_duppliquer extends Activity implements
 
 	}
 
+	/**
+	 * @param message
+	 */
 	public void popUp(String message) {
 		// Toast.makeText(this, message, 1).show();
 	}
@@ -325,8 +328,8 @@ public class choix_produit_a_duppliquer extends Activity implements
 		// objBd.open();
 		// int nbdechamp = objBd.majTable(Table, modifiedValues, whereClause,
 		// whereArgs);
-		AccesTableTrousseTempo accesTempo = new AccesTableTrousseTempo(this);
-		accesTempo.deleteTable();
+		// AccesTableTrousseTempo accesTempo = new AccesTableTrousseTempo(this);
+		// accesTempo.deleteTable();
 		// objBd.deleteTable("trousse_tempo", "1", null);
 		// System.out.println("Nombre de champ modifié : " + nbdechamp);
 		// objBd.close();
@@ -400,6 +403,9 @@ public class choix_produit_a_duppliquer extends Activity implements
 		return super.onKeyDown(keyCode, event);
 	}
 
+	/**
+	 * 
+	 */
 	public void OnDestroy() {
 		popUp("OnDestroy-Page1");
 		super.onDestroy();
@@ -441,7 +447,6 @@ public class choix_produit_a_duppliquer extends Activity implements
 		dial.show();
 	}
 
-	@SuppressWarnings("rawtypes")
 	protected void gotoDuppliqueEtLanceFormPage3(int p_idProduit) {
 		// TODO Auto-generated method stub
 		// objBd.open();

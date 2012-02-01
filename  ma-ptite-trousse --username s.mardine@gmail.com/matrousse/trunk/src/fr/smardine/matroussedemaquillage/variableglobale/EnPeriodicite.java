@@ -5,7 +5,13 @@ package fr.smardine.matroussedemaquillage.variableglobale;
  * @author smardine
  */
 public enum EnPeriodicite {
+	/**
+	 * 
+	 */
 	HEURE(0, "Heures"), //
+	/**
+	 * 
+	 */
 	JOUR(1, "JOUR");
 
 	private int code;
@@ -16,14 +22,23 @@ public enum EnPeriodicite {
 		lib = p_lib;
 	}
 
+	/**
+	 * @return l'ident
+	 */
 	public Long getIdent() {
 		return Long.valueOf(ordinal());
 	}
 
+	/**
+	 * @return le code
+	 */
 	public int getCode() {
 		return code;
 	}
 
+	/**
+	 * @return the lib
+	 */
 	public String getLib() {
 		return lib;
 	}

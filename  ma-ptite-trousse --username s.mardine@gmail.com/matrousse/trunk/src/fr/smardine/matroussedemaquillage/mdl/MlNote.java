@@ -26,6 +26,9 @@ public class MlNote {
 		this.titre = defProduit.get(1);
 	}
 
+	/**
+	 * 
+	 */
 	public MlNote() {
 
 	}
@@ -51,14 +54,23 @@ public class MlNote {
 		return titre;
 	}
 
+	/**
+	 * @param p_idNote
+	 */
 	public void setIdNote(int p_idNote) {
 		idNote = p_idNote;
 	}
 
+	/**
+	 * @param p_message
+	 */
 	public void setMessage(String p_message) {
 		message = p_message;
 	}
 
+	/**
+	 * @param p_titre
+	 */
 	public void setTitre(String p_titre) {
 		titre = p_titre;
 	}

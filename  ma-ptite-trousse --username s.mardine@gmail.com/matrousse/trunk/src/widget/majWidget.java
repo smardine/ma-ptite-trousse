@@ -36,6 +36,7 @@ public class majWidget {
 	 * <li>affiche le nb de produits perime</li>
 	 * <li>met en accord le logo du widget avec le theme choisi dans l'appli.
 	 * @param context
+	 * @param majAussiBdd
 	 */
 	public majWidget(Context context, boolean majAussiBdd) {
 		// objBd = new BDAcces(context);
@@ -46,10 +47,10 @@ public class majWidget {
 		}
 
 		// conaitre le nb de produit perimé dans la trousse:
-		String SQL = "SELECT " + "id_produits "//
-				+ "FROM produit_Enregistre "//
-				+ "where " //
-				+ "(IS_PERIME='true' or IS_PRESQUE_PERIME='true') ";
+		// String SQL = "SELECT " + "id_produits "//
+		// + "FROM produit_Enregistre "//
+		// + "where " //
+		// + "(IS_PERIME='true' or IS_PRESQUE_PERIME='true') ";
 		AccesTableProduitEnregistre accesProduit = new AccesTableProduitEnregistre(
 				ctx);
 		int nbProds = accesProduit.getNbProduitPerimeOuPresque();
@@ -115,7 +116,7 @@ public class majWidget {
 			MlListeProduits lstProds = accesProduits.getListeProduits();
 
 			for (MlProduit p : lstProds) {
-				verifErreurEnregistrementDsBase(p.getIdProduit());
+				verifErreurEnregistrementDsBase(p);
 				CalculDatePeremtionEtMajDansBase(p.getDateAchat(),
 						p.getDureeVie(), p.getIdProduit());
 			}
@@ -124,13 +125,12 @@ public class majWidget {
 	}
 
 	/**
-	 * @param IdProduit
-	 * @throws Exception
+	 * @param p_produit
 	 */
-	public void verifErreurEnregistrementDsBase(int IdProduit) {
+	public void verifErreurEnregistrementDsBase(MlProduit p_produit) {
 		AccesTableProduitEnregistre accesProduit = new AccesTableProduitEnregistre(
 				ctx);
-		accesProduit.CorrigeProduitsEnregistre(IdProduit);
+		accesProduit.CorrigeProduitsEnregistre(p_produit);
 
 	}
 
@@ -185,7 +185,6 @@ public class majWidget {
 
 	}
 
-	@SuppressWarnings("rawtypes")
 	private void VerifLeTheme(RemoteViews remoteView) {
 
 		AccesTableParams accesParam = new AccesTableParams(ctx);
