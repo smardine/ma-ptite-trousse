@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_height="fill_parent" 
+    android:layout_width="fill_parent" 
+    android:background="@color/app_color">
+
+	
+	
+	<ScrollView android:id="@+id/ScrollView01" 
+	android:layout_width="wrap_content" 
+	android:layout_height="wrap_content">
+	
+	<RelativeLayout android:id="@+id/RelativeLayout01" 
+	android:layout_width="wrap_content" 
+	android:layout_height="wrap_content" android:gravity="top">
+	
+	
+	
+		<CheckBox android:id="@+id/CbAfficheAlerte" 
+		android:layout_below="@+id/ImageView01_param" 
+		android:layout_height="wrap_content" 
+		android:layout_width="wrap_content" 
+		android:text="Afficher les alertes au demarrage?" 
+		android:textColor="@color/text_color"></CheckBox>
+		<TextView android:layout_below="@id/CbAfficheAlerte" 
+		android:layout_width="wrap_content" 
+		android:layout_height="wrap_content" 
+		android:background="@color/app_color" 
+		android:id="@+id/Param_NbJourPeremp" 
+		android:textColor="@color/text_color" 
+		android:text="Nb de jours avant de considerer un produit comme perime"></TextView>
+		<EditText android:layout_below="@id/Param_NbJourPeremp" 
+		android:layout_height="wrap_content" 
+		android:inputType="number" 
+		android:lines="1" 
+		android:textColor="@color/text_color" 
+		android:visibility="visible" 
+		android:id="@+id/Param_DureeVie" 
+		android:layout_width="fill_parent"></EditText>
+		<TextView android:layout_width="wrap_content" 
+		android:layout_height="wrap_content" 
+		android:id="@+id/TvConfWidget" 
+		android:text="Action par defaut lors du clic sur le widget" 
+		android:layout_below="@+id/Param_DureeVie" 
+		android:layout_alignLeft="@+id/Param_DureeVie" 
+		android:layout_alignRight="@+id/Param_DureeVie" 
+		android:textColor="@color/text_color"></TextView>
+		 <Spinner android:layout_width="wrap_content" 
+		 android:layout_height="wrap_content" 
+		 android:id="@+id/SpWidget" 
+		 android:layout_below="@+id/TvConfWidget" 
+		 android:layout_alignLeft="@+id/TvConfWidget" 
+		 android:layout_alignRight="@+id/TvConfWidget"></Spinner>
+		 <TextView android:layout_width="wrap_content" 
+		 android:layout_height="wrap_content" 
+		 android:id="@+id/TvConfWidgetColor" 
+		 android:text="Choix de la couleur pour le texte du widget" 
+		 android:layout_below="@+id/SpWidget" 
+		 android:layout_alignLeft="@+id/Param_DureeVie" 
+		 android:layout_alignRight="@+id/Param_DureeVie" 
+		 android:textColor="@color/text_color"></TextView>
+		 
+		<Button android:layout_width="wrap_content" 
+		android:layout_height="wrap_content" 
+		android:id="@+id/BtColorPicker" 
+		android:text="Choix couleur" android:layout_below="@+id/TvConfWidgetColor"></Button>
+		<ImageView android:layout_alignTop="@+id/BtColorPicker" 
+		android:id="@+id/IvPreviewWidget" 
+		android:src="@drawable/icone_bisounours"
+		android:layout_toRightOf="@+id/BtColorPicker" android:layout_height="92dip" android:layout_width="92dip"></ImageView>
+		<TextView android:layout_width="wrap_content"
+		 android:id="@+id/TvPreviewColor" 
+		 android:layout_height="wrap_content"
+		 android:layout_below="@+id/TvConfWidgetColor"
+		 android:text="10" 
+		 android:textColor="@color/text_color" 
+		 android:layout_toRightOf="@+id/BtColorPicker" 
+		 android:layout_marginLeft="5dip" android:layout_marginTop="10dip" android:textSize="32px"></TextView>
+		
+
+</RelativeLayout>
+</ScrollView>
+
+</LinearLayout>
+

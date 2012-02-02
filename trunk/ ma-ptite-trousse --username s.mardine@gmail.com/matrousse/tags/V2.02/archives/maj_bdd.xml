@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<maj_base>
+   <script_maj_table_v2 SCRIPT="UPDATE trousse_marques SET nom_marque=''L'Oréal'' where id_marque=80">texte</script_maj_table_v2>
+   <script_maj_table_v3 SCRIPT="UPDATE trousse_marques SET nom_marque=''Black'Up'' where id_marque=17">texte</script_maj_table_v3>
+   <script_maj_table_v3 SCRIPT="UPDATE trousse_marques SET nom_marque=''L'Action Cosmétique'' where id_marque=79">texte</script_maj_table_v3>
+   <script_maj_table_v3 SCRIPT="UPDATE trousse_marques SET nom_marque=''Mosqueta's'' where id_marque=110">texte</script_maj_table_v3>
+   <script_maj_table_v3 SCRIPT="UPDATE trousse_marques SET nom_marque=''Paula's Choice'' where id_marque=120">texte</script_maj_table_v3>
+   <script_maj_table_v3 SCRIPT="UPDATE trousse_marques SET nom_marque=''Phyt's'' where id_marque=123">texte</script_maj_table_v3>
+   <script_maj_table_v3 SCRIPT="UPDATE trousse_marques SET nom_marque=''Planter's'' where id_marque=124">texte</script_maj_table_v3>
+   <script_maj_table_v3 SCRIPT="UPDATE trousse_marques SET nom_marque=''So'Bio Etic'' where id_marque=140">texte</script_maj_table_v3>
+   <script_maj_table_v3 SCRIPT="UPDATE trousse_marques SET nom_marque=''Terre d'Oc'' where id_marque=148">texte</script_maj_table_v3>
+   <script_maj_table_v4 SCRIPT="UPDATE trousse_produits SET nom_souscatergorie=''Fonds de teint'' where nom_souscatergorie=''Fond de tein''">texte</script_maj_table_v4>
+   <script_maj_table_v4 SCRIPT="UPDATE trousse_produits SET nom_souscatergorie=''Correcteurs - Bases'' where nom_souscatergorie=''Correcteurs - Bases''">texte</script_maj_table_v4>
+   <script_maj_table_v4 SCRIPT="UPDATE trousse_produits SET nom_souscatergorie=''Crayons contour'' where nom_souscatergorie=''Crayon contour''">texte</script_maj_table_v4>
+   <script_maj_table_v4 SCRIPT="UPDATE trousse_produits SET nom_souscatergorie=''Rouges à lèvres'' where nom_souscatergorie=''Rouge à lèvre''">texte</script_maj_table_v4>
+   <script_maj_table_v4 SCRIPT="UPDATE trousse_produits SET nom_souscatergorie=''Vernis à ongles'' where nom_souscatergorie=''Vernis à ongle''">texte</script_maj_table_v4>
+   <script_maj_table_v4 SCRIPT="UPDATE trousse_produits SET nom_souscatergorie=''Crayons - Eyeliners'' where nom_souscatergorie=''Crayons - Eyliners''">texte</script_maj_table_v4>
+   <script_maj_table_v5 SCRIPT="INSERT INTO trousse_produits (nom_souscatergorie,nom_categorie,ISCHECKED) VALUES ('Pinceaux','Autres','false')">texte</script_maj_table_v5>
+   <script_maj_table_v6 SCRIPT="ALTER TABLE produit_Enregistre ADD nom_marque Varchar(255)">texte</script_maj_table_v6>
+   <script_maj_table_v7 SCRIPT="ALTER TABLE produit_Enregistre ADD Date_Peremption_milli LONG">texte</script_maj_table_v7>
+   <script_maj_table_v8 SCRIPT="ALTER TABLE produit_Enregistre ADD IS_PERIME VARCHAR (255)">texte</script_maj_table_v8>
+   <script_maj_table_v8 SCRIPT="ALTER TABLE produit_Enregistre ADD IS_PRESQUE_PERIME VARCHAR (255)">texte</script_maj_table_v8>
+   <script_maj_table_v8 SCRIPT="ALTER TABLE produit_Enregistre ADD NB_JOUR_AVANT_PEREMP VARCHAR (255)">texte</script_maj_table_v8>
+   <script_maj_table_v9 SCRIPT="CREATE TABLE IF NOT EXISTS Notes ( id_note INTEGER PRIMARY KEY  AUTOINCREMENT,Titre VARCHAR(255) NULL, Message VARCHAR (9999) NULL)">texte</script_maj_table_v9>
+    <script_maj_table_v10 SCRIPT="CREATE TABLE IF NOT EXISTS Param ( AfficheAlerte VARCHAR(255) NULL, DureeViePeremp VARCHAR (255) NULL)">texte</script_maj_table_v10>
+	<script_maj_table_v10 SCRIPT="INSERT INTO Param (AfficheAlerte,DureeViePeremp) VALUES (''true'',''30'')  ">texte</script_maj_table_v10>
+	<script_maj_table_v11 SCRIPT="UPDATE  Param set DureeViePeremp=30 where DureeViePeremp>99 ">texte</script_maj_table_v11>
+	<script_maj_table_v12 SCRIPT="DROP TABLE Param">texte</script_maj_table_v12>
+	<script_maj_table_v12 SCRIPT="CREATE TABLE IF NOT EXISTS Param ( AfficheAlerte VARCHAR(255) NULL,DureeViePeremp INTEGER )">texte</script_maj_table_v12>
+	<script_maj_table_v12 SCRIPT="INSERT INTO Param (AfficheAlerte,DureeViePeremp) VALUES (''true'',''30'')">texte</script_maj_table_v12>
+	<script_maj_table_v13 SCRIPT="DROP TABLE Notes">texte</script_maj_table_v13>
+	<script_maj_table_v13 SCRIPT="CREATE TABLE IF NOT EXISTS Notes ( id_note INTEGER PRIMARY KEY  AUTOINCREMENT,Titre VARCHAR(255) NULL, Message VARCHAR (9999) NULL)">texte</script_maj_table_v13>
+	<script_maj_table_v14 SCRIPT="ALTER TABLE Param ADD Theme Varchar(255)">texte</script_maj_table_v14>
+	<script_maj_table_v14 SCRIPT="UPDATE Param SET Theme =''Classique''">texte</script_maj_table_v14>
+  
+</maj_base>
