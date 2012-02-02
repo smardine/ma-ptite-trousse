@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+<project default="javadoc">
+	<property name="doc.dir" value="../build/javadocs"/>
+		<target name="clean">
+			<delete dir="${doc.dir}" />
+		</target>
+    <target name="javadoc" depends="clean">
+        <javadoc access="public" 
+        	author="true" 
+        	classpath="libs/edtftpj.jar" 
+        	destdir="./build/javadocs"
+        	nodeprecated="false"
+        	nodeprecatedlist="false"
+        	noindex="false"
+        	nonavbar="false"
+        	notree="false"
+        	packagenames="fr.smardine.matroussedemaquillage,
+        	fr.smardine.matroussedemaquillage.base,
+        	fr.smardine.matroussedemaquillage.base.accesTable,
+        	fr.smardine.matroussedemaquillage.base.structure,
+        	fr.smardine.matroussedemaquillage.crashreport,
+        	fr.smardine.matroussedemaquillage.factory,
+        	fr.smardine.matroussedemaquillage.ftp,
+        	fr.smardine.matroussedemaquillage.mdl,
+        	fr.smardine.matroussedemaquillage.modifier,
+        	fr.smardine.matroussedemaquillage.note,
+        	fr.smardine.matroussedemaquillage.param,
+        	fr.smardine.matroussedemaquillage.recherche,
+        	fr.smardine.matroussedemaquillage.remplir,
+        	fr.smardine.matroussedemaquillage.variableglobale,
+        	com.example.android.apis.animation,
+        	helper,
+        	widget"
+        	source="1.6"
+        	sourcepath="gen;src"
+        	splitindex="true"
+        	use="true"
+        	version="true"/>
+    </target>
+</project>
