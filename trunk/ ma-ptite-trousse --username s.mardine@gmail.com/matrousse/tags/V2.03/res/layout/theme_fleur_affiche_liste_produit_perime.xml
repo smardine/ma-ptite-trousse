@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="fill_parent" android:layout_width="fill_parent" android:background="@color/app_color">
+       	
+     <ImageView android:id="@+id/ImageView03_rech" android:layout_alignParentLeft="true" android:background="@drawable/theme_fleur_background_bande_gauche" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+	 <ImageView android:id="@+id/ImageView04_rech" android:layout_alignParentRight="true" android:background="@drawable/theme_fleur_background_bande_droite" android:layout_height="wrap_content" android:layout_width="wrap_content"/>
+	 <ImageView android:id="@+id/ImageView01_rech" android:layout_alignParentTop="true" android:layout_alignParentBottom="false" android:layout_height="140dip" android:visibility="visible" android:background="@drawable/theme_fleur_background_bande_haut" android:layout_width="fill_parent" />
+	        <EditText android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/EtFiltrage" android:textColor="@color/text_color" android:visibility="visible" android:layout_centerHorizontal="true" android:drawableRight="@drawable/menu_recherche" android:hint="Filtrage" android:layout_alignLeft="@+id/BTcat" android:layout_alignRight="@+id/BTtout" android:layout_below="@+id/ImageView01_rech" android:inputType="none"></EditText>
+			
+			<ToggleButton android:id="@+id/BTcat" android:layout_width="wrap_content" android:layout_height="wrap_content" android:clickable="true" android:checked="false" android:visibility="visible" android:layout_toLeftOf="@+id/BTmarque" android:layout_marginRight="15dip" android:layout_below="@+id/EtFiltrage" android:textOff="Date pér." android:textOn="Date pér."></ToggleButton>
+     		<ToggleButton android:text="Marque" android:id="@+id/BTmarque"  android:layout_width="wrap_content" android:layout_height="wrap_content" android:textOn="Marque" android:textOff="Marque" android:visibility="visible" android:checked="false" android:clickable="true" android:layout_centerHorizontal="true" android:layout_below="@+id/EtFiltrage"></ToggleButton>
+     		<ToggleButton android:text="Tout" android:id="@+id/BTtout" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textOff="Tout" android:textOn="Tout" android:visibility="visible" android:checked="true" android:clickable="true" android:layout_toRightOf="@+id/BTmarque" android:layout_marginLeft="15dip" android:layout_below="@+id/EtFiltrage"></ToggleButton>
+     	
+	        <ListView android:layout_width="fill_parent" android:layout_height="wrap_content"  android:background="@color/app_color" android:layout_marginLeft="40dip" android:layout_marginTop="20dip" android:visibility="visible" android:id="@+id/produitListViewRechercheTitre" android:layout_marginRight="42dip" android:layout_below="@+id/BTcat"> </ListView>
+			<ListView android:layout_width="fill_parent" android:layout_height="wrap_content"  android:background="@color/app_color" android:layout_marginLeft="40dip" android:layout_marginTop="20dip" android:visibility="visible" android:divider="@drawable/separateur" android:dividerHeight="1dip" android:id="@+id/produitListViewRecherche" android:layout_below="@+id/produitListViewRechercheTitre" android:layout_marginRight="42dip"> </ListView>
+			
+</RelativeLayout>
