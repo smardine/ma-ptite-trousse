@@ -4,6 +4,7 @@
 	<!-- Proprietées globales du scripts ant  -->
 	
 	<property name="classes.dir" value="../bin"/>
+	<property name="src.dir" value="../src"/>
 	<property name="jars.dir" value="../libs"/>
 	<property name="antask.dir" value="${basedir}/etc"/>
 
@@ -60,10 +61,7 @@
     <!-- The workDir directory is used by Sonar to store temporary files -->
     <sonar:sonar workDir="./" key="fr.simscorps:androidproject" version="2.3-SNAPSHOT" xmlns:sonar="antlib:org.sonar.ant">
 	<property key="sonar.host.url" value="http://172.30.3.55:1234/sonar/" />
-      <!-- source directories (required) -->
-      <sources>
-        <path location="../src" />
-      </sources>
+     
   
     	<!-- list of properties (optional) -->
       <property key="sonar.dynamicAnalysis" value="reuseReports" /><!--reuseReports si on veut utiliser les rapport cobertura, false sinon  -->
@@ -73,11 +71,14 @@
       <!--<property key="sonar.phase" value="generate-sources"/> -->
      
     
-     
+	 <!-- source directories (required) -->
+      <sources>
+        <path location="${src.dir}" />
+      </sources>
  
       <!-- binaries directories, which contain for example the compiled Java bytecode (optional) -->
       <binaries>
-        <path location="../bin" />
+        <path location="${classes.dir}" />
       </binaries>
  
       <!-- path to libraries (optional). These libraries are for example used by the Java Findbugs plugin -->

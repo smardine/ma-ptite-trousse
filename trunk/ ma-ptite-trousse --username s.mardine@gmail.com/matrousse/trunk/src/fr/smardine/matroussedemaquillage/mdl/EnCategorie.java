@@ -1,4 +1,4 @@
-package fr.smardine.matroussedemaquillage.variableglobale;
+package fr.smardine.matroussedemaquillage.mdl;
 
 /**
  * interface regroupant toutes les categories
@@ -20,11 +20,5 @@ public interface EnCategorie {
 	 * @return the ident
 	 */
 	Long getIdent();
-
-	/**
-	 * @param p_value
-	 * @return Enum correspondant ou null
-	 */
-	EnCategorie getCategorieFromValue(String p_value);
 
 }

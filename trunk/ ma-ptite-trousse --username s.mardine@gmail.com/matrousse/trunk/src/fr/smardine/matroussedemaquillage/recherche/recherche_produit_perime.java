@@ -527,7 +527,7 @@ public class recherche_produit_perime extends Activity implements
 		// objBd.open();
 
 		if (TypeRecherche.equals("TitreCat")) {
-			produitFinal.add(new produitRecherche(-1, "Date Peremp.",
+			produitFinal.add(new produitRecherche("-1", "Date Peremp.",
 					"Produit", "Marque"));
 		}
 
@@ -537,8 +537,8 @@ public class recherche_produit_perime extends Activity implements
 			MlListeProduits lstProduit = accesProduit
 					.getListeProduitsPerimeAvecFiltrageSurCategorie(p_Filtrage);
 			for (MlProduit p : lstProduit) {
-				produitFinal.add(new produitRecherche(p.getIdProduit(), p
-						.getNomCat(), p.getNomProduit(), p.getMarque()));
+				produitFinal.add(new produitRecherche("" + p.getIdProduit(), p
+						.getNomCat().name(), p.getNomProduit(), p.getMarque()));
 			}
 
 			// String[] Colonnes = { "id_produits", "nom_produit",
@@ -573,8 +573,8 @@ public class recherche_produit_perime extends Activity implements
 			// }
 		}
 		if (TypeRecherche.equals("TitreMarque")) {
-			produitFinal.add(new produitRecherche(-1, "Date Peremp", "Produit",
-					"Marque"));
+			produitFinal.add(new produitRecherche("-1", "Date Peremp",
+					"Produit", "Marque"));
 		}
 
 		if (TypeRecherche.equals("MarqueAvecFiltrage")) {
@@ -583,8 +583,8 @@ public class recherche_produit_perime extends Activity implements
 			MlListeProduits lstProduit = accesProduit
 					.getListeProduitsPerimeAvecFiltrageSurMarque(p_Filtrage);
 			for (MlProduit p : lstProduit) {
-				produitFinal.add(new produitRecherche(p.getIdProduit(), p
-						.getNomCat(), p.getNomProduit(), p.getMarque()));
+				produitFinal.add(new produitRecherche("" + p.getIdProduit(), p
+						.getNomCat().name(), p.getNomProduit(), p.getMarque()));
 			}
 			// String[] Colonnes = { "id_produits", "nom_marque", "nom_produit",
 			// "Date_Peremption" };
@@ -612,7 +612,7 @@ public class recherche_produit_perime extends Activity implements
 			// }
 		}
 		if (TypeRecherche.equals("TitreTout")) {
-			produitFinal.add(new produitRecherche(-1, "Date péremp.",
+			produitFinal.add(new produitRecherche("-1", "Date péremp.",
 					"Produit", "Marque"));
 		}
 
@@ -622,8 +622,8 @@ public class recherche_produit_perime extends Activity implements
 			MlListeProduits lstProduit = accesProduit
 					.getListeProduitsPerimeAvecFiltrageSurTout(p_Filtrage);
 			for (MlProduit p : lstProduit) {
-				produitFinal.add(new produitRecherche(p.getIdProduit(), p
-						.getNomCat(), p.getNomProduit(), p.getMarque()));
+				produitFinal.add(new produitRecherche("" + p.getIdProduit(), p
+						.getNomCat().name(), p.getNomProduit(), p.getMarque()));
 			}
 			// String[] Colonnes = { "id_produits", "Date_Peremption",
 			// "nom_produit", "nom_marque" };

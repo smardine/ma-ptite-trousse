@@ -8,6 +8,7 @@ import android.content.Context;
 import fr.smardine.matroussedemaquillage.base.RequeteFactory;
 import fr.smardine.matroussedemaquillage.base.structure.EnStructProduits;
 import fr.smardine.matroussedemaquillage.base.structure.EnTable;
+import fr.smardine.matroussedemaquillage.mdl.EnCategorie;
 import fr.smardine.matroussedemaquillage.mdl.MlListeTrousseProduit;
 import fr.smardine.matroussedemaquillage.mdl.MlTrousseProduit;
 
@@ -79,14 +80,14 @@ public class AccesTableTrousseProduits {
 	}
 
 	/**
-	 * @param p_sousCat
+	 * @param p_categorieChoisie
 	 */
-	public void majSouscatChoisie(String p_sousCat) {
+	public void majSouscatChoisie(EnCategorie p_categorieChoisie) {
 		reinitProduitChoisi();
 		ContentValues modifiedValues = new ContentValues();
 		modifiedValues.put("ischecked", "true");
 		String whereClause = "nom_souscatergorie=?";
-		String[] whereArgs = new String[] { p_sousCat };
+		String[] whereArgs = new String[] { p_categorieChoisie.getLib() };
 		requeteFact.majTable(EnTable.TROUSSE_PRODUIT, modifiedValues,
 				whereClause, whereArgs);
 	}

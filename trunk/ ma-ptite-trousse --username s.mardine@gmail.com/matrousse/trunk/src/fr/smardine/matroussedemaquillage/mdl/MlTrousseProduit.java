@@ -12,8 +12,8 @@ public class MlTrousseProduit {
 
 	private final int idTrousseproduit;
 	private final Context ctx;
-	private final String nomSousCat;
-	private final String nomCat;
+	private final EnCategorie nomSousCat;
+	private final EnTypeCategorie nomCat;
 	private final boolean isChecked;
 
 	/**
@@ -27,8 +27,13 @@ public class MlTrousseProduit {
 				ctx);
 		ArrayList<String> defTrousseProduit = accesProduit
 				.getTrousseProduitById(idTrousseproduit);
-		this.nomSousCat = defTrousseProduit.get(0);
-		this.nomCat = defTrousseProduit.get(1);
+		this.nomSousCat = MlProduit.rechercheSousCat(defTrousseProduit.get(0));
+
+		this.nomCat = EnTypeCategorie
+				.getEnumFromValue(defTrousseProduit.get(1));
+
+		// this.nomSousCat = defTrousseProduit.get(0);
+		// this.nomCat = defTrousseProduit.get(1);
 		this.isChecked = Boolean.parseBoolean(defTrousseProduit.get(2));
 
 	}
@@ -36,14 +41,14 @@ public class MlTrousseProduit {
 	/**
 	 * @return the nomSousCat
 	 */
-	public String getNomSousCat() {
+	public EnCategorie getNomSousCat() {
 		return nomSousCat;
 	}
 
 	/**
 	 * @return the nomCat
 	 */
-	public String getNomCat() {
+	public EnTypeCategorie getNomCat() {
 		return nomCat;
 	}
 

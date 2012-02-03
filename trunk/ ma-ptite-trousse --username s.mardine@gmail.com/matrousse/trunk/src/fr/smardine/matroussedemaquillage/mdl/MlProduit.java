@@ -7,7 +7,6 @@ import java.util.Date;
 
 import android.content.Context;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableProduitEnregistre;
-import fr.smardine.matroussedemaquillage.variableglobale.EnCategorie;
 
 /**
  * Classe gerant les produits en base
@@ -27,8 +26,8 @@ public class MlProduit {
 	private boolean isPerime;
 	private boolean isPresquePerime;
 	private int nbJourAvantPeremp;
-	private String nomSousCat;
-	private String nomCat;
+	private EnCategorie nomSousCat;
+	private EnTypeCategorie nomCat;
 	private int dureeVie;
 	private long datePeremMilli;
 	private final Context ctx;
@@ -48,8 +47,11 @@ public class MlProduit {
 		ArrayList<String> defProduit = accesProduit
 				.getDefProduitById(idProduit);
 		this.nomProduit = defProduit.get(0);
-		this.nomSousCat = defProduit.get(1);
-		this.nomCat = defProduit.get(2);
+
+		this.nomSousCat = rechercheSousCat(defProduit.get(1));
+
+		this.nomCat = EnTypeCategorie.getEnumFromValue(defProduit.get(2));
+
 		this.teinte = defProduit.get(3);
 		this.dureeVie = Integer.parseInt(defProduit.get(4));
 		this.datePeremption = DateHelper.getDateFromDatabase(defProduit.get(5));
@@ -60,6 +62,19 @@ public class MlProduit {
 		this.isPerime = Boolean.getBoolean(defProduit.get(9));
 		this.isPresquePerime = Boolean.getBoolean(defProduit.get(10));
 		this.nbJourAvantPeremp = Integer.parseInt(defProduit.get(11));
+
+	}
+
+	static EnCategorie rechercheSousCat(String p_nomSousCat) {
+		if (EnCategorieAutres.getCategorieFromValue(p_nomSousCat) != null) {
+			return EnCategorieAutres.getCategorieFromValue(p_nomSousCat);
+		} else if (EnCategorieLevre.getCategorieFromValue(p_nomSousCat) != null) {
+			return EnCategorieLevre.getCategorieFromValue(p_nomSousCat);
+		} else if (EnCategorieVisage.getCategorieFromValue(p_nomSousCat) != null) {
+			return EnCategorieVisage.getCategorieFromValue(p_nomSousCat);
+		} else {
+			return EnCategorieYeux.getCategorieFromValue(p_nomSousCat);
+		}
 
 	}
 
@@ -102,7 +117,7 @@ public class MlProduit {
 	/**
 	 * @return la date d'achat
 	 */
-	public java.util.Date getDateAchat() {
+	public Date getDateAchat() {
 		return dateAchat;
 	}
 
@@ -116,7 +131,7 @@ public class MlProduit {
 	/**
 	 * @return la date de peremption
 	 */
-	public java.util.Date getDatePeremption() {
+	public Date getDatePeremption() {
 		return datePeremption;
 	}
 
@@ -228,28 +243,28 @@ public class MlProduit {
 	/**
 	 * @return le nom de la sous categorie
 	 */
-	public String getNomSousCat() {
+	public EnCategorie getNomSousCat() {
 		return nomSousCat;
 	}
 
 	/**
 	 * @param p_nomSousCat
 	 */
-	public void setNomSousCat(String p_nomSousCat) {
+	public void setNomSousCat(EnCategorie p_nomSousCat) {
 		nomSousCat = p_nomSousCat;
 	}
 
 	/**
 	 * @return le nom de la categorie
 	 */
-	public String getNomCat() {
+	public EnTypeCategorie getNomCat() {
 		return nomCat;
 	}
 
 	/**
 	 * @param p_nomCat
 	 */
-	public void setNomCat(String p_nomCat) {
+	public void setNomCat(EnTypeCategorie p_nomCat) {
 		nomCat = p_nomCat;
 	}
 

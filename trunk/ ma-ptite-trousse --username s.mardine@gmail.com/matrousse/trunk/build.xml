@@ -16,7 +16,7 @@
 	
 	 <!-- Pour HUDSON indiquer où se trouve les SDK sur le serveur d'intégration continu
 	         cette valeur peut être surchargée sur une machine en local en redéfinissant le chemin dans local.properties  -->
-		<property name="sdk.dir" value="C:\android\android-sdk-windows"/>
+	<property name="sdk.dir" value="C:\android\android-sdk-windows"/>
 
     <!-- The build.properties file can be created by you and is never touched
          by the 'android' tool. This is the place to change some of the

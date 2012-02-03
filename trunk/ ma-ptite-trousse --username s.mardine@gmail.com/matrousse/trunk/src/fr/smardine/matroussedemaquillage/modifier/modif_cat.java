@@ -14,14 +14,14 @@ import fr.smardine.matroussedemaquillage.R;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableParams;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableProduitEnregistre;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableTrousseProduits;
+import fr.smardine.matroussedemaquillage.mdl.EnCategorieAutres;
+import fr.smardine.matroussedemaquillage.mdl.EnCategorieLevre;
+import fr.smardine.matroussedemaquillage.mdl.EnCategorieVisage;
+import fr.smardine.matroussedemaquillage.mdl.EnCategorieYeux;
 import fr.smardine.matroussedemaquillage.mdl.MlListeTrousseProduit;
 import fr.smardine.matroussedemaquillage.recherche.Recherche;
 import fr.smardine.matroussedemaquillage.recherche.affiche_detail;
 import fr.smardine.matroussedemaquillage.variableglobale.ActivityParam;
-import fr.smardine.matroussedemaquillage.variableglobale.EnCategorieAutres;
-import fr.smardine.matroussedemaquillage.variableglobale.EnCategorieLevre;
-import fr.smardine.matroussedemaquillage.variableglobale.EnCategorieVisage;
-import fr.smardine.matroussedemaquillage.variableglobale.EnCategorieYeux;
 import fr.smardine.matroussedemaquillage.variableglobale.EnTheme;
 
 /**
@@ -344,7 +344,7 @@ public class modif_cat extends Activity implements OnClickListener {
 				.getListeTrousseProduit(p_categorie);
 		String[] NomProduits = new String[ListeProduits.size()];
 		for (int j = 0; j < ListeProduits.size(); j++) {
-			NomProduits[j] = ListeProduits.get(j).getNomCat();
+			NomProduits[j] = ListeProduits.get(j).getNomCat().name();
 			boolean isChecked = ListeProduits.get(j).isChecked();
 			if (isChecked) {
 				indiceProduitCoche = j;
@@ -366,7 +366,7 @@ public class modif_cat extends Activity implements OnClickListener {
 				.getListeTrousseProduit(p_categorie);
 		String[] NomProduits = new String[ListeProduits.size()];
 		for (int j = 0; j < ListeProduits.size(); j++) {
-			NomProduits[j] = ListeProduits.get(j).getNomSousCat();
+			NomProduits[j] = ListeProduits.get(j).getNomSousCat().getLib();
 		}
 		// objBd.close();
 		return NomProduits;
@@ -415,8 +415,8 @@ public class modif_cat extends Activity implements OnClickListener {
 
 		// ArrayList[] Categorie_Cochée =
 		// objBd.renvoiCategorieEtProduitCochée();
-		String SousCat = lstProdsCoche.get(0).getNomSousCat();
-		String Cat = lstProdsCoche.get(1).getNomCat();
+		String SousCat = lstProdsCoche.get(0).getNomSousCat().getLib();
+		String Cat = lstProdsCoche.get(1).getNomCat().name();
 
 		intent.putExtra(ActivityParam.IdProduit, Id_Produit);
 		intent.putExtra(ActivityParam.LaunchFromModfiCat, true);

@@ -2,7 +2,6 @@ package fr.smardine.matroussedemaquillage.base.accesTable;
 
 import helper.DateHelper;
 
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -126,8 +125,9 @@ public class AccesTableProduitEnregistre {
 
 		ContentValues modifiedValues = new ContentValues();
 		modifiedValues.put("nom_produit", p_produit.getNomProduit());
-		modifiedValues.put("nom_souscatergorie", p_produit.getNomSousCat());
-		modifiedValues.put("nom_categorie", p_produit.getNomCat());
+		modifiedValues.put("nom_souscatergorie", p_produit.getNomSousCat()
+				.getLib());
+		modifiedValues.put("nom_categorie", p_produit.getNomCat().name());
 		modifiedValues.put("numero_Teinte", p_produit.getTeinte());
 		modifiedValues.put("Duree_Vie", "" + p_produit.getDureeVie());
 		modifiedValues.put("Date_Peremption",
@@ -190,8 +190,9 @@ public class AccesTableProduitEnregistre {
 	public void majProduitComplet(MlProduit p_produit) {
 		ContentValues modifiedValues = new ContentValues();
 		modifiedValues.put("nom_produit", p_produit.getNomProduit());
-		modifiedValues.put("nom_souscatergorie", p_produit.getNomSousCat());
-		modifiedValues.put("nom_categorie", p_produit.getNomCat());
+		modifiedValues.put("nom_souscatergorie", p_produit.getNomSousCat()
+				.getLib());
+		modifiedValues.put("nom_categorie", p_produit.getNomCat().name());
 		modifiedValues.put("numero_Teinte", p_produit.getTeinte());
 		modifiedValues.put("Duree_Vie", p_produit.getDureeVie());
 		modifiedValues.put("Date_Peremption",
@@ -217,8 +218,9 @@ public class AccesTableProduitEnregistre {
 		ContentValues newValueToInsert = new ContentValues();
 		newValueToInsert.put("nom_produit", p_produit.getNomProduit());
 		newValueToInsert.put("nom_marque", p_produit.getMarque());
-		newValueToInsert.put("nom_souscatergorie", p_produit.getNomSousCat());
-		newValueToInsert.put("nom_categorie", p_produit.getNomCat());
+		newValueToInsert.put("nom_souscatergorie", p_produit.getNomSousCat()
+				.getLib());
+		newValueToInsert.put("nom_categorie", p_produit.getNomCat().name());
 		newValueToInsert.put("numero_Teinte", p_produit.getTeinte());
 		newValueToInsert.put("DateAchat",
 				DateHelper.getDateforDatabase(p_produit.getDateAchat()));
@@ -227,7 +229,7 @@ public class AccesTableProduitEnregistre {
 
 		int nbMoisDurreeDeVie = p_produit.getDureeVie();
 
-		Date DatePeremption = (Date) DateHelper.getDatePeremption(
+		java.util.Date DatePeremption = DateHelper.getDatePeremption(
 				p_produit.getDateAchat(), nbMoisDurreeDeVie);
 
 		newValueToInsert.put("Date_Peremption_milli", DatePeremption.getTime());

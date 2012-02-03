@@ -41,6 +41,11 @@ import fr.smardine.matroussedemaquillage.R;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableParams;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableTrousseMarque;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableTrousseProduits;
+import fr.smardine.matroussedemaquillage.mdl.EnCategorie;
+import fr.smardine.matroussedemaquillage.mdl.EnCategorieAutres;
+import fr.smardine.matroussedemaquillage.mdl.EnCategorieLevre;
+import fr.smardine.matroussedemaquillage.mdl.EnCategorieVisage;
+import fr.smardine.matroussedemaquillage.mdl.EnCategorieYeux;
 import fr.smardine.matroussedemaquillage.mdl.MlListeMarque;
 import fr.smardine.matroussedemaquillage.mdl.MlListeTrousseProduit;
 import fr.smardine.matroussedemaquillage.mdl.MlTrousseProduit;
@@ -48,10 +53,6 @@ import fr.smardine.matroussedemaquillage.note.note_page1;
 import fr.smardine.matroussedemaquillage.param.tab_param;
 import fr.smardine.matroussedemaquillage.recherche.Recherche;
 import fr.smardine.matroussedemaquillage.variableglobale.ActivityParam;
-import fr.smardine.matroussedemaquillage.variableglobale.EnCategorieAutres;
-import fr.smardine.matroussedemaquillage.variableglobale.EnCategorieLevre;
-import fr.smardine.matroussedemaquillage.variableglobale.EnCategorieVisage;
-import fr.smardine.matroussedemaquillage.variableglobale.EnCategorieYeux;
 import fr.smardine.matroussedemaquillage.variableglobale.EnTheme;
 
 /**
@@ -76,7 +77,7 @@ public class formulaire_entree_page1bis extends Activity implements
 	String[] Marque;
 	// private ContentValues modifiedValues;
 	// private String whereClause;
-	private String categorieChoisie;
+	private EnCategorie categorieChoisie;
 
 	/** Called when the activity is first created. */
 
@@ -314,37 +315,56 @@ public class formulaire_entree_page1bis extends Activity implements
 						@Override
 						public void onClick(DialogInterface dialog, int item) {
 							/* User clicked on a radio button do some stuff */
+							EnCategorieVisage catVisage = EnCategorieVisage
+									.getCategorieFromCode(item);
+							switch (catVisage) {
+								case FONDS_DE_TEINTS:
+									categorieChoisie = EnCategorieVisage.FONDS_DE_TEINTS;
+									break;
+								case Correcteurs_Bases:
+									categorieChoisie = EnCategorieVisage.Correcteurs_Bases;
+									break;
+								case Blush:
+									categorieChoisie = EnCategorieVisage.Blush;
+									break;
+								case Poudres:
+									categorieChoisie = EnCategorieVisage.Poudres;
+									break;
+							}
 
-							if (item == EnCategorieVisage.FONDS_DE_TEINTS
-									.getCode()) {
-								// modifiedValues = new ContentValues();
-								// modifiedValues.put("ischecked", "true");
-								// whereClause = "nom_souscatergorie=?";
-								categorieChoisie = EnCategorieVisage.FONDS_DE_TEINTS
-										.getLib();
-							}
-							if (item == EnCategorieVisage.Correcteurs_Bases
-									.getCode()) {
-								// modifiedValues = new ContentValues();
-								// modifiedValues.put("ischecked", "true");
-								// whereClause = "nom_souscatergorie=?";
-								categorieChoisie = EnCategorieVisage.Correcteurs_Bases
-										.getLib();
-							}
-							if (item == EnCategorieVisage.Blush.getCode()) {
-								// modifiedValues = new ContentValues();
-								// modifiedValues.put("ischecked", "true");
-								// whereClause = "nom_souscatergorie=?";
-								categorieChoisie = EnCategorieVisage.Blush
-										.getLib();
-							}
-							if (item == EnCategorieVisage.Poudres.getCode()) {
-								// modifiedValues = new ContentValues();
-								// modifiedValues.put("ischecked", "true");
-								// whereClause = "nom_souscatergorie=?";
-								categorieChoisie = EnCategorieVisage.Poudres
-										.getLib();
-							}
+							// if (item == EnCategorieVisage.FONDS_DE_TEINTS
+							// .getCode()) {
+							// // modifiedValues = new ContentValues();
+							// // modifiedValues.put("ischecked", "true");
+							// // whereClause = "nom_souscatergorie=?";
+							// categorieChoisie =
+							// EnCategorieVisage.FONDS_DE_TEINTS
+							// .getLib();
+							// }
+							// if (item == EnCategorieVisage.Correcteurs_Bases
+							// .getCode()) {
+							// // modifiedValues = new ContentValues();
+							// // modifiedValues.put("ischecked", "true");
+							// // whereClause = "nom_souscatergorie=?";
+							// categorieChoisie =
+							// EnCategorieVisage.Correcteurs_Bases
+							// .getLib();
+							// }
+							// if (item == EnCategorieVisage.Blush.getCode()) {
+							// // modifiedValues = new ContentValues();
+							// // modifiedValues.put("ischecked", "true");
+							// // whereClause = "nom_souscatergorie=?";
+							// categorieChoisie = EnCategorieVisage.Blush
+							// .getLib();
+							// }
+							// if (item == EnCategorieVisage.Poudres.getCode())
+							// {
+							// // modifiedValues = new ContentValues();
+							// // modifiedValues.put("ischecked", "true");
+							// // whereClause = "nom_souscatergorie=?";
+							// categorieChoisie = EnCategorieVisage.Poudres
+							// .getLib();
+							// }
 						}
 					});
 			adChoixVisage.setPositiveButton("Choisir",
@@ -369,36 +389,22 @@ public class formulaire_entree_page1bis extends Activity implements
 						@Override
 						public void onClick(DialogInterface dialog, int item) {
 							/* User clicked on a radio button do some stuff */
+							EnCategorieYeux catYeux = EnCategorieYeux
+									.getCategorieFromCode(item);
+							switch (catYeux) {
+								case Bases:
+									categorieChoisie = EnCategorieYeux.Bases;
+									break;
+								case Crayons_Eyeliners:
+									categorieChoisie = EnCategorieYeux.Crayons_Eyeliners;
+									break;
+								case Fards:
+									categorieChoisie = EnCategorieYeux.Fards;
+									break;
+								case Mascaras:
+									categorieChoisie = EnCategorieYeux.Mascaras;
+							}
 
-							if (item == EnCategorieYeux.Bases.getCode()) {
-								// modifiedValues = new ContentValues();
-								// modifiedValues.put("ischecked", "true");
-								// whereClause = "nom_souscatergorie=?";
-								categorieChoisie = EnCategorieYeux.Bases
-										.getLib();
-							}
-							if (item == EnCategorieYeux.Crayons_Eyeliners
-									.getCode()) {
-								// modifiedValues = new ContentValues();
-								// modifiedValues.put("ischecked", "true");
-								// whereClause = "nom_souscatergorie=?";
-								categorieChoisie = EnCategorieYeux.Crayons_Eyeliners
-										.getLib();
-							}
-							if (item == EnCategorieYeux.Fards.getCode()) {
-								// modifiedValues = new ContentValues();
-								// modifiedValues.put("ischecked", "true");
-								// whereClause = "nom_souscatergorie=?";
-								categorieChoisie = EnCategorieYeux.Fards
-										.getLib();
-							}
-							if (item == EnCategorieYeux.Mascaras.getCode()) {
-								// modifiedValues = new ContentValues();
-								// modifiedValues.put("ischecked", "true");
-								// whereClause = "nom_souscatergorie=?";
-								categorieChoisie = EnCategorieYeux.Mascaras
-										.getLib();
-							}
 						}
 					});
 			adChoixYeux.setPositiveButton("Choisir",
@@ -422,24 +428,16 @@ public class formulaire_entree_page1bis extends Activity implements
 						@Override
 						public void onClick(DialogInterface dialog, int item) {
 							/* User clicked on a radio button do some stuff */
-
-							if (item == EnCategorieLevre.Crayons_contour
-									.getCode()) {
-								// modifiedValues = new ContentValues();
-								// modifiedValues.put("ischecked", "true");
-								// whereClause = "nom_souscatergorie=?";
-								categorieChoisie = EnCategorieLevre.Crayons_contour
-										.getLib();
+							EnCategorieLevre catLevre = EnCategorieLevre
+									.getCategorieFromCode(item);
+							switch (catLevre) {
+								case Crayons_contour:
+									categorieChoisie = EnCategorieLevre.Crayons_contour;
+									break;
+								case RougesAlevres:
+									categorieChoisie = EnCategorieLevre.RougesAlevres;
+									break;
 							}
-							if (item == EnCategorieLevre.RougesAlevres
-									.getCode()) {
-								// modifiedValues = new ContentValues();
-								// modifiedValues.put("ischecked", "true");
-								// whereClause = "nom_souscatergorie=?";
-								categorieChoisie = EnCategorieLevre.RougesAlevres
-										.getLib();
-							}
-
 						}
 					});
 			adChoixLevre.setPositiveButton("Choisir",
@@ -463,21 +461,15 @@ public class formulaire_entree_page1bis extends Activity implements
 						@Override
 						public void onClick(DialogInterface dialog, int item) {
 							/* User clicked on a radio button do some stuff */
-
-							if (item == EnCategorieAutres.Pinceaux.getCode()) {
-								// modifiedValues = new ContentValues();
-								// modifiedValues.put("ischecked", "true");
-								// whereClause = "nom_souscatergorie=?";
-								categorieChoisie = EnCategorieAutres.Pinceaux
-										.getLib();
-							}
-							if (item == EnCategorieAutres.VernisAongles
-									.getCode()) {
-								// modifiedValues = new ContentValues();
-								// modifiedValues.put("ischecked", "true");
-								// whereClause = "nom_souscatergorie=?";
-								categorieChoisie = EnCategorieAutres.VernisAongles
-										.getLib();
+							EnCategorieAutres catAutre = EnCategorieAutres
+									.getCategorieFromCode(item);
+							switch (catAutre) {
+								case Pinceaux:
+									categorieChoisie = EnCategorieAutres.Pinceaux;
+									break;
+								case VernisAongles:
+									categorieChoisie = EnCategorieAutres.VernisAongles;
+									break;
 							}
 
 						}
@@ -595,7 +587,7 @@ public class formulaire_entree_page1bis extends Activity implements
 		String[] NomProduits = new String[ListeProduits.size()];
 
 		for (int j = 0; j < ListeProduits.size(); j++) {
-			NomProduits[j] = ListeProduits.get(j).getNomSousCat();
+			NomProduits[j] = ListeProduits.get(j).getNomSousCat().getLib();
 		}
 
 		return NomProduits;
@@ -631,7 +623,7 @@ public class formulaire_entree_page1bis extends Activity implements
 		// int nbCategorieCochées = ListeCategorieCochée[0].size();
 		String NomProduits = "";
 		for (MlTrousseProduit tp : lstCatCochee) {
-			NomProduits = tp.getNomSousCat();
+			NomProduits = tp.getNomSousCat().getLib();
 		}
 		// for (int j = 0; j < nbCatCochee; j++) {
 		// NomProduits = ListeCategorieCochée[0].get(j).toString();
