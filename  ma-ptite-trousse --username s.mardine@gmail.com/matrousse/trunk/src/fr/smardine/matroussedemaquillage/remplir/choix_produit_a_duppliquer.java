@@ -218,7 +218,7 @@ public class choix_produit_a_duppliquer extends Activity implements
 
 		// objBd.open();
 		if (TypeRecherche.equals("Titre")) {
-			produitDuppliqueTitre.add(new produitRecherche(-1, "Marque",
+			produitDuppliqueTitre.add(new produitRecherche("-1", "Marque",
 					"Produit", "Catégorie"));
 		}
 		if (TypeRecherche.equals("Tout")) {
@@ -226,8 +226,9 @@ public class choix_produit_a_duppliquer extends Activity implements
 					this);
 			MlListeProduits lstProduit = accesProduit.getListeProduits();
 			for (MlProduit p : lstProduit) {
-				produitDupplique.add(new produitRecherche(p.getIdProduit(), p
-						.getNomCat(), p.getNomProduit(), p.getMarque()));
+				produitDupplique.add(new produitRecherche(
+						"" + p.getIdProduit(), p.getNomCat().name(), p
+								.getNomProduit(), p.getMarque()));
 			}
 			// String[] Colonnes = { "id_produits", "nom_produit", "nom_marque",
 			// "nom_souscatergorie" };

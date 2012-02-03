@@ -67,10 +67,10 @@ public class Recherche extends Activity implements OnClickListener,
 	String nomProduitRecup;
 	String Txt01, Txt02, Txt03;
 	String TypeDeRecherche;
-	protected boolean detail;
-	protected boolean newNote;
+	private boolean detail;
+	private boolean newNote;
 	boolean IsCalledFromMain;
-	String filtrageChoisi;
+	EnCategorieFiltrage filtrageChoisi;
 
 	@Override
 	/** Called when the activity is first created. */
@@ -153,17 +153,14 @@ public class Recherche extends Activity implements OnClickListener,
 
 						switch (item) {
 							case 0:
-								filtrageChoisi = EnCategorieFiltrage.Tout
-										.getLib();
+								filtrageChoisi = EnCategorieFiltrage.Tout;
 
 								break;
 							case 1:
-								filtrageChoisi = EnCategorieFiltrage.Marque
-										.getLib();
+								filtrageChoisi = EnCategorieFiltrage.Marque;
 								break;
 							case 2:
-								filtrageChoisi = EnCategorieFiltrage.Categorie
-										.getLib();
+								filtrageChoisi = EnCategorieFiltrage.Categorie;
 								break;
 						}
 
@@ -181,7 +178,7 @@ public class Recherche extends Activity implements OnClickListener,
 				});
 		adChoixFiltrage.setNegativeButton("Annuler", null);
 
-		filtreSelonSaisieEtBtActive("", EnCategorieFiltrage.Tout.getLib());
+		filtreSelonSaisieEtBtActive("", EnCategorieFiltrage.Tout);
 		this.setTitle("Recherche d'un produit");
 
 	}
@@ -196,8 +193,8 @@ public class Recherche extends Activity implements OnClickListener,
 	 * @param p_isToutChecked boolean Le BtTout est activé.
 	 */
 	protected void filtreSelonSaisieEtBtActive(String p_txtFiltrage,
-			String p_filtrageChoisi) {
-		if (EnCategorieFiltrage.Categorie.getLib().equals(p_filtrageChoisi)) {
+			EnCategorieFiltrage p_filtrageChoisi) {
+		if (EnCategorieFiltrage.Categorie.equals(p_filtrageChoisi)) {
 			produitRecherche.removeAll(produitRecherche);
 			produitRechercheTitre.removeAll(produitRechercheTitre);
 			AfficheLeContenu("TitreCat", produitRechercheTitre,
@@ -206,7 +203,7 @@ public class Recherche extends Activity implements OnClickListener,
 					ProduitListView1, p_txtFiltrage);
 
 		}
-		if (EnCategorieFiltrage.Marque.getLib().equals(p_filtrageChoisi)) {
+		if (EnCategorieFiltrage.Marque.equals(p_filtrageChoisi)) {
 			produitRecherche.removeAll(produitRecherche);
 			produitRechercheTitre.removeAll(produitRechercheTitre);
 			AfficheLeContenu("TitreMarque", produitRechercheTitre,
@@ -215,7 +212,7 @@ public class Recherche extends Activity implements OnClickListener,
 					ProduitListView1, p_txtFiltrage);
 
 		}
-		if (EnCategorieFiltrage.Tout.getLib().equals(p_filtrageChoisi)) {
+		if (EnCategorieFiltrage.Tout.equals(p_filtrageChoisi)) {
 			produitRecherche.removeAll(produitRecherche);
 			produitRechercheTitre.removeAll(produitRechercheTitre);
 			AfficheLeContenu("TitreTout", produitRechercheTitre,
@@ -550,7 +547,7 @@ public class Recherche extends Activity implements OnClickListener,
 		// objBd.open();
 
 		if (TypeRecherche.equals("TitreCat")) {
-			produitFinal.add(new produitRecherche(-1, "Catégorie", "Produit",
+			produitFinal.add(new produitRecherche("-1", "Catégorie", "Produit",
 					"Marque"));
 		}
 
@@ -569,8 +566,8 @@ public class Recherche extends Activity implements OnClickListener,
 			MlListeProduits lstProduit = accesProduit
 					.getListeProduitsAvecFiltrageSurCategorie(p_Filtrage);
 			for (MlProduit p : lstProduit) {
-				produitFinal.add(new produitRecherche(p.getIdProduit(), p
-						.getNomCat(), p.getNomProduit(), p.getMarque()));
+				produitFinal.add(new produitRecherche("" + p.getIdProduit(), p
+						.getNomCat().name(), p.getNomProduit(), p.getMarque()));
 			}
 			// int nbdobjet = ListeProduits[0].size();
 			// if (nbdobjet != 0) {
@@ -591,7 +588,7 @@ public class Recherche extends Activity implements OnClickListener,
 			// }
 		}
 		if (TypeRecherche.equals("TitreMarque")) {
-			produitFinal.add(new produitRecherche(-1, "Marque", "Produit",
+			produitFinal.add(new produitRecherche("-1", "Marque", "Produit",
 					"Catégorie"));
 		}
 
@@ -601,8 +598,8 @@ public class Recherche extends Activity implements OnClickListener,
 			MlListeProduits lstProduit = accesProduit
 					.getListeProduitsAvecFiltrageSurMarque(p_Filtrage);
 			for (MlProduit p : lstProduit) {
-				produitFinal.add(new produitRecherche(p.getIdProduit(), p
-						.getNomCat(), p.getNomProduit(), p.getMarque()));
+				produitFinal.add(new produitRecherche("" + p.getIdProduit(), p
+						.getNomCat().name(), p.getNomProduit(), p.getMarque()));
 			}
 
 			// String[] Colonnes = { "id_produits", "nom_produit", "nom_marque",
@@ -627,7 +624,7 @@ public class Recherche extends Activity implements OnClickListener,
 			// }
 		}
 		if (TypeRecherche.equals("TitreTout")) {
-			produitFinal.add(new produitRecherche(-1, "Marque", "Produit",
+			produitFinal.add(new produitRecherche("-1", "Marque", "Produit",
 					"Catégorie"));
 		}
 		// if (TypeRecherche.equals("Tout")) {
@@ -657,8 +654,8 @@ public class Recherche extends Activity implements OnClickListener,
 			MlListeProduits lstProduit = accesProduit
 					.getListeProduitsAvecFiltrageSurTout(p_Filtrage);
 			for (MlProduit p : lstProduit) {
-				produitFinal.add(new produitRecherche(p.getIdProduit(), p
-						.getNomCat(), p.getNomProduit(), p.getMarque()));
+				produitFinal.add(new produitRecherche("" + p.getIdProduit(), p
+						.getNomCat().name(), p.getNomProduit(), p.getMarque()));
 			}
 
 			// String[] Colonnes = { "id_produits", "nom_produit", "nom_marque",
@@ -687,7 +684,7 @@ public class Recherche extends Activity implements OnClickListener,
 			// }
 		}
 		if (TypeRecherche.equals("TitrePerime")) {
-			produitFinal.add(new produitRecherche(-1, "Date péremp.",
+			produitFinal.add(new produitRecherche("-1", "Date péremp.",
 					"Produit", "Marque"));
 		}
 		if (TypeRecherche.equals("Perimé")) {
@@ -698,8 +695,8 @@ public class Recherche extends Activity implements OnClickListener,
 				adAucunProduit.show();
 			}
 			for (MlProduit p : lstProduit) {
-				produitFinal.add(new produitRecherche(p.getIdProduit(), p
-						.getNomCat(), p.getNomProduit(), p.getMarque()));
+				produitFinal.add(new produitRecherche("" + p.getIdProduit(), p
+						.getNomCat().name(), p.getNomProduit(), p.getMarque()));
 			}
 			// String[] Colonnes = { "id_produits", "nom_produit",
 			// "Date_Peremption", "nom_marque" };

@@ -37,6 +37,7 @@ import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableParams;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableProduitEnregistre;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableTrousseMarque;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableTrousseProduits;
+import fr.smardine.matroussedemaquillage.mdl.EnCategorie;
 import fr.smardine.matroussedemaquillage.mdl.MlListeMarque;
 import fr.smardine.matroussedemaquillage.mdl.MlProduit;
 import fr.smardine.matroussedemaquillage.modifier.modif_cat;
@@ -70,7 +71,7 @@ public class affiche_detail extends Activity implements OnClickListener {
 	int nbMoisDurreeDeVie = 0;
 	int RequestCodePage1 = 1, RequestCodePage2 = 2, RequestCodePage3 = 3,
 			mYear, mMonth, mDay;
-	private StringBuilder categorie;
+	private EnCategorie categorie;
 
 	// ///////////////////
 
@@ -286,7 +287,7 @@ public class affiche_detail extends Activity implements OnClickListener {
 		// trousse_final = objBd.renvoi_liste_TrousseFinalComplete(Colonnes,
 		// IdProduit);
 
-		CategorieDetail.setText(p.getNomCat());
+		CategorieDetail.setText(p.getNomCat().name());
 		MarqueDetail.setText(p.getMarque());
 		nomProduitDetail.setText(p.getNomProduit());
 		numeroTeinteDetail.setText(p.getTeinte());
@@ -316,11 +317,11 @@ public class affiche_detail extends Activity implements OnClickListener {
 		if (nbMoisDurreeDeVie != 0) {
 			p.setDureeVie(nbMoisDurreeDeVie);
 		}
-		p.setDatePeremption((java.sql.Date) new Date(DatePeremtionDetail
+		p.setDatePeremption((java.util.Date) new Date(DatePeremtionDetail
 				.getText().toString().trim().replace("[", "").replace("]", "")
 				.replace("/", "-")));
 
-		p.setDateAchat((java.sql.Date) new Date(DateAchatDetail.getText()
+		p.setDateAchat((java.util.Date) new Date(DateAchatDetail.getText()
 				.toString().trim().replace("[", "").replace("]", "")
 				.replace("/", "-")));
 		p.setMarque(MarqueDetail.getText().toString().trim().replace("[", "")
@@ -501,7 +502,7 @@ public class affiche_detail extends Activity implements OnClickListener {
 		if (v == BTChangerCat) {
 			AccesTableTrousseProduits accesProduit = new AccesTableTrousseProduits(
 					this);
-			accesProduit.majSouscatChoisie(categorie.toString());
+			accesProduit.majSouscatChoisie(categorie);
 			// ContentValues modifiedValues = new ContentValues();
 			//
 			// modifiedValues.put("ischecked", "true");

@@ -1,4 +1,4 @@
-package fr.smardine.matroussedemaquillage.variableglobale;
+package fr.smardine.matroussedemaquillage.mdl;
 
 /**
  * @author smardine
@@ -53,13 +53,22 @@ public enum EnCategorieYeux implements EnCategorie {
 		return lib;
 	}
 
-	@Override
-	public EnCategorie getCategorieFromValue(String p_value) {
+	public static EnCategorie getCategorieFromValue(String p_value) {
 		for (EnCategorieYeux e : EnCategorieYeux.values()) {
-			if (((EnCategorie) e).getLib().equals(p_value)) {
+			if (e.getLib().equals(p_value)) {
 				return e;
 			}
 		}
+		return null;
+	}
+
+	public static EnCategorieYeux getCategorieFromCode(int p_code) {
+		for (EnCategorieYeux e : values()) {
+			if (e.getCode() == p_code) {
+				return e;
+			}
+		}
+
 		return null;
 	}
 
