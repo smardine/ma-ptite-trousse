@@ -7,6 +7,12 @@ import java.util.Date;
 
 import android.content.Context;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableProduitEnregistre;
+import fr.smardine.matroussedemaquillage.mdl.cat.EnCategorie;
+import fr.smardine.matroussedemaquillage.mdl.cat.EnCategorieAutres;
+import fr.smardine.matroussedemaquillage.mdl.cat.EnCategorieLevre;
+import fr.smardine.matroussedemaquillage.mdl.cat.EnCategorieVisage;
+import fr.smardine.matroussedemaquillage.mdl.cat.EnCategorieYeux;
+import fr.smardine.matroussedemaquillage.mdl.cat.EnTypeCategorie;
 
 /**
  * Classe gerant les produits en base
@@ -15,19 +21,19 @@ import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableProduitEnregi
 public class MlProduit {
 	private int idProduit;
 	private String nomProduit;
-
+	private MlCategorie categorie;
 	// private Date dateAchat;
 	// private Date datePeremption;
 	private int nbJourDureeVie;
-	private EnCategorie categorie;
+	// private EnCategorie categorie;
 
 	private String marque;
 	private String teinte;
 	private boolean isPerime;
 	private boolean isPresquePerime;
 	private int nbJourAvantPeremp;
-	private EnCategorie nomSousCat;
-	private EnTypeCategorie nomCat;
+	// private EnCategorie nomSousCat;
+	// private EnTypeCategorie nomCat;
 	private int dureeVie;
 	private long datePeremMilli;
 	private final Context ctx;
@@ -48,9 +54,9 @@ public class MlProduit {
 				.getDefProduitById(idProduit);
 		this.nomProduit = defProduit.get(0);
 
-		this.nomSousCat = rechercheSousCat(defProduit.get(1));
-
-		this.nomCat = EnTypeCategorie.getEnumFromValue(defProduit.get(2));
+		this.categorie = new MlCategorie(
+				EnTypeCategorie.getEnumFromValue(defProduit.get(2)),
+				rechercheSousCat(defProduit.get(1)));
 
 		this.teinte = defProduit.get(3);
 		this.dureeVie = Integer.parseInt(defProduit.get(4));
@@ -159,14 +165,14 @@ public class MlProduit {
 	/**
 	 * @return la categorie du produit
 	 */
-	public EnCategorie getCategorie() {
+	public MlCategorie getCategorie() {
 		return categorie;
 	}
 
 	/**
 	 * @param p_categorie
 	 */
-	public void setCategorie(EnCategorie p_categorie) {
+	public void setCategorie(MlCategorie p_categorie) {
 		categorie = p_categorie;
 	}
 
@@ -238,34 +244,6 @@ public class MlProduit {
 	 */
 	public void setNbJourAvantPeremp(int p_nbJourAvantPeremp) {
 		nbJourAvantPeremp = p_nbJourAvantPeremp;
-	}
-
-	/**
-	 * @return le nom de la sous categorie
-	 */
-	public EnCategorie getNomSousCat() {
-		return nomSousCat;
-	}
-
-	/**
-	 * @param p_nomSousCat
-	 */
-	public void setNomSousCat(EnCategorie p_nomSousCat) {
-		nomSousCat = p_nomSousCat;
-	}
-
-	/**
-	 * @return le nom de la categorie
-	 */
-	public EnTypeCategorie getNomCat() {
-		return nomCat;
-	}
-
-	/**
-	 * @param p_nomCat
-	 */
-	public void setNomCat(EnTypeCategorie p_nomCat) {
-		nomCat = p_nomCat;
 	}
 
 	/**

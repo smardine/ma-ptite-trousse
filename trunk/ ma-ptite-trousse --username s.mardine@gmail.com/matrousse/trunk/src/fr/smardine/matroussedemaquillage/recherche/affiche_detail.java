@@ -37,9 +37,9 @@ import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableParams;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableProduitEnregistre;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableTrousseMarque;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableTrousseProduits;
-import fr.smardine.matroussedemaquillage.mdl.EnCategorie;
 import fr.smardine.matroussedemaquillage.mdl.MlListeMarque;
 import fr.smardine.matroussedemaquillage.mdl.MlProduit;
+import fr.smardine.matroussedemaquillage.mdl.cat.EnCategorie;
 import fr.smardine.matroussedemaquillage.modifier.modif_cat;
 import fr.smardine.matroussedemaquillage.note.note_page1;
 import fr.smardine.matroussedemaquillage.param.tab_param;
@@ -287,7 +287,7 @@ public class affiche_detail extends Activity implements OnClickListener {
 		// trousse_final = objBd.renvoi_liste_TrousseFinalComplete(Colonnes,
 		// IdProduit);
 
-		CategorieDetail.setText(p.getNomCat().name());
+		CategorieDetail.setText(p.getCategorie().getCategorie().name());
 		MarqueDetail.setText(p.getMarque());
 		nomProduitDetail.setText(p.getNomProduit());
 		numeroTeinteDetail.setText(p.getTeinte());

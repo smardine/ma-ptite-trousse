@@ -227,8 +227,8 @@ public class choix_produit_a_duppliquer extends Activity implements
 			MlListeProduits lstProduit = accesProduit.getListeProduits();
 			for (MlProduit p : lstProduit) {
 				produitDupplique.add(new produitRecherche(
-						"" + p.getIdProduit(), p.getNomCat().name(), p
-								.getNomProduit(), p.getMarque()));
+						"" + p.getIdProduit(), p.getCategorie().getCategorie()
+								.name(), p.getNomProduit(), p.getMarque()));
 			}
 			// String[] Colonnes = { "id_produits", "nom_produit", "nom_marque",
 			// "nom_souscatergorie" };
@@ -493,7 +493,7 @@ public class choix_produit_a_duppliquer extends Activity implements
 		// //objBd.close();
 		AccesTableTrousseProduits accesTrousse = new AccesTableTrousseProduits(
 				this);
-		accesTrousse.majSouscatChoisie(p.getNomSousCat());
+		accesTrousse.majSouscatChoisie(p.getCategorie().getSousCategorie());
 		// String Table1 = "trousse_produits";
 		// ContentValues modifiedValues1 = new ContentValues();
 		// modifiedValues1.put("ischecked", "true");

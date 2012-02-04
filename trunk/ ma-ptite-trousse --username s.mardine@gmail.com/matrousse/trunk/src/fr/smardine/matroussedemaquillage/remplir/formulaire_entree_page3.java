@@ -32,6 +32,7 @@ import fr.smardine.matroussedemaquillage.R;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableParams;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableProduitEnregistre;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableTrousseProduits;
+import fr.smardine.matroussedemaquillage.mdl.MlCategorie;
 import fr.smardine.matroussedemaquillage.mdl.MlListeTrousseProduit;
 import fr.smardine.matroussedemaquillage.mdl.MlProduit;
 import fr.smardine.matroussedemaquillage.mdl.MlTrousseProduit;
@@ -556,9 +557,10 @@ public class formulaire_entree_page3 extends Activity implements
 		MlProduit p = new MlProduit(this);
 		p.setNomProduit(nomDuProduit);
 		p.setMarque(MarqueChoisie);
-		p.setNomSousCat(lstProduitCoche.get(0).getNomSousCat());
+		p.setCategorie(new MlCategorie(lstProduitCoche.get(0).getNomCat(),
+				lstProduitCoche.get(0).getNomSousCat()));
 
-		p.setNomCat(lstProduitCoche.get(0).getNomCat());
+		// p.setNomCat(lstProduitCoche.get(0).getNomCat());
 		p.setTeinte(numeroDeTeinte);
 		p.setDateAchat(DateHelper.getDateFromDatabase(DateAchat.replaceAll("/",
 				"-").trim()));

@@ -1,4 +1,4 @@
-package fr.smardine.matroussedemaquillage.mdl;
+package fr.smardine.matroussedemaquillage.mdl.cat;
 
 public enum EnTypeCategorie {
 

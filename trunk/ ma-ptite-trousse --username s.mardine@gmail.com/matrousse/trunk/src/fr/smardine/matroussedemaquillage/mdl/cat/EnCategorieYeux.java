@@ -1,22 +1,30 @@
-package fr.smardine.matroussedemaquillage.mdl;
+package fr.smardine.matroussedemaquillage.mdl.cat;
 
 /**
  * @author smardine
  */
-public enum EnCategorieLevre implements EnCategorie {
+public enum EnCategorieYeux implements EnCategorie {
 	/**
 	 * 
 	 */
-	Crayons_contour(0, "Crayons contour"), /**
+	Bases(0, "Bases"), //
+	/**
 	 * 
 	 */
-	//
-	RougesAlevres(1, "Rouges à lèvres");
+	Crayons_Eyeliners(1, "Crayons - Eyeliners"), //
+	/**
+	 * 
+	 */
+	Fards(2, "Fards"), //
+	/**
+	 * 
+	 */
+	Mascaras(3, "Mascaras");
 
 	private int code;
 	private String lib;
 
-	private EnCategorieLevre(int p_code, String p_lib) {
+	private EnCategorieYeux(int p_code, String p_lib) {
 		code = p_code;
 		lib = p_lib;
 	}
@@ -46,17 +54,16 @@ public enum EnCategorieLevre implements EnCategorie {
 	}
 
 	public static EnCategorie getCategorieFromValue(String p_value) {
-		for (EnCategorieLevre e : EnCategorieLevre.values()) {
-			if (((EnCategorie) e).getLib().equals(p_value)) {
+		for (EnCategorieYeux e : EnCategorieYeux.values()) {
+			if (e.getLib().equals(p_value)) {
 				return e;
 			}
 		}
-
 		return null;
 	}
 
-	public static EnCategorieLevre getCategorieFromCode(int p_code) {
-		for (EnCategorieLevre e : values()) {
+	public static EnCategorieYeux getCategorieFromCode(int p_code) {
+		for (EnCategorieYeux e : values()) {
 			if (e.getCode() == p_code) {
 				return e;
 			}
