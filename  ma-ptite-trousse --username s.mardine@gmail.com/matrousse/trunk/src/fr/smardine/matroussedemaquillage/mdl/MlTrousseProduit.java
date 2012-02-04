@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import android.content.Context;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableTrousseProduits;
+import fr.smardine.matroussedemaquillage.mdl.cat.EnCategorie;
+import fr.smardine.matroussedemaquillage.mdl.cat.EnTypeCategorie;
 
 /**
  * @author smardine

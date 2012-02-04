@@ -8,9 +8,9 @@ import android.content.Context;
 import fr.smardine.matroussedemaquillage.base.RequeteFactory;
 import fr.smardine.matroussedemaquillage.base.structure.EnStructProduits;
 import fr.smardine.matroussedemaquillage.base.structure.EnTable;
-import fr.smardine.matroussedemaquillage.mdl.EnCategorie;
 import fr.smardine.matroussedemaquillage.mdl.MlListeTrousseProduit;
 import fr.smardine.matroussedemaquillage.mdl.MlTrousseProduit;
+import fr.smardine.matroussedemaquillage.mdl.cat.EnCategorie;
 
 /**
  * @author smardine Acces a la table "Trousse produits" Contient les categories

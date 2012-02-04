@@ -84,11 +84,11 @@ public class AccesTableNotes {
 		values.put(
 				"Message",
 				"Produit acheté le: " + p_produit.getDateAchat() + "\n"
-						+ "Catégorie du produit: " + p_produit.getNomSousCat()
-						+ "\n" + "Numéro de teinte: " + p_produit.getTeinte()
-						+ "\n" + "Durée de vie du produit: "
-						+ p_produit.getDureeVie() + " mois\n"
-						+ "Date de péremption: "
+						+ "Catégorie du produit: "
+						+ p_produit.getCategorie().getSousCategorie() + "\n"
+						+ "Numéro de teinte: " + p_produit.getTeinte() + "\n"
+						+ "Durée de vie du produit: " + p_produit.getDureeVie()
+						+ " mois\n" + "Date de péremption: "
 						+ p_produit.getDatePeremption() + "\n");
 
 		requeteFact.insertDansTable(EnTable.NOTES, values);

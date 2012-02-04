@@ -538,7 +538,8 @@ public class recherche_produit_perime extends Activity implements
 					.getListeProduitsPerimeAvecFiltrageSurCategorie(p_Filtrage);
 			for (MlProduit p : lstProduit) {
 				produitFinal.add(new produitRecherche("" + p.getIdProduit(), p
-						.getNomCat().name(), p.getNomProduit(), p.getMarque()));
+						.getCategorie().getCategorie().name(), p
+						.getNomProduit(), p.getMarque()));
 			}
 
 			// String[] Colonnes = { "id_produits", "nom_produit",
@@ -584,7 +585,8 @@ public class recherche_produit_perime extends Activity implements
 					.getListeProduitsPerimeAvecFiltrageSurMarque(p_Filtrage);
 			for (MlProduit p : lstProduit) {
 				produitFinal.add(new produitRecherche("" + p.getIdProduit(), p
-						.getNomCat().name(), p.getNomProduit(), p.getMarque()));
+						.getCategorie().getCategorie().name(), p
+						.getNomProduit(), p.getMarque()));
 			}
 			// String[] Colonnes = { "id_produits", "nom_marque", "nom_produit",
 			// "Date_Peremption" };
@@ -623,7 +625,8 @@ public class recherche_produit_perime extends Activity implements
 					.getListeProduitsPerimeAvecFiltrageSurTout(p_Filtrage);
 			for (MlProduit p : lstProduit) {
 				produitFinal.add(new produitRecherche("" + p.getIdProduit(), p
-						.getNomCat().name(), p.getNomProduit(), p.getMarque()));
+						.getCategorie().getCategorie().name(), p
+						.getNomProduit(), p.getMarque()));
 			}
 			// String[] Colonnes = { "id_produits", "Date_Peremption",
 			// "nom_produit", "nom_marque" };

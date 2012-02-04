@@ -125,9 +125,10 @@ public class AccesTableProduitEnregistre {
 
 		ContentValues modifiedValues = new ContentValues();
 		modifiedValues.put("nom_produit", p_produit.getNomProduit());
-		modifiedValues.put("nom_souscatergorie", p_produit.getNomSousCat()
-				.getLib());
-		modifiedValues.put("nom_categorie", p_produit.getNomCat().name());
+		modifiedValues.put("nom_souscatergorie", p_produit.getCategorie()
+				.getSousCategorie().getLib());
+		modifiedValues.put("nom_categorie", p_produit.getCategorie()
+				.getCategorie().name());
 		modifiedValues.put("numero_Teinte", p_produit.getTeinte());
 		modifiedValues.put("Duree_Vie", "" + p_produit.getDureeVie());
 		modifiedValues.put("Date_Peremption",
@@ -190,9 +191,10 @@ public class AccesTableProduitEnregistre {
 	public void majProduitComplet(MlProduit p_produit) {
 		ContentValues modifiedValues = new ContentValues();
 		modifiedValues.put("nom_produit", p_produit.getNomProduit());
-		modifiedValues.put("nom_souscatergorie", p_produit.getNomSousCat()
-				.getLib());
-		modifiedValues.put("nom_categorie", p_produit.getNomCat().name());
+		modifiedValues.put("nom_souscatergorie", p_produit.getCategorie()
+				.getSousCategorie().getLib());
+		modifiedValues.put("nom_categorie", p_produit.getCategorie()
+				.getCategorie().name());
 		modifiedValues.put("numero_Teinte", p_produit.getTeinte());
 		modifiedValues.put("Duree_Vie", p_produit.getDureeVie());
 		modifiedValues.put("Date_Peremption",
@@ -218,9 +220,10 @@ public class AccesTableProduitEnregistre {
 		ContentValues newValueToInsert = new ContentValues();
 		newValueToInsert.put("nom_produit", p_produit.getNomProduit());
 		newValueToInsert.put("nom_marque", p_produit.getMarque());
-		newValueToInsert.put("nom_souscatergorie", p_produit.getNomSousCat()
-				.getLib());
-		newValueToInsert.put("nom_categorie", p_produit.getNomCat().name());
+		newValueToInsert.put("nom_souscatergorie", p_produit.getCategorie()
+				.getSousCategorie().getLib());
+		newValueToInsert.put("nom_categorie", p_produit.getCategorie()
+				.getCategorie().name());
 		newValueToInsert.put("numero_Teinte", p_produit.getTeinte());
 		newValueToInsert.put("DateAchat",
 				DateHelper.getDateforDatabase(p_produit.getDateAchat()));

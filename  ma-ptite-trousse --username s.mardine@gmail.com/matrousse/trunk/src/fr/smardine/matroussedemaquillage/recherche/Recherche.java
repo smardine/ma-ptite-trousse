@@ -567,7 +567,8 @@ public class Recherche extends Activity implements OnClickListener,
 					.getListeProduitsAvecFiltrageSurCategorie(p_Filtrage);
 			for (MlProduit p : lstProduit) {
 				produitFinal.add(new produitRecherche("" + p.getIdProduit(), p
-						.getNomCat().name(), p.getNomProduit(), p.getMarque()));
+						.getCategorie().getCategorie().name(), p
+						.getNomProduit(), p.getMarque()));
 			}
 			// int nbdobjet = ListeProduits[0].size();
 			// if (nbdobjet != 0) {
@@ -599,7 +600,8 @@ public class Recherche extends Activity implements OnClickListener,
 					.getListeProduitsAvecFiltrageSurMarque(p_Filtrage);
 			for (MlProduit p : lstProduit) {
 				produitFinal.add(new produitRecherche("" + p.getIdProduit(), p
-						.getNomCat().name(), p.getNomProduit(), p.getMarque()));
+						.getCategorie().getCategorie().name(), p
+						.getNomProduit(), p.getMarque()));
 			}
 
 			// String[] Colonnes = { "id_produits", "nom_produit", "nom_marque",
@@ -655,7 +657,8 @@ public class Recherche extends Activity implements OnClickListener,
 					.getListeProduitsAvecFiltrageSurTout(p_Filtrage);
 			for (MlProduit p : lstProduit) {
 				produitFinal.add(new produitRecherche("" + p.getIdProduit(), p
-						.getNomCat().name(), p.getNomProduit(), p.getMarque()));
+						.getCategorie().getCategorie().name(), p
+						.getNomProduit(), p.getMarque()));
 			}
 
 			// String[] Colonnes = { "id_produits", "nom_produit", "nom_marque",
@@ -696,7 +699,8 @@ public class Recherche extends Activity implements OnClickListener,
 			}
 			for (MlProduit p : lstProduit) {
 				produitFinal.add(new produitRecherche("" + p.getIdProduit(), p
-						.getNomCat().name(), p.getNomProduit(), p.getMarque()));
+						.getCategorie().getCategorie().name(), p
+						.getNomProduit(), p.getMarque()));
 			}
 			// String[] Colonnes = { "id_produits", "nom_produit",
 			// "Date_Peremption", "nom_marque" };
