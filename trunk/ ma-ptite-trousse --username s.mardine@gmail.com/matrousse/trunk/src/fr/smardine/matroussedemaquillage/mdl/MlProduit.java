@@ -2,6 +2,7 @@ package fr.smardine.matroussedemaquillage.mdl;
 
 import helper.DateHelper;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -18,22 +19,22 @@ import fr.smardine.matroussedemaquillage.mdl.cat.EnTypeCategorie;
  * Classe gerant les produits en base
  * @author smardine
  */
-public class MlProduit {
+public class MlProduit implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1389302186422578394L;
 	private int idProduit;
 	private String nomProduit;
 	private MlCategorie categorie;
-	// private Date dateAchat;
-	// private Date datePeremption;
 	private int nbJourDureeVie;
-	// private EnCategorie categorie;
 
 	private String marque;
 	private String teinte;
 	private boolean isPerime;
 	private boolean isPresquePerime;
 	private int nbJourAvantPeremp;
-	// private EnCategorie nomSousCat;
-	// private EnTypeCategorie nomCat;
+
 	private int dureeVie;
 	private long datePeremMilli;
 	private final Context ctx;

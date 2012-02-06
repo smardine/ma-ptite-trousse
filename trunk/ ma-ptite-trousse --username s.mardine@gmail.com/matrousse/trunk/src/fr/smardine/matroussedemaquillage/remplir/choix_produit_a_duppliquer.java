@@ -213,15 +213,15 @@ public class choix_produit_a_duppliquer extends Activity implements
 		finish();
 	}
 
-	private void AfficheLeContenu(String TypeRecherche,
+	private void AfficheLeContenu(String ptypeRecherche,
 			ArrayList<produitRecherche> produitFinal, ListView produitListView) {
 
 		// objBd.open();
-		if (TypeRecherche.equals("Titre")) {
+		if (ptypeRecherche.equals("Titre")) {
 			produitDuppliqueTitre.add(new produitRecherche("-1", "Marque",
 					"Produit", "Catégorie"));
 		}
-		if (TypeRecherche.equals("Tout")) {
+		if (ptypeRecherche.equals("Tout")) {
 			AccesTableProduitEnregistre accesProduit = new AccesTableProduitEnregistre(
 					this);
 			MlListeProduits lstProduit = accesProduit.getListeProduits();
