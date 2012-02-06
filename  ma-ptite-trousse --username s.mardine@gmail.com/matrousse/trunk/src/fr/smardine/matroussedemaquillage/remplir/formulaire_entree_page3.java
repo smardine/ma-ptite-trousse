@@ -74,6 +74,8 @@ public class formulaire_entree_page3 extends Activity implements
 	String DureeVie = "";
 	MlTrousseProduit Cat;
 
+	private MlProduit p;
+
 	// /////////////////////////
 
 	/** Called when the activity is first created. */
@@ -84,6 +86,12 @@ public class formulaire_entree_page3 extends Activity implements
 		// ExceptionHandler.register(this,
 		// "http://simon.mardine.free.fr/trousse_maquillage/test/server.php","ma_ptite_trousse");
 		ChoisiLeTheme();
+
+		Object extra = getIntent().getSerializableExtra(
+				MlProduit.class.getCanonicalName());
+		if (extra instanceof MlProduit) {
+			p = (MlProduit) extra;
+		}
 
 		// capture our View elements
 		mDateDisplay = (TextView) findViewById(R.id.dateDisplay_page3);

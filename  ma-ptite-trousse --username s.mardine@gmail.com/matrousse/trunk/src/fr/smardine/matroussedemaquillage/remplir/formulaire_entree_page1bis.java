@@ -1,5 +1,7 @@
 package fr.smardine.matroussedemaquillage.remplir;
 
+import helper.DateHelper;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -43,6 +45,7 @@ import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableTrousseMarque
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableTrousseProduits;
 import fr.smardine.matroussedemaquillage.mdl.MlListeMarque;
 import fr.smardine.matroussedemaquillage.mdl.MlListeTrousseProduit;
+import fr.smardine.matroussedemaquillage.mdl.MlProduit;
 import fr.smardine.matroussedemaquillage.mdl.MlTrousseProduit;
 import fr.smardine.matroussedemaquillage.mdl.cat.EnCategorie;
 import fr.smardine.matroussedemaquillage.mdl.cat.EnCategorieAutres;
@@ -533,12 +536,23 @@ public class formulaire_entree_page1bis extends Activity implements
 			} else {
 				Intent intent = new Intent(formulaire_entree_page1bis.this,
 						formulaire_entree_page3.class);
-				intent.putExtra(ActivityParam.Marque, MarqueChoisie.trim());
-				intent.putExtra(ActivityParam.DurreeDeVie, DureeVie.trim());
-				intent.putExtra(ActivityParam.DateAchat, DateChoisie.trim());
-				intent.putExtra(ActivityParam.NumeroDeTeinte, numTeinte.trim());
-				intent.putExtra(ActivityParam.NomProduit,
-						nomProduitRecup.trim());
+				MlProduit p = new MlProduit(this);
+				p.setMarque(MarqueChoisie.trim());
+				p.setDureeVie(Integer.parseInt(DureeVie.trim()));
+				p.setDateAchat(DateHelper.getDateFromDatabase(DateChoisie
+						.trim()));
+				p.setTeinte(numTeinte.trim());
+				p.setNomProduit(nomProduitRecup.trim());
+
+				intent.putExtra(MlProduit.class.getCanonicalName(), p);
+
+				// intent.putExtra(ActivityParam.Marque, MarqueChoisie.trim());
+				// intent.putExtra(ActivityParam.DurreeDeVie, DureeVie.trim());
+				// intent.putExtra(ActivityParam.DateAchat, DateChoisie.trim());
+				// intent.putExtra(ActivityParam.NumeroDeTeinte,
+				// numTeinte.trim());
+				// intent.putExtra(ActivityParam.NomProduit,
+				// nomProduitRecup.trim());
 				intent.putExtra(ActivityParam.LaunchFromPage1, true);
 				startActivity(intent);
 				termineActivity();
@@ -629,15 +643,7 @@ public class formulaire_entree_page1bis extends Activity implements
 		// NomProduits = ListeCategorieCochée[0].get(j).toString();
 		// }
 
-		if ((lstCatCochee.size() == 1) && (NomProduits.equals("aucun"))) {
-			// popUp ("Vous n'avez selectionné aucune catégorie");
-			// objBd.close();
-			return false;
-		} else {
-			// popUp("On Continue");
-			// objBd.close();
-			return true;
-		}
+		return ((lstCatCochee.size() == 1) && (NomProduits.equals("aucun")));
 
 	}
 
