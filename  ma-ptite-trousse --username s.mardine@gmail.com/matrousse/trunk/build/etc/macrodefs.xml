@@ -30,8 +30,10 @@
 			<exec executable="${svn}" dir="@{dir}" failonerror="true">
      			<arg value="--non-interactive"/>
      			<arg value="--no-auth-cache"/>				
-				<arg line="--username MICROCONCEPT"/>
-				<arg line="--password 2450"/>				
+				<!-- <arg line="-->
+				<!--username blablabla"/>
+				<arg line="-->
+				<!--password 1234"/>-->				
 				<arg value="@{function}"/>
 				<svn-elements/>
 			</exec>		
@@ -47,8 +49,10 @@
 			<exec executable="${svn}" dir="@{chemin}" failonerror="true" output=".svnInfo1.xml">
 	   			<arg value="--non-interactive"/>
 	   			<arg value="--no-auth-cache"/>				
-				<arg line="--username MICROCONCEPT"/>
-				<arg line="--password 2450"/>				
+				<!-- <arg line="-->
+			<!--username blablabla"/>
+			<arg line="-->
+			<!--password 1234"/>-->			
 	   			<arg value="--xml"/>				
 				<arg value="info"/>
 			</exec>
@@ -75,8 +79,10 @@
 		<exec executable="${svn}" dir="${basedir}" failonerror="true" output=".svnInfo.xml">
    			<arg value="--non-interactive"/>
    			<arg value="--no-auth-cache"/>				
-			<arg line="--username MICROCONCEPT"/>
-			<arg line="--password 2450"/>				
+		<!-- <arg line="-->
+			<!--username blablabla"/>
+			<arg line="-->
+			<!--password 1234"/>-->				
 			
    			<arg value="--xml"/>				
 			<arg value="info"/>
