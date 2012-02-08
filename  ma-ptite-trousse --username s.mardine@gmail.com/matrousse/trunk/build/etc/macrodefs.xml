@@ -79,10 +79,8 @@
 		<exec executable="${svn}" dir="${basedir}" failonerror="true" output=".svnInfo.xml">
    			<arg value="--non-interactive"/>
    			<arg value="--no-auth-cache"/>				
-		<!-- <arg line="-->
-			<!--username blablabla"/>
-			<arg line="-->
-			<!--password 1234"/>-->				
+		 <arg line="--username s.mardine"/>
+			<arg line="--password wa4BP7yz2eE8"/>			
 			
    			<arg value="--xml"/>				
 			<arg value="info"/>
