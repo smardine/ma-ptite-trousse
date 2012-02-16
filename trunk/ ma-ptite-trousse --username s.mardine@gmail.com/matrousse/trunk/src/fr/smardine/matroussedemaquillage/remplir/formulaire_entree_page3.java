@@ -91,6 +91,7 @@ public class formulaire_entree_page3 extends Activity implements
 				MlProduit.class.getCanonicalName());
 		if (extra instanceof MlProduit) {
 			p = (MlProduit) extra;
+
 		}
 
 		// capture our View elements
