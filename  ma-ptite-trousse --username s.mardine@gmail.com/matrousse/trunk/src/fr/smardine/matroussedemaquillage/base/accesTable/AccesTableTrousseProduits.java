@@ -68,14 +68,14 @@ public class AccesTableTrousseProduits {
 	}
 
 	/**
-	 * 
+	 * @return nombre de produit impacté
 	 */
-	public void reinitProduitChoisi() {
+	public int reinitProduitChoisi() {
 		ContentValues modifiedValues = new ContentValues();
 		modifiedValues.put("ischecked", "false");
 		String whereClause = "ischecked=?";
 		String[] whereArgs = new String[] { "true" };
-		requeteFact.majTable(EnTable.TROUSSE_PRODUIT, modifiedValues,
+		return requeteFact.majTable(EnTable.TROUSSE_PRODUIT, modifiedValues,
 				whereClause, whereArgs);
 	}
 
@@ -83,7 +83,7 @@ public class AccesTableTrousseProduits {
 	 * @param p_categorieChoisie
 	 */
 	public void majSouscatChoisie(EnCategorie p_categorieChoisie) {
-		reinitProduitChoisi();
+		int result = reinitProduitChoisi();
 		ContentValues modifiedValues = new ContentValues();
 		modifiedValues.put("ischecked", "true");
 		String whereClause = "nom_souscatergorie=?";

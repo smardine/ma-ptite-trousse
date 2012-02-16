@@ -138,32 +138,26 @@ public class EntryPoint extends Activity implements ViewFactory {
 
 		if (total < 10) {
 			mSwitcher.setImageResource(mImageIds[8]);
-		}
+		} else
 
 		if (total >= 10 && total < 20) {
 			mSwitcher.setImageResource(mImageIds[7]);
-		}
-		if (total >= 20 && total < 30) {
+		} else if (total >= 20 && total < 30) {
 			mSwitcher.setImageResource(mImageIds[9]);
-		}
-		if (total >= 30 && total < 40) {
+		} else if (total >= 30 && total < 40) {
 			mSwitcher.setImageResource(mImageIds[5]);
-		}
-		if (total >= 40 && total < 50) {
+		} else if (total >= 40 && total < 50) {
 			mSwitcher.setImageResource(mImageIds[4]);
-		}
-		if (total >= 50 && total < 60) {
+		} else if (total >= 50 && total < 60) {
 			mSwitcher.setImageResource(mImageIds[3]);
 		}
 		if (total >= 60 && total < 70) {
 			mSwitcher.setImageResource(mImageIds[2]);
-		}
-		if (total >= 80 && total < 90) {
+		} else if (total >= 80 && total < 90) {
 			mSwitcher.setImageResource(mImageIds[1]);
-		}
-		if (total >= 90 && total < 100) {
+		} else if (total >= 90 && total < 100) {
 			mSwitcher.setImageResource(mImageIds[0]);
-		}
+		} else
 
 		if (total >= 100) {
 			// on a fini tt les traitement avant fermeture => on quitte

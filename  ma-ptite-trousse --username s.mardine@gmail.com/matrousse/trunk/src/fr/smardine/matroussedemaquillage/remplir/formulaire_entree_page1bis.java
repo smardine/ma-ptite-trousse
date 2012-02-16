@@ -313,6 +313,7 @@ public class formulaire_entree_page1bis extends Activity implements
 			int idProdCoche = recupereIndiceSousCategorieCochee("Visage");
 			AlertDialog.Builder adChoixVisage = new AlertDialog.Builder(this);
 			adChoixVisage.setTitle("Visage");
+
 			adChoixVisage.setSingleChoiceItems(NomProduits, idProdCoche,
 					new DialogInterface.OnClickListener() {
 						@Override
@@ -538,7 +539,12 @@ public class formulaire_entree_page1bis extends Activity implements
 						formulaire_entree_page3.class);
 				MlProduit p = new MlProduit(this);
 				p.setMarque(MarqueChoisie.trim());
-				p.setDureeVie(Integer.parseInt(DureeVie.trim()));
+				try {
+					p.setDureeVie(Integer.parseInt(DureeVie.trim()));
+				} catch (Exception e) {
+					p.setDureeVie(0);
+				}
+
 				p.setDateAchat(DateHelper.getDateFromDatabase(DateChoisie
 						.trim()));
 				p.setTeinte(numTeinte.trim());
@@ -643,7 +649,7 @@ public class formulaire_entree_page1bis extends Activity implements
 		// NomProduits = ListeCategorieCochée[0].get(j).toString();
 		// }
 
-		return ((lstCatCochee.size() == 1) && (NomProduits.equals("aucun")));
+		return ((lstCatCochee.size() == 1) && (!NomProduits.equals("aucun")));
 
 	}
 
