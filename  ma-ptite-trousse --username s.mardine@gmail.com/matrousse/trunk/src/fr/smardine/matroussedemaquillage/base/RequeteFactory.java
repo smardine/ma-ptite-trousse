@@ -7,6 +7,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import fr.smardine.matroussedemaquillage.base.structure.EnTable;
+import fr.smardine.matroussedemaquillage.base.structure.StructureTable;
 
 /**
  * @author smardine S'occupe de gerer les requetes en bases.
@@ -78,6 +79,52 @@ public class RequeteFactory {
 			for (int i = 0; i < c.getColumnCount(); i++) {
 
 				lstIntermediaire.add(c.getString(i));
+			}
+			lstRetour.add(lstIntermediaire);
+		}
+		c.close();
+		bdAcces.close();
+		return lstRetour;
+
+	}
+
+	public List<ArrayList<Object>> getListeDeChampBis(EnTable p_table,
+			Class<? extends StructureTable> class1, String p_whereClause) {
+
+		StructureTable[] lstChamp = class1.getEnumConstants();
+		String requete = "Select ";
+		for (int i = 0; i < lstChamp.length; i++) {
+			if (i == 0) {
+				requete = requete + lstChamp[i].getNomChamp();
+			} else if (i > 0) {
+				requete = requete + ", " + lstChamp[i].getNomChamp();
+			}
+		}
+		// for (StructureTable unChamp : lstChamp) {
+		// requete = requete + ", " + unChamp.getNomChamp();
+		// }
+		requete = requete + " FROM " + p_table.getNomTable();
+		if (p_whereClause != null && p_whereClause != "") {
+			requete = requete + " " + p_whereClause;
+		}
+		ArrayList<ArrayList<Object>> lstRetour = new ArrayList<ArrayList<Object>>();
+		bdAcces.open();
+		Cursor c = bdAcces.getMdb().rawQuery(requete, null);
+		while (c.moveToNext()) {
+			ArrayList<Object> lstIntermediaire = new ArrayList<Object>();
+			for (StructureTable unChamp : lstChamp) {
+				int idxColumn = c.getColumnIndex(unChamp.getNomChamp());
+				switch (unChamp.getTypeChamp()) {
+					case INTEGER:
+						lstIntermediaire.add(c.getInt(idxColumn));
+						break;
+					case LONG:
+						lstIntermediaire.add(c.getLong(idxColumn));
+						break;
+					case VARCHAR:
+						lstIntermediaire.add(c.getString(idxColumn));
+						break;
+				}
 			}
 			lstRetour.add(lstIntermediaire);
 		}

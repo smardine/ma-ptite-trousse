@@ -13,7 +13,7 @@ public interface StructureTable {
 	/**
 	 * @return le type de champ
 	 */
-	Class<?> getTypeChamp();
+	EnTypeChampsSQLite getTypeChamp();
 
 	/**
 	 * @return la taille max d'un champ
@@ -24,5 +24,7 @@ public interface StructureTable {
 	 * @return le nom de l'enum
 	 */
 	String name();
+
+	StructureTable[] getListeChamp();
 
 }

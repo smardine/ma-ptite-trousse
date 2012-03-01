@@ -8,21 +8,22 @@ public enum EnStructParam implements StructureTable {
 	 * Doit on afficher l'alerte de peremption au demarrage, prend "ture" ou
 	 * "false"
 	 */
-	AFFICHE_ALERTE("AfficheAlerte", String.class, 255), //
+	AFFICHE_ALERTE("AfficheAlerte", EnTypeChampsSQLite.VARCHAR, 255), //
 	/**
 	 * le nb de jour a partir duquel un produit est considere comme perime
 	 */
-	DUREE_VIE_PEREMP("DureeViePeremp", Integer.class, null), //
+	DUREE_VIE_PEREMP("DureeViePeremp", EnTypeChampsSQLite.INTEGER, null), //
 	/**
 	 * le nom du theme choisi
 	 */
-	THEME("Theme", String.class, 255);
+	THEME("Theme", EnTypeChampsSQLite.VARCHAR, 255);
 
 	private final String nomChamp;
-	private final Class<?> typeClass;
+	private final EnTypeChampsSQLite typeClass;
 	private final Integer tailleMax;
 
-	EnStructParam(String p_nomChamp, Class<?> p_typeClass, Integer p_tailleMax) {
+	EnStructParam(String p_nomChamp, EnTypeChampsSQLite p_typeClass,
+			Integer p_tailleMax) {
 		this.nomChamp = p_nomChamp;
 		this.typeClass = p_typeClass;
 		this.tailleMax = p_tailleMax;
@@ -34,13 +35,18 @@ public enum EnStructParam implements StructureTable {
 	}
 
 	@Override
-	public Class<?> getTypeChamp() {
+	public EnTypeChampsSQLite getTypeChamp() {
 		return typeClass;
 	}
 
 	@Override
 	public Integer getTailleMax() {
 		return tailleMax;
+	}
+
+	@Override
+	public StructureTable[] getListeChamp() {
+		return values();
 	}
 
 }

@@ -1,10 +1,16 @@
 package fr.smardine.matroussedemaquillage.mdl;
 
+import java.io.Serializable;
+
 import fr.smardine.matroussedemaquillage.mdl.cat.EnCategorie;
 import fr.smardine.matroussedemaquillage.mdl.cat.EnTypeCategorie;
 
-public class MlCategorie {
+public class MlCategorie implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1498661669298220239L;
 	private final EnTypeCategorie categorie;
 	private final EnCategorie sousCategorie;
 

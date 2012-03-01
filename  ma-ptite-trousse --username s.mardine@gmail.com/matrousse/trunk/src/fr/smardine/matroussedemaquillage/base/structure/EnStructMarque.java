@@ -7,21 +7,22 @@ public enum EnStructMarque implements StructureTable {
 	/**
 	 * l'id de la marque
 	 */
-	ID("id_marque", Integer.class, null), //
+	ID("id_marque", EnTypeChampsSQLite.INTEGER, null), //
 	/**
 	 * le nom de la marque
 	 */
-	NOM("nom_marque", String.class, 250), //
+	NOM("nom_marque", EnTypeChampsSQLite.VARCHAR, 250), //
 	/**
 	 * est elle cochee?
 	 */
-	ISCHECKED("ischecked", String.class, 250);
+	ISCHECKED("ischecked", EnTypeChampsSQLite.VARCHAR, 250);
 
 	private final String nomChamp;
-	private final Class<?> typeClass;
+	private final EnTypeChampsSQLite typeClass;
 	private final Integer tailleMax;
 
-	EnStructMarque(String p_nomChamp, Class<?> p_typeClass, Integer p_tailleMax) {
+	EnStructMarque(String p_nomChamp, EnTypeChampsSQLite p_typeClass,
+			Integer p_tailleMax) {
 		this.nomChamp = p_nomChamp;
 		this.typeClass = p_typeClass;
 		this.tailleMax = p_tailleMax;
@@ -33,13 +34,18 @@ public enum EnStructMarque implements StructureTable {
 	}
 
 	@Override
-	public Class<?> getTypeChamp() {
+	public EnTypeChampsSQLite getTypeChamp() {
 		return typeClass;
 	}
 
 	@Override
 	public Integer getTailleMax() {
 		return tailleMax;
+	}
+
+	@Override
+	public EnStructMarque[] getListeChamp() {
+		return EnStructMarque.values();
 	}
 
 }
