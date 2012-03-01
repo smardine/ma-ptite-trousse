@@ -1,6 +1,7 @@
 package fr.smardine.matroussedemaquillage.remplir;
 
 import helper.DateHelper;
+import helper.SerialisableHelper;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -87,10 +88,13 @@ public class formulaire_entree_page3 extends Activity implements
 		// "http://simon.mardine.free.fr/trousse_maquillage/test/server.php","ma_ptite_trousse");
 		ChoisiLeTheme();
 
-		Object extra = getIntent().getSerializableExtra(
+		// Object extra = getIntent().getSerializableExtra(
+		// MlProduit.class.getCanonicalName());
+		byte[] extra = getIntent().getByteArrayExtra(
 				MlProduit.class.getCanonicalName());
-		if (extra instanceof MlProduit) {
-			p = (MlProduit) extra;
+		Object o = SerialisableHelper.deserializeObject(extra);
+		if (o instanceof MlProduit) {
+			p = (MlProduit) o;
 
 		}
 
@@ -563,7 +567,7 @@ public class formulaire_entree_page3 extends Activity implements
 				this);
 		MlListeTrousseProduit lstProduitCoche = accesTrousseProduit
 				.getListeProduitCochee();
-		MlProduit p = new MlProduit(this);
+		MlProduit p = new MlProduit();
 		p.setNomProduit(nomDuProduit);
 		p.setMarque(MarqueChoisie);
 		p.setCategorie(new MlCategorie(lstProduitCoche.get(0).getNomCat(),

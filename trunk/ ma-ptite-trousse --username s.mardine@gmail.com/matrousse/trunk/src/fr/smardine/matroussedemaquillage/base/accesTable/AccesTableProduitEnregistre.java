@@ -58,7 +58,7 @@ public class AccesTableProduitEnregistre {
 		List<ArrayList<Object>> lstRetour = requeteFact.getListeDeChampBis(
 				EnTable.PRODUIT_ENREGISTRE, EnStructProduitEnregistre.class,
 				null);
-		MlProduitFactory prodFact = new MlProduitFactory(ctx);
+		MlProduitFactory prodFact = new MlProduitFactory();
 		for (ArrayList<Object> aList : lstRetour) {
 			lstProds.add(prodFact.creationMlProduit(aList));
 		}
@@ -273,7 +273,7 @@ public class AccesTableProduitEnregistre {
 				"nom_souscatergorie LIKE '%" + p_filtrage
 						+ "%' ORDER BY nom_souscatergorie");
 
-		MlProduitFactory prodFact = new MlProduitFactory(ctx);
+		MlProduitFactory prodFact = new MlProduitFactory();
 		for (ArrayList<Object> aList : lstRetour) {
 			lst.add(prodFact.creationMlProduit(aList));
 		}
@@ -300,7 +300,7 @@ public class AccesTableProduitEnregistre {
 				EnTable.PRODUIT_ENREGISTRE, EnStructProduitEnregistre.class,
 				"nom_marque LIKE '%" + p_Filtrage + "%' ORDER BY p_Filtrage");
 
-		MlProduitFactory prodFact = new MlProduitFactory(ctx);
+		MlProduitFactory prodFact = new MlProduitFactory();
 		for (ArrayList<Object> aList : lstRetour) {
 			lst.add(prodFact.creationMlProduit(aList));
 		}
@@ -332,7 +332,7 @@ public class AccesTableProduitEnregistre {
 						+ "or nom_souscatergorie LIKE '%" + p_Filtrage
 						+ "%' ORDER BY id_produits");
 
-		MlProduitFactory prodFact = new MlProduitFactory(ctx);
+		MlProduitFactory prodFact = new MlProduitFactory();
 		for (ArrayList<Object> aList : lstRetour) {
 			lst.add(prodFact.creationMlProduit(aList));
 		}
@@ -371,7 +371,7 @@ public class AccesTableProduitEnregistre {
 						+ EnStructProduitEnregistre.IS_PRESQUE_PERIME
 								.getNomChamp() + "='true') ");
 
-		MlProduitFactory prodFact = new MlProduitFactory(ctx);
+		MlProduitFactory prodFact = new MlProduitFactory();
 		for (ArrayList<Object> aList : lstRetour) {
 			lst.add(prodFact.creationMlProduit(aList));
 		}
@@ -407,7 +407,7 @@ public class AccesTableProduitEnregistre {
 								+ "%' and (IS_PERIME='true' or IS_PRESQUE_PERIME='true') " //
 								+ "ORDER BY Date_Peremption");
 
-		MlProduitFactory prodFact = new MlProduitFactory(ctx);
+		MlProduitFactory prodFact = new MlProduitFactory();
 		for (ArrayList<Object> aList : lstRetour) {
 			lst.add(prodFact.creationMlProduit(aList));
 		}
@@ -442,7 +442,7 @@ public class AccesTableProduitEnregistre {
 								+ p_Filtrage
 								+ "%' and (IS_PERIME='true' or IS_PRESQUE_PERIME='true') ORDER BY nom_marque");
 
-		MlProduitFactory prodFact = new MlProduitFactory(ctx);
+		MlProduitFactory prodFact = new MlProduitFactory();
 		for (ArrayList<Object> aList : lstRetour) {
 			lst.add(prodFact.creationMlProduit(aList));
 		}
@@ -491,7 +491,7 @@ public class AccesTableProduitEnregistre {
 								+ p_Filtrage
 								+ "%' and (IS_PERIME='true' or IS_PRESQUE_PERIME='true')  ORDER BY id_produits");
 
-		MlProduitFactory prodFact = new MlProduitFactory(ctx);
+		MlProduitFactory prodFact = new MlProduitFactory();
 		for (ArrayList<Object> aList : lstRetour) {
 			lst.add(prodFact.creationMlProduit(aList));
 		}

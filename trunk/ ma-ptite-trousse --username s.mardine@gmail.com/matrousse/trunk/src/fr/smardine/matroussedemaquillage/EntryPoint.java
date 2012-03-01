@@ -521,6 +521,7 @@ public class EntryPoint extends Activity implements ViewFactory {
 			if (nbDenregistrement > 0) {
 				MlListeProduits lstProds = accesProduits.getListeProduits();
 				int count = 0;
+
 				for (MlProduit p : lstProds) {
 					count++;
 					total = (100 * count) / nbDenregistrement;
