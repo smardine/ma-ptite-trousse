@@ -4,21 +4,20 @@ import helper.DateHelper;
 
 import java.util.ArrayList;
 
-import android.content.Context;
 import fr.smardine.matroussedemaquillage.mdl.MlCategorie;
 import fr.smardine.matroussedemaquillage.mdl.MlProduit;
 import fr.smardine.matroussedemaquillage.mdl.cat.EnTypeCategorie;
 
 public class MlProduitFactory {
 
-	private final Context ctx;
+	
 
-	public MlProduitFactory(Context p_ctx) {
-		this.ctx = p_ctx;
+	public MlProduitFactory() {
+		
 	}
 
 	public MlProduit creationMlProduit(ArrayList<Object> p_list) {
-		MlProduit p = new MlProduit(ctx);
+		MlProduit p = new MlProduit();
 		for (int i = 0; i < p_list.size(); i++) {
 			if (i == 0) {
 				p.setIdProduit((Integer) p_list.get(i));

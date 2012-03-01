@@ -2,16 +2,11 @@ package fr.smardine.matroussedemaquillage.mdl;
 
 import helper.DateHelper;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
 import android.content.Context;
-import android.util.Log;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableProduitEnregistre;
 import fr.smardine.matroussedemaquillage.mdl.cat.EnCategorie;
 import fr.smardine.matroussedemaquillage.mdl.cat.EnCategorieAutres;
@@ -22,6 +17,11 @@ import fr.smardine.matroussedemaquillage.mdl.cat.EnTypeCategorie;
 
 /**
  * Classe gerant les produits en base
+ * <ul>
+ * <li>ATTENTION, le fait que la classe implemente Serializable, interdit de
+ * poser un champ de type Context, qui lui n'est pas serializable, cela
+ * declanche de notserializableException lorsque l'on essaye de serialiser
+ * l'objet</li>
  * @author smardine
  */
 public class MlProduit implements Serializable {
@@ -42,9 +42,20 @@ public class MlProduit implements Serializable {
 
 	private int dureeVie;
 	private long datePeremMilli;
-	private final Context ctx;
+	// private final Context ctx;
 	private java.util.Date dateAchat;
 	private java.util.Date datePeremption;
+
+	/**
+	 * Constructeur par defaut, ATTENTION, le fait que la classe implemente
+	 * Serializable, interdit de poser un champ de type Context, qui lui n'est
+	 * pas serializable, cela declanche de notserializableException lorsque l'on
+	 * essaye de serialiser l'objet
+	 */
+	public MlProduit() {
+		// this.ctx = p_ctx;
+
+	}
 
 	/**
 	 * Constructeur permettant la valorisation complete d'un MlProduit
@@ -53,9 +64,9 @@ public class MlProduit implements Serializable {
 	 */
 	public MlProduit(int p_idProduit, Context p_ctx) {
 		this.idProduit = p_idProduit;
-		this.ctx = p_ctx;
+		// this.ctx = p_ctx;
 		AccesTableProduitEnregistre accesProduit = new AccesTableProduitEnregistre(
-				ctx);
+				p_ctx);
 		ArrayList<String> defProduit = accesProduit
 				.getDefProduitById(idProduit);
 		this.nomProduit = defProduit.get(0);
@@ -87,14 +98,6 @@ public class MlProduit implements Serializable {
 		} else {
 			return EnCategorieYeux.getCategorieFromValue(p_nomSousCat);
 		}
-
-	}
-
-	/**
-	 * @param p_ctx
-	 */
-	public MlProduit(Context p_ctx) {
-		this.ctx = p_ctx;
 
 	}
 
@@ -278,23 +281,6 @@ public class MlProduit implements Serializable {
 	 */
 	public void setDatePeremMilli(long p_datePeremMilli) {
 		datePeremMilli = p_datePeremMilli;
-	}
-
-	public byte[] serialize() {
-		ByteArrayOutputStream bos = new ByteArrayOutputStream();
-		try {
-			ObjectOutput out = new ObjectOutputStream(bos);
-			out.writeObject(this); // This is where the Exception occurs
-			out.close();
-			// Get the bytes of the serialized object
-			byte[] buf = bos.toByteArray();
-			return buf;
-		} catch (IOException ioe) {
-			Log.e("serializeObject", "error", ioe); // "ioe" says
-													// java.io.NotSerializableException
-													// exception
-			return null;
-		}
 	}
 
 }

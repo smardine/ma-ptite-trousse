@@ -1,6 +1,7 @@
 package fr.smardine.matroussedemaquillage.remplir;
 
 import helper.DateHelper;
+import helper.SerialisableHelper;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -537,7 +538,7 @@ public class formulaire_entree_page1bis extends Activity implements
 			} else {
 				Intent intent = new Intent(formulaire_entree_page1bis.this,
 						formulaire_entree_page3.class);
-				MlProduit p = new MlProduit(this);
+				MlProduit p = new MlProduit();
 				p.setMarque(MarqueChoisie.trim());
 				try {
 					p.setDureeVie(Integer.parseInt(DureeVie.trim()));
@@ -551,7 +552,7 @@ public class formulaire_entree_page1bis extends Activity implements
 				p.setNomProduit(nomProduitRecup.trim());
 
 				intent.putExtra(MlProduit.class.getCanonicalName(),
-						p.serialize());
+						SerialisableHelper.serialize(p));
 
 				// intent.putExtra(ActivityParam.Marque, MarqueChoisie.trim());
 				// intent.putExtra(ActivityParam.DurreeDeVie, DureeVie.trim());
