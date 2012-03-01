@@ -8,29 +8,30 @@ public enum EnStructTempo implements StructureTable {
 	/**
 	 * 
 	 */
-	NOM_MARQUE("nom_marque_choisie", String.class, 250), //
+	NOM_MARQUE("nom_marque_choisie", EnTypeChampsSQLite.VARCHAR, 250), //
 	/**
 	 * 
 	 */
-	NOM_PRODUIT("nom_produit", String.class, 255), //
+	NOM_PRODUIT("nom_produit", EnTypeChampsSQLite.VARCHAR, 255), //
 	/**
 	 * 
 	 */
-	NUM_TEINTE("numero_Teinte", String.class, 255), //
+	NUM_TEINTE("numero_Teinte", EnTypeChampsSQLite.VARCHAR, 255), //
 	/**
 	 * 
 	 */
-	DATE_ACHAT("DateAchat", String.class, 255), //
+	DATE_ACHAT("DateAchat", EnTypeChampsSQLite.VARCHAR, 255), //
 	/**
 	 * 
 	 */
-	DUREE_VIE("Duree_Vie", String.class, 255);
+	DUREE_VIE("Duree_Vie", EnTypeChampsSQLite.VARCHAR, 255);
 
 	private final String nomChamp;
-	private final Class<?> typeClass;
+	private final EnTypeChampsSQLite typeClass;
 	private final Integer tailleMax;
 
-	EnStructTempo(String p_nomChamp, Class<?> p_typeClass, Integer p_tailleMax) {
+	EnStructTempo(String p_nomChamp, EnTypeChampsSQLite p_typeClass,
+			Integer p_tailleMax) {
 		this.nomChamp = p_nomChamp;
 		this.typeClass = p_typeClass;
 		this.tailleMax = p_tailleMax;
@@ -42,7 +43,7 @@ public enum EnStructTempo implements StructureTable {
 	}
 
 	@Override
-	public Class<?> getTypeChamp() {
+	public EnTypeChampsSQLite getTypeChamp() {
 		return typeClass;
 	}
 
@@ -51,4 +52,8 @@ public enum EnStructTempo implements StructureTable {
 		return tailleMax;
 	}
 
+	@Override
+	public StructureTable[] getListeChamp() {
+		return values();
+	}
 }

@@ -6,7 +6,7 @@ public enum EnTypeCategorie {
 
 	public static EnTypeCategorie getEnumFromValue(String p_value) {
 		for (EnTypeCategorie e : values()) {
-			if (e.name().equals(p_value)) {
+			if (e.name().equals(p_value.toUpperCase())) {
 				return e;
 			}
 		}

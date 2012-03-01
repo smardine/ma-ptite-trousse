@@ -2,11 +2,16 @@ package fr.smardine.matroussedemaquillage.mdl;
 
 import helper.DateHelper;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
 import android.content.Context;
+import android.util.Log;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableProduitEnregistre;
 import fr.smardine.matroussedemaquillage.mdl.cat.EnCategorie;
 import fr.smardine.matroussedemaquillage.mdl.cat.EnCategorieAutres;
@@ -72,7 +77,7 @@ public class MlProduit implements Serializable {
 
 	}
 
-	static EnCategorie rechercheSousCat(String p_nomSousCat) {
+	public static EnCategorie rechercheSousCat(String p_nomSousCat) {
 		if (EnCategorieAutres.getCategorieFromValue(p_nomSousCat) != null) {
 			return EnCategorieAutres.getCategorieFromValue(p_nomSousCat);
 		} else if (EnCategorieLevre.getCategorieFromValue(p_nomSousCat) != null) {
@@ -273,6 +278,23 @@ public class MlProduit implements Serializable {
 	 */
 	public void setDatePeremMilli(long p_datePeremMilli) {
 		datePeremMilli = p_datePeremMilli;
+	}
+
+	public byte[] serialize() {
+		ByteArrayOutputStream bos = new ByteArrayOutputStream();
+		try {
+			ObjectOutput out = new ObjectOutputStream(bos);
+			out.writeObject(this); // This is where the Exception occurs
+			out.close();
+			// Get the bytes of the serialized object
+			byte[] buf = bos.toByteArray();
+			return buf;
+		} catch (IOException ioe) {
+			Log.e("serializeObject", "error", ioe); // "ioe" says
+													// java.io.NotSerializableException
+													// exception
+			return null;
+		}
 	}
 
 }

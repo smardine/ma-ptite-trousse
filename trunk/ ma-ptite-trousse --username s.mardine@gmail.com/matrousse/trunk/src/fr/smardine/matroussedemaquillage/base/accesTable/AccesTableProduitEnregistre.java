@@ -10,6 +10,7 @@ import android.content.Context;
 import fr.smardine.matroussedemaquillage.base.RequeteFactory;
 import fr.smardine.matroussedemaquillage.base.structure.EnStructProduitEnregistre;
 import fr.smardine.matroussedemaquillage.base.structure.EnTable;
+import fr.smardine.matroussedemaquillage.factory.MlProduitFactory;
 import fr.smardine.matroussedemaquillage.mdl.MlListeProduits;
 import fr.smardine.matroussedemaquillage.mdl.MlProduit;
 
@@ -42,12 +43,24 @@ public class AccesTableProduitEnregistre {
 	 */
 	public MlListeProduits getListeProduits() {
 		MlListeProduits lstProds = new MlListeProduits();
-		String requete = "SELECT " + EnStructProduitEnregistre.ID.getNomChamp()
-				+ " FROM " + EnTable.PRODUIT_ENREGISTRE.getNomTable();
-		List<ArrayList<String>> lstId = requeteFact.getListeDeChamp(requete);
-		for (ArrayList<String> anId : lstId) {
-			MlProduit prod = new MlProduit(Integer.parseInt(anId.get(0)), ctx);
-			lstProds.add(prod);
+		// String requete = "SELECT " +
+		// EnStructProduitEnregistre.ID.getNomChamp()
+		// + " FROM " + EnTable.PRODUIT_ENREGISTRE.getNomTable();
+		// List<ArrayList<String>> lstId = requeteFact.getListeDeChamp(requete);
+		// for (ArrayList<String> anId : lstId) {
+		// // MlProduit prod = new MlProduit(Integer.parseInt(anId.get(0)),
+		// // ctx);
+		// MlProduit prod = new MlProduit(ctx);
+		// prod.setIdProduit(p_idProduit)
+		// lstProds.add(prod);
+		// }
+
+		List<ArrayList<Object>> lstRetour = requeteFact.getListeDeChampBis(
+				EnTable.PRODUIT_ENREGISTRE, EnStructProduitEnregistre.class,
+				null);
+		MlProduitFactory prodFact = new MlProduitFactory(ctx);
+		for (ArrayList<Object> aList : lstRetour) {
+			lstProds.add(prodFact.creationMlProduit(aList));
 		}
 		return lstProds;
 
@@ -251,12 +264,18 @@ public class AccesTableProduitEnregistre {
 	public MlListeProduits getListeProduitsAvecFiltrageSurCategorie(
 			String p_filtrage) {
 		MlListeProduits lst = new MlListeProduits();
-		String requete = "SELECT id_produits FROM produit_Enregistre where nom_souscatergorie LIKE '%"
-				+ p_filtrage + "%' ORDER BY nom_souscatergorie";
-		List<ArrayList<String>> lstId = requeteFact.getListeDeChamp(requete);
-		for (ArrayList<String> anId : lstId) {
-			MlProduit prod = new MlProduit(Integer.parseInt(anId.get(0)), ctx);
-			lst.add(prod);
+		// String requete =
+		// "SELECT id_produits FROM produit_Enregistre where nom_souscatergorie LIKE '%"
+		// + p_filtrage + "%' ORDER BY nom_souscatergorie";
+		// List<ArrayList<String>> lstId = requeteFact.getListeDeChamp(requete);
+		List<ArrayList<Object>> lstRetour = requeteFact.getListeDeChampBis(
+				EnTable.PRODUIT_ENREGISTRE, EnStructProduitEnregistre.class,
+				"nom_souscatergorie LIKE '%" + p_filtrage
+						+ "%' ORDER BY nom_souscatergorie");
+
+		MlProduitFactory prodFact = new MlProduitFactory(ctx);
+		for (ArrayList<Object> aList : lstRetour) {
+			lst.add(prodFact.creationMlProduit(aList));
 		}
 		return lst;
 	}
@@ -268,12 +287,22 @@ public class AccesTableProduitEnregistre {
 	public MlListeProduits getListeProduitsAvecFiltrageSurMarque(
 			String p_Filtrage) {
 		MlListeProduits lst = new MlListeProduits();
-		String requete = "SELECT id_produits FROM produit_Enregistre where nom_marque LIKE '%"
-				+ p_Filtrage + "%' ORDER BY nom_marque";
-		List<ArrayList<String>> lstId = requeteFact.getListeDeChamp(requete);
-		for (ArrayList<String> anId : lstId) {
-			MlProduit prod = new MlProduit(Integer.parseInt(anId.get(0)), ctx);
-			lst.add(prod);
+		// String requete =
+		// "SELECT id_produits FROM produit_Enregistre where nom_marque LIKE '%"
+		// + p_Filtrage + "%' ORDER BY nom_marque";
+		// List<ArrayList<String>> lstId = requeteFact.getListeDeChamp(requete);
+		// for (ArrayList<String> anId : lstId) {
+		// MlProduit prod = new MlProduit(Integer.parseInt(anId.get(0)), ctx);
+		// lst.add(prod);
+		// }
+
+		List<ArrayList<Object>> lstRetour = requeteFact.getListeDeChampBis(
+				EnTable.PRODUIT_ENREGISTRE, EnStructProduitEnregistre.class,
+				"nom_marque LIKE '%" + p_Filtrage + "%' ORDER BY p_Filtrage");
+
+		MlProduitFactory prodFact = new MlProduitFactory(ctx);
+		for (ArrayList<Object> aList : lstRetour) {
+			lst.add(prodFact.creationMlProduit(aList));
 		}
 
 		return lst;
@@ -285,15 +314,27 @@ public class AccesTableProduitEnregistre {
 	 */
 	public MlListeProduits getListeProduitsAvecFiltrageSurTout(String p_Filtrage) {
 		MlListeProduits lst = new MlListeProduits();
-		String requete = "SELECT" + " id_produits "
-				+ "FROM produit_Enregistre " + "where nom_produit LIKE '%"
-				+ p_Filtrage + "%' " + "or nom_marque LIKE '%" + p_Filtrage
-				+ "%' " + "or nom_souscatergorie LIKE '%" + p_Filtrage
-				+ "%' ORDER BY id_produits";
-		List<ArrayList<String>> lstId = requeteFact.getListeDeChamp(requete);
-		for (ArrayList<String> anId : lstId) {
-			MlProduit prod = new MlProduit(Integer.parseInt(anId.get(0)), ctx);
-			lst.add(prod);
+		// String requete = "SELECT" + " id_produits "
+		// + "FROM produit_Enregistre " + "where nom_produit LIKE '%"
+		// + p_Filtrage + "%' " + "or nom_marque LIKE '%" + p_Filtrage
+		// + "%' " + "or nom_souscatergorie LIKE '%" + p_Filtrage
+		// + "%' ORDER BY id_produits";
+		// List<ArrayList<String>> lstId = requeteFact.getListeDeChamp(requete);
+		// for (ArrayList<String> anId : lstId) {
+		// MlProduit prod = new MlProduit(Integer.parseInt(anId.get(0)), ctx);
+		// lst.add(prod);
+		// }
+
+		List<ArrayList<Object>> lstRetour = requeteFact.getListeDeChampBis(
+				EnTable.PRODUIT_ENREGISTRE, EnStructProduitEnregistre.class,
+				"nom_produit LIKE '%" + p_Filtrage + "%' "
+						+ "or nom_marque LIKE '%" + p_Filtrage + "%' "
+						+ "or nom_souscatergorie LIKE '%" + p_Filtrage
+						+ "%' ORDER BY id_produits");
+
+		MlProduitFactory prodFact = new MlProduitFactory(ctx);
+		for (ArrayList<Object> aList : lstRetour) {
+			lst.add(prodFact.creationMlProduit(aList));
 		}
 
 		return lst;
@@ -304,22 +345,39 @@ public class AccesTableProduitEnregistre {
 	 */
 	public MlListeProduits getListeProduitsPerime() {
 		MlListeProduits lst = new MlListeProduits();
-		String requete = "SELECT "
-				+ EnStructProduitEnregistre.ID.getNomChamp()
-				+ " FROM "
-				+ EnTable.PRODUIT_ENREGISTRE.getNomTable()
-				+ " WHERE "
-				+ //
-				"(" + EnStructProduitEnregistre.IS_PERIME.getNomChamp()
-				+ "='true'" + " or "
-				+ EnStructProduitEnregistre.IS_PRESQUE_PERIME.getNomChamp()
-				+ "='true') ";
-		List<ArrayList<String>> lstId = requeteFact.getListeDeChamp(requete);
-		for (ArrayList<String> anId : lstId) {
-			MlProduit prod = new MlProduit(Integer.parseInt(anId.get(0)), ctx);
-			lst.add(prod);
+		// String requete = "SELECT "
+		// + EnStructProduitEnregistre.ID.getNomChamp()
+		// + " FROM "
+		// + EnTable.PRODUIT_ENREGISTRE.getNomTable()
+		// + " WHERE "
+		// + //
+		// "(" + EnStructProduitEnregistre.IS_PERIME.getNomChamp()
+		// + "='true'" + " or "
+		// + EnStructProduitEnregistre.IS_PRESQUE_PERIME.getNomChamp()
+		// + "='true') ";
+		// List<ArrayList<String>> lstId = requeteFact.getListeDeChamp(requete);
+		// for (ArrayList<String> anId : lstId) {
+		// MlProduit prod = new MlProduit(Integer.parseInt(anId.get(0)), ctx);
+		// lst.add(prod);
+		// }
+
+		List<ArrayList<Object>> lstRetour = requeteFact.getListeDeChampBis(
+				EnTable.PRODUIT_ENREGISTRE,
+				EnStructProduitEnregistre.class,
+				"("
+						+ EnStructProduitEnregistre.IS_PERIME.getNomChamp()
+						+ "='true'"
+						+ " or "
+						+ EnStructProduitEnregistre.IS_PRESQUE_PERIME
+								.getNomChamp() + "='true') ");
+
+		MlProduitFactory prodFact = new MlProduitFactory(ctx);
+		for (ArrayList<Object> aList : lstRetour) {
+			lst.add(prodFact.creationMlProduit(aList));
 		}
+
 		return lst;
+
 	}
 
 	/**
@@ -329,14 +387,29 @@ public class AccesTableProduitEnregistre {
 	public MlListeProduits getListeProduitsPerimeAvecFiltrageSurCategorie(
 			String p_filtrage) {
 		MlListeProduits lst = new MlListeProduits();
-		String requete = "SELECT id_produits FROM produit_Enregistre where nom_souscatergorie LIKE '%"
-				+ p_filtrage
-				+ "%' and (IS_PERIME='true' or IS_PRESQUE_PERIME='true') " //
-				+ "ORDER BY Date_Peremption";
-		List<ArrayList<String>> lstId = requeteFact.getListeDeChamp(requete);
-		for (ArrayList<String> anId : lstId) {
-			MlProduit prod = new MlProduit(Integer.parseInt(anId.get(0)), ctx);
-			lst.add(prod);
+		// String requete =
+		// "SELECT id_produits FROM produit_Enregistre where nom_souscatergorie LIKE '%"
+		// + p_filtrage
+		// + "%' and (IS_PERIME='true' or IS_PRESQUE_PERIME='true') " //
+		// + "ORDER BY Date_Peremption";
+		// List<ArrayList<String>> lstId = requeteFact.getListeDeChamp(requete);
+		// for (ArrayList<String> anId : lstId) {
+		// MlProduit prod = new MlProduit(Integer.parseInt(anId.get(0)), ctx);
+		// lst.add(prod);
+		// }
+
+		List<ArrayList<Object>> lstRetour = requeteFact
+				.getListeDeChampBis(
+						EnTable.PRODUIT_ENREGISTRE,
+						EnStructProduitEnregistre.class,
+						"nom_souscatergorie LIKE '%"
+								+ p_filtrage
+								+ "%' and (IS_PERIME='true' or IS_PRESQUE_PERIME='true') " //
+								+ "ORDER BY Date_Peremption");
+
+		MlProduitFactory prodFact = new MlProduitFactory(ctx);
+		for (ArrayList<Object> aList : lstRetour) {
+			lst.add(prodFact.creationMlProduit(aList));
 		}
 
 		return lst;
@@ -349,15 +422,31 @@ public class AccesTableProduitEnregistre {
 	public MlListeProduits getListeProduitsPerimeAvecFiltrageSurMarque(
 			String p_Filtrage) {
 		MlListeProduits lst = new MlListeProduits();
-		String requete = "SELECT id_produits FROM produit_Enregistre where nom_marque LIKE '%"
-				+ p_Filtrage
-				+ "%' and (IS_PERIME='true' or IS_PRESQUE_PERIME='true') ORDER BY nom_marque";
+		// String requete =
+		// "SELECT id_produits FROM produit_Enregistre where nom_marque LIKE '%"
+		// + p_Filtrage
+		// +
+		// "%' and (IS_PERIME='true' or IS_PRESQUE_PERIME='true') ORDER BY nom_marque";
+		//
+		// List<ArrayList<String>> lstId = requeteFact.getListeDeChamp(requete);
+		// for (ArrayList<String> anId : lstId) {
+		// MlProduit prod = new MlProduit(Integer.parseInt(anId.get(0)), ctx);
+		// lst.add(prod);
+		// }
 
-		List<ArrayList<String>> lstId = requeteFact.getListeDeChamp(requete);
-		for (ArrayList<String> anId : lstId) {
-			MlProduit prod = new MlProduit(Integer.parseInt(anId.get(0)), ctx);
-			lst.add(prod);
+		List<ArrayList<Object>> lstRetour = requeteFact
+				.getListeDeChampBis(
+						EnTable.PRODUIT_ENREGISTRE,
+						EnStructProduitEnregistre.class,
+						"nom_marque LIKE '%"
+								+ p_Filtrage
+								+ "%' and (IS_PERIME='true' or IS_PRESQUE_PERIME='true') ORDER BY nom_marque");
+
+		MlProduitFactory prodFact = new MlProduitFactory(ctx);
+		for (ArrayList<Object> aList : lstRetour) {
+			lst.add(prodFact.creationMlProduit(aList));
 		}
+
 		return lst;
 	}
 
@@ -368,22 +457,43 @@ public class AccesTableProduitEnregistre {
 	public MlListeProduits getListeProduitsPerimeAvecFiltrageSurTout(
 			String p_Filtrage) {
 		MlListeProduits lst = new MlListeProduits();
-		String requete = "SELECT"
-				+ " id_produits "
-				+ "FROM produit_Enregistre "
-				+ "where nom_produit LIKE '%"
-				+ p_Filtrage
-				+ "%' "
-				+ "or nom_marque LIKE '%"
-				+ p_Filtrage
-				+ "%' "
-				+ "or nom_souscatergorie LIKE '%"
-				+ p_Filtrage
-				+ "%' and (IS_PERIME='true' or IS_PRESQUE_PERIME='true')  ORDER BY id_produits";
-		List<ArrayList<String>> lstId = requeteFact.getListeDeChamp(requete);
-		for (ArrayList<String> anId : lstId) {
-			MlProduit prod = new MlProduit(Integer.parseInt(anId.get(0)), ctx);
-			lst.add(prod);
+		// String requete = "SELECT"
+		// + " id_produits "
+		// + "FROM produit_Enregistre "
+		// + "where nom_produit LIKE '%"
+		// + p_Filtrage
+		// + "%' "
+		// + "or nom_marque LIKE '%"
+		// + p_Filtrage
+		// + "%' "
+		// + "or nom_souscatergorie LIKE '%"
+		// + p_Filtrage
+		// +
+		// "%' and (IS_PERIME='true' or IS_PRESQUE_PERIME='true')  ORDER BY id_produits";
+		// List<ArrayList<String>> lstId = requeteFact.getListeDeChamp(requete);
+		// for (ArrayList<String> anId : lstId) {
+		// MlProduit prod = new MlProduit(Integer.parseInt(anId.get(0)), ctx);
+		// lst.add(prod);
+		// }
+		//
+
+		List<ArrayList<Object>> lstRetour = requeteFact
+				.getListeDeChampBis(
+						EnTable.PRODUIT_ENREGISTRE,
+						EnStructProduitEnregistre.class,
+						"nom_produit LIKE '%"
+								+ p_Filtrage
+								+ "%' "
+								+ "or nom_marque LIKE '%"
+								+ p_Filtrage
+								+ "%' "
+								+ "or nom_souscatergorie LIKE '%"
+								+ p_Filtrage
+								+ "%' and (IS_PERIME='true' or IS_PRESQUE_PERIME='true')  ORDER BY id_produits");
+
+		MlProduitFactory prodFact = new MlProduitFactory(ctx);
+		for (ArrayList<Object> aList : lstRetour) {
+			lst.add(prodFact.creationMlProduit(aList));
 		}
 
 		return lst;

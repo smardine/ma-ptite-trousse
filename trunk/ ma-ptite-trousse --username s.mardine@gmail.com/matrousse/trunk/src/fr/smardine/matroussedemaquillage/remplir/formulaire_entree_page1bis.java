@@ -550,7 +550,8 @@ public class formulaire_entree_page1bis extends Activity implements
 				p.setTeinte(numTeinte.trim());
 				p.setNomProduit(nomProduitRecup.trim());
 
-				intent.putExtra(MlProduit.class.getCanonicalName(), p);
+				intent.putExtra(MlProduit.class.getCanonicalName(),
+						p.serialize());
 
 				// intent.putExtra(ActivityParam.Marque, MarqueChoisie.trim());
 				// intent.putExtra(ActivityParam.DurreeDeVie, DureeVie.trim());

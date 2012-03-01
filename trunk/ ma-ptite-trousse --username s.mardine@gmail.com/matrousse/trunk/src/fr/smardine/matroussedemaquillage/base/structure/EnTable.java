@@ -7,32 +7,34 @@ public enum EnTable {
 	/**
 	 * voir EnStructNotes pour la structure de la table
 	 */
-	NOTES("Notes"), //
+	NOTES("Notes", EnStructNotes.class), //
 	/**
 	 * voir EnStructParam pour la structure de la table
 	 */
-	PARAM("Param"), //
+	PARAM("Param", EnStructParam.class), //
 	/**
 	 * voir EnStructProduitEnregistre pour la structure de la table
 	 */
-	PRODUIT_ENREGISTRE("produit_Enregistre"), //
+	PRODUIT_ENREGISTRE("produit_Enregistre", EnStructProduitEnregistre.class), //
 	/**
 	 * voir EnStructMarque pour la structure de la table
 	 */
-	TROUSSE_MARQUE("trousse_marques"), //
+	TROUSSE_MARQUE("trousse_marques", EnStructMarque.class), //
 	/**
 	 * voir EnStructProduits pour la structure de la table
 	 */
-	TROUSSE_PRODUIT("trousse_produits"), //
+	TROUSSE_PRODUIT("trousse_produits", EnStructProduits.class), //
 	/**
 	 * voir EnStructTempo pour la structure de la table
 	 */
-	TROUSSE_TEMPO("trousse_tempo");
+	TROUSSE_TEMPO("trousse_tempo", EnStructTempo.class);
 
 	private String nomTable;
+	private Class<? extends StructureTable> structureTable;
 
-	EnTable(String p_nomTable) {
+	EnTable(String p_nomTable, Class<? extends StructureTable> p_structure) {
 		this.nomTable = p_nomTable;
+		this.structureTable = p_structure;
 	}
 
 	/**
@@ -45,6 +47,10 @@ public enum EnTable {
 	@Override
 	public String toString() {
 		return nomTable;
+	}
+
+	public Class<? extends StructureTable> getStructureTable() {
+		return structureTable;
 	}
 
 }
