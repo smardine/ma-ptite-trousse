@@ -10,10 +10,8 @@ import fr.smardine.matroussedemaquillage.mdl.cat.EnTypeCategorie;
 
 public class MlProduitFactory {
 
-	
-
 	public MlProduitFactory() {
-		
+
 	}
 
 	public MlProduit creationMlProduit(ArrayList<Object> p_list) {

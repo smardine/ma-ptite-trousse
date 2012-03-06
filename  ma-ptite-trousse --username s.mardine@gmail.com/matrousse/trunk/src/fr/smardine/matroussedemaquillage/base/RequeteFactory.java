@@ -7,7 +7,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import fr.smardine.matroussedemaquillage.base.structure.EnTable;
-import fr.smardine.matroussedemaquillage.base.structure.StructureTable;
+import fr.smardine.matroussedemaquillage.base.structure.IStructureTable;
 
 /**
  * @author smardine S'occupe de gerer les requetes en bases.
@@ -88,31 +88,36 @@ public class RequeteFactory {
 
 	}
 
-	public List<ArrayList<Object>> getListeDeChampBis(EnTable p_table,
-			Class<? extends StructureTable> class1, String p_whereClause) {
-
-		StructureTable[] lstChamp = class1.getEnumConstants();
+	private String construitRequeteFromStructuretable(
+			IStructureTable[] p_sctructureTable) {
 		String requete = "Select ";
-		for (int i = 0; i < lstChamp.length; i++) {
+		for (int i = 0; i < p_sctructureTable.length; i++) {
 			if (i == 0) {
-				requete = requete + lstChamp[i].getNomChamp();
+				requete = requete + p_sctructureTable[i].getNomChamp();
 			} else if (i > 0) {
-				requete = requete + ", " + lstChamp[i].getNomChamp();
+				requete = requete + ", " + p_sctructureTable[i].getNomChamp();
 			}
 		}
-		// for (StructureTable unChamp : lstChamp) {
-		// requete = requete + ", " + unChamp.getNomChamp();
-		// }
-		requete = requete + " FROM " + p_table.getNomTable();
-		if (p_whereClause != null && p_whereClause != "") {
-			requete = requete + " " + p_whereClause;
+		return requete;
+	}
+
+	public List<ArrayList<Object>> getListeDeChampBis(EnTable p_table,
+			Class<? extends IStructureTable> class1, String p_whereClause) {
+
+		IStructureTable[] lstChamp = class1.getEnumConstants();
+		StringBuilder sb = new StringBuilder();
+		sb.append(construitRequeteFromStructuretable(lstChamp));
+
+		sb.append(" FROM " + p_table.getNomTable());
+		if (p_whereClause != null && !p_whereClause.equals("")) {
+			sb.append(" " + p_whereClause);
 		}
 		ArrayList<ArrayList<Object>> lstRetour = new ArrayList<ArrayList<Object>>();
 		bdAcces.open();
-		Cursor c = bdAcces.getMdb().rawQuery(requete, null);
+		Cursor c = bdAcces.getMdb().rawQuery(sb.toString(), null);
 		while (c.moveToNext()) {
 			ArrayList<Object> lstIntermediaire = new ArrayList<Object>();
-			for (StructureTable unChamp : lstChamp) {
+			for (IStructureTable unChamp : lstChamp) {
 				int idxColumn = c.getColumnIndex(unChamp.getNomChamp());
 				switch (unChamp.getTypeChamp()) {
 					case INTEGER:

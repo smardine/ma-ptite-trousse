@@ -3,7 +3,7 @@ package fr.smardine.matroussedemaquillage.base.structure;
 /**
  * @author smardine Table contenant les marque de produits
  */
-public enum EnStructMarque implements StructureTable {
+public enum EnStructMarque implements IStructureTable {
 	/**
 	 * l'id de la marque
 	 */

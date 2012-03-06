@@ -41,6 +41,9 @@ import com.example.android.apis.animation.Animlineaire;
 
 import fr.smardine.matroussedemaquillage.Main;
 import fr.smardine.matroussedemaquillage.R;
+import fr.smardine.matroussedemaquillage.alertDialog.AlertDialogFactory;
+import fr.smardine.matroussedemaquillage.alertDialog.type.EnTypeAlertDialogAttention;
+import fr.smardine.matroussedemaquillage.alertDialog.type.EnTypeAlertDialogOuiNon;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableParams;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableTrousseMarque;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableTrousseProduits;
@@ -65,20 +68,19 @@ import fr.smardine.matroussedemaquillage.variableglobale.EnTheme;
 public class formulaire_entree_page1bis extends Activity implements
 		OnClickListener {
 
-	Button BoutonValider;
-	ImageView BtVisage, BtYeux, BtLevres, BtAutres;
-	AutoCompleteTextView textView;
+	private Button BoutonValider;
+	private ImageView BtVisage, BtYeux, BtLevres, BtAutres;
+	private AutoCompleteTextView textView;
 
-	// private BDAcces objBd;
-	AlertDialog.Builder adPlusieurCat, adAucuneCat, adNouvelleMarque,
+	private AlertDialog.Builder adPlusieurCat, adAucuneCat, adNouvelleMarque,
 			adAucuneMarque;;
 	String MarqueChoisie = "";
 	String DureeVie = "";
 	String DateChoisie = "";
 	String numTeinte = "";
 	String nomProduitRecup = "";
-	Intent intentRecherche, intentParametres, intentNote;
-	String[] Marque;
+	private Intent intentRecherche, intentParametres, intentNote;
+	// String[] Marque;
 	// private ContentValues modifiedValues;
 	// private String whereClause;
 	private EnCategorie categorieChoisie;
@@ -106,53 +108,34 @@ public class formulaire_entree_page1bis extends Activity implements
 		BtAutres.setOnClickListener(this);
 		BoutonValider.setOnClickListener(this);
 
-		adPlusieurCat = new AlertDialog.Builder(this);
-		adPlusieurCat.setTitle("Attention");
-		adPlusieurCat.setIcon(R.drawable.ad_attention);
-		adPlusieurCat
-				.setMessage("Vous avez séléctionné plus d'une categorie \n"
-						+ "Veuillez n'en choisir qu'une.");
-		adPlusieurCat.setPositiveButton("Ok",
-				new DialogInterface.OnClickListener() {
+		AlertDialogFactory adFact = new AlertDialogFactory(this);
+		adPlusieurCat = adFact
+				.getAttentionDialog(EnTypeAlertDialogAttention.PLUSIEUR_CAT);
+		//
+		adAucuneCat = adFact
+				.getAttentionDialog(EnTypeAlertDialogAttention.AUCUNE_CAT);
+		// adAucuneCat = new AlertDialog.Builder(this);
+		// adAucuneCat.setTitle("Attention");
+		// adAucuneCat.setIcon(R.drawable.ad_attention);
+		// adAucuneCat.setMessage("Vous n'avez selectionné aucune categorie. \n"
+		// + "Merci d'en choisir au moins une.");
+		// adAucuneCat.setPositiveButton("Ok", null);
 
-					@Override
-					public void onClick(DialogInterface p_dialog, int p_which) {
-						AccesTableTrousseProduits accesTrousse = new AccesTableTrousseProduits(
-								getApplicationContext());
-						accesTrousse.reinitProduitChoisi();
-						// String Table = "trousse_produits";
-						// modifiedValues = new ContentValues();
-						// modifiedValues.put("ischecked", "false");
-						// whereClause = "ischecked=?";
-						// whereArgs = new String[] { "true" };
-						//
-						// //objBd.open();
-						// objBd.majTable(Table, modifiedValues, whereClause,
-						// whereArgs);
-						// //objBd.close();
-
-					}
-				});
-
-		adAucuneCat = new AlertDialog.Builder(this);
-		adAucuneCat.setTitle("Attention");
-		adAucuneCat.setIcon(R.drawable.ad_attention);
-		adAucuneCat.setMessage("Vous n'avez selectionné aucune categorie. \n"
-				+ "Merci d'en choisir au moins une.");
-		adAucuneCat.setPositiveButton("Ok", null);
-
-		adAucuneMarque = new AlertDialog.Builder(this);
-		adAucuneMarque.setTitle("Attention");
-		adAucuneMarque.setIcon(R.drawable.ad_attention);
-		adAucuneMarque
-				.setMessage("Vous n'avez rentré aucune marque \nMerci d'en saisir une");
-		adAucuneMarque.setPositiveButton("Ok", null);
-
-		adNouvelleMarque = new AlertDialog.Builder(this);
-		adNouvelleMarque.setIcon(R.drawable.ad_attention);
-		adNouvelleMarque.setTitle("Petite vérification");
-		adNouvelleMarque
-				.setMessage("Nouvelle marque\nCette marque est inconnue de \"Ma p'tite trousse\"\nSouhaitez vous la partager avec les autres utilisateurs? (Connexion Edge, 3G ou wifi requise)");
+		adAucuneMarque = adFact
+				.getAttentionDialog(EnTypeAlertDialogAttention.AUCUNE_MARQUE);
+		// adAucuneMarque = new AlertDialog.Builder(this);
+		// adAucuneMarque.setTitle("Attention");
+		// adAucuneMarque.setIcon(R.drawable.ad_attention);
+		// adAucuneMarque
+		// .setMessage("Vous n'avez rentré aucune marque \nMerci d'en saisir une");
+		// adAucuneMarque.setPositiveButton("Ok", null);
+		adNouvelleMarque = adFact
+				.getOuiNonDialog(EnTypeAlertDialogOuiNon.NOUVELLE_MARQUE);
+		// adNouvelleMarque = new AlertDialog.Builder(this);
+		// adNouvelleMarque.setIcon(R.drawable.ad_attention);
+		// adNouvelleMarque.setTitle("Petite vérification");
+		// adNouvelleMarque
+		// .setMessage("Nouvelle marque\nCette marque est inconnue de \"Ma p'tite trousse\"\nSouhaitez vous la partager avec les autres utilisateurs? (Connexion Edge, 3G ou wifi requise)");
 		adNouvelleMarque.setPositiveButton("Oui",
 				new DialogInterface.OnClickListener() {
 
@@ -164,14 +147,14 @@ public class formulaire_entree_page1bis extends Activity implements
 
 					}
 				});
-		adNouvelleMarque.setNegativeButton("Non",
-				new DialogInterface.OnClickListener() {
-
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-
-					}
-				});
+		// adNouvelleMarque.setNegativeButton("Non",
+		// new DialogInterface.OnClickListener() {
+		//
+		// @Override
+		// public void onClick(DialogInterface dialog, int which) {
+		//
+		// }
+		// });
 		// objBd = new BDAcces(this);
 		this.setTitle("Choix de la catégorie et de la marque");
 
@@ -185,14 +168,14 @@ public class formulaire_entree_page1bis extends Activity implements
 
 		AccesTableTrousseMarque accesMarque = new AccesTableTrousseMarque(this);
 		MlListeMarque lstMarque = accesMarque.getListeMarques();
-		Marque = new String[lstMarque.size()];
-		for (int i = 0; i < lstMarque.size(); i++) {
-			Marque[i] = lstMarque.get(i).getNomMarque();
-		}
+		// String[] Marque = new String[lstMarque.size()];
+		// for (int i = 0; i < lstMarque.size(); i++) {
+		// Marque[i] = lstMarque.get(i).getNomMarque();
+		// }
 
 		// objBd.close();
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-				R.layout.list_item_marque_auto, Marque);
+				R.layout.list_item_marque_auto, (String[]) lstMarque.toArray());
 		textView.setAdapter(adapter);
 
 	}
@@ -304,6 +287,230 @@ public class formulaire_entree_page1bis extends Activity implements
 		}
 		Log.i("", "" + item.getTitle());
 		return super.onOptionsItemSelected(item);
+	}
+
+	/**
+	 * @param message
+	 */
+	public void popUp(String message) {
+		// Toast.makeText(this, message, 1).show();
+	}
+
+	@Override
+	protected void onRestart() {
+		super.onRestart();
+		// popUp("onRestart()-Page1");
+	}
+
+	/**
+	 * Exécuté lorsque l'activité devient visible à l'utilisateur. La fonction
+	 * onStart() est suivie de la fonction onResume().
+	 */
+	@Override
+	protected void onStart() {
+		super.onStart();
+		// popUp("onStart()-Page1");
+	}
+
+	/**
+	 * Exécutée a chaque passage en premier plan de l'activité. Ou bien, si
+	 * l'activité passe à nouveau en premier (si une autre activité était passé
+	 * en premier plan entre temps). La fonction onResume() est suivie de
+	 * l'exécution de l'activité.
+	 */
+	@Override
+	protected void onResume() {
+		super.onResume();
+
+		boolean isCalledFromMain = getIntent().getBooleanExtra(
+				ActivityParam.LaunchFromMain, false);
+		boolean isCalledFromPageRecap = getIntent().getBooleanExtra(
+				ActivityParam.LaunchFromPageRecap, false);
+		boolean isCalledFromPageRecapBack = getIntent().getBooleanExtra(
+				ActivityParam.LaunchFromPageRecapBack, false);
+		// boolean isCalledFromDetail =
+		// getIntent().getBooleanExtra(ActivityParam.LaunchFromAfficheDetail,
+		// false);
+		// boolean isCalledFromDupplique =
+		// getIntent().getBooleanExtra(ActivityParam.LaunchFromDuppliquer,
+		// false);
+		boolean isCalledFromParam = getIntent().getBooleanExtra(
+				ActivityParam.LaunchFromParam, false);
+
+		if (isCalledFromMain || isCalledFromPageRecap) {
+			// popUp("IscreatFormRecap: " + isCalledFromPageRecap);
+			// popUp("IscreatFormMain: " + isCalledFromMain);
+			Animlineaire anim = new Animlineaire();
+			anim.setDroiteversGauche(500);
+			Animlineaire anim1 = new Animlineaire();
+			anim1.setDroiteversGauche(550);
+			Animlineaire anim2 = new Animlineaire();
+			anim2.setDroiteversGauche(600);
+			Animlineaire anim3 = new Animlineaire();
+			anim3.setDroiteversGauche(650);
+
+			BtVisage.startAnimation(anim);
+			BtYeux.startAnimation(anim1);
+			BtLevres.startAnimation(anim2);
+			BtAutres.startAnimation(anim3);
+
+			AccesTableTrousseProduits accesTrousse = new AccesTableTrousseProduits(
+					this);
+			accesTrousse.reinitProduitChoisi();
+			// AccesTableTrousseTempo accesTempo = new
+			// AccesTableTrousseTempo(this);
+			// accesTempo.deleteTable();
+			// String Table = "trousse_produits";
+			// ContentValues modifiedValues = new ContentValues();
+			// modifiedValues.put("ischecked", "false");
+			// String whereClause = "ischecked=?";
+			// String[] whereArgs = new String[] { "true" };
+			// objBd = new BDAcces(this);
+			// objBd.open();
+			// int nbdechamp = objBd.majTable(Table, modifiedValues,
+			// whereClause, whereArgs);
+			// objBd.deleteTable("trousse_tempo", "1", null);
+			// System.out.println("Nombre de champ modifié : " + nbdechamp);
+			// objBd.close();
+
+		}
+
+		if (isCalledFromParam || isCalledFromPageRecapBack) {
+			MarqueChoisie = getIntent().getStringExtra(ActivityParam.Marque)
+					.trim();
+			DureeVie = getIntent().getStringExtra(ActivityParam.DurreeDeVie)
+					.trim();
+			DateChoisie = getIntent().getStringExtra(ActivityParam.DateAchat)
+					.trim();
+			numTeinte = getIntent()
+					.getStringExtra(ActivityParam.NumeroDeTeinte).trim();
+			nomProduitRecup = getIntent().getStringExtra(
+					ActivityParam.NomProduit).trim();
+
+			textView.setText(MarqueChoisie);
+			Animlineaire anim = new Animlineaire();
+			anim.setDroiteversGauche(250);
+			Animlineaire anim1 = new Animlineaire();
+			anim1.setDroiteversGauche(300);
+			Animlineaire anim2 = new Animlineaire();
+			anim2.setDroiteversGauche(350);
+			Animlineaire anim3 = new Animlineaire();
+			anim3.setDroiteversGauche(400);
+
+			BtVisage.startAnimation(anim);
+			BtYeux.startAnimation(anim1);
+			BtLevres.startAnimation(anim2);
+			BtAutres.startAnimation(anim3);
+		}
+
+	}
+
+	/**
+	 * La fonction onStop() est exécutée : - lorsque l'activité n'est plus en
+	 * premier plan - ou bien lorsque l'activité va être détruite Cette fonction
+	 * est suivie : - de la fonction onRestart() si l'activité passe à nouveau
+	 * en premier plan - de la fonction onDestroy() lorsque l'activité se
+	 * termine ou bien lorsque le système décide de l'arrêter
+	 */
+	@Override
+	protected void onStop() {
+		super.onStop();
+		popUp("onStop-Page1");
+	}
+
+	/**
+	 * La fonction onPause() est suivie : - d'un onResume() si l'activité passe
+	 * à nouveau en premier plan - d'un onStop() si elle devient invisible à
+	 * l'utilisateur L'exécution de la fonction onPause() doit être rapide, car
+	 * la prochaine activité ne démarrera pas tant que l'exécution de la
+	 * fonction onPause() n'est pas terminée.
+	 */
+	@Override
+	protected void onPause() {
+		super.onPause();
+
+	}
+
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+
+			Intent Main = new Intent(this, Main.class);
+			Main.putExtra(ActivityParam.LaunchFromPage1, true);
+			startActivity(Main);
+			termineActivity();
+			return true;
+		}
+		if (keyCode == KeyEvent.KEYCODE_SEARCH) {
+			Intent intentRecherche = new Intent(this, Recherche.class);
+			// on demarre la nouvelle activité
+			startActivity(intentRecherche);
+			termineActivity();
+		}
+		return super.onKeyDown(keyCode, event);
+	}
+
+	/**
+	 * 
+	 */
+	public void OnDestroy() {
+		popUp("OnDestroy-Page1");
+		super.onDestroy();
+
+	}
+
+	protected void PostMarqueSurServeur(String Marque) {
+		String TAG = "fr.smardine.matroussedemaquillage.remplir";
+		DefaultHttpClient httpClient = new DefaultHttpClient();
+		HttpPost httpPost = new HttpPost(
+				"http://simon.mardine.free.fr/trousse_maquillage/nouveautes/postmarque.php");
+		List<NameValuePair> nvps = new ArrayList<NameValuePair>();
+
+		nvps.add(new BasicNameValuePair("marque", Marque));
+		try {
+			httpPost.setEntity(new UrlEncodedFormEntity(nvps, HTTP.UTF_8));
+		} catch (UnsupportedEncodingException e) {
+
+			Log.d(TAG, "UnsupportedEncodingException: " + e);
+			// e.printStackTrace();
+		}
+
+		// We don't care about the response, so we just hope it went well and on
+		// with it
+		HttpResponse response = null;
+		try {
+			response = httpClient.execute(httpPost);
+		} catch (ClientProtocolException e) {
+
+			Log.d(TAG, "ClientProtocolException: " + e);
+			// e.printStackTrace();
+		} catch (IOException e) {
+
+			Log.d(TAG, "IOException: " + e);
+			// e.printStackTrace();
+		}
+		BufferedReader reader = null;
+		try {
+			reader = new BufferedReader(new InputStreamReader(response
+					.getEntity().getContent()));
+		} catch (IllegalStateException e1) {
+
+			Log.d(TAG, "IllegalStateException: " + e1);
+		} catch (IOException e1) {
+
+			Log.d(TAG, "IOException: " + e1);
+			// e1.printStackTrace();
+		}
+		String strLine;
+		try {
+			while ((strLine = reader.readLine()) != null) {
+				Log.d(TAG, "reponse du post : " + strLine);
+			}
+		} catch (IOException e) {
+
+			Log.d(TAG, "IOException: " + e);
+			// e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -653,230 +860,6 @@ public class formulaire_entree_page1bis extends Activity implements
 
 		return ((lstCatCochee.size() == 1) && (!NomProduits.equals("aucun")));
 
-	}
-
-	/**
-	 * @param message
-	 */
-	public void popUp(String message) {
-		// Toast.makeText(this, message, 1).show();
-	}
-
-	@Override
-	protected void onRestart() {
-		super.onRestart();
-		// popUp("onRestart()-Page1");
-	}
-
-	/**
-	 * Exécuté lorsque l'activité devient visible à l'utilisateur. La fonction
-	 * onStart() est suivie de la fonction onResume().
-	 */
-	@Override
-	protected void onStart() {
-		super.onStart();
-		// popUp("onStart()-Page1");
-	}
-
-	/**
-	 * Exécutée a chaque passage en premier plan de l'activité. Ou bien, si
-	 * l'activité passe à nouveau en premier (si une autre activité était passé
-	 * en premier plan entre temps). La fonction onResume() est suivie de
-	 * l'exécution de l'activité.
-	 */
-	@Override
-	protected void onResume() {
-		super.onResume();
-
-		boolean isCalledFromMain = getIntent().getBooleanExtra(
-				ActivityParam.LaunchFromMain, false);
-		boolean isCalledFromPageRecap = getIntent().getBooleanExtra(
-				ActivityParam.LaunchFromPageRecap, false);
-		boolean isCalledFromPageRecapBack = getIntent().getBooleanExtra(
-				ActivityParam.LaunchFromPageRecapBack, false);
-		// boolean isCalledFromDetail =
-		// getIntent().getBooleanExtra(ActivityParam.LaunchFromAfficheDetail,
-		// false);
-		// boolean isCalledFromDupplique =
-		// getIntent().getBooleanExtra(ActivityParam.LaunchFromDuppliquer,
-		// false);
-		boolean isCalledFromParam = getIntent().getBooleanExtra(
-				ActivityParam.LaunchFromParam, false);
-
-		if (isCalledFromMain || isCalledFromPageRecap) {
-			// popUp("IscreatFormRecap: " + isCalledFromPageRecap);
-			// popUp("IscreatFormMain: " + isCalledFromMain);
-			Animlineaire anim = new Animlineaire();
-			anim.setDroiteversGauche(500);
-			Animlineaire anim1 = new Animlineaire();
-			anim1.setDroiteversGauche(550);
-			Animlineaire anim2 = new Animlineaire();
-			anim2.setDroiteversGauche(600);
-			Animlineaire anim3 = new Animlineaire();
-			anim3.setDroiteversGauche(650);
-
-			BtVisage.startAnimation(anim);
-			BtYeux.startAnimation(anim1);
-			BtLevres.startAnimation(anim2);
-			BtAutres.startAnimation(anim3);
-
-			AccesTableTrousseProduits accesTrousse = new AccesTableTrousseProduits(
-					this);
-			accesTrousse.reinitProduitChoisi();
-			// AccesTableTrousseTempo accesTempo = new
-			// AccesTableTrousseTempo(this);
-			// accesTempo.deleteTable();
-			// String Table = "trousse_produits";
-			// ContentValues modifiedValues = new ContentValues();
-			// modifiedValues.put("ischecked", "false");
-			// String whereClause = "ischecked=?";
-			// String[] whereArgs = new String[] { "true" };
-			// objBd = new BDAcces(this);
-			// objBd.open();
-			// int nbdechamp = objBd.majTable(Table, modifiedValues,
-			// whereClause, whereArgs);
-			// objBd.deleteTable("trousse_tempo", "1", null);
-			// System.out.println("Nombre de champ modifié : " + nbdechamp);
-			// objBd.close();
-
-		}
-
-		if (isCalledFromParam || isCalledFromPageRecapBack) {
-			MarqueChoisie = getIntent().getStringExtra(ActivityParam.Marque)
-					.trim();
-			DureeVie = getIntent().getStringExtra(ActivityParam.DurreeDeVie)
-					.trim();
-			DateChoisie = getIntent().getStringExtra(ActivityParam.DateAchat)
-					.trim();
-			numTeinte = getIntent()
-					.getStringExtra(ActivityParam.NumeroDeTeinte).trim();
-			nomProduitRecup = getIntent().getStringExtra(
-					ActivityParam.NomProduit).trim();
-
-			textView.setText(MarqueChoisie);
-			Animlineaire anim = new Animlineaire();
-			anim.setDroiteversGauche(250);
-			Animlineaire anim1 = new Animlineaire();
-			anim1.setDroiteversGauche(300);
-			Animlineaire anim2 = new Animlineaire();
-			anim2.setDroiteversGauche(350);
-			Animlineaire anim3 = new Animlineaire();
-			anim3.setDroiteversGauche(400);
-
-			BtVisage.startAnimation(anim);
-			BtYeux.startAnimation(anim1);
-			BtLevres.startAnimation(anim2);
-			BtAutres.startAnimation(anim3);
-		}
-
-	}
-
-	/**
-	 * La fonction onStop() est exécutée : - lorsque l'activité n'est plus en
-	 * premier plan - ou bien lorsque l'activité va être détruite Cette fonction
-	 * est suivie : - de la fonction onRestart() si l'activité passe à nouveau
-	 * en premier plan - de la fonction onDestroy() lorsque l'activité se
-	 * termine ou bien lorsque le système décide de l'arrêter
-	 */
-	@Override
-	protected void onStop() {
-		super.onStop();
-		popUp("onStop-Page1");
-	}
-
-	/**
-	 * La fonction onPause() est suivie : - d'un onResume() si l'activité passe
-	 * à nouveau en premier plan - d'un onStop() si elle devient invisible à
-	 * l'utilisateur L'exécution de la fonction onPause() doit être rapide, car
-	 * la prochaine activité ne démarrera pas tant que l'exécution de la
-	 * fonction onPause() n'est pas terminée.
-	 */
-	@Override
-	protected void onPause() {
-		super.onPause();
-
-	}
-
-	@Override
-	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		if (keyCode == KeyEvent.KEYCODE_BACK) {
-
-			Intent Main = new Intent(this, Main.class);
-			Main.putExtra(ActivityParam.LaunchFromPage1, true);
-			startActivity(Main);
-			termineActivity();
-			return true;
-		}
-		if (keyCode == KeyEvent.KEYCODE_SEARCH) {
-			Intent intentRecherche = new Intent(this, Recherche.class);
-			// on demarre la nouvelle activité
-			startActivity(intentRecherche);
-			termineActivity();
-		}
-		return super.onKeyDown(keyCode, event);
-	}
-
-	/**
-	 * 
-	 */
-	public void OnDestroy() {
-		popUp("OnDestroy-Page1");
-		super.onDestroy();
-
-	}
-
-	protected void PostMarqueSurServeur(String Marque) {
-		String TAG = "fr.smardine.matroussedemaquillage.remplir";
-		DefaultHttpClient httpClient = new DefaultHttpClient();
-		HttpPost httpPost = new HttpPost(
-				"http://simon.mardine.free.fr/trousse_maquillage/nouveautes/postmarque.php");
-		List<NameValuePair> nvps = new ArrayList<NameValuePair>();
-
-		nvps.add(new BasicNameValuePair("marque", Marque));
-		try {
-			httpPost.setEntity(new UrlEncodedFormEntity(nvps, HTTP.UTF_8));
-		} catch (UnsupportedEncodingException e) {
-
-			Log.d(TAG, "UnsupportedEncodingException: " + e);
-			// e.printStackTrace();
-		}
-
-		// We don't care about the response, so we just hope it went well and on
-		// with it
-		HttpResponse response = null;
-		try {
-			response = httpClient.execute(httpPost);
-		} catch (ClientProtocolException e) {
-
-			Log.d(TAG, "ClientProtocolException: " + e);
-			// e.printStackTrace();
-		} catch (IOException e) {
-
-			Log.d(TAG, "IOException: " + e);
-			// e.printStackTrace();
-		}
-		BufferedReader reader = null;
-		try {
-			reader = new BufferedReader(new InputStreamReader(response
-					.getEntity().getContent()));
-		} catch (IllegalStateException e1) {
-
-			Log.d(TAG, "IllegalStateException: " + e1);
-		} catch (IOException e1) {
-
-			Log.d(TAG, "IOException: " + e1);
-			// e1.printStackTrace();
-		}
-		String strLine;
-		try {
-			while ((strLine = reader.readLine()) != null) {
-				Log.d(TAG, "reponse du post : " + strLine);
-			}
-		} catch (IOException e) {
-
-			Log.d(TAG, "IOException: " + e);
-			// e.printStackTrace();
-		}
 	}
 
 }

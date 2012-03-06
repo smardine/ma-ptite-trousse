@@ -30,9 +30,9 @@ public enum EnTable {
 	TROUSSE_TEMPO("trousse_tempo", EnStructTempo.class);
 
 	private String nomTable;
-	private Class<? extends StructureTable> structureTable;
+	private Class<? extends IStructureTable> structureTable;
 
-	EnTable(String p_nomTable, Class<? extends StructureTable> p_structure) {
+	EnTable(String p_nomTable, Class<? extends IStructureTable> p_structure) {
 		this.nomTable = p_nomTable;
 		this.structureTable = p_structure;
 	}
@@ -49,7 +49,7 @@ public enum EnTable {
 		return nomTable;
 	}
 
-	public Class<? extends StructureTable> getStructureTable() {
+	public Class<? extends IStructureTable> getStructureTable() {
 		return structureTable;
 	}
 

@@ -20,13 +20,11 @@ import fr.smardine.matroussedemaquillage.mdl.MlProduit;
 public class AccesTableProduitEnregistre {
 
 	private final RequeteFactory requeteFact;
-	private final Context ctx;
 
 	/**
 	 * @param p_ctx le contexte
 	 */
 	public AccesTableProduitEnregistre(Context p_ctx) {
-		this.ctx = p_ctx;
 		requeteFact = new RequeteFactory(p_ctx);
 
 	}

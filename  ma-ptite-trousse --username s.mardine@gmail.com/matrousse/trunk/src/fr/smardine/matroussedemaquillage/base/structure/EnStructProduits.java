@@ -3,7 +3,7 @@ package fr.smardine.matroussedemaquillage.base.structure;
 /**
  * @author smardine
  */
-public enum EnStructProduits implements StructureTable {
+public enum EnStructProduits implements IStructureTable {
 	/**
 	 * l'id du produit
 	 */
@@ -48,7 +48,7 @@ public enum EnStructProduits implements StructureTable {
 	}
 
 	@Override
-	public StructureTable[] getListeChamp() {
+	public IStructureTable[] getListeChamp() {
 		return values();
 	}
 

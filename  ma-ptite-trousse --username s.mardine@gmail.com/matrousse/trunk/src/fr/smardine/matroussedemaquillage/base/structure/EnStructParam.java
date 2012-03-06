@@ -3,7 +3,7 @@ package fr.smardine.matroussedemaquillage.base.structure;
 /**
  * @author smardine Structure de la table Param
  */
-public enum EnStructParam implements StructureTable {
+public enum EnStructParam implements IStructureTable {
 	/**
 	 * Doit on afficher l'alerte de peremption au demarrage, prend "ture" ou
 	 * "false"
@@ -45,7 +45,7 @@ public enum EnStructParam implements StructureTable {
 	}
 
 	@Override
-	public StructureTable[] getListeChamp() {
+	public IStructureTable[] getListeChamp() {
 		return values();
 	}
 
