@@ -3,7 +3,7 @@ package fr.smardine.matroussedemaquillage.base.structure;
 /**
  * @author smardine
  */
-public interface StructureTable {
+public interface IStructureTable {
 
 	/**
 	 * @return le nom du champ
@@ -25,6 +25,6 @@ public interface StructureTable {
 	 */
 	String name();
 
-	StructureTable[] getListeChamp();
+	IStructureTable[] getListeChamp();
 
 }

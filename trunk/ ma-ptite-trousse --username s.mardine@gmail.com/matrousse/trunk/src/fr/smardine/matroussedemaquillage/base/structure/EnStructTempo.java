@@ -3,7 +3,7 @@ package fr.smardine.matroussedemaquillage.base.structure;
 /**
  * @author smardine
  */
-public enum EnStructTempo implements StructureTable {
+public enum EnStructTempo implements IStructureTable {
 
 	/**
 	 * 
@@ -53,7 +53,7 @@ public enum EnStructTempo implements StructureTable {
 	}
 
 	@Override
-	public StructureTable[] getListeChamp() {
+	public IStructureTable[] getListeChamp() {
 		return values();
 	}
 }

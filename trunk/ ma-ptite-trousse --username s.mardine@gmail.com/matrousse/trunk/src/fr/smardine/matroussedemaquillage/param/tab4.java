@@ -373,31 +373,33 @@ public class tab4 extends Activity implements OnClickListener {
 		String[] liste = null;
 		File directory = new File(directoryPath);
 
-		if (!directory.exists()) {
-			// System.out.println("Le fichier/répertoire '"+directoryPath+"' n'existe pas");
-		} else if (directory.isFile()) {
+		// if (!directory.exists()) {
+		// //
+		// System.out.println("Le fichier/répertoire '"+directoryPath+"' n'existe pas");
+		// } else if (directory.isFile()) {
+		//
+		// // nbDossier--;
+		// // nbFichier++;
+		//
+		// } else {
+		if (directory.isDirectory()) {
+			File[] subfiles = directory.listFiles();
 
-			// nbDossier--;
-			// nbFichier++;
-
-		} else {
-			if (directory.isDirectory()) {
-				File[] subfiles = directory.listFiles();
-
-				if (subfiles != null) {// si subfiles=null, c'est que le dossier
-										// a des restriction d'acces
-					liste = new String[subfiles.length];
-					for (int i = 0; i < subfiles.length; i++) {
-						// LanceComptage(subfiles[i].toString());
-						liste[i] = subfiles[i].toString().substring(
-								subfiles[i].toString().lastIndexOf(
-										"trousse_base") + 12);
-					}
-					return liste;
+			if (subfiles != null) {// si subfiles=null, c'est que le dossier
+									// a des restriction d'acces
+				liste = new String[subfiles.length];
+				for (int i = 0; i < subfiles.length; i++) {
+					// LanceComptage(subfiles[i].toString());
+					liste[i] = subfiles[i].toString()
+							.substring(
+									subfiles[i].toString().lastIndexOf(
+											"trousse_base") + 12);
 				}
-
+				return liste;
 			}
+
 		}
+		// }
 		return liste;
 	}
 

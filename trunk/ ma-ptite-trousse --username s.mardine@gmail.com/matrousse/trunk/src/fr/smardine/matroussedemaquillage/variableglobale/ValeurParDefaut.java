@@ -19,8 +19,10 @@ public class ValeurParDefaut {
 	 */
 	public ValeurParDefaut(Context ctx) {
 		preferences = PreferenceManager.getDefaultSharedPreferences(ctx);
-		ACTION_PAR_DEFAUT = preferences.getString("default_action", EnActionParDefaut.PERIME.getLib());
-		PASTILLE_COULEUR = Integer.parseInt(preferences.getString("pastille_color", "-65536"));
+		ACTION_PAR_DEFAUT = preferences.getString("default_action",
+				EnActionParDefaut.PERIME.getLib());
+		PASTILLE_COULEUR = Integer.parseInt(preferences.getString(
+				"pastille_color", "-65536"));
 
 	}
 

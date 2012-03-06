@@ -42,7 +42,7 @@ public class MlProduit implements Serializable {
 
 	private int dureeVie;
 	private long datePeremMilli;
-	// private final Context ctx;
+
 	private java.util.Date dateAchat;
 	private java.util.Date datePeremption;
 
@@ -53,8 +53,6 @@ public class MlProduit implements Serializable {
 	 * essaye de serialiser l'objet
 	 */
 	public MlProduit() {
-		// this.ctx = p_ctx;
-
 	}
 
 	/**

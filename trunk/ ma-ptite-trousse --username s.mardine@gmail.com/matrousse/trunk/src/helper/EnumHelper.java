@@ -6,7 +6,7 @@ import fr.smardine.matroussedemaquillage.base.structure.EnStructParam;
 import fr.smardine.matroussedemaquillage.base.structure.EnStructProduitEnregistre;
 import fr.smardine.matroussedemaquillage.base.structure.EnStructProduits;
 import fr.smardine.matroussedemaquillage.base.structure.EnStructTempo;
-import fr.smardine.matroussedemaquillage.base.structure.StructureTable;
+import fr.smardine.matroussedemaquillage.base.structure.IStructureTable;
 
 /**
  * @author smardine
@@ -18,34 +18,34 @@ public class EnumHelper {
 	 * @param p_columnName
 	 * @return obtenir l'enum correspondant au nom de la colonne
 	 */
-	public static StructureTable getValueFromName(
-			Class<StructureTable> p_class, String p_columnName) {
-		for (StructureTable e : EnStructMarque.values()) {
+	public static IStructureTable getValueFromName(
+			Class<IStructureTable> p_class, String p_columnName) {
+		for (IStructureTable e : EnStructMarque.values()) {
 			if (e.getNomChamp().equals(p_columnName)) {
 				return e;
 			}
 		}
-		for (StructureTable e : EnStructNotes.values()) {
+		for (IStructureTable e : EnStructNotes.values()) {
 			if (e.getNomChamp().equals(p_columnName)) {
 				return e;
 			}
 		}
-		for (StructureTable e : EnStructParam.values()) {
+		for (IStructureTable e : EnStructParam.values()) {
 			if (e.getNomChamp().equals(p_columnName)) {
 				return e;
 			}
 		}
-		for (StructureTable e : EnStructProduits.values()) {
+		for (IStructureTable e : EnStructProduits.values()) {
 			if (e.getNomChamp().equals(p_columnName)) {
 				return e;
 			}
 		}
-		for (StructureTable e : EnStructProduitEnregistre.values()) {
+		for (IStructureTable e : EnStructProduitEnregistre.values()) {
 			if (e.getNomChamp().equals(p_columnName)) {
 				return e;
 			}
 		}
-		for (StructureTable e : EnStructTempo.values()) {
+		for (IStructureTable e : EnStructTempo.values()) {
 			if (e.getNomChamp().equals(p_columnName)) {
 				return e;
 			}

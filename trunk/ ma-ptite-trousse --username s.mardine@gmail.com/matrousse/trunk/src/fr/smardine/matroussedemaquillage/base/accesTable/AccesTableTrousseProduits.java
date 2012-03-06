@@ -47,14 +47,14 @@ public class AccesTableTrousseProduits {
 	}
 
 	/**
-	 * @param Catégorie
+	 * @param p_categorie
 	 * @return un tableau de liste de String
 	 */
-	public MlListeTrousseProduit getListeTrousseProduit(String Catégorie) {
+	public MlListeTrousseProduit getListeTrousseProduit(String p_categorie) {
 		MlListeTrousseProduit lstRetour = new MlListeTrousseProduit();
 		String requete = "SELECT " + EnStructProduits.ID.getNomChamp()
 				+ " FROM " + EnTable.TROUSSE_PRODUIT.getNomTable() + " WHERE "
-				+ EnStructProduits.NOM_CAT.getNomChamp() + "='" + Catégorie
+				+ EnStructProduits.NOM_CAT.getNomChamp() + "='" + p_categorie
 				+ "' ORDER BY " + EnStructProduits.NOM_SOUSCAT.getNomChamp();
 
 		List<ArrayList<String>> lstId = requeteFact.getListeDeChamp(requete);
@@ -83,7 +83,7 @@ public class AccesTableTrousseProduits {
 	 * @param p_categorieChoisie
 	 */
 	public void majSouscatChoisie(EnCategorie p_categorieChoisie) {
-		int result = reinitProduitChoisi();
+		reinitProduitChoisi();
 		ContentValues modifiedValues = new ContentValues();
 		modifiedValues.put("ischecked", "true");
 		String whereClause = "nom_souscatergorie=?";
