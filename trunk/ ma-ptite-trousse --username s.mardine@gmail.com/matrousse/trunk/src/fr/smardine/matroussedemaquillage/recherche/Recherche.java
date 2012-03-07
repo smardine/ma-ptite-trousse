@@ -93,8 +93,8 @@ public class Recherche extends Activity implements OnClickListener,
 		EtFiltrage = (EditText) findViewById(R.id.EtFiltrage);
 
 		EtFiltrage.addTextChangedListener(new TextWatcher() {
-			@SuppressWarnings("unused")
-			int len = 0;
+
+			// int len = 0;
 
 			@Override
 			public void afterTextChanged(Editable s) {

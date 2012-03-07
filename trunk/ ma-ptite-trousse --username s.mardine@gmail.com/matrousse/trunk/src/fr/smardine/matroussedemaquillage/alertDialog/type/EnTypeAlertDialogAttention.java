@@ -3,14 +3,18 @@ package fr.smardine.matroussedemaquillage.alertDialog.type;
 import fr.smardine.matroussedemaquillage.alertDialog.IAlertDialogClickListener;
 import fr.smardine.matroussedemaquillage.alertDialog.clickListener.AlertDialogAttentionClickListener;
 
+/**
+ * Definition des différente DialogBox de type "Attention"
+ * @author smardine
+ */
 public enum EnTypeAlertDialogAttention {
 
 	PLUSIEUR_CAT("Attention", "Vous avez séléctionné plus d'une categorie \n"
 			+ "Veuillez n'en choisir qu'une.", "Ok",
 			AlertDialogAttentionClickListener.class), //
 	AUCUNE_CAT("Attention",
-			"Vous n'avez rentré aucune marque \nMerci d'en saisir une", "Ok",
-			null), //
+			"Vous n'avez rentré aucune catégorie \nMerci d'en saisir une",
+			"Ok", null), //
 	AUCUNE_MARQUE("Attention",
 			"Vous n'avez rentré aucune marque \nMerci d'en saisir une", "Ok",
 			null); //

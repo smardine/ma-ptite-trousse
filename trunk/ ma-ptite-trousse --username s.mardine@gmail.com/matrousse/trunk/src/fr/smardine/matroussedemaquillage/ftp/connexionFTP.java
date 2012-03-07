@@ -133,7 +133,7 @@ public class connexionFTP {
 	 * @return true ou false
 	 */
 	public boolean ActiveOrPassiveMod(boolean active, boolean passive) {
-		if (active == true && passive == false) {
+		if (active && !passive) {
 			try {
 				ftp.getAdvancedFTPSettings().setConnectMode(
 						FTPConnectMode.ACTIVE);
@@ -143,7 +143,7 @@ public class connexionFTP {
 				return false;
 			}
 		}
-		if (active == false && passive == true) {
+		if (!active && passive) {
 			try {
 				ftp.getAdvancedFTPSettings()
 						.setConnectMode(FTPConnectMode.PASV);
@@ -153,14 +153,13 @@ public class connexionFTP {
 				return false;
 			}
 		}
-		if ((active == true && passive == true)
-				|| (active == false && passive == false)) {
-			// on ne peut pas avoir a la fois un mod active et passive
-			// et il faut qu'aun moins un des mod soit actif
-			return false;
-		}
-
-		return true;
+		return ((active && passive) || (!active && !passive));
+		// on ne peut pas avoir a la fois un mod active et passive
+		// et il faut qu'aun moins un des mod soit actif
+		// return false;
+		// }
+		//
+		// return true;
 	}
 
 	/**

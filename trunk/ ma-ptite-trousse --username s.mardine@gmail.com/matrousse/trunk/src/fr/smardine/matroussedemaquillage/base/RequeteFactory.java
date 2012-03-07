@@ -110,7 +110,7 @@ public class RequeteFactory {
 
 		sb.append(" FROM " + p_table.getNomTable());
 		if (p_whereClause != null && !p_whereClause.equals("")) {
-			sb.append(" " + p_whereClause);
+			sb.append(" where " + p_whereClause);
 		}
 		ArrayList<ArrayList<Object>> lstRetour = new ArrayList<ArrayList<Object>>();
 		bdAcces.open();

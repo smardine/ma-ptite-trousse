@@ -268,7 +268,7 @@ public class AccesTableProduitEnregistre {
 		// List<ArrayList<String>> lstId = requeteFact.getListeDeChamp(requete);
 		List<ArrayList<Object>> lstRetour = requeteFact.getListeDeChampBis(
 				EnTable.PRODUIT_ENREGISTRE, EnStructProduitEnregistre.class,
-				"nom_souscatergorie LIKE '%" + p_filtrage
+				" nom_souscatergorie LIKE '%" + p_filtrage
 						+ "%' ORDER BY nom_souscatergorie");
 
 		MlProduitFactory prodFact = new MlProduitFactory();

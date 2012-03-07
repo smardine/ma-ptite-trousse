@@ -1,18 +1,15 @@
 package fr.smardine.matroussedemaquillage.remplir;
 
-import helper.DateHelper;
 import helper.SerialisableHelper;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -43,19 +40,15 @@ import fr.smardine.matroussedemaquillage.Main;
 import fr.smardine.matroussedemaquillage.R;
 import fr.smardine.matroussedemaquillage.alertDialog.AlertDialogFactory;
 import fr.smardine.matroussedemaquillage.alertDialog.type.EnTypeAlertDialogAttention;
+import fr.smardine.matroussedemaquillage.alertDialog.type.EnTypeAlertDialogChoixCat;
 import fr.smardine.matroussedemaquillage.alertDialog.type.EnTypeAlertDialogOuiNon;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableParams;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableTrousseMarque;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableTrousseProduits;
+import fr.smardine.matroussedemaquillage.mdl.MlCategorie;
 import fr.smardine.matroussedemaquillage.mdl.MlListeMarque;
-import fr.smardine.matroussedemaquillage.mdl.MlListeTrousseProduit;
 import fr.smardine.matroussedemaquillage.mdl.MlProduit;
-import fr.smardine.matroussedemaquillage.mdl.MlTrousseProduit;
 import fr.smardine.matroussedemaquillage.mdl.cat.EnCategorie;
-import fr.smardine.matroussedemaquillage.mdl.cat.EnCategorieAutres;
-import fr.smardine.matroussedemaquillage.mdl.cat.EnCategorieLevre;
-import fr.smardine.matroussedemaquillage.mdl.cat.EnCategorieVisage;
-import fr.smardine.matroussedemaquillage.mdl.cat.EnCategorieYeux;
 import fr.smardine.matroussedemaquillage.note.note_page1;
 import fr.smardine.matroussedemaquillage.param.tab_param;
 import fr.smardine.matroussedemaquillage.recherche.Recherche;
@@ -70,20 +63,22 @@ public class formulaire_entree_page1bis extends Activity implements
 
 	private Button BoutonValider;
 	private ImageView BtVisage, BtYeux, BtLevres, BtAutres;
-	private AutoCompleteTextView textView;
+	private AutoCompleteTextView textViewMarque;
 
 	private AlertDialog.Builder adPlusieurCat, adAucuneCat, adNouvelleMarque,
 			adAucuneMarque;;
-	String MarqueChoisie = "";
-	String DureeVie = "";
-	String DateChoisie = "";
-	String numTeinte = "";
-	String nomProduitRecup = "";
+	// String MarqueChoisie = "";
+	// String DureeVie = "";
+	// String DateChoisie = "";
+	// String numTeinte = "";
+	// String nomProduitRecup = "";
 	private Intent intentRecherche, intentParametres, intentNote;
 	// String[] Marque;
 	// private ContentValues modifiedValues;
 	// private String whereClause;
-	private EnCategorie categorieChoisie;
+	static EnCategorie categorieChoisie;
+	private MlProduit produit;
+	private AlertDialogFactory af;
 
 	/** Called when the activity is first created. */
 
@@ -100,7 +95,7 @@ public class formulaire_entree_page1bis extends Activity implements
 		BtLevres = (ImageView) findViewById(R.id.ImageViewLevres_page1);
 		BtAutres = (ImageView) this.findViewById(R.id.ImageViewAutres_page1);
 		BoutonValider = (Button) this.findViewById(R.id.ButtonValider2_Page1);
-		textView = (AutoCompleteTextView) findViewById(R.id.autocomplete_marque_Page1);
+		textViewMarque = (AutoCompleteTextView) findViewById(R.id.autocomplete_marque_Page1);
 
 		BtVisage.setOnClickListener(this);
 		BtYeux.setOnClickListener(this);
@@ -143,7 +138,8 @@ public class formulaire_entree_page1bis extends Activity implements
 					public void onClick(DialogInterface dialog, int which) {
 
 						// popUp("Ok, c'est bon, l'utilisateur confirme");
-						PostMarqueSurServeur(textView.getText().toString());
+						PostMarqueSurServeur(textViewMarque.getText()
+								.toString());
 
 					}
 				});
@@ -168,15 +164,15 @@ public class formulaire_entree_page1bis extends Activity implements
 
 		AccesTableTrousseMarque accesMarque = new AccesTableTrousseMarque(this);
 		MlListeMarque lstMarque = accesMarque.getListeMarques();
-		// String[] Marque = new String[lstMarque.size()];
-		// for (int i = 0; i < lstMarque.size(); i++) {
-		// Marque[i] = lstMarque.get(i).getNomMarque();
-		// }
+		String[] Marque = new String[lstMarque.size()];
+		for (int i = 0; i < lstMarque.size(); i++) {
+			Marque[i] = lstMarque.get(i).getNomMarque();
+		}
 
 		// objBd.close();
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-				R.layout.list_item_marque_auto, (String[]) lstMarque.toArray());
-		textView.setAdapter(adapter);
+				R.layout.list_item_marque_auto, Marque);
+		textViewMarque.setAdapter(adapter);
 
 	}
 
@@ -261,16 +257,21 @@ public class formulaire_entree_page1bis extends Activity implements
 			case 2001:
 				Toast.makeText(this, "Paramètres", 1000).show();
 				intentParametres = new Intent(this, tab_param.class);
-				intentParametres.putExtra(ActivityParam.Marque, textView
-						.getText().toString().trim());
-				intentParametres.putExtra(ActivityParam.DurreeDeVie,
-						DureeVie.trim());
-				intentParametres.putExtra(ActivityParam.DateAchat,
-						DateChoisie.trim());
-				intentParametres.putExtra(ActivityParam.NumeroDeTeinte,
-						numTeinte.trim());
-				intentParametres.putExtra(ActivityParam.NomProduit,
-						nomProduitRecup.trim());
+
+				intentParametres.putExtra(MlProduit.class.getCanonicalName(),
+						SerialisableHelper.serialize(produit));
+
+				// intentParametres.putExtra(ActivityParam.Marque,
+				// textViewMarque
+				// .getText().toString().trim());
+				// intentParametres.putExtra(ActivityParam.DurreeDeVie,
+				// DureeVie.trim());
+				// intentParametres.putExtra(ActivityParam.DateAchat,
+				// DateChoisie.trim());
+				// intentParametres.putExtra(ActivityParam.NumeroDeTeinte,
+				// numTeinte.trim());
+				// intentParametres.putExtra(ActivityParam.NomProduit,
+				// nomProduitRecup.trim());
 				intentParametres.putExtra(ActivityParam.LaunchFromPage1, true);
 				// on demarre la nouvelle activité
 				startActivity(intentParametres);
@@ -336,71 +337,63 @@ public class formulaire_entree_page1bis extends Activity implements
 		// false);
 		boolean isCalledFromParam = getIntent().getBooleanExtra(
 				ActivityParam.LaunchFromParam, false);
+		Animlineaire anim = new Animlineaire();
+		anim.setDroiteversGauche(500);
+		Animlineaire anim1 = new Animlineaire();
+		anim1.setDroiteversGauche(550);
+		Animlineaire anim2 = new Animlineaire();
+		anim2.setDroiteversGauche(600);
+		Animlineaire anim3 = new Animlineaire();
+		anim3.setDroiteversGauche(650);
 
+		BtVisage.startAnimation(anim);
+		BtYeux.startAnimation(anim1);
+		BtLevres.startAnimation(anim2);
+		BtAutres.startAnimation(anim3);
 		if (isCalledFromMain || isCalledFromPageRecap) {
 			// popUp("IscreatFormRecap: " + isCalledFromPageRecap);
 			// popUp("IscreatFormMain: " + isCalledFromMain);
-			Animlineaire anim = new Animlineaire();
-			anim.setDroiteversGauche(500);
-			Animlineaire anim1 = new Animlineaire();
-			anim1.setDroiteversGauche(550);
-			Animlineaire anim2 = new Animlineaire();
-			anim2.setDroiteversGauche(600);
-			Animlineaire anim3 = new Animlineaire();
-			anim3.setDroiteversGauche(650);
-
-			BtVisage.startAnimation(anim);
-			BtYeux.startAnimation(anim1);
-			BtLevres.startAnimation(anim2);
-			BtAutres.startAnimation(anim3);
 
 			AccesTableTrousseProduits accesTrousse = new AccesTableTrousseProduits(
 					this);
 			accesTrousse.reinitProduitChoisi();
-			// AccesTableTrousseTempo accesTempo = new
-			// AccesTableTrousseTempo(this);
-			// accesTempo.deleteTable();
-			// String Table = "trousse_produits";
-			// ContentValues modifiedValues = new ContentValues();
-			// modifiedValues.put("ischecked", "false");
-			// String whereClause = "ischecked=?";
-			// String[] whereArgs = new String[] { "true" };
-			// objBd = new BDAcces(this);
-			// objBd.open();
-			// int nbdechamp = objBd.majTable(Table, modifiedValues,
-			// whereClause, whereArgs);
-			// objBd.deleteTable("trousse_tempo", "1", null);
-			// System.out.println("Nombre de champ modifié : " + nbdechamp);
-			// objBd.close();
 
 		}
 
 		if (isCalledFromParam || isCalledFromPageRecapBack) {
-			MarqueChoisie = getIntent().getStringExtra(ActivityParam.Marque)
-					.trim();
-			DureeVie = getIntent().getStringExtra(ActivityParam.DurreeDeVie)
-					.trim();
-			DateChoisie = getIntent().getStringExtra(ActivityParam.DateAchat)
-					.trim();
-			numTeinte = getIntent()
-					.getStringExtra(ActivityParam.NumeroDeTeinte).trim();
-			nomProduitRecup = getIntent().getStringExtra(
-					ActivityParam.NomProduit).trim();
+			byte[] extra = getIntent().getByteArrayExtra(
+					MlProduit.class.getCanonicalName());
+			Object o = SerialisableHelper.deserializeObject(extra);
+			if (o instanceof MlProduit) {
+				produit = (MlProduit) o;
+				textViewMarque.setText(produit.getMarque());
+				// DureeVie =
+				// getIntent().getStringExtra(ActivityParam.DurreeDeVie)
+				// .trim();
+				// DateChoisie =
+				// getIntent().getStringExtra(ActivityParam.DateAchat)
+				// .trim();
+				// numTeinte = getIntent()
+				// .getStringExtra(ActivityParam.NumeroDeTeinte).trim();
+				// nomProduitRecup = getIntent().getStringExtra(
+				// ActivityParam.NomProduit).trim();
 
-			textView.setText(MarqueChoisie);
-			Animlineaire anim = new Animlineaire();
-			anim.setDroiteversGauche(250);
-			Animlineaire anim1 = new Animlineaire();
-			anim1.setDroiteversGauche(300);
-			Animlineaire anim2 = new Animlineaire();
-			anim2.setDroiteversGauche(350);
-			Animlineaire anim3 = new Animlineaire();
-			anim3.setDroiteversGauche(400);
+			}
 
-			BtVisage.startAnimation(anim);
-			BtYeux.startAnimation(anim1);
-			BtLevres.startAnimation(anim2);
-			BtAutres.startAnimation(anim3);
+			// textView.setText(MarqueChoisie);
+			// Animlineaire anim = new Animlineaire();
+			// anim.setDroiteversGauche(250);
+			// Animlineaire anim1 = new Animlineaire();
+			// anim1.setDroiteversGauche(300);
+			// Animlineaire anim2 = new Animlineaire();
+			// anim2.setDroiteversGauche(350);
+			// Animlineaire anim3 = new Animlineaire();
+			// anim3.setDroiteversGauche(400);
+			//
+			// BtVisage.startAnimation(anim);
+			// BtYeux.startAnimation(anim1);
+			// BtLevres.startAnimation(anim2);
+			// BtAutres.startAnimation(anim3);
 		}
 
 	}
@@ -442,7 +435,7 @@ public class formulaire_entree_page1bis extends Activity implements
 			return true;
 		}
 		if (keyCode == KeyEvent.KEYCODE_SEARCH) {
-			Intent intentRecherche = new Intent(this, Recherche.class);
+			intentRecherche = new Intent(this, Recherche.class);
 			// on demarre la nouvelle activité
 			startActivity(intentRecherche);
 			termineActivity();
@@ -459,307 +452,116 @@ public class formulaire_entree_page1bis extends Activity implements
 
 	}
 
-	protected void PostMarqueSurServeur(String Marque) {
+	protected void PostMarqueSurServeur(String p_marque) {
 		String TAG = "fr.smardine.matroussedemaquillage.remplir";
 		DefaultHttpClient httpClient = new DefaultHttpClient();
 		HttpPost httpPost = new HttpPost(
 				"http://simon.mardine.free.fr/trousse_maquillage/nouveautes/postmarque.php");
 		List<NameValuePair> nvps = new ArrayList<NameValuePair>();
 
-		nvps.add(new BasicNameValuePair("marque", Marque));
+		nvps.add(new BasicNameValuePair("marque", p_marque));
 		try {
 			httpPost.setEntity(new UrlEncodedFormEntity(nvps, HTTP.UTF_8));
-		} catch (UnsupportedEncodingException e) {
 
-			Log.d(TAG, "UnsupportedEncodingException: " + e);
-			// e.printStackTrace();
-		}
+			// We don't care about the response, so we just hope it went well
+			// and on
+			// with it
 
-		// We don't care about the response, so we just hope it went well and on
-		// with it
-		HttpResponse response = null;
-		try {
-			response = httpClient.execute(httpPost);
-		} catch (ClientProtocolException e) {
+			HttpResponse response = httpClient.execute(httpPost);
 
-			Log.d(TAG, "ClientProtocolException: " + e);
-			// e.printStackTrace();
-		} catch (IOException e) {
+			BufferedReader reader = null;
 
-			Log.d(TAG, "IOException: " + e);
-			// e.printStackTrace();
-		}
-		BufferedReader reader = null;
-		try {
 			reader = new BufferedReader(new InputStreamReader(response
 					.getEntity().getContent()));
-		} catch (IllegalStateException e1) {
 
-			Log.d(TAG, "IllegalStateException: " + e1);
-		} catch (IOException e1) {
+			String strLine;
 
-			Log.d(TAG, "IOException: " + e1);
-			// e1.printStackTrace();
-		}
-		String strLine;
-		try {
 			while ((strLine = reader.readLine()) != null) {
 				Log.d(TAG, "reponse du post : " + strLine);
 			}
 		} catch (IOException e) {
 
 			Log.d(TAG, "IOException: " + e);
+			return;
 			// e.printStackTrace();
+		} catch (IllegalStateException e1) {
+
+			Log.d(TAG, "IllegalStateException: " + e1);
+			return;
 		}
 	}
 
 	@Override
 	public void onClick(View v) {
-
-		if (v == BtVisage) {// si le bouton cliqué est le "BoutonVisage"
-			String[] NomProduits = recupereSousCategorie("Visage");
-			int idProdCoche = recupereIndiceSousCategorieCochee("Visage");
-			AlertDialog.Builder adChoixVisage = new AlertDialog.Builder(this);
-			adChoixVisage.setTitle("Visage");
-
-			adChoixVisage.setSingleChoiceItems(NomProduits, idProdCoche,
-					new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(DialogInterface dialog, int item) {
-							/* User clicked on a radio button do some stuff */
-							EnCategorieVisage catVisage = EnCategorieVisage
-									.getCategorieFromCode(item);
-							switch (catVisage) {
-								case FONDS_DE_TEINTS:
-									categorieChoisie = EnCategorieVisage.FONDS_DE_TEINTS;
-									break;
-								case Correcteurs_Bases:
-									categorieChoisie = EnCategorieVisage.Correcteurs_Bases;
-									break;
-								case Blush:
-									categorieChoisie = EnCategorieVisage.Blush;
-									break;
-								case Poudres:
-									categorieChoisie = EnCategorieVisage.Poudres;
-									break;
-							}
-
-							// if (item == EnCategorieVisage.FONDS_DE_TEINTS
-							// .getCode()) {
-							// // modifiedValues = new ContentValues();
-							// // modifiedValues.put("ischecked", "true");
-							// // whereClause = "nom_souscatergorie=?";
-							// categorieChoisie =
-							// EnCategorieVisage.FONDS_DE_TEINTS
-							// .getLib();
-							// }
-							// if (item == EnCategorieVisage.Correcteurs_Bases
-							// .getCode()) {
-							// // modifiedValues = new ContentValues();
-							// // modifiedValues.put("ischecked", "true");
-							// // whereClause = "nom_souscatergorie=?";
-							// categorieChoisie =
-							// EnCategorieVisage.Correcteurs_Bases
-							// .getLib();
-							// }
-							// if (item == EnCategorieVisage.Blush.getCode()) {
-							// // modifiedValues = new ContentValues();
-							// // modifiedValues.put("ischecked", "true");
-							// // whereClause = "nom_souscatergorie=?";
-							// categorieChoisie = EnCategorieVisage.Blush
-							// .getLib();
-							// }
-							// if (item == EnCategorieVisage.Poudres.getCode())
-							// {
-							// // modifiedValues = new ContentValues();
-							// // modifiedValues.put("ischecked", "true");
-							// // whereClause = "nom_souscatergorie=?";
-							// categorieChoisie = EnCategorieVisage.Poudres
-							// .getLib();
-							// }
-						}
-					});
-			adChoixVisage.setPositiveButton("Choisir",
-					new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(DialogInterface dialog, int id) {
-							majTable();
-						}
-					});
-			adChoixVisage.setNegativeButton("Annuler", null);
-			adChoixVisage.show();
-
+		if (af == null) {
+			af = new AlertDialogFactory(this);
 		}
-		if (v == BtYeux) {
 
-			String[] NomProduits = recupereSousCategorie("Yeux");
-			int idProdCoche = recupereIndiceSousCategorieCochee("Yeux");
-			AlertDialog.Builder adChoixYeux = new AlertDialog.Builder(this);
-			adChoixYeux.setTitle("Yeux");
-			adChoixYeux.setSingleChoiceItems(NomProduits, idProdCoche,
-					new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(DialogInterface dialog, int item) {
-							/* User clicked on a radio button do some stuff */
-							EnCategorieYeux catYeux = EnCategorieYeux
-									.getCategorieFromCode(item);
-							switch (catYeux) {
-								case Bases:
-									categorieChoisie = EnCategorieYeux.Bases;
-									break;
-								case Crayons_Eyeliners:
-									categorieChoisie = EnCategorieYeux.Crayons_Eyeliners;
-									break;
-								case Fards:
-									categorieChoisie = EnCategorieYeux.Fards;
-									break;
-								case Mascaras:
-									categorieChoisie = EnCategorieYeux.Mascaras;
-							}
+		// cette methode prend en charge le fait que le controle clicqué soit un
+		// bouton de cateegorie ou pas.
+		traiteBoutonCat(v);
+		if (v == textViewMarque) {
+			textViewMarque.setFocusable(true);
+		} else if (v == BoutonValider) {
 
-						}
-					});
-			adChoixYeux.setPositiveButton("Choisir",
-					new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(DialogInterface dialog, int id) {
-							majTable();
-						}
-					});
-			adChoixYeux.setNegativeButton("Annuler", null);
-			adChoixYeux.show();
-
-		}
-		if (v == BtLevres) {
-			String[] NomProduits = recupereSousCategorie("Levres");
-			int idProdCoche = recupereIndiceSousCategorieCochee("Levres");
-			AlertDialog.Builder adChoixLevre = new AlertDialog.Builder(this);
-			adChoixLevre.setTitle("Levres");
-			adChoixLevre.setSingleChoiceItems(NomProduits, idProdCoche,
-					new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(DialogInterface dialog, int item) {
-							/* User clicked on a radio button do some stuff */
-							EnCategorieLevre catLevre = EnCategorieLevre
-									.getCategorieFromCode(item);
-							switch (catLevre) {
-								case Crayons_contour:
-									categorieChoisie = EnCategorieLevre.Crayons_contour;
-									break;
-								case RougesAlevres:
-									categorieChoisie = EnCategorieLevre.RougesAlevres;
-									break;
-							}
-						}
-					});
-			adChoixLevre.setPositiveButton("Choisir",
-					new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(DialogInterface dialog, int id) {
-							majTable();
-						}
-					});
-			adChoixLevre.setNegativeButton("Annuler", null);
-			adChoixLevre.show();
-
-		}
-		if (v == BtAutres) {
-			String[] NomProduits = recupereSousCategorie("Autres");
-			int idProdCoche = recupereIndiceSousCategorieCochee("Autres");
-			AlertDialog.Builder adChoixAutres = new AlertDialog.Builder(this);
-			adChoixAutres.setTitle("Autres");
-			adChoixAutres.setSingleChoiceItems(NomProduits, idProdCoche,
-					new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(DialogInterface dialog, int item) {
-							/* User clicked on a radio button do some stuff */
-							EnCategorieAutres catAutre = EnCategorieAutres
-									.getCategorieFromCode(item);
-							switch (catAutre) {
-								case Pinceaux:
-									categorieChoisie = EnCategorieAutres.Pinceaux;
-									break;
-								case VernisAongles:
-									categorieChoisie = EnCategorieAutres.VernisAongles;
-									break;
-							}
-
-						}
-					});
-			adChoixAutres.setPositiveButton("Choisir",
-					new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(DialogInterface dialog, int id) {
-							majTable();
-						}
-					});
-			adChoixAutres.setNegativeButton("Annuler", null);
-			adChoixAutres.show();
-
-		}
-		if (v == textView) {
-			textView.setFocusable(true);
-		}
-		if (v == BoutonValider) {
-			// majTable();
 			// on recupere le nom de marque choisi par l'utilisateur
+			if (textViewMarque.getText().toString().equals("")) {
+				adAucuneMarque.show();
+				return;
+			}
+
+			// on verifie qu'au moins une categorie est cochée.
+
+			int nbCatCochee = new AccesTableTrousseProduits(this)
+					.getNbProduitCochee();
+
 			AccesTableTrousseMarque accesMarque = new AccesTableTrousseMarque(
 					this);
 
-			boolean isMarqueEnbase = accesMarque.isMarqueExist(textView
+			boolean isMarqueEnbase = accesMarque.isMarqueExist(textViewMarque
 					.getText().toString());
-			// on verifie qu'au moins une categorie est cochée.
-			boolean isOk = verfieAuMoinsUneCategorieSelectionnee();
-			AccesTableTrousseProduits accesProduit = new AccesTableTrousseProduits(
-					this);
 
-			int nbCatCochee = accesProduit.getNbProduitCochee();
-			if (!isOk || nbCatCochee > 1 || !isMarqueEnbase) {
-				if (!isOk) {
-					adAucuneCat.show();
-				}
-				if (nbCatCochee > 1) {
-					adPlusieurCat.show();
-				}
-				if (!isMarqueEnbase) {
-					if (MarqueChoisie.equals("")) {
-						adAucuneMarque.show();
-					} else {
+			if (nbCatCochee > 1) {
+				adPlusieurCat.show();
+				return;
+			} else if (nbCatCochee == 0) {
+				adAucuneCat.show();
+				return;
+			} else if (!isMarqueEnbase) {
+				accesMarque.majMarqueChoisi(
+						textViewMarque.getText().toString(), false);
+				accesMarque
+						.createNewMarque(textViewMarque.getText().toString());
 
-						accesMarque.majMarqueChoisi(MarqueChoisie, false);
-						accesMarque.createNewMarque(MarqueChoisie);
-
-						// ContentValues values = new ContentValues();
-						// values.put("nom_marque", MarqueChoisie);
-						// values.put("ischecked", "false");
-						//
-						// // objBd.open();
-						// objBd.InsertDonnéedansTable("trousse_marques",
-						// values);
-						// objBd.close();
-						adNouvelleMarque.show();
-					}
-
-				}
-
+				adNouvelleMarque.show();
+				return;
 			} else {
 				Intent intent = new Intent(formulaire_entree_page1bis.this,
 						formulaire_entree_page3.class);
-				MlProduit p = new MlProduit();
-				p.setMarque(MarqueChoisie.trim());
-				try {
-					p.setDureeVie(Integer.parseInt(DureeVie.trim()));
-				} catch (Exception e) {
-					p.setDureeVie(0);
+				if (produit == null) {
+					produit = new MlProduit();
 				}
+				af.getChoixCatSingleClickListener();
 
-				p.setDateAchat(DateHelper.getDateFromDatabase(DateChoisie
-						.trim()));
-				p.setTeinte(numTeinte.trim());
-				p.setNomProduit(nomProduitRecup.trim());
+				produit.setCategorie(new MlCategorie(af
+						.getChoixCatSingleClickListener().getCategorieMere(),
+						af.getChoixCatSingleClickListener()
+								.getSousCategorieChoisie()));
+
+				produit.setMarque(textViewMarque.getText().toString());
+				// try {
+				// p.setDureeVie(Integer.parseInt(DureeVie.trim()));
+				// } catch (Exception e) {
+				// p.setDureeVie(0);
+				// }
+				//
+				// p.setDateAchat(DateHelper.getDateFromDatabase(DateChoisie
+				// .trim()));
+				// p.setTeinte(numTeinte.trim());
+				// p.setNomProduit(nomProduitRecup.trim());
 
 				intent.putExtra(MlProduit.class.getCanonicalName(),
-						SerialisableHelper.serialize(p));
+						SerialisableHelper.serialize(produit));
 
 				// intent.putExtra(ActivityParam.Marque, MarqueChoisie.trim());
 				// intent.putExtra(ActivityParam.DurreeDeVie, DureeVie.trim());
@@ -777,6 +579,28 @@ public class formulaire_entree_page1bis extends Activity implements
 
 	}
 
+	private void traiteBoutonCat(View p_v) {
+		AlertDialog.Builder adChoixCat = null;
+		if (p_v == BtVisage) {// si le bouton cliqué est le "BoutonVisage"
+			adChoixCat = af.getChoixCatDialog(EnTypeAlertDialogChoixCat.VISAGE);
+			adChoixCat.show();
+			return;
+		} else if (p_v == BtYeux) {
+			adChoixCat = af.getChoixCatDialog(EnTypeAlertDialogChoixCat.YEUX);
+			adChoixCat.show();
+			return;
+		} else if (p_v == BtLevres) {
+			adChoixCat = af.getChoixCatDialog(EnTypeAlertDialogChoixCat.LEVRE);
+			adChoixCat.show();
+			return;
+		} else if (p_v == BtAutres) {
+			adChoixCat = af.getChoixCatDialog(EnTypeAlertDialogChoixCat.AUTRE);
+			adChoixCat.show();
+			return;
+		}
+
+	}
+
 	/**
 	 * 
 	 */
@@ -787,79 +611,80 @@ public class formulaire_entree_page1bis extends Activity implements
 	/**
 	 * 
 	 */
-	public void majTable() {
-		// //objBd.open();
-		AccesTableTrousseProduits accesTrousseProds = new AccesTableTrousseProduits(
-				this);
+	// private void majTable() {
+	// // //objBd.open();
+	// AccesTableTrousseProduits accesTrousseProds = new
+	// AccesTableTrousseProduits(
+	// this);
+	//
+	// accesTrousseProds.majSouscatChoisie(categorieChoisie);
+	// // AccesTableTrousseTempo accestempo = new AccesTableTrousseTempo(this);
+	// // accestempo.deleteTable();
+	// // int nbdechamp = objBd.majTable("trousse_produits", modifiedValues,
+	// // whereClause, categorieChoisie);
+	// // System.out.println("Nombre de champ modifié : " + nbdechamp);
+	// // objBd.deleteTable("trousse_tempo", "1", null);
+	// // //objBd.close();
+	//
+	// }
 
-		accesTrousseProds.majSouscatChoisie(categorieChoisie);
-		// AccesTableTrousseTempo accestempo = new AccesTableTrousseTempo(this);
-		// accestempo.deleteTable();
-		// int nbdechamp = objBd.majTable("trousse_produits", modifiedValues,
-		// whereClause, categorieChoisie);
-		// System.out.println("Nombre de champ modifié : " + nbdechamp);
-		// objBd.deleteTable("trousse_tempo", "1", null);
-		// //objBd.close();
+	// /**
+	// * @param p_categorie la categorie recherchée (Visage,Yeux,Levres...)
+	// * @return
+	// */
+	// private String[] recupereSousCategorie(String p_categorie) {
+	//
+	// AccesTableTrousseProduits accesProduits = new AccesTableTrousseProduits(
+	// this);
+	// MlListeTrousseProduit ListeProduits = accesProduits
+	// .getListeTrousseProduit(p_categorie);
+	// String[] NomProduits = new String[ListeProduits.size()];
+	//
+	// for (int j = 0; j < ListeProduits.size(); j++) {
+	// NomProduits[j] = ListeProduits.get(j).getNomSousCat().getLib();
+	// }
+	//
+	// return NomProduits;
+	// }
+	//
+	// private int recupereIndiceSousCategorieCochee(String p_categorie) {
+	// int indiceProduitCoche = -1;
+	// AccesTableTrousseProduits accesProduits = new AccesTableTrousseProduits(
+	// this);
+	// MlListeTrousseProduit ListeProduits = accesProduits
+	// .getListeTrousseProduit(p_categorie);
+	//
+	// for (int j = 0; j < ListeProduits.size(); j++) {
+	// // NomProduits[j] = ListeProduits.get(j).toString();
+	// boolean isChecked = ListeProduits.get(j).isChecked();
+	// if (isChecked) {
+	// indiceProduitCoche = j;
+	// break;
+	// }
+	// }
+	// // objBd.close();
+	// return indiceProduitCoche;
+	// }
 
-	}
-
-	/**
-	 * @param p_categorie la categorie recherchée (Visage,Yeux,Levres...)
-	 * @return
-	 */
-	private String[] recupereSousCategorie(String p_categorie) {
-
-		AccesTableTrousseProduits accesProduits = new AccesTableTrousseProduits(
-				this);
-		MlListeTrousseProduit ListeProduits = accesProduits
-				.getListeTrousseProduit(p_categorie);
-		String[] NomProduits = new String[ListeProduits.size()];
-
-		for (int j = 0; j < ListeProduits.size(); j++) {
-			NomProduits[j] = ListeProduits.get(j).getNomSousCat().getLib();
-		}
-
-		return NomProduits;
-	}
-
-	private int recupereIndiceSousCategorieCochee(String p_categorie) {
-		int indiceProduitCoche = -1;
-		AccesTableTrousseProduits accesProduits = new AccesTableTrousseProduits(
-				this);
-		MlListeTrousseProduit ListeProduits = accesProduits
-				.getListeTrousseProduit(p_categorie);
-
-		for (int j = 0; j < ListeProduits.size(); j++) {
-			// NomProduits[j] = ListeProduits.get(j).toString();
-			boolean isChecked = ListeProduits.get(j).isChecked();
-			if (isChecked) {
-				indiceProduitCoche = j;
-				break;
-			}
-		}
-		// objBd.close();
-		return indiceProduitCoche;
-	}
-
-	private boolean verfieAuMoinsUneCategorieSelectionnee() {
-		AccesTableTrousseProduits accesProduit = new AccesTableTrousseProduits(
-				this);
-
-		MlListeTrousseProduit lstCatCochee = accesProduit
-				.getListeProduitCochee();
-		// objBd.open();
-		// ArrayList[] ListeCategorieCochée = objBd.renvoiCategorieCochée();
-		// int nbCategorieCochées = ListeCategorieCochée[0].size();
-		String NomProduits = "";
-		for (MlTrousseProduit tp : lstCatCochee) {
-			NomProduits = tp.getNomSousCat().getLib();
-		}
-		// for (int j = 0; j < nbCatCochee; j++) {
-		// NomProduits = ListeCategorieCochée[0].get(j).toString();
-		// }
-
-		return ((lstCatCochee.size() == 1) && (!NomProduits.equals("aucun")));
-
-	}
+	// private boolean verfieAuMoinsUneCategorieSelectionnee() {
+	// AccesTableTrousseProduits accesProduit = new AccesTableTrousseProduits(
+	// this);
+	//
+	// MlListeTrousseProduit lstCatCochee = accesProduit
+	// .getListeProduitCochee();
+	// // objBd.open();
+	// // ArrayList[] ListeCategorieCochée = objBd.renvoiCategorieCochée();
+	// // int nbCategorieCochées = ListeCategorieCochée[0].size();
+	// String NomProduits = "";
+	// for (MlTrousseProduit tp : lstCatCochee) {
+	// NomProduits = tp.getNomSousCat().getLib();
+	// }
+	// // for (int j = 0; j < nbCatCochee; j++) {
+	// // NomProduits = ListeCategorieCochée[0].get(j).toString();
+	// // }
+	//
+	// return ((lstCatCochee.size() == 1) && (!NomProduits.equals("aucun")));
+	//
+	// }
 
 }

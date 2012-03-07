@@ -1,14 +1,18 @@
 package fr.smardine.matroussedemaquillage.alertDialog.type;
 
 import fr.smardine.matroussedemaquillage.alertDialog.IAlertDialogClickListener;
-import fr.smardine.matroussedemaquillage.alertDialog.clickListener.AlertDialogAttentionClickListener;
+import fr.smardine.matroussedemaquillage.alertDialog.clickListener.AlertDialogOuiNonClickListener;
 
+/**
+ * Definition des dialogBox de type "Oui/Non"
+ * @author smardine
+ */
 public enum EnTypeAlertDialogOuiNon {
 
 	NOUVELLE_MARQUE(
 			"Petite vérification",
 			"Nouvelle marque\nCette marque est inconnue de \"Ma p'tite trousse\"\nSouhaitez vous la partager avec les autres utilisateurs? (Connexion Edge, 3G ou wifi requise)",
-			"Oui", "Non", AlertDialogAttentionClickListener.class, null);
+			"Oui", "Non", AlertDialogOuiNonClickListener.class, null);
 
 	private String titre;
 	private String message;

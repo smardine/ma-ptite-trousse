@@ -1,18 +1,25 @@
 package fr.smardine.matroussedemaquillage.alertDialog.clickListener;
 
-import fr.smardine.matroussedemaquillage.alertDialog.type.EnTypeAlertDialogOuiNon;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
+import fr.smardine.matroussedemaquillage.alertDialog.IAlertDialogClickListener;
+import fr.smardine.matroussedemaquillage.alertDialog.type.EnTypeAlertDialogOuiNon;
 
-public class AlertDialogOuiNonClickListener implements OnClickListener {
+/**
+ * Gestion des evenements lors du click sur le bouton Oui sur une boite de
+ * dialogue "Oui/Non"
+ * @author smardine
+ */
+public class AlertDialogOuiNonClickListener implements
+		IAlertDialogClickListener, OnClickListener {
 
-	private final Context ctx;
 	private final EnTypeAlertDialogOuiNon typeClick;
 
-	public AlertDialogOuiNonClickListener(Context p_ctx,
-			EnTypeAlertDialogOuiNon p_type) {
-		this.ctx = p_ctx;
+	/**
+	 * Constructeur
+	 * @param p_type - le type d'alertDialog concerné
+	 */
+	public AlertDialogOuiNonClickListener(EnTypeAlertDialogOuiNon p_type) {
 		this.typeClick = p_type;
 	}
 
