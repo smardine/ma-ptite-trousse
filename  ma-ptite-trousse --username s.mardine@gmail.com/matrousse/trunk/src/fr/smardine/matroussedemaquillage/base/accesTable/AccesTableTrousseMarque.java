@@ -8,6 +8,7 @@ import android.content.Context;
 import fr.smardine.matroussedemaquillage.base.RequeteFactory;
 import fr.smardine.matroussedemaquillage.base.structure.EnStructMarque;
 import fr.smardine.matroussedemaquillage.base.structure.EnTable;
+import fr.smardine.matroussedemaquillage.factory.MlMarqueFactory;
 import fr.smardine.matroussedemaquillage.mdl.MlListeMarque;
 import fr.smardine.matroussedemaquillage.mdl.MlMarque;
 
@@ -17,13 +18,11 @@ import fr.smardine.matroussedemaquillage.mdl.MlMarque;
 public class AccesTableTrousseMarque {
 
 	private final RequeteFactory requeteFact;
-	private final Context ctx;
 
 	/**
 	 * @param p_ctx le contexte
 	 */
 	public AccesTableTrousseMarque(Context p_ctx) {
-		this.ctx = p_ctx;
 		requeteFact = new RequeteFactory(p_ctx);
 
 	}
@@ -63,24 +62,32 @@ public class AccesTableTrousseMarque {
 	 * @return la liste complete des marques enregstrée en base
 	 */
 	public MlListeMarque getListeMarques() {
-		MlListeMarque lstRetour = new MlListeMarque();
-		String requete = "SELECT " + EnStructMarque.ID.getNomChamp() + " FROM "
-				+ EnTable.TROUSSE_MARQUE.getNomTable();
+		MlListeMarque lstMarque = new MlListeMarque();
 
+		List<ArrayList<Object>> lstRetour = requeteFact.getListeDeChampBis(
+				EnTable.TROUSSE_MARQUE, EnStructMarque.class, null);
 		// return requeteFact.getListeDeChamp(requete).get(0);
+		MlMarqueFactory marqueFact = new MlMarqueFactory();
 
-		List<ArrayList<String>> lstResult = requeteFact
-				.getListeDeChamp(requete);
-		for (int i = 0; i < lstResult.size(); i++) {
-			ArrayList<String> unEnsemble = lstResult.get(i);
-			for (String s : unEnsemble) {
-				int idMarque = Integer.parseInt(s);
-				MlMarque m = new MlMarque(idMarque, ctx);
-				lstRetour.add(m);
-			}
-
+		for (ArrayList<Object> aList : lstRetour) {
+			lstMarque.add(marqueFact.creationMlMarque(aList));
 		}
-		return lstRetour;
+		return lstMarque;
+		// String requete = "SELECT " + EnStructMarque.ID.getNomChamp() +
+		// " FROM "
+		// + EnTable.TROUSSE_MARQUE.getNomTable();
+		// List<ArrayList<String>> lstResult = requeteFact
+		// .getListeDeChamp(requete);
+		// for (int i = 0; i < lstResult.size(); i++) {
+		// ArrayList<String> unEnsemble = lstResult.get(i);
+		// for (String s : unEnsemble) {
+		// int idMarque = Integer.parseInt(s);
+		// MlMarque m = new MlMarque(idMarque, ctx);
+		// lstRetour.add(m);
+		// }
+		//
+		// }
+		// return lstRetour;
 	}
 
 	/**

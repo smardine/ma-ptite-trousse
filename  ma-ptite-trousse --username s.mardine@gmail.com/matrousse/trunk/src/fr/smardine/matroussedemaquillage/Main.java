@@ -19,7 +19,6 @@ import android.widget.ImageView;
 
 import com.example.android.apis.animation.Animlineaire;
 
-import fr.smardine.matroussedemaquillage.base.BDAcces;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableParams;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableProduitEnregistre;
 import fr.smardine.matroussedemaquillage.mdl.MlListeProduits;
@@ -41,9 +40,9 @@ public class Main extends Activity implements OnClickListener {
 	Intent intentFormPage1, intentRecherche, intentDupplique, intentParametres,
 			intentNote;
 	AlertDialog.Builder adSortie, adHelp, adInfoProduitPerime;
-	BDAcces objBd;
+	// BDAcces objBd;
 	Context ctx = Main.this;
-	private CheckBox cb;
+	// private CheckBox cb;
 	boolean nouveau = false, dupplique = false;
 
 	/** Called when the activity is first created. */
@@ -58,11 +57,9 @@ public class Main extends Activity implements OnClickListener {
 
 		View v = LayoutInflater.from(this).inflate(
 				R.layout.alerte_produit_perime, null);
-		cb = (CheckBox) v.findViewById(R.id.checkbox);
+		final CheckBox cb = (CheckBox) v.findViewById(R.id.checkbox);
 
 		adInfoProduitPerime.setView(v);
-
-		// adInfoProduitPerimé.setView(findViewById(R.layout.alerte_produit_perime));
 
 		adInfoProduitPerime.setTitle("Alerte");
 		// adInfoProduitPerimé

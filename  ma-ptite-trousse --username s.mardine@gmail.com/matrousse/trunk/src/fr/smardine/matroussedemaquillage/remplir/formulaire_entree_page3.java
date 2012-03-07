@@ -3,7 +3,6 @@ package fr.smardine.matroussedemaquillage.remplir;
 import helper.DateHelper;
 import helper.SerialisableHelper;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 
 import android.app.Activity;
@@ -50,10 +49,6 @@ public class formulaire_entree_page3 extends Activity implements
 		OnClickListener {
 	Button BoutonValider3;
 
-	// private BDAcces objBd;
-	@SuppressWarnings("rawtypes")
-	ArrayList[] TrousseTempo;
-	// ////////////////////
 	private TextView mDateDisplay;
 	private Button mPickDate;
 	private ImageView BoutonAide;
@@ -75,7 +70,7 @@ public class formulaire_entree_page3 extends Activity implements
 	String DureeVie = "";
 	MlTrousseProduit Cat;
 
-	private MlProduit p;
+	private MlProduit produit;
 
 	// /////////////////////////
 
@@ -94,7 +89,7 @@ public class formulaire_entree_page3 extends Activity implements
 				MlProduit.class.getCanonicalName());
 		Object o = SerialisableHelper.deserializeObject(extra);
 		if (o instanceof MlProduit) {
-			p = (MlProduit) o;
+			produit = (MlProduit) o;
 
 		}
 

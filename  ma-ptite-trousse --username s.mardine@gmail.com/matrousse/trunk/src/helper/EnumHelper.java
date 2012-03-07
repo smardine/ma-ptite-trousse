@@ -11,7 +11,11 @@ import fr.smardine.matroussedemaquillage.base.structure.IStructureTable;
 /**
  * @author smardine
  */
-public class EnumHelper {
+public final class EnumHelper {
+
+	private EnumHelper() {
+
+	}
 
 	/**
 	 * @param p_class
@@ -20,6 +24,7 @@ public class EnumHelper {
 	 */
 	public static IStructureTable getValueFromName(
 			Class<IStructureTable> p_class, String p_columnName) {
+
 		for (IStructureTable e : EnStructMarque.values()) {
 			if (e.getNomChamp().equals(p_columnName)) {
 				return e;
