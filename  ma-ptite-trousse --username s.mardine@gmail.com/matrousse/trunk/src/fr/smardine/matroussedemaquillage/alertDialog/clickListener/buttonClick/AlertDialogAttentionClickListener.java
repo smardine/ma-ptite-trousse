@@ -1,4 +1,4 @@
-package fr.smardine.matroussedemaquillage.alertDialog.clickListener;
+package fr.smardine.matroussedemaquillage.alertDialog.clickListener.buttonClick;
 
 import android.content.Context;
 import android.content.DialogInterface;

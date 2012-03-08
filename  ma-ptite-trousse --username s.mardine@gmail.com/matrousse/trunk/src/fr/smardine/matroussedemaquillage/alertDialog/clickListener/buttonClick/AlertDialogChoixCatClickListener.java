@@ -1,9 +1,10 @@
-package fr.smardine.matroussedemaquillage.alertDialog.clickListener;
+package fr.smardine.matroussedemaquillage.alertDialog.clickListener.buttonClick;
 
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import fr.smardine.matroussedemaquillage.alertDialog.IAlertDialogClickListener;
+import fr.smardine.matroussedemaquillage.alertDialog.clickListener.itemClick.AlertDialogSingleChoiceChoixCatItemClickListener;
 import fr.smardine.matroussedemaquillage.alertDialog.type.EnTypeAlertDialogChoixCat;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableTrousseProduits;
 
@@ -18,7 +19,7 @@ public class AlertDialogChoixCatClickListener implements
 
 	private final EnTypeAlertDialogChoixCat type;
 	private final Context ctx;
-	private final AlertDialogSingleChoiceItemClickListener choixCatClickListener;
+	private final AlertDialogSingleChoiceChoixCatItemClickListener choixCatClickListener;
 
 	/**
 	 * Constructeur
@@ -31,7 +32,7 @@ public class AlertDialogChoixCatClickListener implements
 	public AlertDialogChoixCatClickListener(
 			Context p_ctx,
 			EnTypeAlertDialogChoixCat p_type,
-			AlertDialogSingleChoiceItemClickListener p_choixCatSingleClickListener) {
+			AlertDialogSingleChoiceChoixCatItemClickListener p_choixCatSingleClickListener) {
 		this.ctx = p_ctx;
 		this.type = p_type;
 		this.choixCatClickListener = p_choixCatSingleClickListener;

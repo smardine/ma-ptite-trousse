@@ -4,13 +4,17 @@ import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.Context;
 import fr.smardine.matroussedemaquillage.R;
-import fr.smardine.matroussedemaquillage.alertDialog.clickListener.AlertDialogAttentionClickListener;
-import fr.smardine.matroussedemaquillage.alertDialog.clickListener.AlertDialogChoixCatClickListener;
-import fr.smardine.matroussedemaquillage.alertDialog.clickListener.AlertDialogOuiNonClickListener;
 import fr.smardine.matroussedemaquillage.alertDialog.clickListener.AlertDialogSingleChoiceItemClickListener;
+import fr.smardine.matroussedemaquillage.alertDialog.clickListener.AlertDialogSingleChoiceOkClickListener;
+import fr.smardine.matroussedemaquillage.alertDialog.clickListener.buttonClick.AlertDialogAttentionClickListener;
+import fr.smardine.matroussedemaquillage.alertDialog.clickListener.buttonClick.AlertDialogChoixCatClickListener;
+import fr.smardine.matroussedemaquillage.alertDialog.clickListener.buttonClick.AlertDialogOuiNonClickListener;
+import fr.smardine.matroussedemaquillage.alertDialog.clickListener.itemClick.AlertDialogSingleChoiceChoixCatItemClickListener;
+import fr.smardine.matroussedemaquillage.alertDialog.type.EnTypeAlertDialogAide;
 import fr.smardine.matroussedemaquillage.alertDialog.type.EnTypeAlertDialogAttention;
 import fr.smardine.matroussedemaquillage.alertDialog.type.EnTypeAlertDialogChoixCat;
 import fr.smardine.matroussedemaquillage.alertDialog.type.EnTypeAlertDialogOuiNon;
+import fr.smardine.matroussedemaquillage.alertDialog.type.EnTypeAlertDialogSingleChoice;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableTrousseProduits;
 import fr.smardine.matroussedemaquillage.mdl.MlListeTrousseProduit;
 
@@ -24,7 +28,10 @@ public class AlertDialogFactory {
 	private final Context ctx;
 	private Builder ad;
 	private AlertDialogChoixCatClickListener choixCatlickListener;
-	private AlertDialogSingleChoiceItemClickListener choixCatSingleClickListener;
+	private AlertDialogSingleChoiceChoixCatItemClickListener choixCatSingleClickListener;
+
+	// private AlertDialogSingleChoiceItemClickListener
+	// singleChoiceClickListener;
 
 	/**
 	 * Constructeur
@@ -49,9 +56,17 @@ public class AlertDialogFactory {
 
 		AlertDialogAttentionClickListener attentionClickListener = new AlertDialogAttentionClickListener(
 				this.ctx, p_type);
-
 		ad.setPositiveButton(p_type.getTxtOkBtton(), attentionClickListener);
 		return ad;
+	}
+
+	public AlertDialog.Builder getAideDialog(EnTypeAlertDialogAide p_type) {
+		ad = new AlertDialog.Builder(ctx);
+		ad.setTitle(p_type.getTitre());
+		ad.setMessage(p_type.getMessage());
+		ad.setPositiveButton(p_type.getTxtOkButton(), null);
+		return ad;
+
 	}
 
 	/**
@@ -88,7 +103,7 @@ public class AlertDialogFactory {
 			EnTypeAlertDialogChoixCat p_type) {
 		ad = new AlertDialog.Builder(ctx);
 		ad.setTitle(p_type.getTitre());
-		choixCatSingleClickListener = new AlertDialogSingleChoiceItemClickListener(
+		choixCatSingleClickListener = new AlertDialogSingleChoiceChoixCatItemClickListener(
 				p_type);
 
 		choixCatlickListener = new AlertDialogChoixCatClickListener(ctx,
@@ -105,11 +120,30 @@ public class AlertDialogFactory {
 		return ad;
 	}
 
+	public AlertDialog.Builder getSingleChoiceDialog(
+			EnTypeAlertDialogSingleChoice p_type) {
+		ad = new AlertDialog.Builder(ctx);
+		ad.setTitle(p_type.getTitre());
+		ad.setIcon(R.drawable.ad_attention);
+		AlertDialogSingleChoiceItemClickListener singleChoiceClickListener = new AlertDialogSingleChoiceItemClickListener(
+				p_type);
+
+		AlertDialogSingleChoiceOkClickListener singleChoiceOkCLickListener = new AlertDialogSingleChoiceOkClickListener(
+				ctx, p_type, singleChoiceClickListener);
+
+		ad.setSingleChoiceItems(p_type.getItems(), p_type.getIdxSelected(),
+				singleChoiceClickListener);
+
+		ad.setPositiveButton(p_type.getTxtOkButton(),
+				singleChoiceOkCLickListener);
+		return ad;
+	}
+
 	public AlertDialogChoixCatClickListener getChoixCatlickListener() {
 		return choixCatlickListener;
 	}
 
-	public AlertDialogSingleChoiceItemClickListener getChoixCatSingleClickListener() {
+	public AlertDialogSingleChoiceChoixCatItemClickListener getChoixCatSingleClickListener() {
 		return choixCatSingleClickListener;
 	}
 

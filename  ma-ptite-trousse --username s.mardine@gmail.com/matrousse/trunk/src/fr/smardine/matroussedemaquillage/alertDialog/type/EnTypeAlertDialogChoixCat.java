@@ -1,7 +1,7 @@
 package fr.smardine.matroussedemaquillage.alertDialog.type;
 
 import fr.smardine.matroussedemaquillage.alertDialog.IAlertDialogClickListener;
-import fr.smardine.matroussedemaquillage.alertDialog.clickListener.AlertDialogChoixCatClickListener;
+import fr.smardine.matroussedemaquillage.alertDialog.clickListener.buttonClick.AlertDialogChoixCatClickListener;
 
 /**
  * Definition des dialogBox de type "ChoixCategorie
@@ -14,7 +14,7 @@ public enum EnTypeAlertDialogChoixCat {
 	YEUX("Yeux", "Choisir", "Annuler", AlertDialogChoixCatClickListener.class), //
 	LEVRE("Levres", "Choisir", "Annuler",
 			AlertDialogChoixCatClickListener.class), //
-	AUTRE("Autre", "Choisir", "Annuler", AlertDialogChoixCatClickListener.class);
+	AUTRE("Autre", "Choisir", "Annuler", AlertDialogChoixCatClickListener.class); //
 
 	private String titre;
 	private String txtOkBtton;

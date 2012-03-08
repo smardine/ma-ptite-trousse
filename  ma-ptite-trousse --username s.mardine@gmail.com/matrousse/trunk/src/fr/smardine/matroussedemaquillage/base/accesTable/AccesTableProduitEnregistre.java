@@ -10,7 +10,7 @@ import android.content.Context;
 import fr.smardine.matroussedemaquillage.base.RequeteFactory;
 import fr.smardine.matroussedemaquillage.base.structure.EnStructProduitEnregistre;
 import fr.smardine.matroussedemaquillage.base.structure.EnTable;
-import fr.smardine.matroussedemaquillage.factory.MlProduitFactory;
+import fr.smardine.matroussedemaquillage.factory.MlProduitEnregistreFactory;
 import fr.smardine.matroussedemaquillage.mdl.MlListeProduits;
 import fr.smardine.matroussedemaquillage.mdl.MlProduit;
 
@@ -56,9 +56,9 @@ public class AccesTableProduitEnregistre {
 		List<ArrayList<Object>> lstRetour = requeteFact.getListeDeChampBis(
 				EnTable.PRODUIT_ENREGISTRE, EnStructProduitEnregistre.class,
 				null);
-		MlProduitFactory prodFact = new MlProduitFactory();
+		MlProduitEnregistreFactory prodFact = new MlProduitEnregistreFactory();
 		for (ArrayList<Object> aList : lstRetour) {
-			lstProds.add(prodFact.creationMlProduit(aList));
+			lstProds.add(prodFact.creationMlProduitEnregistre(aList));
 		}
 		return lstProds;
 
@@ -271,9 +271,9 @@ public class AccesTableProduitEnregistre {
 				" nom_souscatergorie LIKE '%" + p_filtrage
 						+ "%' ORDER BY nom_souscatergorie");
 
-		MlProduitFactory prodFact = new MlProduitFactory();
+		MlProduitEnregistreFactory prodFact = new MlProduitEnregistreFactory();
 		for (ArrayList<Object> aList : lstRetour) {
-			lst.add(prodFact.creationMlProduit(aList));
+			lst.add(prodFact.creationMlProduitEnregistre(aList));
 		}
 		return lst;
 	}
@@ -298,9 +298,9 @@ public class AccesTableProduitEnregistre {
 				EnTable.PRODUIT_ENREGISTRE, EnStructProduitEnregistre.class,
 				"nom_marque LIKE '%" + p_Filtrage + "%' ORDER BY p_Filtrage");
 
-		MlProduitFactory prodFact = new MlProduitFactory();
+		MlProduitEnregistreFactory prodFact = new MlProduitEnregistreFactory();
 		for (ArrayList<Object> aList : lstRetour) {
-			lst.add(prodFact.creationMlProduit(aList));
+			lst.add(prodFact.creationMlProduitEnregistre(aList));
 		}
 
 		return lst;
@@ -330,9 +330,9 @@ public class AccesTableProduitEnregistre {
 						+ "or nom_souscatergorie LIKE '%" + p_Filtrage
 						+ "%' ORDER BY id_produits");
 
-		MlProduitFactory prodFact = new MlProduitFactory();
+		MlProduitEnregistreFactory prodFact = new MlProduitEnregistreFactory();
 		for (ArrayList<Object> aList : lstRetour) {
-			lst.add(prodFact.creationMlProduit(aList));
+			lst.add(prodFact.creationMlProduitEnregistre(aList));
 		}
 
 		return lst;
@@ -369,9 +369,9 @@ public class AccesTableProduitEnregistre {
 						+ EnStructProduitEnregistre.IS_PRESQUE_PERIME
 								.getNomChamp() + "='true') ");
 
-		MlProduitFactory prodFact = new MlProduitFactory();
+		MlProduitEnregistreFactory prodFact = new MlProduitEnregistreFactory();
 		for (ArrayList<Object> aList : lstRetour) {
-			lst.add(prodFact.creationMlProduit(aList));
+			lst.add(prodFact.creationMlProduitEnregistre(aList));
 		}
 
 		return lst;
@@ -405,9 +405,9 @@ public class AccesTableProduitEnregistre {
 								+ "%' and (IS_PERIME='true' or IS_PRESQUE_PERIME='true') " //
 								+ "ORDER BY Date_Peremption");
 
-		MlProduitFactory prodFact = new MlProduitFactory();
+		MlProduitEnregistreFactory prodFact = new MlProduitEnregistreFactory();
 		for (ArrayList<Object> aList : lstRetour) {
-			lst.add(prodFact.creationMlProduit(aList));
+			lst.add(prodFact.creationMlProduitEnregistre(aList));
 		}
 
 		return lst;
@@ -440,9 +440,9 @@ public class AccesTableProduitEnregistre {
 								+ p_Filtrage
 								+ "%' and (IS_PERIME='true' or IS_PRESQUE_PERIME='true') ORDER BY nom_marque");
 
-		MlProduitFactory prodFact = new MlProduitFactory();
+		MlProduitEnregistreFactory prodFact = new MlProduitEnregistreFactory();
 		for (ArrayList<Object> aList : lstRetour) {
-			lst.add(prodFact.creationMlProduit(aList));
+			lst.add(prodFact.creationMlProduitEnregistre(aList));
 		}
 
 		return lst;
@@ -489,9 +489,9 @@ public class AccesTableProduitEnregistre {
 								+ p_Filtrage
 								+ "%' and (IS_PERIME='true' or IS_PRESQUE_PERIME='true')  ORDER BY id_produits");
 
-		MlProduitFactory prodFact = new MlProduitFactory();
+		MlProduitEnregistreFactory prodFact = new MlProduitEnregistreFactory();
 		for (ArrayList<Object> aList : lstRetour) {
-			lst.add(prodFact.creationMlProduit(aList));
+			lst.add(prodFact.creationMlProduitEnregistre(aList));
 		}
 
 		return lst;

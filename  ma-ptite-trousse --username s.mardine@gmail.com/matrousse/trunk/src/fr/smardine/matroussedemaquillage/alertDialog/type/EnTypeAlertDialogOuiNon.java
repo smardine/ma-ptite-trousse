@@ -1,7 +1,7 @@
 package fr.smardine.matroussedemaquillage.alertDialog.type;
 
 import fr.smardine.matroussedemaquillage.alertDialog.IAlertDialogClickListener;
-import fr.smardine.matroussedemaquillage.alertDialog.clickListener.AlertDialogOuiNonClickListener;
+import fr.smardine.matroussedemaquillage.alertDialog.clickListener.buttonClick.AlertDialogOuiNonClickListener;
 
 /**
  * Definition des dialogBox de type "Oui/Non"

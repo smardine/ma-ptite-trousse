@@ -26,39 +26,30 @@ import fr.smardine.matroussedemaquillage.alertDialog.AlertDialogFactory;
 import fr.smardine.matroussedemaquillage.alertDialog.type.EnTypeAlertDialogAttention;
 import fr.smardine.matroussedemaquillage.alertDialog.type.EnTypeAlertDialogChoixCat;
 import fr.smardine.matroussedemaquillage.alertDialog.type.EnTypeAlertDialogOuiNon;
+import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableParams;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableTrousseMarque;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableTrousseProduits;
 import fr.smardine.matroussedemaquillage.mdl.MlCategorie;
 import fr.smardine.matroussedemaquillage.mdl.MlListeMarque;
 import fr.smardine.matroussedemaquillage.mdl.MlProduit;
-import fr.smardine.matroussedemaquillage.mdl.cat.EnCategorie;
 import fr.smardine.matroussedemaquillage.note.note_page1;
 import fr.smardine.matroussedemaquillage.param.tab_param;
 import fr.smardine.matroussedemaquillage.recherche.Recherche;
 import fr.smardine.matroussedemaquillage.variableglobale.ActivityParam;
+import fr.smardine.matroussedemaquillage.variableglobale.EnTheme;
 
 /**
  * @author smardine
  */
 public class formulaire_entree_page1bis extends SuperActivity implements
-		OnClickListener {
+		OnClickListener, IremplissageActivity {
 
 	private Button BoutonValider;
 	private ImageView BtVisage, BtYeux, BtLevres, BtAutres;
 	private AutoCompleteTextView textViewMarque;
 
-	// private AlertDialog.Builder adPlusieurCat, adAucuneCat, adNouvelleMarque,
-	// adAucuneMarque;;
-	// String MarqueChoisie = "";
-	// String DureeVie = "";
-	// String DateChoisie = "";
-	// String numTeinte = "";
-	// String nomProduitRecup = "";
 	private Intent intentRecherche, intentParametres, intentNote;
-	// String[] Marque;
-	// private ContentValues modifiedValues;
-	// private String whereClause;
-	static EnCategorie categorieChoisie;
+
 	private MlProduit produit;
 	private AlertDialogFactory af;
 
@@ -70,87 +61,9 @@ public class formulaire_entree_page1bis extends SuperActivity implements
 
 		// ExceptionHandler.register(this,
 		// "http://simon.mardine.free.fr/trousse_maquillage/test/server.php","ma_ptite_trousse");
-		// ChoisiLeTheme();
-
-		BtVisage = (ImageView) this.findViewById(R.id.ImageViewVisage_page1);
-		BtYeux = (ImageView) this.findViewById(R.id.ImageViewYeux_page1);
-		BtLevres = (ImageView) findViewById(R.id.ImageViewLevres_page1);
-		BtAutres = (ImageView) this.findViewById(R.id.ImageViewAutres_page1);
-		BoutonValider = (Button) this.findViewById(R.id.ButtonValider2_Page1);
-		textViewMarque = (AutoCompleteTextView) findViewById(R.id.autocomplete_marque_Page1);
-
-		BtVisage.setOnClickListener(this);
-		BtYeux.setOnClickListener(this);
-		BtLevres.setOnClickListener(this);
-		BtAutres.setOnClickListener(this);
-		BoutonValider.setOnClickListener(this);
-
-		this.setTitle("Choix de la catégorie et de la marque");
-
-		popUp("OnCreate-page1");
-
-		AccesTableTrousseMarque accesMarque = new AccesTableTrousseMarque(this);
-		MlListeMarque lstMarque = accesMarque.getListeMarques();
-		String[] Marque = new String[lstMarque.size()];
-		for (int i = 0; i < lstMarque.size(); i++) {
-			Marque[i] = lstMarque.get(i).getNomMarque();
-		}
-
-		// objBd.close();
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-				R.layout.list_item_marque_auto, Marque);
-		textViewMarque.setAdapter(adapter);
+		initComposantVisuel();
 
 	}
-
-	/**
-	 * 
-	 */
-	// private void ChoisiLeTheme() {
-	//
-	// AccesTableParams accesParam = new AccesTableParams(this);
-	// switch (accesParam.getThemeChoisi()) {
-	// case Bisounours:
-	// setContentView(R.layout.theme_bisounours_formulaire_entree_page1bis);
-	// break;
-	// case Classique:
-	// accesParam.majTheme(EnTheme.Fleur);
-	// ChoisiLeTheme();
-	// break;
-	// case Fleur:
-	// setContentView(R.layout.theme_fleur_formulaire_entree_page1bis);
-	// break;
-	// }
-	// objBd = new BDAcces(this);
-	// //objBd.open();
-	// String[] champ = { "AfficheAlerte", "DureeViePeremp", "Theme" };
-	// @SuppressWarnings("rawtypes")
-	// ArrayList[] Param = objBd.renvoi_param(champ);
-	//
-	// String nomThemeChoisi = Param[2].get(0).toString().trim();
-	// if (EnTheme.Bisounours.getLib().equals(nomThemeChoisi)) {
-	// setContentView(R.layout.theme_bisounours_formulaire_entree_page1bis);
-	//
-	// }
-	// if (EnTheme.Classique.getLib().equals(nomThemeChoisi)) {
-	// // setContentView(R.layout.formulaire_entree_page1bis);
-	// AccesTableParams accesParam = new AccesTableParams(this);
-	// accesParam.majTheme(EnTheme.Fleur);
-	// // ContentValues values = new ContentValues();
-	// // values.put("Theme", EnTheme.Fleur.getLib());
-	// //
-	// // //objBd.open();
-	// // objBd.majTable("Param", values, "", null);
-	// // //objBd.close();
-	// ChoisiLeTheme();
-	//
-	// }
-	// if (EnTheme.Fleur.getLib().equals(nomThemeChoisi)) {
-	// setContentView(R.layout.theme_fleur_formulaire_entree_page1bis);
-	// }
-
-	// objBd.close();
-	// }
 
 	private void onCreateMenu(Menu menu) {
 		SubMenu recherche = menu.addSubMenu(0, 2000, 1, "Recherche");
@@ -184,9 +97,9 @@ public class formulaire_entree_page1bis extends SuperActivity implements
 			case 2001:
 				Toast.makeText(this, "Paramètres", 1000).show();
 				intentParametres = new Intent(this, tab_param.class);
-
-				intentParametres.putExtra(MlProduit.class.getCanonicalName(),
-						SerialisableHelper.serialize(produit));
+				transfereMlProduitToActivity(intentParametres);
+				// intentParametres.putExtra(MlProduit.class.getCanonicalName(),
+				// SerialisableHelper.serialize(produit));
 
 				// intentParametres.putExtra(ActivityParam.Marque,
 				// textViewMarque
@@ -217,29 +130,6 @@ public class formulaire_entree_page1bis extends SuperActivity implements
 		return super.onOptionsItemSelected(item);
 	}
 
-	// /**
-	// * @param message
-	// */
-	// public void popUp(String message) {
-	// // Toast.makeText(this, message, 1).show();
-	// }
-
-	// @Override
-	// protected void onRestart() {
-	// super.onRestart();
-	// // popUp("onRestart()-Page1");
-	// }
-	//
-	// /**
-	// * Exécuté lorsque l'activité devient visible à l'utilisateur. La fonction
-	// * onStart() est suivie de la fonction onResume().
-	// */
-	// @Override
-	// protected void onStart() {
-	// super.onStart();
-	// // popUp("onStart()-Page1");
-	// }
-
 	/**
 	 * Exécutée a chaque passage en premier plan de l'activité. Ou bien, si
 	 * l'activité passe à nouveau en premier (si une autre activité était passé
@@ -256,14 +146,19 @@ public class formulaire_entree_page1bis extends SuperActivity implements
 				ActivityParam.LaunchFromPageRecap, false);
 		boolean isCalledFromPageRecapBack = getIntent().getBooleanExtra(
 				ActivityParam.LaunchFromPageRecapBack, false);
-		// boolean isCalledFromDetail =
-		// getIntent().getBooleanExtra(ActivityParam.LaunchFromAfficheDetail,
-		// false);
-		// boolean isCalledFromDupplique =
-		// getIntent().getBooleanExtra(ActivityParam.LaunchFromDuppliquer,
-		// false);
+
 		boolean isCalledFromParam = getIntent().getBooleanExtra(
 				ActivityParam.LaunchFromParam, false);
+
+		if (isCalledFromMain || isCalledFromPageRecap) {
+			AccesTableTrousseProduits accesTrousse = new AccesTableTrousseProduits(
+					this);
+			accesTrousse.reinitProduitChoisi();
+		}
+
+		if (isCalledFromParam || isCalledFromPageRecapBack) {
+			recupereMlProduitfromPreviousActivity();
+		}
 		Animlineaire anim = new Animlineaire();
 		anim.setDroiteversGauche(500);
 		Animlineaire anim1 = new Animlineaire();
@@ -277,82 +172,8 @@ public class formulaire_entree_page1bis extends SuperActivity implements
 		BtYeux.startAnimation(anim1);
 		BtLevres.startAnimation(anim2);
 		BtAutres.startAnimation(anim3);
-		if (isCalledFromMain || isCalledFromPageRecap) {
-			// popUp("IscreatFormRecap: " + isCalledFromPageRecap);
-			// popUp("IscreatFormMain: " + isCalledFromMain);
-
-			AccesTableTrousseProduits accesTrousse = new AccesTableTrousseProduits(
-					this);
-			accesTrousse.reinitProduitChoisi();
-
-		}
-
-		if (isCalledFromParam || isCalledFromPageRecapBack) {
-			byte[] extra = getIntent().getByteArrayExtra(
-					MlProduit.class.getCanonicalName());
-			Object o = SerialisableHelper.deserializeObject(extra);
-			if (o instanceof MlProduit) {
-				produit = (MlProduit) o;
-				textViewMarque.setText(produit.getMarque());
-				// DureeVie =
-				// getIntent().getStringExtra(ActivityParam.DurreeDeVie)
-				// .trim();
-				// DateChoisie =
-				// getIntent().getStringExtra(ActivityParam.DateAchat)
-				// .trim();
-				// numTeinte = getIntent()
-				// .getStringExtra(ActivityParam.NumeroDeTeinte).trim();
-				// nomProduitRecup = getIntent().getStringExtra(
-				// ActivityParam.NomProduit).trim();
-
-			}
-
-			// textView.setText(MarqueChoisie);
-			// Animlineaire anim = new Animlineaire();
-			// anim.setDroiteversGauche(250);
-			// Animlineaire anim1 = new Animlineaire();
-			// anim1.setDroiteversGauche(300);
-			// Animlineaire anim2 = new Animlineaire();
-			// anim2.setDroiteversGauche(350);
-			// Animlineaire anim3 = new Animlineaire();
-			// anim3.setDroiteversGauche(400);
-			//
-			// BtVisage.startAnimation(anim);
-			// BtYeux.startAnimation(anim1);
-			// BtLevres.startAnimation(anim2);
-			// BtAutres.startAnimation(anim3);
-		}
 
 	}
-
-	// /**
-	// * La fonction onStop() est exécutée : - lorsque l'activité n'est plus en
-	// * premier plan - ou bien lorsque l'activité va être détruite Cette
-	// fonction
-	// * est suivie : - de la fonction onRestart() si l'activité passe à nouveau
-	// * en premier plan - de la fonction onDestroy() lorsque l'activité se
-	// * termine ou bien lorsque le système décide de l'arrêter
-	// */
-	// @Override
-	// protected void onStop() {
-	// super.onStop();
-	// popUp("onStop-Page1");
-	// }
-	//
-	// /**
-	// * La fonction onPause() est suivie : - d'un onResume() si l'activité
-	// passe
-	// * à nouveau en premier plan - d'un onStop() si elle devient invisible à
-	// * l'utilisateur L'exécution de la fonction onPause() doit être rapide,
-	// car
-	// * la prochaine activité ne démarrera pas tant que l'exécution de la
-	// * fonction onPause() n'est pas terminée.
-	// */
-	// @Override
-	// protected void onPause() {
-	// super.onPause();
-	//
-	// }
 
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -372,15 +193,6 @@ public class formulaire_entree_page1bis extends SuperActivity implements
 		}
 		return super.onKeyDown(keyCode, event);
 	}
-
-	// /**
-	// *
-	// */
-	// public void OnDestroy() {
-	// popUp("OnDestroy-Page1");
-	// super.onDestroy();
-	//
-	// }
 
 	@Override
 	public void onClick(View v) {
@@ -439,38 +251,8 @@ public class formulaire_entree_page1bis extends SuperActivity implements
 			} else {
 				Intent intent = new Intent(formulaire_entree_page1bis.this,
 						formulaire_entree_page3.class);
-				if (produit == null) {
-					produit = new MlProduit();
-				}
-				af.getChoixCatSingleClickListener();
+				transfereMlProduitToActivity(intent);
 
-				produit.setCategorie(new MlCategorie(af
-						.getChoixCatSingleClickListener().getCategorieMere(),
-						af.getChoixCatSingleClickListener()
-								.getSousCategorieChoisie()));
-
-				produit.setMarque(textViewMarque.getText().toString());
-				// try {
-				// p.setDureeVie(Integer.parseInt(DureeVie.trim()));
-				// } catch (Exception e) {
-				// p.setDureeVie(0);
-				// }
-				//
-				// p.setDateAchat(DateHelper.getDateFromDatabase(DateChoisie
-				// .trim()));
-				// p.setTeinte(numTeinte.trim());
-				// p.setNomProduit(nomProduitRecup.trim());
-
-				intent.putExtra(MlProduit.class.getCanonicalName(),
-						SerialisableHelper.serialize(produit));
-
-				// intent.putExtra(ActivityParam.Marque, MarqueChoisie.trim());
-				// intent.putExtra(ActivityParam.DurreeDeVie, DureeVie.trim());
-				// intent.putExtra(ActivityParam.DateAchat, DateChoisie.trim());
-				// intent.putExtra(ActivityParam.NumeroDeTeinte,
-				// numTeinte.trim());
-				// intent.putExtra(ActivityParam.NomProduit,
-				// nomProduitRecup.trim());
 				intent.putExtra(ActivityParam.LaunchFromPage1, true);
 				startActivity(intent);
 				termineActivity();
@@ -502,90 +284,84 @@ public class formulaire_entree_page1bis extends SuperActivity implements
 
 	}
 
-	// /**
-	// *
-	// */
-	// private void termineActivity() {
-	// finish();
-	// }
+	@Override
+	public MlProduit recupereMlProduitfromPreviousActivity() {
+		byte[] extra = getIntent().getByteArrayExtra(
+				MlProduit.class.getCanonicalName());
+		Object o = SerialisableHelper.deserializeObject(extra);
+		if (o instanceof MlProduit) {
+			produit = (MlProduit) o;
+			textViewMarque.setText(produit.getMarque());
+		}
+		return produit;
+	}
 
-	/**
-	 * 
-	 */
-	// private void majTable() {
-	// // //objBd.open();
-	// AccesTableTrousseProduits accesTrousseProds = new
-	// AccesTableTrousseProduits(
-	// this);
-	//
-	// accesTrousseProds.majSouscatChoisie(categorieChoisie);
-	// // AccesTableTrousseTempo accestempo = new AccesTableTrousseTempo(this);
-	// // accestempo.deleteTable();
-	// // int nbdechamp = objBd.majTable("trousse_produits", modifiedValues,
-	// // whereClause, categorieChoisie);
-	// // System.out.println("Nombre de champ modifié : " + nbdechamp);
-	// // objBd.deleteTable("trousse_tempo", "1", null);
-	// // //objBd.close();
-	//
-	// }
+	@Override
+	public void transfereMlProduitToActivity(Intent p_intent) {
+		if (produit == null) {
+			produit = new MlProduit();
+		}
+		if (af != null) {
+			produit.setCategorie(new MlCategorie(af
+					.getChoixCatSingleClickListener().getCategorieMere(), af
+					.getChoixCatSingleClickListener().getSousCategorieChoisie()));
 
-	// /**
-	// * @param p_categorie la categorie recherchée (Visage,Yeux,Levres...)
-	// * @return
-	// */
-	// private String[] recupereSousCategorie(String p_categorie) {
-	//
-	// AccesTableTrousseProduits accesProduits = new AccesTableTrousseProduits(
-	// this);
-	// MlListeTrousseProduit ListeProduits = accesProduits
-	// .getListeTrousseProduit(p_categorie);
-	// String[] NomProduits = new String[ListeProduits.size()];
-	//
-	// for (int j = 0; j < ListeProduits.size(); j++) {
-	// NomProduits[j] = ListeProduits.get(j).getNomSousCat().getLib();
-	// }
-	//
-	// return NomProduits;
-	// }
-	//
-	// private int recupereIndiceSousCategorieCochee(String p_categorie) {
-	// int indiceProduitCoche = -1;
-	// AccesTableTrousseProduits accesProduits = new AccesTableTrousseProduits(
-	// this);
-	// MlListeTrousseProduit ListeProduits = accesProduits
-	// .getListeTrousseProduit(p_categorie);
-	//
-	// for (int j = 0; j < ListeProduits.size(); j++) {
-	// // NomProduits[j] = ListeProduits.get(j).toString();
-	// boolean isChecked = ListeProduits.get(j).isChecked();
-	// if (isChecked) {
-	// indiceProduitCoche = j;
-	// break;
-	// }
-	// }
-	// // objBd.close();
-	// return indiceProduitCoche;
-	// }
+		}
+		produit.setMarque(textViewMarque.getText().toString());
 
-	// private boolean verfieAuMoinsUneCategorieSelectionnee() {
-	// AccesTableTrousseProduits accesProduit = new AccesTableTrousseProduits(
-	// this);
-	//
-	// MlListeTrousseProduit lstCatCochee = accesProduit
-	// .getListeProduitCochee();
-	// // objBd.open();
-	// // ArrayList[] ListeCategorieCochée = objBd.renvoiCategorieCochée();
-	// // int nbCategorieCochées = ListeCategorieCochée[0].size();
-	// String NomProduits = "";
-	// for (MlTrousseProduit tp : lstCatCochee) {
-	// NomProduits = tp.getNomSousCat().getLib();
-	// }
-	// // for (int j = 0; j < nbCatCochee; j++) {
-	// // NomProduits = ListeCategorieCochée[0].get(j).toString();
-	// // }
-	//
-	// return ((lstCatCochee.size() == 1) && (!NomProduits.equals("aucun")));
-	//
-	// }
+		p_intent.putExtra(MlProduit.class.getCanonicalName(),
+				SerialisableHelper.serialize(produit));
+
+	}
+
+	@Override
+	public void initComposantVisuel() {
+		ChoisiLeTheme();
+		BtVisage = (ImageView) this.findViewById(R.id.ImageViewVisage_page1);
+		BtYeux = (ImageView) this.findViewById(R.id.ImageViewYeux_page1);
+		BtLevres = (ImageView) findViewById(R.id.ImageViewLevres_page1);
+		BtAutres = (ImageView) this.findViewById(R.id.ImageViewAutres_page1);
+		BoutonValider = (Button) this.findViewById(R.id.ButtonValider2_Page1);
+		textViewMarque = (AutoCompleteTextView) findViewById(R.id.autocomplete_marque_Page1);
+
+		BtVisage.setOnClickListener(this);
+		BtYeux.setOnClickListener(this);
+		BtLevres.setOnClickListener(this);
+		BtAutres.setOnClickListener(this);
+		BoutonValider.setOnClickListener(this);
+
+		this.setTitle("Choix de la catégorie et de la marque");
+
+		AccesTableTrousseMarque accesMarque = new AccesTableTrousseMarque(this);
+		MlListeMarque lstMarque = accesMarque.getListeMarques();
+		String[] Marque = new String[lstMarque.size()];
+		for (int i = 0; i < lstMarque.size(); i++) {
+			Marque[i] = lstMarque.get(i).getNomMarque();
+		}
+
+		// objBd.close();
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+				R.layout.list_item_marque_auto, Marque);
+		textViewMarque.setAdapter(adapter);
+
+	}
+
+	@Override
+	public void ChoisiLeTheme() {
+
+		AccesTableParams accesParam = new AccesTableParams(this);
+		switch (accesParam.getThemeChoisi()) {
+			case Bisounours:
+				setContentView(R.layout.theme_bisounours_formulaire_entree_page1bis);
+				break;
+			case Classique:
+				accesParam.majTheme(EnTheme.Fleur);
+				ChoisiLeTheme();
+				break;
+			case Fleur:
+				setContentView(R.layout.theme_fleur_formulaire_entree_page1bis);
+				break;
+		}
+	}
 
 }

@@ -26,24 +26,28 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-import fr.smardine.matroussedemaquillage.Main;
 import fr.smardine.matroussedemaquillage.R;
+import fr.smardine.matroussedemaquillage.alertDialog.AlertDialogFactory;
+import fr.smardine.matroussedemaquillage.alertDialog.type.EnTypeAlertDialogAide;
+import fr.smardine.matroussedemaquillage.alertDialog.type.EnTypeAlertDialogAttention;
+import fr.smardine.matroussedemaquillage.alertDialog.type.EnTypeAlertDialogSingleChoice;
+import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableParams;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableProduitEnregistre;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableTrousseProduits;
 import fr.smardine.matroussedemaquillage.mdl.MlCategorie;
 import fr.smardine.matroussedemaquillage.mdl.MlListeTrousseProduit;
 import fr.smardine.matroussedemaquillage.mdl.MlProduit;
-import fr.smardine.matroussedemaquillage.mdl.MlTrousseProduit;
 import fr.smardine.matroussedemaquillage.note.note_page1;
 import fr.smardine.matroussedemaquillage.param.tab_param;
 import fr.smardine.matroussedemaquillage.recherche.Recherche;
 import fr.smardine.matroussedemaquillage.variableglobale.ActivityParam;
+import fr.smardine.matroussedemaquillage.variableglobale.EnTheme;
 
 /**
  * @author smardine
  */
 public class formulaire_entree_page3 extends SuperActivity implements
-		OnClickListener {
+		OnClickListener, IremplissageActivity {
 	Button BoutonValider3;
 
 	private TextView mDateDisplay;
@@ -55,17 +59,17 @@ public class formulaire_entree_page3 extends SuperActivity implements
 	private int mMonth;
 	private int mDay;
 
-	private boolean NouveauProduit = false, Duppliquer = false,
-			acceuil = false;
+	// private final boolean NouveauProduit = false, Duppliquer = false,
+	// acceuil = false;
 
 	static final int DATE_DIALOG_ID = 0;
 	AlertDialog.Builder adManqueInfo, adAide, adRecap, adFiniOuPas;
-	String MarqueChoisie = "";
-	String nomDuProduit = "";
-	String numeroDeTeinte = "";
-	String DateAchat = "";
-	String DureeVie = "";
-	MlTrousseProduit Cat;
+	// String MarqueChoisie = "";
+	// String nomDuProduit = "";
+	// String numeroDeTeinte = "";
+	// String DateAchat = "";
+	// String DureeVie = "";
+	// MlTrousseProduit Cat;
 
 	private MlProduit produit;
 
@@ -78,130 +82,64 @@ public class formulaire_entree_page3 extends SuperActivity implements
 		super.onCreate(savedInstanceState);
 		// ExceptionHandler.register(this,
 		// "http://simon.mardine.free.fr/trousse_maquillage/test/server.php","ma_ptite_trousse");
-		// ChoisiLeTheme();
 
-		// Object extra = getIntent().getSerializableExtra(
-		// MlProduit.class.getCanonicalName());
-		byte[] extra = getIntent().getByteArrayExtra(
-				MlProduit.class.getCanonicalName());
-		Object o = SerialisableHelper.deserializeObject(extra);
-		if (o instanceof MlProduit) {
-			produit = (MlProduit) o;
+		initComposantVisuel();
+		adFiniOuPas = new AlertDialogFactory(this)
+				.getSingleChoiceDialog(EnTypeAlertDialogSingleChoice.FINIOUPAS);
 
-		}
+		// adFiniOuPas = new AlertDialog.Builder(this);
+		// adFiniOuPas.setTitle("Que voulez vous faire?");
+		// adFiniOuPas.setIcon(R.drawable.ad_attention);
+		// CharSequence[] items = { "Ajouter un produit",
+		// "Dupliquer un produit",
+		// "Revenir à la page d'accueil" };
+		// adFiniOuPas.setSingleChoiceItems(items, -1,
+		// new DialogInterface.OnClickListener() {
+		//
+		// @Override
+		// public void onClick(DialogInterface dialog, int item) {
+		// /* User clicked on a radio button do some stuff */
+		//
+		// switch (item) {
+		// case 0:
+		// NouveauProduit = true;
+		// break;
+		// case 1:
+		// Duppliquer = true;
+		// break;
+		// case 2:
+		// acceuil = true;
+		// break;
+		// }
+		//
+		// }
+		// });
 
-		// capture our View elements
-		mDateDisplay = (TextView) findViewById(R.id.dateDisplay_page3);
-		mPickDate = (Button) findViewById(R.id.pickDate_page3);
-		nomProduit = (EditText) findViewById(R.id.EditTextNom_page3);
-		numeroTeinte = (EditText) findViewById(R.id.EditTextTeinte_page3);
-		dureeVie = (EditText) findViewById(R.id.EditTextDureeDeVie_page3);
-		BoutonValider3 = (Button) this.findViewById(R.id.ButtonValider3_page3);
-		BoutonAide = (ImageView) this.findViewById(R.id.IvAide_page3);
-		BoutonAide.setOnClickListener(this);
-
-		/*
-		 * nomProduit.addTextChangedListener(new TextWatcher(){
-		 * @SuppressWarnings("unused") int len=0;
-		 * @Override public void afterTextChanged(Editable s) { String str =
-		 * nomProduit.getText().toString(); if(!str.equals("")){ String str1 =
-		 * UpperCaseWords(str); nomProduit.setText(""+str1+""); } }
-		 * @Override public void beforeTextChanged(CharSequence arg0, int arg1,
-		 * int arg2, int arg3) { String str = nomProduit.getText().toString();
-		 * len = str.length(); }
-		 * @Override public void onTextChanged(CharSequence s, int start, int
-		 * before, int count) { } });
-		 */
-		adFiniOuPas = new AlertDialog.Builder(this);
-		adFiniOuPas.setTitle("Que voulez vous faire?");
-		adFiniOuPas.setIcon(R.drawable.ad_attention);
-		CharSequence[] items = { "Ajouter un produit", "Dupliquer un produit",
-				"Revenir à la page d'accueil" };
-		adFiniOuPas.setSingleChoiceItems(items, -1,
-				new DialogInterface.OnClickListener() {
-
-					@Override
-					public void onClick(DialogInterface dialog, int item) {
-						/* User clicked on a radio button do some stuff */
-
-						switch (item) {
-							case 0:
-								NouveauProduit = true;
-								break;
-							case 1:
-								Duppliquer = true;
-								break;
-							case 2:
-								acceuil = true;
-								break;
-						}
-
-					}
-				});
-
-		adFiniOuPas.setPositiveButton("Ok",
-				new DialogInterface.OnClickListener() {
-
-					@Override
-					public void onClick(DialogInterface dialog, int id) {
-						AccesTableTrousseProduits accesTrousse = new AccesTableTrousseProduits(
-								getApplicationContext());
-						accesTrousse.reinitProduitChoisi();
-						// String Table = "trousse_produits";
-						// ContentValues modifiedValues = new ContentValues();
-						// modifiedValues.put("ischecked", "false");
-						// String whereClause = "ischecked=?";
-						// String[] whereArgs = new String[] { "true" };
-
-						// objBd.open();
-						// int nbdechamp = objBd.majTable(Table, modifiedValues,
-						// whereClause, whereArgs);
-						// AccesTableTrousseTempo accesTempo = new
-						// AccesTableTrousseTempo(
-						// getApplicationContext());
-						// accesTempo.deleteTable();
-						// objBd.deleteTable("trousse_tempo", "1", null);
-						// System.out.println("Nombre de champ modifié : " +
-						// nbdechamp);
-						// objBd.close();
-
-						if (NouveauProduit) {// on retourne a la 1° fenetre du
-												// formulaire
-							Intent intent = new Intent(
-									formulaire_entree_page3.this,
-									formulaire_entree_page1bis.class);
-							// on demarre la nouvelle activité
-							intent.putExtra(ActivityParam.LaunchFromPageRecap,
-									true);
-							startActivity(intent);
-							termineActivity();
-						}
-						if (Duppliquer) {// on revient a la page d'acceuil
-							Intent intent = new Intent(
-									formulaire_entree_page3.this,
-									choix_produit_a_duppliquer.class);
-							// on demarre la nouvelle activité
-							intent.putExtra(ActivityParam.LaunchFromPageRecap,
-									true);
-							startActivity(intent);
-							termineActivity();
-						}
-						if (acceuil) {
-							Intent intent = new Intent(
-									formulaire_entree_page3.this, Main.class);
-							// on demarre la nouvelle activité
-							intent.putExtra(ActivityParam.LaunchFromPageRecap,
-									true);
-							startActivity(intent);
-							termineActivity();
-						}
-
-					}
-
-				});
+		// adFiniOuPas.setPositiveButton("Ok",
+		// new DialogInterface.OnClickListener() {
+		// @Override
+		// public void onClick(DialogInterface dialog, int id) {
+		// new AccesTableTrousseProduits(getApplicationContext())
+		// .reinitProduitChoisi();
+		// Intent intent = null;
+		// if (NouveauProduit) {
+		// intent = new Intent(formulaire_entree_page3.this,
+		// formulaire_entree_page1bis.class);
+		// }
+		// if (Duppliquer) {// on revient a la page d'acceuil
+		// intent = new Intent(formulaire_entree_page3.this,
+		// choix_produit_a_duppliquer.class);
+		// }
+		// if (acceuil) {
+		// intent = new Intent(formulaire_entree_page3.this,
+		// Main.class);
+		// }
+		// intent.putExtra(ActivityParam.LaunchFromPageRecap, true);
+		// startActivity(intent);
+		// termineActivity();
+		// }
+		// });
 		dureeVie.addTextChangedListener(new TextWatcher() {
-			@SuppressWarnings("unused")
-			int len = 0;
 
 			@Override
 			public void afterTextChanged(Editable s) {
@@ -210,22 +148,17 @@ public class formulaire_entree_page3 extends SuperActivity implements
 					int valeurRentree = Integer.parseInt(str);
 					if (valeurRentree > 99) {
 						dureeVie.setText("99");
-					}
-					if (valeurRentree <= 0) {
+					} else if (valeurRentree <= 0) {
 						dureeVie.setText("1");
 					}
 				} else {
 					dureeVie.setText("1");
 				}
-
 			}
 
 			@Override
 			public void beforeTextChanged(CharSequence arg0, int arg1,
 					int arg2, int arg3) {
-
-				String str = dureeVie.getText().toString();
-				len = str.length();
 			}
 
 			@Override
@@ -235,67 +168,8 @@ public class formulaire_entree_page3 extends SuperActivity implements
 
 		});
 
-		/*
-		 * Animlineaire anim = new Animlineaire (false,true);
-		 * mDateDisplay.startAnimation(anim.getAnim());
-		 * mPickDate.startAnimation(anim.getAnim());
-		 * nomProduit.startAnimation(anim.getAnim());
-		 * numeroTeinte.startAnimation(anim.getAnim());
-		 * dureeVie.startAnimation(anim.getAnim());
-		 * BoutonValider3.startAnimation(anim.getAnim());
-		 * BoutonAide.startAnimation(anim.getAnim());
-		 */
-
-		adAide = new AlertDialog.Builder(this);
-		adAide.setTitle("Aide");
-		/*
-		 * CharSequence[] items = { "Mascara (3 à 6 mois)",
-		 * "Fond  de teint(6 à 12 mois )"
-		 * ,"Blush-Poudre (12 à 18 mois)","Fards (12 à 18 mois)"
-		 * ,"Crayons (12 à 36 mois)", "Rouge à lèvres (12 à 36 mois)",
-		 * "Pinceau (nettoyage tout les mois)"
-		 * ,"Vernis à ongle (Voir sur la bouteille)"}; /*
-		 * adAide.setSingleChoiceItems(items , -1, new
-		 * DialogInterface.OnClickListener() { public void
-		 * onClick(DialogInterface dialog, int item){ /* User clicked on a radio
-		 * button do some stuff
-		 */
-		/*
-		 * if (item==0){//Mascara NbMoisChoisiBas=3; NbMoisChoisiHaut=6; }if
-		 * (item==1){//fond de teint NbMoisChoisiBas=6; NbMoisChoisiHaut=12; }
-		 * if (item==2){//blush-poudres NbMoisChoisiBas=12; NbMoisChoisiHaut=18;
-		 * } if (item==3){//fards NbMoisChoisiBas=12; NbMoisChoisiHaut=18; } if
-		 * (item==4){//crayons NbMoisChoisiBas=12; NbMoisChoisiHaut=36; } if
-		 * (item==5){//Rouges à lèvres NbMoisChoisiBas=12; NbMoisChoisiHaut=36;
-		 * } if (item==6){//pinceaux NbMoisChoisiBas=1; NbMoisChoisiHaut=1; } if
-		 * (item==7){//Vernis NbMoisChoisiBas=6; NbMoisChoisiHaut=12; } } });
-		 */
-
-		adAide.setMessage("La durée de vie de vos produits de maquillage est inscrite au dos de l'emballage\n\nDurée de vie moyenne:\n"
-				+ "Mascaras : 3 à 6 mois\n"
-				+ "Fonds de teint : 6 à 12 mois\n"
-				+ "Blush-Poudres :\n"
-				+ "12 à 18 mois\n"
-				+ "Fards : 12 à 18 mois\n"
-				+ "Crayons :\n"
-				+ "12 à 36 mois\n"
-				+ "Rouges à lèvres : 12 à 36 mois\n"
-				+ "Pinceaux : nettoyage tout les mois\n"
-				+ "\n"
-				+ "Attention, ces informations sont fournies à titre indicatif uniquement.\n"
-				+ "Quelques conseils :\n"
-				+ "Un produits périmé à une odeur et une texture inhabituelle.N'hesitez pas à jeter tout produit suspect, plus particulierement ceux en contact avec vos yeux.\n"
-				+ "Stockez vos produits dans un endroits sec, à l'abri des fluctuations de température.");
-
-		adAide.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-
-			@Override
-			public void onClick(DialogInterface dialog, int id) {
-
-				// dureeVie.setText(""+NbMoisChoisiBas);
-
-			}
-		});
+		adAide = new AlertDialogFactory(this)
+				.getAideDialog(EnTypeAlertDialogAide.AIDE_PAGE3);
 
 		// add a click listener to the button
 		mPickDate.setOnClickListener(new View.OnClickListener() {
@@ -313,75 +187,11 @@ public class formulaire_entree_page3 extends SuperActivity implements
 
 		// objBd = new BDAcces(this);
 		BoutonValider3.setOnClickListener(this);
-
-		adManqueInfo = new AlertDialog.Builder(this);
-		adManqueInfo.setTitle("Attention");
-		adManqueInfo.setIcon(R.drawable.ad_attention);
-		adManqueInfo
-				.setMessage("Vous avez oublié de rentrer certaines informations.");
-		adManqueInfo.setPositiveButton("Ok", null);
+		adManqueInfo = new AlertDialogFactory(this)
+				.getAttentionDialog(EnTypeAlertDialogAttention.MANQUE_INFO);
 
 		this.setTitle("Choix noms & dates");
-
-		// popUp("OnCreate-page3");
-
 	}
-
-	/**
-	 * 
-	 */
-	// private void termineActivity() {
-	// finish();
-	// }
-
-	// /**
-	// *
-	// */
-	// private void ChoisiLeTheme() {
-	// AccesTableParams accesParam = new AccesTableParams(this);
-	// switch (accesParam.getThemeChoisi()) {
-	// case Bisounours:
-	// setContentView(R.layout.theme_bisounours_formulaire_entree_page3);
-	// break;
-	// case Classique:
-	// accesParam.majTheme(EnTheme.Fleur);
-	// ChoisiLeTheme();
-	// break;
-	// case Fleur:
-	// setContentView(R.layout.theme_fleur_formulaire_entree_page3);
-	// break;
-	// }
-
-	// objBd = new BDAcces(this);
-	// //objBd.open();
-	// String[] champ = { "AfficheAlerte", "DureeViePeremp", "Theme" };
-	// @SuppressWarnings("rawtypes")
-	// ArrayList[] Param = objBd.renvoi_param(champ);
-	//
-	// String nomThemeChoisi = Param[2].get(0).toString().trim();
-	// if (EnTheme.Bisounours.getLib().equals(nomThemeChoisi)) {
-	// setContentView(R.layout.theme_bisounours_formulaire_entree_page3);
-	//
-	// }
-	// if (EnTheme.Classique.getLib().equals(nomThemeChoisi)) {
-	// // setContentView(R.layout.formulaire_entree_page3);
-	// AccesTableParams accesParam = new AccesTableParams(this);
-	// accesParam.majTheme(EnTheme.Fleur);
-	// // ContentValues values = new ContentValues();
-	// // values.put("Theme", EnTheme.Fleur.getLib());
-	// //
-	// // //objBd.open();
-	// // objBd.majTable("Param", values, "", null);
-	// // //objBd.close();
-	// // ChoisiLeTheme();
-	//
-	// }
-	// if (EnTheme.Fleur.getLib().equals(nomThemeChoisi)) {
-	// setContentView(R.layout.theme_fleur_formulaire_entree_page3);
-	// }
-
-	// objBd.close();
-	// }
 
 	private void onCreateMenu(Menu menu) {
 		SubMenu recherche = menu.addSubMenu(0, 2000, 1, "Recherche");
@@ -415,19 +225,11 @@ public class formulaire_entree_page3 extends SuperActivity implements
 			case 2001:
 				Toast.makeText(this, "Paramètres", 1000).show();
 				Intent intentParametres = new Intent(this, tab_param.class);
+
+				transfereMlProduitToActivity(intentParametres);
 				intentParametres.putExtra(ActivityParam.LaunchFromPageRecap,
 						true);
-				intentParametres.putExtra(ActivityParam.Marque,
-						MarqueChoisie.trim());
-				intentParametres.putExtra(ActivityParam.DurreeDeVie, dureeVie
-						.getText().toString().trim());
-				intentParametres.putExtra(ActivityParam.DateAchat, mDateDisplay
-						.getText().toString().trim());
-				intentParametres.putExtra(ActivityParam.NumeroDeTeinte,
-						numeroTeinte.getText().toString().trim());
-				intentParametres.putExtra(ActivityParam.NomProduit, nomProduit
-						.getText().toString().trim());
-				// on demarre la nouvelle activité
+
 				startActivity(intentParametres);
 				termineActivity();
 				break;
@@ -443,14 +245,6 @@ public class formulaire_entree_page3 extends SuperActivity implements
 		Log.i("", "" + item.getTitle());
 		return super.onOptionsItemSelected(item);
 	}
-
-	/*
-	 * public String UpperCaseWords(String line){ line =
-	 * line.trim().toLowerCase(); String data[] = line.split("\\s"); line = "";
-	 * for(int i =0;i< data.length;i++) { if(data[i].length()>1) { line = line +
-	 * data[i].substring(0,1).toUpperCase()+data[i].substring(1)+" "; } else {
-	 * line = line + data[i].toUpperCase(); } } return line.trim(); }
-	 */
 
 	@Override
 	protected Dialog onCreateDialog(int id) {
@@ -489,189 +283,100 @@ public class formulaire_entree_page3 extends SuperActivity implements
 			adAide.show();
 		}
 		if (v == BoutonValider3) {
-
-			nomDuProduit = nomProduit.getText().toString().trim();
-			numeroDeTeinte = numeroTeinte.getText().toString().trim();
-			DateAchat = mDateDisplay.getText().toString().trim();
-			DureeVie = dureeVie.getText().toString().trim();
+			if (checkInfoManquante()) {
+				adManqueInfo.show();
+				return;
+			}
+			// nomDuProduit = nomProduit.getText().toString().trim();
+			// numeroDeTeinte = numeroTeinte.getText().toString().trim();
+			// DateAchat = mDateDisplay.getText().toString().trim();
+			// DureeVie = dureeVie.getText().toString().trim();
 			// objBd.open();
-			AccesTableTrousseProduits accesProduit = new AccesTableTrousseProduits(
-					this);
-			MlListeTrousseProduit lstProdCoche = accesProduit
-					.getListeProduitCochee();
+			// AccesTableTrousseProduits accesProduit = new
+			// AccesTableTrousseProduits(
+			// this);
+			// MlListeTrousseProduit lstProdCoche = accesProduit
+			// .getListeProduitCochee();
 			// ArrayList[] Categorie_Cochée = objBd
 			// .renvoiCategorieEtProduitCochée();
 			// objBd.close();
-			Cat = lstProdCoche.get(0);
-			if (nomDuProduit.equals("") || numeroDeTeinte.equals("")
-					|| DateAchat.equals("") || DureeVie.equals("")) {
-				adManqueInfo.show();
-			} else {
-				adRecap = new AlertDialog.Builder(this);
-				adRecap.setTitle("Souhaitez-vous ajouter ce produit à ma p’tite trousse ?");
-				adRecap.setMessage(Cat.getNomSousCat() + "\n" + MarqueChoisie
-						+ "\n" + nomDuProduit + "\n" + "Numéro de teinte : "
-						+ numeroDeTeinte + "\n" + "Date d'achat : " + DateAchat
-						+ "\n" + "Durée de vie : " + DureeVie + " mois");
-				adRecap.setPositiveButton("Oui",
-						new DialogInterface.OnClickListener() {
+			// Cat = lstProdCoche.get(0);
 
-							@Override
-							public void onClick(DialogInterface dialog, int id) {
+			adRecap = new AlertDialog.Builder(this);
+			adRecap.setTitle("Souhaitez-vous ajouter ce produit à ma p’tite trousse ?");
+			adRecap.setMessage(produit.getCategorie().getSousCategorie()
+					.getLib()
+					+ "\n"
+					+ produit.getMarque()
+					+ "\n"
+					+ nomProduit.getText()
+					+ "\n"
+					+ "Numéro de teinte : "
+					+ numeroTeinte.getText()
+					+ "\n"
+					+ "Date d'achat : "
+					+ mDateDisplay.getText().toString()
+					+ "\n"
+					+ "Durée de vie : " + dureeVie.getText() + " mois");
+			adRecap.setPositiveButton("Oui",
+					new DialogInterface.OnClickListener() {
 
-								insereProduitDansTableEtPrposeLaSuite();
+						@Override
+						public void onClick(DialogInterface dialog, int id) {
 
-							}
-						});
-				adRecap.setNegativeButton("Non", null);
+							insereProduitDansTableEtPrposeLaSuite();
 
-				adRecap.show();
+						}
+					});
+			adRecap.setNegativeButton("Non", null);
 
-			}
+			adRecap.show();
 
 		}
 	}
 
-	protected void insereProduitDansTableEtPrposeLaSuite() {
-		// objBd.open();
-		// **
-		// Remplissage de la table temporaire
-		// ContentValues values = new ContentValues();
-		// values.put("nom_marque_choisie", MarqueChoisie);
-		// values.put("nom_produit", nomDuProduit);
-		// values.put("numero_teinte", numeroDeTeinte);
-		// values.put("DateAchat", DateAchat.replaceAll("/", "-").trim());
-		// values.put("Duree_Vie", DureeVie);
-		// objBd.deleteTable("trousse_tempo", "1", null);
-		// boolean insertOk = objBd.InsertDonnéedansTable("trousse_tempo",
-		// values);
-		// fin du remplissage de la table temporaire.
-		// recuperation des infos dans la table temporaires et insertion dans la
-		// table produit finale.
-		// ArrayList[] Categorie_Cochée =
-		// objBd.renvoiCategorieEtProduitCochée();
+	private boolean checkInfoManquante() {
+		return (nomProduit.getText().toString().trim().equals("")//
+				|| numeroTeinte.getText().toString().trim().equals("")//
+				|| mDateDisplay.getText().toString().trim().equals("") //
+		|| dureeVie.getText().toString().trim().equals(""));
 
-		// String[] Colonnes = { "nom_marque_choisie", "nom_produit",
-		// "numero_Teinte", "DateAchat", "Duree_Vie" };
-		// ArrayList[] trousse_tempo = objBd.renvoi_liste_ValeurTroussetempo(
-		// "trousse_tempo", Colonnes);
+	}
+
+	protected void insereProduitDansTableEtPrposeLaSuite() {
+
 		AccesTableTrousseProduits accesTrousseProduit = new AccesTableTrousseProduits(
 				this);
 		MlListeTrousseProduit lstProduitCoche = accesTrousseProduit
 				.getListeProduitCochee();
-		MlProduit p = new MlProduit();
-		p.setNomProduit(nomDuProduit);
-		p.setMarque(MarqueChoisie);
-		p.setCategorie(new MlCategorie(lstProduitCoche.get(0).getNomCat(),
-				lstProduitCoche.get(0).getNomSousCat()));
+
+		produit.setNomProduit(nomProduit.getText().toString().trim());
+		// p.setMarque(MarqueChoisie);
+		produit.setCategorie(new MlCategorie(
+				lstProduitCoche.get(0).getNomCat(), lstProduitCoche.get(0)
+						.getNomSousCat()));
 
 		// p.setNomCat(lstProduitCoche.get(0).getNomCat());
-		p.setTeinte(numeroDeTeinte);
-		p.setDateAchat(DateHelper.getDateFromDatabase(DateAchat.replaceAll("/",
-				"-").trim()));
-		p.setDureeVie(Integer.parseInt(DureeVie));
+		produit.setTeinte(numeroTeinte.getText().toString().trim());
+		produit.setDateAchat(DateHelper.getDateFromDatabase(mDateDisplay
+				.getText().toString().trim().replaceAll("/", "-").trim()));
+		produit.setDureeVie(Integer.parseInt(dureeVie.getText().toString()
+				.trim()));
 
 		AccesTableProduitEnregistre accesProduit = new AccesTableProduitEnregistre(
 				this);
-		boolean insertOk = accesProduit.insertProduit(p);
+		boolean insertOk = accesProduit.insertProduit(produit);
 
-		// ContentValues valuesProduitsFinal = new ContentValues();
-		// valuesProduitsFinal.put("nom_produit", nomDuProduit);
-		// valuesProduitsFinal.put("nom_marque", MarqueChoisie);
-		// valuesProduitsFinal.put("nom_souscatergorie", lstProduitCoche.get(0)
-		// .getNomSousCat());
-		// valuesProduitsFinal.put("nom_categorie", lstProduitCoche.get(0)
-		// .getNomCat());
-		// valuesProduitsFinal.put("numero_Teinte", numeroDeTeinte);
-		// valuesProduitsFinal.put("DateAchat", DateAchat.replaceAll("/", "-")
-		// .trim());
-		// valuesProduitsFinal.put("Duree_Vie", DureeVie);
-		// // calcul de la date de peremption problable
-		//
-		// int nbMoisDurreeDeVie = Integer.parseInt(DureeVie);
-		// int nbJours = nbMoisDurreeDeVie * 30;
-		//
-		// String DateAchat1 = DateAchat.replaceAll("/", "-").trim();
-		// String tabAchat[] = DateAchat1.split("-");
-		// int jourAchat = Integer.parseInt(tabAchat[0]);
-		// // les mois commence à 0 (janvier) et se termine à 11 (decembre)
-		// int mois = Integer.parseInt(tabAchat[1]) - 1;
-		// // les années commence à 0(1900), pour avoir l'année exacte a partir
-		// // d'une
-		// // valeur contenu dans un string, il faut retrancher 1900 a la valeur
-		// de
-		// // l'année. exemple, l'année 2010 est considérée comme 2010-1900 =
-		// 110
-		// int annee = Integer.parseInt(tabAchat[2]) - 1900;
-		//
-		// Date DateAchatAuformatDate = new Date(annee, mois, jourAchat);
-		// // on recupere la date d'achat au format milliseconde
-		// long DateAchatEnMilli = DateAchatAuformatDate.getTime();
-		// // on calcule la date de permetpion en fonction de la date d'achat+nb
-		// de
-		// // jour donné par l'utilisateur
-		// Date DatePeremption = getDateAfterDays(DateAchatEnMilli, nbJours);
-		// DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-		// // date de peremtion au format jj/mm/aaaa
-		// String Date_Peremption = dateFormat.format(DatePeremption);
-		// // on converti la date de permeption en milliseconde
-		// long DatePeremtInMilli = DatePeremption.getTime();
-		// // et on le stocke en base
-		// valuesProduitsFinal.put("Date_Peremption_milli", DatePeremtInMilli);
-		// // ////////////////////////////////////////////////////////
-		// valuesProduitsFinal.put("Date_Peremption", Date_Peremption);
-		// boolean insertOk = objBd.InsertDonnéedansTable("produit_Enregistre",
-		// valuesProduitsFinal);
 		if (insertOk) {
 			popUp("Insert Ok");
 			AccesTableTrousseProduits accesTrousse = new AccesTableTrousseProduits(
 					this);
 			accesTrousse.reinitProduitChoisi();
-			// AccesTableTrousseTempo accesTempo = new
-			// AccesTableTrousseTempo(this);
-			// accesTempo.deleteTable();
-			// String Table = "trousse_produits";
-			// ContentValues modifiedValues = new ContentValues();
-			// modifiedValues.put("ischecked", "false");
-			// String whereClause = "ischecked=?";
-			// String[] whereArgs = new String[] { "true" };
 
-			// objBd.open();
-			// int nbdechamp = objBd.majTable(Table, modifiedValues,
-			// whereClause, whereArgs);
-			// objBd.deleteTable("trousse_tempo", "1", null);
-			// System.out.println("Nombre de champ modifié : " + nbdechamp);
-			// objBd.close();
-
-			// //objBd.close();
 			adFiniOuPas.show();
-		} else {
-			// popUp("Insert Pas Ok");
-			// String Table = "trousse_produits";
-			// ContentValues modifiedValues = new ContentValues();
-			// modifiedValues.put("ischecked", "false");
-			// String whereClause = "ischecked=?";
-			// String[] whereArgs = new String[] { "true" };
-			//
-			// //objBd.open();
-			// int nbdechamp = objBd.majTable(Table, modifiedValues,
-			// whereClause, whereArgs);
-			// objBd.deleteTable("trousse_tempo", "1", null);
-			// System.out.println("Nombre de champ modifié : " + nbdechamp);
-			// //objBd.close();
-
 		}
-		// popUp("date peremption: "+Date_Peremption);
-		// objBd.close();
 
 	}
-
-	// /**
-	// * @param message
-	// */
-	// public void popUp(String message) {
-	// // Toast.makeText(this, message, 1).show();
-	// }
 
 	/**
 	 * Exécutée a chaque passage en premier plan de l'activité. Ou bien, si
@@ -690,28 +395,33 @@ public class formulaire_entree_page3 extends SuperActivity implements
 		// false);
 		//
 		// if (IsCalledFromPage1 || IsCalledFromDupplique) {
+		recupereMlProduitfromPreviousActivity();
 
-		MarqueChoisie = getIntent().getStringExtra(ActivityParam.Marque).trim();
-		DureeVie = getIntent().getStringExtra(ActivityParam.DurreeDeVie).trim();
-		DateAchat = getIntent().getStringExtra(ActivityParam.DateAchat).trim();
-		numeroDeTeinte = getIntent().getStringExtra(
-				ActivityParam.NumeroDeTeinte).trim();
-		nomDuProduit = getIntent().getStringExtra(ActivityParam.NomProduit)
-				.trim();
-		if (DateAchat.equals("")) {
+		// MarqueChoisie =
+		// getIntent().getStringExtra(ActivityParam.Marque).trim();
+		// DureeVie =
+		// getIntent().getStringExtra(ActivityParam.DurreeDeVie).trim();
+		// DateAchat =
+		// getIntent().getStringExtra(ActivityParam.DateAchat).trim();
+		// numeroDeTeinte = getIntent().getStringExtra(
+		// ActivityParam.NumeroDeTeinte).trim();
+		// nomDuProduit = getIntent().getStringExtra(ActivityParam.NomProduit)
+		// .trim();
+		if (produit.getDateAchat() == null) {
 			updateDisplay();
 		} else {
-			mDateDisplay.setText(new StringBuilder().append(DateAchat
-					.replaceAll("-", "/")));
+			mDateDisplay.setText(new StringBuilder().append(DateHelper
+					.getDateforDatabase(produit.getDateAchat()).replaceAll("-",
+							"/")));
 		}
-		if (!nomDuProduit.equals("")) {
-			nomProduit.setText(nomDuProduit);
+		if (produit.getNomProduit() != null) {
+			nomProduit.setText(produit.getNomProduit());
 		}
-		if (!numeroDeTeinte.equals("")) {
-			numeroTeinte.setText(numeroDeTeinte);
+		if (produit.getTeinte() != null) {
+			numeroTeinte.setText(produit.getTeinte());
 		}
-		if (!DureeVie.equals("")) {
-			dureeVie.setText(DureeVie);
+		if (produit.getDureeVie() != 0) {
+			dureeVie.setText("" + produit.getDureeVie());
 		}
 		// }
 
@@ -740,44 +450,13 @@ public class formulaire_entree_page3 extends SuperActivity implements
 
 	}
 
-	// /**
-	// * La fonction onStop() est exécutée : - lorsque l'activité n'est plus en
-	// * premier plan - ou bien lorsque l'activité va être détruite Cette
-	// fonction
-	// * est suivie : - de la fonction onRestart() si l'activité passe à nouveau
-	// * en premier plan - de la fonction onDestroy() lorsque l'activité se
-	// * termine ou bien lorsque le système décide de l'arrêter
-	// */
-	// @Override
-	// protected void onStop() {
-	// super.onStop();
-	// // popUp("onStop-Page3");
-	// }
-	//
-	// /**
-	// * La fonction onPause() est suivie : - d'un onResume() si l'activité
-	// passe
-	// * à nouveau en premier plan - d'un onStop() si elle devient invisible à
-	// * l'utilisateur L'exécution de la fonction onPause() doit être rapide,
-	// car
-	// * la prochaine activité ne démarrera pas tant que l'exécution de la
-	// * fonction onPause() n'est pas terminée.
-	// */
-	// @Override
-	// protected void onPause() {
-	// super.onPause();
-	//
-	// }
-
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
 			Intent page2 = new Intent(this, formulaire_entree_page1bis.class);
-			page2.putExtra(ActivityParam.Marque, MarqueChoisie.trim());
-			page2.putExtra(ActivityParam.DurreeDeVie, DureeVie.trim());
-			page2.putExtra(ActivityParam.DateAchat, DateAchat.trim());
-			page2.putExtra(ActivityParam.NumeroDeTeinte, numeroDeTeinte.trim());
-			page2.putExtra(ActivityParam.NomProduit, nomDuProduit.trim());
+
+			transfereMlProduitToActivity(page2);
+
 			page2.putExtra(ActivityParam.LaunchFromPageRecapBack, true);
 			startActivity(page2);
 			termineActivity();
@@ -792,13 +471,65 @@ public class formulaire_entree_page3 extends SuperActivity implements
 		return super.onKeyDown(keyCode, event);
 	}
 
-	// /**
-	// *
-	// */
-	// public void OnDestroy() {
-	// // popUp("OnDestroy");
-	// super.onDestroy();
-	//
-	// }
+	@Override
+	public MlProduit recupereMlProduitfromPreviousActivity() {
+		byte[] extra = getIntent().getByteArrayExtra(
+				MlProduit.class.getCanonicalName());
+		Object o = SerialisableHelper.deserializeObject(extra);
+		if (o instanceof MlProduit) {
+			produit = (MlProduit) o;
+		}
+
+		return produit;
+	}
+
+	@Override
+	public void transfereMlProduitToActivity(Intent p_intent) {
+		if (produit == null) {
+			produit = new MlProduit();
+		}
+		produit.setDureeVie(Integer.parseInt(dureeVie.getText().toString()
+				.trim()));
+		produit.setDateAchat(DateHelper.getDateFromDatabase(mDateDisplay
+				.getText().toString().trim()));
+		produit.setTeinte(numeroTeinte.getText().toString().trim());
+		produit.setNomProduit(nomProduit.getText().toString().trim());
+
+		p_intent.putExtra(MlProduit.class.getCanonicalName(),
+				SerialisableHelper.serialize(produit));
+
+	}
+
+	@Override
+	public void initComposantVisuel() {
+		ChoisiLeTheme();
+		mDateDisplay = (TextView) findViewById(R.id.dateDisplay_page3);
+		mPickDate = (Button) findViewById(R.id.pickDate_page3);
+		nomProduit = (EditText) findViewById(R.id.EditTextNom_page3);
+		numeroTeinte = (EditText) findViewById(R.id.EditTextTeinte_page3);
+		dureeVie = (EditText) findViewById(R.id.EditTextDureeDeVie_page3);
+		BoutonValider3 = (Button) this.findViewById(R.id.ButtonValider3_page3);
+		BoutonAide = (ImageView) this.findViewById(R.id.IvAide_page3);
+		BoutonAide.setOnClickListener(this);
+
+	}
+
+	@Override
+	public void ChoisiLeTheme() {
+
+		AccesTableParams accesParam = new AccesTableParams(this);
+		switch (accesParam.getThemeChoisi()) {
+			case Bisounours:
+				setContentView(R.layout.theme_bisounours_formulaire_entree_page3);
+				break;
+			case Classique:
+				accesParam.majTheme(EnTheme.Fleur);
+				ChoisiLeTheme();
+				break;
+			case Fleur:
+				setContentView(R.layout.theme_fleur_formulaire_entree_page3);
+				break;
+		}
+	}
 
 }

@@ -31,6 +31,7 @@ import android.widget.Toast;
 import fr.smardine.matroussedemaquillage.Main;
 import fr.smardine.matroussedemaquillage.R;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableNotes;
+import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableParams;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableProduitEnregistre;
 import fr.smardine.matroussedemaquillage.mdl.MlListeProduits;
 import fr.smardine.matroussedemaquillage.mdl.MlProduit;
@@ -40,6 +41,7 @@ import fr.smardine.matroussedemaquillage.recherche.produitRechercheListAdapter.V
 import fr.smardine.matroussedemaquillage.remplir.SuperActivity;
 import fr.smardine.matroussedemaquillage.variableglobale.ActivityParam;
 import fr.smardine.matroussedemaquillage.variableglobale.EnCategorieFiltrage;
+import fr.smardine.matroussedemaquillage.variableglobale.EnTheme;
 
 /**
  * @author smardine
@@ -82,7 +84,7 @@ public class Recherche extends SuperActivity implements OnClickListener,
 
 		// objBd = new BDAcces(this);
 
-		// ChoisiLeTheme();
+		ChoisiLeTheme();
 		BtFiltrerPar = (Button) findViewById(R.id.BtFiltrerPar);
 		BtFiltrerPar.setOnClickListener(this);
 		// Cat = (ToggleButton) findViewById(R.id.BTcat);
@@ -223,21 +225,23 @@ public class Recherche extends SuperActivity implements OnClickListener,
 	}
 
 	// @Override
-	// private void ChoisiLeTheme() {
-	//
-	// AccesTableParams accesParam = new AccesTableParams(this);
-	// switch (accesParam.getThemeChoisi()) {
-	// case Bisounours:
-	// setContentView(R.layout.theme_bisounours_recherche);
-	// break;
-	// case Classique:
-	// accesParam.majTheme(EnTheme.Fleur);
-	// ChoisiLeTheme();
-	// break;
-	// case Fleur:
-	// setContentView(R.layout.theme_fleur_recherche);
-	// break;
-	// }
+	private void ChoisiLeTheme() {
+
+		AccesTableParams accesParam = new AccesTableParams(this);
+		switch (accesParam.getThemeChoisi()) {
+			case Bisounours:
+				setContentView(R.layout.theme_bisounours_recherche);
+				break;
+			case Classique:
+				accesParam.majTheme(EnTheme.Fleur);
+				ChoisiLeTheme();
+				break;
+			case Fleur:
+				setContentView(R.layout.theme_fleur_recherche);
+				break;
+		}
+	}
+
 	// objBd.open();
 	// String[] champ = { "AfficheAlerte", "DureeViePeremp", "Theme" };
 	// ArrayList[] Param = objBd.renvoi_param(champ);

@@ -12,11 +12,11 @@ import fr.smardine.matroussedemaquillage.mdl.cat.EnTypeCategorie;
  */
 public class MlTrousseProduit {
 
-	private final int idTrousseproduit;
-	private final Context ctx;
-	private final EnCategorie nomSousCat;
-	private final EnTypeCategorie nomCat;
-	private final boolean isChecked;
+	private int idTrousseproduit;
+	private Context ctx;
+	private EnCategorie nomSousCat;
+	private EnTypeCategorie nomCat;
+	private boolean isChecked;
 
 	/**
 	 * @param p_idTrousseProduit
@@ -34,10 +34,12 @@ public class MlTrousseProduit {
 		this.nomCat = EnTypeCategorie
 				.getEnumFromValue(defTrousseProduit.get(1));
 
-		// this.nomSousCat = defTrousseProduit.get(0);
-		// this.nomCat = defTrousseProduit.get(1);
 		this.isChecked = Boolean.parseBoolean(defTrousseProduit.get(2));
 
+	}
+
+	public MlTrousseProduit() {
+		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -59,6 +61,26 @@ public class MlTrousseProduit {
 	 */
 	public boolean isChecked() {
 		return isChecked;
+	}
+
+	public int getIdTrousseproduit() {
+		return idTrousseproduit;
+	}
+
+	public void setIdTrousseproduit(int p_idTrousseproduit) {
+		idTrousseproduit = p_idTrousseproduit;
+	}
+
+	public void setNomSousCat(EnCategorie p_nomSousCat) {
+		nomSousCat = p_nomSousCat;
+	}
+
+	public void setNomCat(EnTypeCategorie p_nomCat) {
+		nomCat = p_nomCat;
+	}
+
+	public void setChecked(boolean p_isChecked) {
+		isChecked = p_isChecked;
 	}
 
 }

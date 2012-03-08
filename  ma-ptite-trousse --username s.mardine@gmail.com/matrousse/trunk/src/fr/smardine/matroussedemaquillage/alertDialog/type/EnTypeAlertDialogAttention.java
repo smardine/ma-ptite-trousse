@@ -1,7 +1,7 @@
 package fr.smardine.matroussedemaquillage.alertDialog.type;
 
 import fr.smardine.matroussedemaquillage.alertDialog.IAlertDialogClickListener;
-import fr.smardine.matroussedemaquillage.alertDialog.clickListener.AlertDialogAttentionClickListener;
+import fr.smardine.matroussedemaquillage.alertDialog.clickListener.buttonClick.AlertDialogAttentionClickListener;
 
 /**
  * Definition des différente DialogBox de type "Attention"
@@ -17,7 +17,9 @@ public enum EnTypeAlertDialogAttention {
 			"Ok", null), //
 	AUCUNE_MARQUE("Attention",
 			"Vous n'avez rentré aucune marque \nMerci d'en saisir une", "Ok",
-			null); //
+			null), //
+	MANQUE_INFO("Attention",
+			"Vous avez oublié de rentrer certaines informations.", "Ok", null);
 
 	private String titre;
 	private String message;
