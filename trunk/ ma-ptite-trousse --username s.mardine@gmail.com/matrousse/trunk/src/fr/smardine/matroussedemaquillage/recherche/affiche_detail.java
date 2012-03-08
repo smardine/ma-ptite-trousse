@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -33,7 +32,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import fr.smardine.matroussedemaquillage.R;
-import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableParams;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableProduitEnregistre;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableTrousseMarque;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableTrousseProduits;
@@ -43,13 +41,13 @@ import fr.smardine.matroussedemaquillage.mdl.cat.EnCategorie;
 import fr.smardine.matroussedemaquillage.modifier.modif_cat;
 import fr.smardine.matroussedemaquillage.note.note_page1;
 import fr.smardine.matroussedemaquillage.param.tab_param;
+import fr.smardine.matroussedemaquillage.remplir.SuperActivity;
 import fr.smardine.matroussedemaquillage.variableglobale.ActivityParam;
-import fr.smardine.matroussedemaquillage.variableglobale.EnTheme;
 
 /**
  * @author smardine
  */
-public class affiche_detail extends Activity implements OnClickListener {
+public class affiche_detail extends SuperActivity implements OnClickListener {
 
 	long DatePeremtInMilli = 0;
 	TextView CategorieDetail, DateAchatDetail, DatePeremtionDetail;
@@ -86,7 +84,7 @@ public class affiche_detail extends Activity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		// ExceptionHandler.register(this,
 		// "http://simon.mardine.free.fr/trousse_maquillage/test/server.php","ma_ptite_trousse");
-		ChoisiLeTheme();
+		// ChoisiLeTheme();
 
 		// capture our View elements
 		CategorieDetail = (TextView) findViewById(R.id.Categorie2_detail);
@@ -131,49 +129,49 @@ public class affiche_detail extends Activity implements OnClickListener {
 		mDay = c.get(Calendar.DAY_OF_MONTH);
 	}
 
-	/**
-	 * 
-	 */
-	private void ChoisiLeTheme() {
+	// /**
+	// *
+	// */
+	// private void ChoisiLeTheme() {
+	//
+	// AccesTableParams accesParam = new AccesTableParams(this);
+	// switch (accesParam.getThemeChoisi()) {
+	// case Bisounours:
+	// setContentView(R.layout.theme_bisounours_affiche_detail);
+	// break;
+	// case Classique:
+	// accesParam.majTheme(EnTheme.Fleur);
+	// ChoisiLeTheme();
+	// break;
+	// case Fleur:
+	// setContentView(R.layout.theme_fleur_affiche_detail);
+	// break;
+	// }
+	// objBd = new BDAcces(this);
+	// //objBd.open();
+	// String[] champ = { "AfficheAlerte", "DureeViePeremp", "Theme" };
+	// @SuppressWarnings("rawtypes")
+	// ArrayList[] Param = objBd.renvoi_param(champ);
+	//
+	// String nomThemeChoisi = Param[2].get(0).toString().trim();
+	// if (EnTheme.Bisounours.getLib().equals(nomThemeChoisi)) {
+	// setContentView(R.layout.theme_bisounours_affiche_detail);
+	//
+	// }
+	// if (EnTheme.Classique.getLib().equals(nomThemeChoisi)) {
+	// // setContentView(R.layout.affiche_detail);
+	// AccesTableParams accesParam = new AccesTableParams(this);
+	// accesParam.majTheme(EnTheme.Fleur);
+	//
+	// ChoisiLeTheme();
+	//
+	// }
+	// if (EnTheme.Fleur.getLib().equals(nomThemeChoisi)) {
+	// setContentView(R.layout.theme_fleur_affiche_detail);
+	// }
 
-		AccesTableParams accesParam = new AccesTableParams(this);
-		switch (accesParam.getThemeChoisi()) {
-			case Bisounours:
-				setContentView(R.layout.theme_bisounours_affiche_detail);
-				break;
-			case Classique:
-				accesParam.majTheme(EnTheme.Fleur);
-				ChoisiLeTheme();
-				break;
-			case Fleur:
-				setContentView(R.layout.theme_fleur_affiche_detail);
-				break;
-		}
-		// objBd = new BDAcces(this);
-		// //objBd.open();
-		// String[] champ = { "AfficheAlerte", "DureeViePeremp", "Theme" };
-		// @SuppressWarnings("rawtypes")
-		// ArrayList[] Param = objBd.renvoi_param(champ);
-		//
-		// String nomThemeChoisi = Param[2].get(0).toString().trim();
-		// if (EnTheme.Bisounours.getLib().equals(nomThemeChoisi)) {
-		// setContentView(R.layout.theme_bisounours_affiche_detail);
-		//
-		// }
-		// if (EnTheme.Classique.getLib().equals(nomThemeChoisi)) {
-		// // setContentView(R.layout.affiche_detail);
-		// AccesTableParams accesParam = new AccesTableParams(this);
-		// accesParam.majTheme(EnTheme.Fleur);
-		//
-		// ChoisiLeTheme();
-		//
-		// }
-		// if (EnTheme.Fleur.getLib().equals(nomThemeChoisi)) {
-		// setContentView(R.layout.theme_fleur_affiche_detail);
-		// }
-
-		// objBd.close();
-	}
+	// objBd.close();
+	// }
 
 	private void onCreateMenu(Menu menu) {
 		SubMenu note = menu.addSubMenu(0, 2002, 2, "Notes");
@@ -245,9 +243,9 @@ public class affiche_detail extends Activity implements OnClickListener {
 	/**
 	 * 
 	 */
-	private void termineActivity() {
-		finish();
-	}
+	// private void termineActivity() {
+	// finish();
+	// }
 
 	@Override
 	protected Dialog onCreateDialog(int id) {
@@ -403,64 +401,69 @@ public class affiche_detail extends Activity implements OnClickListener {
 	/**
 	 * @param message
 	 */
-	public void popUp(String message) {
-		// Toast.makeText(this, message, 1).show();
-	}
-
-	@Override
-	protected void onRestart() {
-		super.onRestart();
-		// popUp("onRestart()-PageDetail");
-	}
-
-	/**
-	 * Exécuté lorsque l'activité devient visible à l'utilisateur. La fonction
-	 * onStart() est suivie de la fonction onResume().
-	 */
-	@Override
-	protected void onStart() {
-		super.onStart();
-		// popUp("onStart()-PageDetail");
-	}
-
-	/**
-	 * Exécutée a chaque passage en premier plan de l'activité. Ou bien, si
-	 * l'activité passe à nouveau en premier (si une autre activité était passé
-	 * en premier plan entre temps). La fonction onResume() est suivie de
-	 * l'exécution de l'activité.
-	 */
-	@Override
-	protected void onResume() {
-		super.onResume();
-		// popUp("onResume()-PageDetail");
-
-	}
-
-	/**
-	 * La fonction onStop() est exécutée : - lorsque l'activité n'est plus en
-	 * premier plan - ou bien lorsque l'activité va être détruite Cette fonction
-	 * est suivie : - de la fonction onRestart() si l'activité passe à nouveau
-	 * en premier plan - de la fonction onDestroy() lorsque l'activité se
-	 * termine ou bien lorsque le système décide de l'arrêter
-	 */
-	@Override
-	protected void onStop() {
-		super.onStop();
-		// popUp("onStop-PageDetail");
-	}
-
-	/**
-	 * La fonction onPause() est suivie : - d'un onResume() si l'activité passe
-	 * à nouveau en premier plan - d'un onStop() si elle devient invisible à
-	 * l'utilisateur L'exécution de la fonction onPause() doit être rapide, car
-	 * la prochaine activité ne démarrera pas tant que l'exécution de la
-	 * fonction onPause() n'est pas terminée.
-	 */
-	@Override
-	protected void onPause() {
-		super.onPause();
-
-	}
+	// @Override
+	// public void popUp(String message) {
+	// // Toast.makeText(this, message, 1).show();
+	// }
+	//
+	// @Override
+	// protected void onRestart() {
+	// super.onRestart();
+	// // popUp("onRestart()-PageDetail");
+	// }
+	//
+	// /**
+	// * Exécuté lorsque l'activité devient visible à l'utilisateur. La fonction
+	// * onStart() est suivie de la fonction onResume().
+	// */
+	// @Override
+	// protected void onStart() {
+	// super.onStart();
+	// // popUp("onStart()-PageDetail");
+	// }
+	//
+	// /**
+	// * Exécutée a chaque passage en premier plan de l'activité. Ou bien, si
+	// * l'activité passe à nouveau en premier (si une autre activité était
+	// passé
+	// * en premier plan entre temps). La fonction onResume() est suivie de
+	// * l'exécution de l'activité.
+	// */
+	// @Override
+	// protected void onResume() {
+	// super.onResume();
+	// // popUp("onResume()-PageDetail");
+	//
+	// }
+	//
+	// /**
+	// * La fonction onStop() est exécutée : - lorsque l'activité n'est plus en
+	// * premier plan - ou bien lorsque l'activité va être détruite Cette
+	// fonction
+	// * est suivie : - de la fonction onRestart() si l'activité passe à nouveau
+	// * en premier plan - de la fonction onDestroy() lorsque l'activité se
+	// * termine ou bien lorsque le système décide de l'arrêter
+	// */
+	// @Override
+	// protected void onStop() {
+	// super.onStop();
+	// // popUp("onStop-PageDetail");
+	// }
+	//
+	// /**
+	// * La fonction onPause() est suivie : - d'un onResume() si l'activité
+	// passe
+	// * à nouveau en premier plan - d'un onStop() si elle devient invisible à
+	// * l'utilisateur L'exécution de la fonction onPause() doit être rapide,
+	// car
+	// * la prochaine activité ne démarrera pas tant que l'exécution de la
+	// * fonction onPause() n'est pas terminée.
+	// */
+	// @Override
+	// protected void onPause() {
+	// super.onPause();
+	//
+	// }
 
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -487,14 +490,14 @@ public class affiche_detail extends Activity implements OnClickListener {
 		return super.onKeyDown(keyCode, event);
 	}
 
-	/**
-	 * 
-	 */
-	public void OnDestroy() {
-		popUp("OnDestroy-PageDetail");
-		super.onDestroy();
-
-	}
+	// /**
+	// *
+	// */
+	// public void OnDestroy() {
+	// popUp("OnDestroy-PageDetail");
+	// super.onDestroy();
+	//
+	// }
 
 	@Override
 	public void onClick(View v) {
