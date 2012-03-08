@@ -8,13 +8,13 @@ import fr.smardine.matroussedemaquillage.mdl.MlCategorie;
 import fr.smardine.matroussedemaquillage.mdl.MlProduit;
 import fr.smardine.matroussedemaquillage.mdl.cat.EnTypeCategorie;
 
-public class MlProduitFactory {
+public class MlProduitEnregistreFactory {
 
-	public MlProduitFactory() {
+	public MlProduitEnregistreFactory() {
 
 	}
 
-	public MlProduit creationMlProduit(ArrayList<Object> p_list) {
+	public MlProduit creationMlProduitEnregistre(ArrayList<Object> p_list) {
 		MlProduit p = new MlProduit();
 		for (int i = 0; i < p_list.size(); i++) {
 			if (i == 0) {

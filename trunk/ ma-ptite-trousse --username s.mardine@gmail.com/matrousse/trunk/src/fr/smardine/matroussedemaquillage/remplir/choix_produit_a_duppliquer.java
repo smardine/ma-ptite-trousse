@@ -23,6 +23,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 import fr.smardine.matroussedemaquillage.Main;
 import fr.smardine.matroussedemaquillage.R;
+import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableParams;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableProduitEnregistre;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableTrousseMarque;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableTrousseProduits;
@@ -35,6 +36,7 @@ import fr.smardine.matroussedemaquillage.recherche.produitRecherche;
 import fr.smardine.matroussedemaquillage.recherche.produitRechercheListAdapter;
 import fr.smardine.matroussedemaquillage.recherche.produitRechercheListAdapter.ViewHolder;
 import fr.smardine.matroussedemaquillage.variableglobale.ActivityParam;
+import fr.smardine.matroussedemaquillage.variableglobale.EnTheme;
 
 /**
  * @author smardine
@@ -65,7 +67,7 @@ public class choix_produit_a_duppliquer extends SuperActivity implements
 		super.onCreate(savedInstanceState);
 		// ExceptionHandler.register(this,
 		// "http://simon.mardine.free.fr/trousse_maquillage/test/server.php","ma_ptite_trousse");
-		// ChoisiLeTheme();
+		ChoisiLeTheme();
 
 		ProduitListView1 = (ListView) this
 				.findViewById(R.id.produitListViewDupplic);
@@ -86,21 +88,23 @@ public class choix_produit_a_duppliquer extends SuperActivity implements
 	/**
 	 * 
 	 */
-	// private void ChoisiLeTheme() {
-	//
-	// AccesTableParams accesParam = new AccesTableParams(this);
-	// switch (accesParam.getThemeChoisi()) {
-	// case Bisounours:
-	// setContentView(R.layout.theme_bisounours_affiche_liste_produit_a_duppliquer);
-	// break;
-	// case Classique:
-	// accesParam.majTheme(EnTheme.Fleur);
-	// ChoisiLeTheme();
-	// break;
-	// case Fleur:
-	// setContentView(R.layout.theme_fleur_affiche_liste_produit_a_duppliquer);
-	// break;
-	// }
+	private void ChoisiLeTheme() {
+
+		AccesTableParams accesParam = new AccesTableParams(this);
+		switch (accesParam.getThemeChoisi()) {
+			case Bisounours:
+				setContentView(R.layout.theme_bisounours_affiche_liste_produit_a_duppliquer);
+				break;
+			case Classique:
+				accesParam.majTheme(EnTheme.Fleur);
+				ChoisiLeTheme();
+				break;
+			case Fleur:
+				setContentView(R.layout.theme_fleur_affiche_liste_produit_a_duppliquer);
+				break;
+		}
+	}
+
 	// objBd = new BDAcces(this);
 	// //objBd.open();
 	// String[] champ = { "AfficheAlerte", "DureeViePeremp", "Theme" };

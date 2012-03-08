@@ -1,4 +1,4 @@
-package fr.smardine.matroussedemaquillage.alertDialog.clickListener;
+package fr.smardine.matroussedemaquillage.alertDialog.clickListener.buttonClick;
 
 import java.io.BufferedReader;
 import java.io.IOException;

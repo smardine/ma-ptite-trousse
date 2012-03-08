@@ -8,6 +8,7 @@ import android.content.Context;
 import fr.smardine.matroussedemaquillage.base.RequeteFactory;
 import fr.smardine.matroussedemaquillage.base.structure.EnStructProduits;
 import fr.smardine.matroussedemaquillage.base.structure.EnTable;
+import fr.smardine.matroussedemaquillage.factory.MlTrousseProduitFactory;
 import fr.smardine.matroussedemaquillage.mdl.MlListeTrousseProduit;
 import fr.smardine.matroussedemaquillage.mdl.MlTrousseProduit;
 import fr.smardine.matroussedemaquillage.mdl.cat.EnCategorie;
@@ -96,18 +97,29 @@ public class AccesTableTrousseProduits {
 	 * @return la liste des TrousseProduit coché
 	 */
 	public MlListeTrousseProduit getListeProduitCochee() {
-		MlListeTrousseProduit lstRetour = new MlListeTrousseProduit();
-		String requete = "SELECT " + EnStructProduits.ID.getNomChamp()
-				+ " FROM " + EnTable.TROUSSE_PRODUIT.getNomTable() + " WHERE "
-				+ EnStructProduits.ISCHECKED.getNomChamp() + "='true'";
+		MlListeTrousseProduit lst = new MlListeTrousseProduit();
+		// String requete = "SELECT " + EnStructProduits.ID.getNomChamp()
+		// + " FROM " + EnTable.TROUSSE_PRODUIT.getNomTable() + " WHERE "
+		// + EnStructProduits.ISCHECKED.getNomChamp() + "='true'";
 
-		List<ArrayList<String>> lstId = requeteFact.getListeDeChamp(requete);
-		for (ArrayList<String> anId : lstId) {
-			MlTrousseProduit p = new MlTrousseProduit(Integer.parseInt(anId
-					.get(0)), ctx);
-			lstRetour.add(p);
+		List<ArrayList<Object>> lstRetour = requeteFact.getListeDeChampBis(
+				EnTable.TROUSSE_PRODUIT, EnStructProduits.class, ""
+						+ EnStructProduits.ISCHECKED.getNomChamp() + "='true'");
+
+		MlTrousseProduitFactory prodFact = new MlTrousseProduitFactory();
+		for (ArrayList<Object> aList : lstRetour) {
+			lst.add(prodFact.construitTrousseProduit(aList));
 		}
-		return lstRetour;
+
+		return lst;
+
+		// List<ArrayList<String>> lstId = requeteFact.getListeDeChamp(requete);
+		// for (ArrayList<String> anId : lstId) {
+		// MlTrousseProduit p = new MlTrousseProduit(Integer.parseInt(anId
+		// .get(0)), ctx);
+		// lstRetour.add(p);
+		// }
+		// return lstRetour;
 	}
 
 	/**
