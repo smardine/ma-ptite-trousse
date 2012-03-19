@@ -63,35 +63,7 @@ public class BDAcces {
 			Log.w(TAG, "Upgrading database from version " + oldVersion + " to "
 					+ newVersion + ", which will destroy all old data");
 			G_maj_base maj = new G_maj_base();
-			switch (oldVersion) {
-				case 1:
-					LanceMiseAJour(db, maj.getVersion2());
-				case 2:
-					LanceMiseAJour(db, maj.getVersion3());
-				case 3:
-					LanceMiseAJour(db, maj.getVersion4());
-				case 4:
-					LanceMiseAJour(db, maj.getVersion5());
-				case 5:
-					LanceMiseAJour(db, maj.getVersion6());
-				case 6:
-					LanceMiseAJour(db, maj.getVersion7());
-				case 7:
-					LanceMiseAJour(db, maj.getVersion8());
-				case 8:
-					LanceMiseAJour(db, maj.getVersion9());
-				case 9:
-					LanceMiseAJour(db, maj.getVersion10());
-				case 10:
-					LanceMiseAJour(db, maj.getVersion11());
-				case 11:
-					LanceMiseAJour(db, maj.getVersion12());
-				case 12:
-					LanceMiseAJour(db, maj.getVersion13());
-				case 13:
-					LanceMiseAJour(db, maj.getVersion14());
-
-			}
+			LanceMiseAJour(db, maj.getVersionx(oldVersion));
 
 		}
 

@@ -99,7 +99,7 @@ public class DateHelper {
 		Calendar cDateAchat = Calendar.getInstance();
 		cDateAchat.set(Calendar.YEAR, annee + 1900);
 		// les mois sont en base 0 (JANVIER=0, FEVRIER=1.....DECEMBRE=11)
-		cDateAchat.set(Calendar.MONTH, mois - 1);
+		cDateAchat.set(Calendar.MONTH, mois + 1);
 		cDateAchat.set(Calendar.DAY_OF_MONTH, jourAchat);
 
 		// definition de la date a laquelle le produit est perimé

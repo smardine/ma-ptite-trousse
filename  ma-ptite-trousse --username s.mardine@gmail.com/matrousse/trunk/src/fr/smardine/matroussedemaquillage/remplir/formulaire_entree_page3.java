@@ -34,8 +34,6 @@ import fr.smardine.matroussedemaquillage.alertDialog.type.EnTypeAlertDialogSingl
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableParams;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableProduitEnregistre;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableTrousseProduits;
-import fr.smardine.matroussedemaquillage.mdl.MlCategorie;
-import fr.smardine.matroussedemaquillage.mdl.MlListeTrousseProduit;
 import fr.smardine.matroussedemaquillage.mdl.MlProduit;
 import fr.smardine.matroussedemaquillage.note.note_page1;
 import fr.smardine.matroussedemaquillage.param.tab_param;
@@ -343,18 +341,18 @@ public class formulaire_entree_page3 extends SuperActivity implements
 
 	}
 
-	protected void insereProduitDansTableEtPrposeLaSuite() {
+	private void insereProduitDansTableEtPrposeLaSuite() {
 
 		AccesTableTrousseProduits accesTrousseProduit = new AccesTableTrousseProduits(
 				this);
-		MlListeTrousseProduit lstProduitCoche = accesTrousseProduit
-				.getListeProduitCochee();
+		// MlListeTrousseProduit lstProduitCoche = accesTrousseProduit
+		// .getListeProduitCochee();
 
 		produit.setNomProduit(nomProduit.getText().toString().trim());
 		// p.setMarque(MarqueChoisie);
-		produit.setCategorie(new MlCategorie(
-				lstProduitCoche.get(0).getNomCat(), lstProduitCoche.get(0)
-						.getNomSousCat()));
+		// produit.setCategorie(new MlCategorie(
+		// lstProduitCoche.get(0).getNomCat(), lstProduitCoche.get(0)
+		// .getNomSousCat()));
 
 		// p.setNomCat(lstProduitCoche.get(0).getNomCat());
 		produit.setTeinte(numeroTeinte.getText().toString().trim());

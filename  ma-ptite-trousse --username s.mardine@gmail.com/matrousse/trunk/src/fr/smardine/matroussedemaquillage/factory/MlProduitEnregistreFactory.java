@@ -44,7 +44,11 @@ public class MlProduitEnregistreFactory {
 			} else if (i == 11) {
 				p.setPresquePerime(Boolean.getBoolean((String) p_list.get(i)));
 			} else if (i == 12) {
-				p.setNbJourAvantPeremp(Integer.parseInt((String) p_list.get(i)));
+				if (p_list.get(i) != null) {
+					p.setNbJourAvantPeremp(Integer.parseInt((String) p_list
+							.get(i)));
+				}
+
 			}
 		}
 		return p;

@@ -41,6 +41,55 @@ public class G_maj_base {
 	private List<String> version13;
 	private List<String> version14;
 
+	public List<String> getVersionx(int versionNumber) {
+		if (versionNumber >= 1 && versionNumber <= 9) {
+			return getVersion1To10(versionNumber);
+		} else {
+			return getVersion11Toxx(versionNumber);
+		}
+
+	}
+
+	private List<String> getVersion1To10(int versionNumber) {
+		switch (versionNumber) {
+			case 1:
+				return getVersion2();
+			case 2:
+				return getVersion3();
+			case 3:
+				return getVersion4();
+			case 4:
+				return getVersion5();
+			case 5:
+				return getVersion6();
+			case 6:
+				return getVersion7();
+			case 7:
+				return getVersion8();
+			case 8:
+				return getVersion9();
+			case 9:
+				return getVersion10();
+
+		}
+		return null;
+	}
+
+	private List<String> getVersion11Toxx(int versionNumber) {
+		switch (versionNumber) {
+			case 10:
+				return getVersion11();
+			case 11:
+				return getVersion12();
+			case 12:
+				return getVersion13();
+			case 13:
+				return getVersion14();
+
+		}
+		return null;
+	}
+
 	/**
 	 * @return tout les scripts de mise a jours
 	 */
@@ -65,7 +114,7 @@ public class G_maj_base {
 	/**
 	 * @return les scripts de mise a jour en v02
 	 */
-	public List<String> getVersion2() {
+	private List<String> getVersion2() {
 		version2 = new ArrayList<String>();
 		version2.add("UPDATE trousse_marques SET nom_marque=\"L'Oréal\" where id_marque=80");
 		return version2;
@@ -74,7 +123,7 @@ public class G_maj_base {
 	/**
 	 * @return les scripts de mise a jour en v03
 	 */
-	public List<String> getVersion3() {
+	private List<String> getVersion3() {
 		version3 = new ArrayList<String>();
 		version3.add("UPDATE trousse_marques SET nom_marque=\"Black'Up\" where id_marque=17");
 		version3.add("UPDATE trousse_marques SET nom_marque=\"L'Action Cosmétique\" where id_marque=79");
@@ -90,7 +139,7 @@ public class G_maj_base {
 	/**
 	 * @return les scripts de mise a jour en v04
 	 */
-	public List<String> getVersion4() {
+	private List<String> getVersion4() {
 		version4 = new ArrayList<String>();
 		version4.add("UPDATE trousse_produits SET nom_souscatergorie=\"Fonds de teint\" where nom_souscatergorie=\"Fond de tein\"");
 		version4.add("UPDATE trousse_produits SET nom_souscatergorie=\"Correcteurs - Bases\" where nom_souscatergorie=\"Correcteurs - Bases\"");
@@ -105,7 +154,7 @@ public class G_maj_base {
 	/**
 	 * @return les scripts de mise a jour en v05
 	 */
-	public List<String> getVersion5() {
+	private List<String> getVersion5() {
 		version5 = new ArrayList<String>();
 		version5.add("INSERT INTO trousse_produits (nom_souscatergorie,nom_categorie,ISCHECKED) VALUES ('Pinceaux','Autres','false')");
 		return version5;
@@ -114,7 +163,7 @@ public class G_maj_base {
 	/**
 	 * @return les scripts de mise a jour en v06
 	 */
-	public List<String> getVersion6() {
+	private List<String> getVersion6() {
 		version6 = new ArrayList<String>(1);
 		version6.add("ALTER TABLE produit_Enregistre ADD nom_marque Varchar(255)");
 		return version6;
@@ -123,7 +172,7 @@ public class G_maj_base {
 	/**
 	 * @return les scripts de mise a jour en v07
 	 */
-	public List<String> getVersion7() {
+	private List<String> getVersion7() {
 		version7 = new ArrayList<String>();
 		version7.add("ALTER TABLE produit_Enregistre ADD Date_Peremption_milli LONG");
 		return version7;
@@ -132,7 +181,7 @@ public class G_maj_base {
 	/**
 	 * @return les scripts de mise a jour en v08
 	 */
-	public List<String> getVersion8() {
+	private List<String> getVersion8() {
 		version8 = new ArrayList<String>();
 		version8.add("ALTER TABLE produit_Enregistre ADD IS_PERIME VARCHAR (255)");
 		version8.add("ALTER TABLE produit_Enregistre ADD IS_PRESQUE_PERIME VARCHAR (255)");
@@ -143,7 +192,7 @@ public class G_maj_base {
 	/**
 	 * @return les scripts de mise a jour en v09
 	 */
-	public List<String> getVersion9() {
+	private List<String> getVersion9() {
 		version9 = new ArrayList<String>(1);
 		version9.add("CREATE TABLE IF NOT EXISTS Notes ( id_note INTEGER PRIMARY KEY  AUTOINCREMENT,Titre VARCHAR(255) NULL, Message VARCHAR (9999) NULL)");
 		return version9;
@@ -152,7 +201,7 @@ public class G_maj_base {
 	/**
 	 * @return les scripts de mise a jour en v10
 	 */
-	public List<String> getVersion10() {
+	private List<String> getVersion10() {
 		version10 = new ArrayList<String>();
 		version10
 				.add("CREATE TABLE IF NOT EXISTS Param ( AfficheAlerte VARCHAR(255) NULL, DureeViePeremp VARCHAR (255) NULL)");
@@ -164,7 +213,7 @@ public class G_maj_base {
 	/**
 	 * @return les scripts de mise a jour en v11
 	 */
-	public List<String> getVersion11() {
+	private List<String> getVersion11() {
 		version11 = new ArrayList<String>();
 		version11
 				.add("UPDATE  Param set DureeViePeremp=30 where DureeViePeremp>99");
@@ -174,7 +223,7 @@ public class G_maj_base {
 	/**
 	 * @return les scripts de mise a jour en v12
 	 */
-	public List<String> getVersion12() {
+	private List<String> getVersion12() {
 		version12 = new ArrayList<String>();
 		version12.add("DROP TABLE Param");
 		version12
@@ -187,7 +236,7 @@ public class G_maj_base {
 	/**
 	 * @return les scripts de mise a jour en v13
 	 */
-	public List<String> getVersion13() {
+	private List<String> getVersion13() {
 		version13 = new ArrayList<String>();
 		version13.add("DROP TABLE Notes");
 		version13
@@ -198,7 +247,7 @@ public class G_maj_base {
 	/**
 	 * @return les scripts de mise a jour en v14
 	 */
-	public List<String> getVersion14() {
+	private List<String> getVersion14() {
 		version14 = new ArrayList<String>();
 		version14.add("ALTER TABLE Param ADD Theme Varchar(255)");
 		version14.add("UPDATE Param SET Theme =\"Classique\"");
