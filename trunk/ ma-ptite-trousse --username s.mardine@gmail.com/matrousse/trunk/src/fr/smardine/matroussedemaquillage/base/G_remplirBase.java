@@ -5,6 +5,16 @@ package fr.smardine.matroussedemaquillage.base;
  */
 public final class G_remplirBase {
 
+	/**
+	 * @return the scriptRemplirBaseTest
+	 */
+	public static String[] getScriptRemplirBaseTest() {
+		return SCRIPT_REMPLIR_BASE_TEST;
+	}
+
+	/**
+	 * Constructeur privé pour classe utilitaire
+	 */
 	private G_remplirBase() {
 
 	}
@@ -12,7 +22,7 @@ public final class G_remplirBase {
 	/**
 	 * scripts d'instertion en base
 	 */
-	public static String[] SCRIPT_REMPLIR_BASE_TEST = {
+	private static final String[] SCRIPT_REMPLIR_BASE_TEST = {
 			"INSERT INTO "
 					+ "produit_Enregistre "
 					+ "(nom_produit,nom_souscatergorie,nom_categorie,DateAchat,Duree_Vie,nom_marque) "

@@ -1,5 +1,7 @@
 package fr.smardine.matroussedemaquillage.recherche;
 
+import helper.DateHelper;
+
 import java.util.ArrayList;
 
 import android.app.AlertDialog;
@@ -31,6 +33,7 @@ import android.widget.ToggleButton;
 import fr.smardine.matroussedemaquillage.Main;
 import fr.smardine.matroussedemaquillage.R;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableNotes;
+import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableParams;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableProduitEnregistre;
 import fr.smardine.matroussedemaquillage.mdl.MlListeProduits;
 import fr.smardine.matroussedemaquillage.mdl.MlProduit;
@@ -39,6 +42,7 @@ import fr.smardine.matroussedemaquillage.param.tab_param;
 import fr.smardine.matroussedemaquillage.recherche.produitRechercheListAdapter.ViewHolder;
 import fr.smardine.matroussedemaquillage.remplir.SuperActivity;
 import fr.smardine.matroussedemaquillage.variableglobale.ActivityParam;
+import fr.smardine.matroussedemaquillage.variableglobale.EnTheme;
 
 /**
  * @author smardine
@@ -76,27 +80,13 @@ public class recherche_produit_perime extends SuperActivity implements
 
 		IsCalledFromMain = getIntent().getBooleanExtra(
 				ActivityParam.LaunchFromMain, false);
+		initComposantVisuel();
 
 		// objBd = new BDAcces(this);
 
 		// ChoisiLeTheme();
 
 		// RechercheTxt1 = (TextView) this.findViewById(R.id.Text1Rech);
-		ProduitListView1 = (ListView) this
-				.findViewById(R.id.produitListViewRecherche);
-		ProduitListViewTitre = (ListView) this
-				.findViewById(R.id.produitListViewRechercheTitre);
-
-		Cat = (ToggleButton) findViewById(R.id.BTcat);
-		Marque = (ToggleButton) findViewById(R.id.BTmarque);
-		Tout = (ToggleButton) findViewById(R.id.BTtout);
-		EtFiltrage = (EditText) findViewById(R.id.EtFiltrage);
-
-		ProduitListView1.setOnItemClickListener(this);
-		ProduitListView1.setOnItemLongClickListener(this);
-		Cat.setOnClickListener(this);
-		Marque.setOnClickListener(this);
-		Tout.setOnClickListener(this);
 
 		adAucunProduit = new AlertDialog.Builder(this);
 		adAucunProduit.setTitle("Pour information");
@@ -138,6 +128,26 @@ public class recherche_produit_perime extends SuperActivity implements
 		filtreSelonSaisieEtBtActive("", Cat.isChecked(), Marque.isChecked(),
 				Tout.isChecked());
 		this.setTitle("Produit(s) périmé(s)");
+
+	}
+
+	private void initComposantVisuel() {
+		ChoisiLeTheme();
+		ProduitListView1 = (ListView) this
+				.findViewById(R.id.produitListViewRecherche);
+		ProduitListViewTitre = (ListView) this
+				.findViewById(R.id.produitListViewRechercheTitre);
+
+		Cat = (ToggleButton) findViewById(R.id.BTcat);
+		Marque = (ToggleButton) findViewById(R.id.BTmarque);
+		Tout = (ToggleButton) findViewById(R.id.BTtout);
+		EtFiltrage = (EditText) findViewById(R.id.EtFiltrage);
+
+		ProduitListView1.setOnItemClickListener(this);
+		ProduitListView1.setOnItemLongClickListener(this);
+		Cat.setOnClickListener(this);
+		Marque.setOnClickListener(this);
+		Tout.setOnClickListener(this);
 
 	}
 
@@ -183,20 +193,21 @@ public class recherche_produit_perime extends SuperActivity implements
 
 	}
 
-	// private void ChoisiLeTheme() {
-	// AccesTableParams accesParam = new AccesTableParams(this);
-	// switch (accesParam.getThemeChoisi()) {
-	// case Bisounours:
-	// setContentView(R.layout.theme_bisounours_affiche_liste_produit_perime);
-	// break;
-	// case Classique:
-	// accesParam.majTheme(EnTheme.Fleur);
-	// ChoisiLeTheme();
-	// break;
-	// case Fleur:
-	// setContentView(R.layout.theme_fleur_affiche_liste_produit_perime);
-	// break;
-	// }
+	private void ChoisiLeTheme() {
+		AccesTableParams accesParam = new AccesTableParams(this);
+		switch (accesParam.getThemeChoisi()) {
+			case Bisounours:
+				setContentView(R.layout.theme_bisounours_affiche_liste_produit_perime);
+				break;
+			case Classique:
+				accesParam.majTheme(EnTheme.Fleur);
+				ChoisiLeTheme();
+				break;
+			case Fleur:
+				setContentView(R.layout.theme_fleur_affiche_liste_produit_perime);
+				break;
+		}
+	}
 
 	// objBd.open();
 	// String[] champ = { "AfficheAlerte", "DureeViePeremp", "Theme" };
@@ -622,9 +633,9 @@ public class recherche_produit_perime extends SuperActivity implements
 			MlListeProduits lstProduit = accesProduit
 					.getListeProduitsPerimeAvecFiltrageSurTout(p_Filtrage);
 			for (MlProduit p : lstProduit) {
-				produitFinal.add(new produitRecherche("" + p.getIdProduit(), p
-						.getCategorie().getCategorie().name(), p
-						.getNomProduit(), p.getMarque()));
+				produitFinal.add(new produitRecherche("" + p.getIdProduit(),
+						DateHelper.getDateforDatabase(p.getDatePeremption()), p
+								.getNomProduit(), p.getMarque()));
 			}
 			// String[] Colonnes = { "id_produits", "Date_Peremption",
 			// "nom_produit", "nom_marque" };
