@@ -7,15 +7,15 @@ public enum EnCategorieFiltrage {
 	/**
 	 * 
 	 */
-	Tout(0, "Tout"), //
+	TOUT(0, "Tout"), //
 	/**
 	 * 
 	 */
-	Marque(1, "Marques"), //
+	MARQUE(1, "Marques"), //
 	/**
 	 * 
 	 */
-	Categorie(2, "Catégories");
+	CATEGORIE(2, "Catégories");
 
 	private int code;
 	private String lib;
