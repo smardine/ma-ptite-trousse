@@ -1,5 +1,6 @@
 package fr.smardine.matroussedemaquillage.mdl;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import android.content.Context;
@@ -8,8 +9,12 @@ import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableNotes;
 /**
  * @author smardine
  */
-public class MlNote {
+public class MlNote implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7340644404187848866L;
 	private int idNote;
 	private String message;
 	private String titre;
