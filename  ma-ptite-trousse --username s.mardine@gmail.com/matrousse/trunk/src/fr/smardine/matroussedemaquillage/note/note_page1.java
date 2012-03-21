@@ -26,18 +26,20 @@ import android.widget.Toast;
 import fr.smardine.matroussedemaquillage.Main;
 import fr.smardine.matroussedemaquillage.R;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableNotes;
+import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableParams;
 import fr.smardine.matroussedemaquillage.mdl.MlListeNote;
 import fr.smardine.matroussedemaquillage.note.noteListAdapter.ViewHolder;
 import fr.smardine.matroussedemaquillage.param.tab_param;
 import fr.smardine.matroussedemaquillage.recherche.Recherche;
 import fr.smardine.matroussedemaquillage.remplir.SuperActivity;
 import fr.smardine.matroussedemaquillage.variableglobale.ActivityParam;
+import fr.smardine.matroussedemaquillage.variableglobale.EnTheme;
 
 /**
  * @author smardine
  */
 public class note_page1 extends SuperActivity implements OnItemClickListener,
-		OnClickListener, OnItemLongClickListener {
+		OnClickListener, OnItemLongClickListener, INoteActivity {
 
 	// ArrayList<produitNote> produitNote = new ArrayList<produitNote>();
 	ImageView BtAddNote, BtSupprTtteNote;
@@ -60,17 +62,9 @@ public class note_page1 extends SuperActivity implements OnItemClickListener,
 		super.onCreate(savedInstanceState);
 		// ExceptionHandler.register(this,
 		// "http://simon.mardine.free.fr/trousse_maquillage/test/server.php","ma_ptite_trousse");
-		// ChoisiLeTheme();
+		ChoisiLeTheme();
 
-		NoteListView = (ListView) this.findViewById(R.id.produitListViewNote);
-		BtAddNote = (ImageView) this.findViewById(R.id.IvAddNote);
-		BtSupprTtteNote = (ImageView) findViewById(R.id.IvJeterNote);
-
-		NoteListView.setOnItemClickListener(this);
-		NoteListView.setOnItemLongClickListener(this);
-
-		BtAddNote.setOnClickListener(this);
-		BtSupprTtteNote.setOnClickListener(this);
+		initComposantVisuel();
 
 		// objBd = new BDAcces(this);
 		this.setTitle("Notes");
@@ -79,50 +73,6 @@ public class note_page1 extends SuperActivity implements OnItemClickListener,
 		AfficheLeContenu("Tout", NoteListView);
 
 	}
-
-	/**
-	 * 
-	 */
-	// private void ChoisiLeTheme() {
-	//
-	// AccesTableParams accesParam = new AccesTableParams(this);
-	// switch (accesParam.getThemeChoisi()) {
-	// case Bisounours:
-	// setContentView(R.layout.theme_bisounours_note_page1);
-	//
-	// break;
-	// case Classique:
-	// accesParam.majTheme(EnTheme.Fleur);
-	// ChoisiLeTheme();
-	// break;
-	// case Fleur:
-	// setContentView(R.layout.theme_fleur_note_page1);
-	// break;
-	// }
-	// objBd = new BDAcces(this);
-	// //objBd.open();
-	// String[] champ = { "AfficheAlerte", "DureeViePeremp", "Theme" };
-	// @SuppressWarnings("rawtypes")
-	// ArrayList[] Param = objBd.renvoi_param(champ);
-	//
-	// String nomThemeChoisi = Param[2].get(0).toString().trim();
-	// if (EnTheme.Bisounours.getLib().equals(nomThemeChoisi)) {
-	// setContentView(R.layout.theme_bisounours_note_page1);
-	//
-	// }
-	// if (EnTheme.Classique.getLib().equals(nomThemeChoisi)) {
-	// // setContentView(R.layout.note_page1);
-	// AccesTableParams accesParam = new AccesTableParams(this);
-	// accesParam.majTheme(EnTheme.Fleur);
-	// ChoisiLeTheme();
-	//
-	// }
-	// if (EnTheme.Fleur.getLib().equals(nomThemeChoisi)) {
-	// setContentView(R.layout.theme_fleur_note_page1);
-	// }
-
-	// objBd.close();
-	// }
 
 	private void onCreateMenu(Menu menu) {
 		SubMenu recherche = menu.addSubMenu(1, 2000, 1, "Recherche");
@@ -176,7 +126,7 @@ public class note_page1 extends SuperActivity implements OnItemClickListener,
 				break;
 
 			case 2003:
-				AlertDialog.Builder adHelp = new AlertDialog.Builder(this);
+				adHelp = new AlertDialog.Builder(this);
 				adHelp.setTitle("Aide");
 				adHelp.setIcon(R.drawable.ad_question);
 				adHelp.setMessage("En cliquant sur une des notes vous afficherez le détail de celle ci.\n"
@@ -198,11 +148,11 @@ public class note_page1 extends SuperActivity implements OnItemClickListener,
 	// finish();
 	// }
 
-	private void AfficheLeContenu(String TypeRecherche, ListView produitListView) {
+	private void AfficheLeContenu(String p_typeRecherche,
+			ListView p_produitListView) {
 		MlListeNote lstNote = null;
-		// objBd.open();
 
-		if (TypeRecherche.equals("Tout")) {
+		if (p_typeRecherche.equals("Tout")) {
 			AccesTableNotes accesNote = new AccesTableNotes(
 					getApplicationContext());
 			lstNote = accesNote.getListeNote();
@@ -220,30 +170,6 @@ public class note_page1 extends SuperActivity implements OnItemClickListener,
 				BtSupprTtteNote.setVisibility(VISIBLE);
 			}
 
-			// String[] Colonnes = { "id_note", "Titre" };
-			//
-			// ArrayList[] ListeProduits = objBd.renvoi_liste_Note(Colonnes,
-			// "id_note", "", "", null);
-			// int nbdobjet = ListeProduits[0].size();
-			// if (nbdobjet != 0) {
-			// for (int j = 0; j < nbdobjet; j++) {
-			// String IdProduit = ListeProduits[0].get(j).toString();
-			// String NomProduits = ListeProduits[1].get(j).toString();
-			// produitNote2.add(new produitNote(IdProduit, NomProduits));
-			// }
-			// BtSupprTtteNote.setVisibility(VISIBLE);
-			// } else {
-			// AlertDialog.Builder adAlertNoNotes = new AlertDialog.Builder(
-			// this);
-			// adAlertNoNotes.setTitle("Pour Information");
-			// adAlertNoNotes
-			// .setMessage("Aucune note n'est encore enregistrée");
-			// adAlertNoNotes.setIcon(R.drawable.ad_attention);
-			// adAlertNoNotes.setNegativeButton("Ok", null);
-			// adAlertNoNotes.show();
-			// BtSupprTtteNote.setVisibility(INVISIBLE);
-			//
-			// }
 		}
 		// objBd.close();
 
@@ -259,72 +185,14 @@ public class note_page1 extends SuperActivity implements OnItemClickListener,
 		set.addAnimation(animation);
 		LayoutAnimationController controller = new LayoutAnimationController(
 				set, 0.5f);
-		produitListView.setLayoutAnimation(controller);
+		p_produitListView.setLayoutAnimation(controller);
 
 		// paramètrer l'adapteur correspondant
 		adpt = new noteListAdapter(this, lstNote);
 		// paramèter l'adapter sur la listview
-		produitListView.setAdapter(adpt);
+		p_produitListView.setAdapter(adpt);
 
 	}
-
-	// @Override
-	// protected void onRestart() {
-	// super.onRestart();
-	// // popUp("onRestart()-Page1");
-	// }
-	//
-	// /**
-	// * Exécuté lorsque l'activité devient visible à l'utilisateur. La fonction
-	// * onStart() est suivie de la fonction onResume().
-	// */
-	// @Override
-	// protected void onStart() {
-	// super.onStart();
-	// // popUp("onStart()-Page1");
-	// }
-	//
-	// /**
-	// * Exécutée a chaque passage en premier plan de l'activité. Ou bien, si
-	// * l'activité passe à nouveau en premier (si une autre activité était
-	// passé
-	// * en premier plan entre temps). La fonction onResume() est suivie de
-	// * l'exécution de l'activité.
-	// */
-	// @Override
-	// protected void onResume() {
-	// super.onResume();
-	//
-	// }
-	//
-	// /**
-	// * La fonction onStop() est exécutée : - lorsque l'activité n'est plus en
-	// * premier plan - ou bien lorsque l'activité va être détruite Cette
-	// fonction
-	// * est suivie : - de la fonction onRestart() si l'activité passe à nouveau
-	// * en premier plan - de la fonction onDestroy() lorsque l'activité se
-	// * termine ou bien lorsque le système décide de l'arrêter
-	// */
-	// @Override
-	// protected void onStop() {
-	// super.onStop();
-	// // popUp("onStop-Page1");
-	// }
-	//
-	// /**
-	// * La fonction onPause() est suivie : - d'un onResume() si l'activité
-	// passe
-	// * à nouveau en premier plan - d'un onStop() si elle devient invisible à
-	// * l'utilisateur L'exécution de la fonction onPause() doit être rapide,
-	// car
-	// * la prochaine activité ne démarrera pas tant que l'exécution de la
-	// * fonction onPause() n'est pas terminée.
-	// */
-	// @Override
-	// protected void onPause() {
-	// super.onPause();
-	//
-	// }
 
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -345,25 +213,16 @@ public class note_page1 extends SuperActivity implements OnItemClickListener,
 		return super.onKeyDown(keyCode, event);
 	}
 
-	// /**
-	// *
-	// */
-	// public void OnDestroy() {
-	// // popUp("OnDestroy-Page1");
-	// super.onDestroy();
-	//
-	// }
-
 	@Override
-	public void onItemClick(AdapterView<?> Parent, View view, int position,
-			long id) {
+	public void onItemClick(AdapterView<?> p_Parent, View p_view, int p_position,
+			long p_id) {
 		// TODO Auto-generated method stub
 		// int Itemposition = Parent.getSelectedItemPosition();
 
 		// int ChildCount = Parent.getChildCount();
 		// View view1 = Parent.getChildAt(position);
 
-		ViewHolder holder = (ViewHolder) view.getTag();
+		ViewHolder holder = (ViewHolder) p_view.getTag();
 
 		Txt01 = (String) holder.TvIdNote.getText();
 		Txt02 = (String) holder.TvTitreNote.getText();
@@ -509,6 +368,38 @@ public class note_page1 extends SuperActivity implements OnItemClickListener,
 		// produitNote.removeAll(produitNote);
 		AfficheLeContenu("Tout", NoteListView);
 		// objBd.close();
+	}
+
+	@Override
+	public void initComposantVisuel() {
+		NoteListView = (ListView) this.findViewById(R.id.produitListViewNote);
+		BtAddNote = (ImageView) this.findViewById(R.id.IvAddNote);
+		BtSupprTtteNote = (ImageView) findViewById(R.id.IvJeterNote);
+
+		NoteListView.setOnItemClickListener(this);
+		NoteListView.setOnItemLongClickListener(this);
+
+		BtAddNote.setOnClickListener(this);
+		BtSupprTtteNote.setOnClickListener(this);
+
+	}
+
+	@Override
+	public void ChoisiLeTheme() {
+		AccesTableParams accesParam = new AccesTableParams(this);
+		switch (accesParam.getThemeChoisi()) {
+			case Bisounours:
+				setContentView(R.layout.theme_bisounours_note_page1);
+				break;
+			case Classique:
+				accesParam.majTheme(EnTheme.Fleur);
+				ChoisiLeTheme();
+				break;
+			case Fleur:
+				setContentView(R.layout.theme_fleur_note_page1);
+				break;
+		}
+
 	}
 
 }

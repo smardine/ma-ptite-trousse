@@ -82,7 +82,9 @@ public class MlProduit implements Serializable {
 		this.datePeremMilli = Long.parseLong(defProduit.get(8));
 		this.isPerime = Boolean.getBoolean(defProduit.get(9));
 		this.isPresquePerime = Boolean.getBoolean(defProduit.get(10));
-		this.nbJourAvantPeremp = Integer.parseInt(defProduit.get(11));
+		if (defProduit.get(11) != null) {
+			this.nbJourAvantPeremp = Integer.parseInt(defProduit.get(11));
+		}
 
 	}
 

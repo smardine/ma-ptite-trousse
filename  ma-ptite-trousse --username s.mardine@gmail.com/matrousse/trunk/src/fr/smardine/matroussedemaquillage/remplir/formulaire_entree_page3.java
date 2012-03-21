@@ -343,8 +343,9 @@ public class formulaire_entree_page3 extends SuperActivity implements
 
 	private void insereProduitDansTableEtPrposeLaSuite() {
 
-		AccesTableTrousseProduits accesTrousseProduit = new AccesTableTrousseProduits(
-				this);
+		// AccesTableTrousseProduits accesTrousseProduit = new
+		// AccesTableTrousseProduits(
+		// this);
 		// MlListeTrousseProduit lstProduitCoche = accesTrousseProduit
 		// .getListeProduitCochee();
 
@@ -473,9 +474,11 @@ public class formulaire_entree_page3 extends SuperActivity implements
 	public MlProduit recupereMlProduitfromPreviousActivity() {
 		byte[] extra = getIntent().getByteArrayExtra(
 				MlProduit.class.getCanonicalName());
-		Object o = SerialisableHelper.deserializeObject(extra);
-		if (o instanceof MlProduit) {
-			produit = (MlProduit) o;
+		if (extra != null) {
+			Object o = SerialisableHelper.deserializeObject(extra);
+			if (o instanceof MlProduit) {
+				produit = (MlProduit) o;
+			}
 		}
 
 		return produit;

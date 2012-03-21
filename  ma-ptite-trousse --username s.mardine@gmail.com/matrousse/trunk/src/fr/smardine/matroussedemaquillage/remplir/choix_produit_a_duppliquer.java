@@ -1,5 +1,7 @@
 package fr.smardine.matroussedemaquillage.remplir;
 
+import helper.SerialisableHelper;
+
 import java.util.ArrayList;
 
 import android.app.AlertDialog;
@@ -42,7 +44,7 @@ import fr.smardine.matroussedemaquillage.variableglobale.EnTheme;
  * @author smardine
  */
 public class choix_produit_a_duppliquer extends SuperActivity implements
-		OnItemClickListener {
+		OnItemClickListener, IremplissageActivity {
 
 	ArrayList<produitRecherche> produitDupplique = new ArrayList<produitRecherche>();
 	ArrayList<produitRecherche> produitDuppliqueTitre = new ArrayList<produitRecherche>();
@@ -59,6 +61,7 @@ public class choix_produit_a_duppliquer extends SuperActivity implements
 	String nomProduitRecup = "";
 	String SousCat = "";
 	int VISIBLE = 1, INVISIBLE = 4, GONE = 8;
+	private MlProduit produit;
 
 	/** Called when the activity is first created. */
 
@@ -69,12 +72,7 @@ public class choix_produit_a_duppliquer extends SuperActivity implements
 		// "http://simon.mardine.free.fr/trousse_maquillage/test/server.php","ma_ptite_trousse");
 		ChoisiLeTheme();
 
-		ProduitListView1 = (ListView) this
-				.findViewById(R.id.produitListViewDupplic);
-		ProduitListViewTitre = (ListView) this
-				.findViewById(R.id.produitListViewDupplicTitre);
-
-		ProduitListView1.setOnItemClickListener(this);
+		initComposantVisuel();
 
 		// objBd = new BDAcces(this);
 		this.setTitle("Choix du produit à duppliquer");
@@ -84,51 +82,6 @@ public class choix_produit_a_duppliquer extends SuperActivity implements
 		AfficheLeContenu("Tout", produitDupplique, ProduitListView1);
 
 	}
-
-	/**
-	 * 
-	 */
-	private void ChoisiLeTheme() {
-
-		AccesTableParams accesParam = new AccesTableParams(this);
-		switch (accesParam.getThemeChoisi()) {
-			case Bisounours:
-				setContentView(R.layout.theme_bisounours_affiche_liste_produit_a_duppliquer);
-				break;
-			case Classique:
-				accesParam.majTheme(EnTheme.Fleur);
-				ChoisiLeTheme();
-				break;
-			case Fleur:
-				setContentView(R.layout.theme_fleur_affiche_liste_produit_a_duppliquer);
-				break;
-		}
-	}
-
-	// objBd = new BDAcces(this);
-	// //objBd.open();
-	// String[] champ = { "AfficheAlerte", "DureeViePeremp", "Theme" };
-	// @SuppressWarnings("rawtypes")
-	// ArrayList[] Param = objBd.renvoi_param(champ);
-	//
-	// String nomThemeChoisi = Param[2].get(0).toString().trim();
-	// if (EnTheme.Bisounours.getLib().equals(nomThemeChoisi)) {
-	// setContentView(R.layout.theme_bisounours_affiche_liste_produit_a_duppliquer);
-	//
-	// }
-	// if (EnTheme.Classique.getLib().equals(nomThemeChoisi)) {
-	// // setContentView(R.layout.affiche_liste_produit_a_duppliquer);
-	// AccesTableParams accesParams = new AccesTableParams(this);
-	// accesParams.majTheme(EnTheme.Fleur);
-	// ChoisiLeTheme();
-	//
-	// }
-	// if (EnTheme.Fleur.getLib().equals(nomThemeChoisi)) {
-	// setContentView(R.layout.theme_fleur_affiche_liste_produit_a_duppliquer);
-	// }
-
-	// objBd.close();
-	// }
 
 	private void onCreateMenu(Menu menu) {
 		SubMenu recherche = menu.addSubMenu(1, 2000, 1, "Recherche");
@@ -231,26 +184,8 @@ public class choix_produit_a_duppliquer extends SuperActivity implements
 						"" + p.getIdProduit(), p.getCategorie().getCategorie()
 								.name(), p.getNomProduit(), p.getMarque()));
 			}
-			// String[] Colonnes = { "id_produits", "nom_produit", "nom_marque",
-			// "nom_souscatergorie" };
-			//
-			// ArrayList[] ListeProduits = objBd.renvoi_liste_TrousseFinal(
-			// Colonnes, "id_produits", "", "", null);
-			// int nbdobjet = ListeProduits[0].size();
-			// if (nbdobjet != 0) {
-			// for (int j = 0; j < nbdobjet; j++) {
-			// String IdProduit = ListeProduits[0].get(j).toString();
-			// String NomProduits = ListeProduits[1].get(j).toString();
-			// String NomMarque = ListeProduits[2].get(j).toString();
-			// String NomSousCat = ListeProduits[3].get(j).toString();
-			// produitDupplique.add(new produitRecherche(IdProduit,
-			// NomMarque, NomProduits, NomSousCat));
-			// }
-			// } else {
-			//
-			// }
+
 		}
-		// objBd.close();
 
 		// animation d'affichage cascade du haut vers le bas
 		AnimationSet set = new AnimationSet(true);
@@ -272,29 +207,6 @@ public class choix_produit_a_duppliquer extends SuperActivity implements
 		produitListView.setAdapter(adpt);
 
 	}
-
-	/**
-	 * @param message
-	 */
-	// public void popUp(String message) {
-	// // Toast.makeText(this, message, 1).show();
-	// }
-
-	// @Override
-	// protected void onRestart() {
-	// super.onRestart();
-	// // popUp("onRestart()-Page1");
-	// }
-	//
-	// /**
-	// * Exécuté lorsque l'activité devient visible à l'utilisateur. La fonction
-	// * onStart() est suivie de la fonction onResume().
-	// */
-	// @Override
-	// protected void onStart() {
-	// super.onStart();
-	// // popUp("onStart()-Page1");
-	// }
 
 	/**
 	 * Exécutée a chaque passage en premier plan de l'activité. Ou bien, si
@@ -453,29 +365,8 @@ public class choix_produit_a_duppliquer extends SuperActivity implements
 	}
 
 	protected void gotoDuppliqueEtLanceFormPage3(int p_idProduit) {
-		// TODO Auto-generated method stub
-		// objBd.open();
-		// IdProduit=getIntent().getStringExtra("IDProduit").trim();
-		// String[] Colonnes = { "nom_produit", "nom_souscatergorie",
-		// "nom_categorie", "numero_Teinte", "Duree_Vie",
-		// "Date_Peremption", "DateAchat", "nom_marque" };
-		//
-		// ArrayList[] trousse_final = objBd.renvoi_liste_TrousseFinalComplete(
-		// Colonnes, IdProduit);
-		// nomProduitRecup = trousse_final[0].toString().replace("[", "")
-		// .replace("]", "");
-		// SousCat = trousse_final[1].toString().replace("[", "").replace("]",
-		// "");
-		// numTeinte = trousse_final[3].toString().replace("[", "")
-		// .replace("]", "");
-		// DureeVie = trousse_final[4].toString().replace("[", "")
-		// .replace("]", "");
-		// DateChoisie = trousse_final[6].toString().replace("[", "")
-		// .replace("]", "");
-		// MarqueChoisie = trousse_final[7].toString().replace("[", "")
-		// .replace("]", "");
 
-		MlProduit p = new MlProduit(p_idProduit, getApplicationContext());
+		produit = new MlProduit(p_idProduit, getApplicationContext());
 
 		// objBd.close();
 
@@ -483,7 +374,7 @@ public class choix_produit_a_duppliquer extends SuperActivity implements
 		// categorie afin que cescase soient cochée lors de l'affichage de
 		// la page1 du formulaire
 		AccesTableTrousseMarque accesMarque = new AccesTableTrousseMarque(this);
-		accesMarque.majMarqueChoisi(p.getMarque(), true);
+		accesMarque.majMarqueChoisi(produit.getMarque(), true);
 		// String Table = "trousse_marques";
 		// ContentValues modifiedValues = new ContentValues();
 		// modifiedValues.put("ischecked", "true");
@@ -497,7 +388,8 @@ public class choix_produit_a_duppliquer extends SuperActivity implements
 		// //objBd.close();
 		AccesTableTrousseProduits accesTrousse = new AccesTableTrousseProduits(
 				this);
-		accesTrousse.majSouscatChoisie(p.getCategorie().getSousCategorie());
+		accesTrousse.majSouscatChoisie(produit.getCategorie()
+				.getSousCategorie());
 		// String Table1 = "trousse_produits";
 		// ContentValues modifiedValues1 = new ContentValues();
 		// modifiedValues1.put("ischecked", "true");
@@ -513,21 +405,68 @@ public class choix_produit_a_duppliquer extends SuperActivity implements
 		//
 		Intent intentPage3Dupplique = new Intent(this,
 				formulaire_entree_page3.class);
+
+		transfereMlProduitToActivity(intentPage3Dupplique);
 		// on demarre la nouvelle activité
-		intentPage3Dupplique.putExtra(ActivityParam.Marque, p.getMarque());
-		intentPage3Dupplique.putExtra(ActivityParam.DurreeDeVie,
-				p.getDureeVie());
-		intentPage3Dupplique
-				.putExtra(ActivityParam.DateAchat, p.getDateAchat());
-		intentPage3Dupplique.putExtra(ActivityParam.NumeroDeTeinte,
-				p.getTeinte());
-		intentPage3Dupplique.putExtra(ActivityParam.NomProduit,
-				p.getNomProduit());
+		// intentPage3Dupplique.putExtra(ActivityParam.Marque, p.getMarque());
+		// intentPage3Dupplique.putExtra(ActivityParam.DurreeDeVie,
+		// p.getDureeVie());
+		// intentPage3Dupplique
+		// .putExtra(ActivityParam.DateAchat, p.getDateAchat());
+		// intentPage3Dupplique.putExtra(ActivityParam.NumeroDeTeinte,
+		// p.getTeinte());
+		// intentPage3Dupplique.putExtra(ActivityParam.NomProduit,
+		// p.getNomProduit());
 
 		intentPage3Dupplique.putExtra(ActivityParam.LaunchFromDuppliquer, true);
 
 		startActivity(intentPage3Dupplique);
 		termineActivity();
+
+	}
+
+	@Override
+	public MlProduit recupereMlProduitfromPreviousActivity() {
+		return null;
+	}
+
+	@Override
+	public void transfereMlProduitToActivity(Intent p_intent) {
+		if (produit == null) {
+			produit = new MlProduit();
+		}
+
+		p_intent.putExtra(MlProduit.class.getCanonicalName(),
+				SerialisableHelper.serialize(produit));
+
+	}
+
+	@Override
+	public void initComposantVisuel() {
+		ProduitListView1 = (ListView) this
+				.findViewById(R.id.produitListViewDupplic);
+		ProduitListViewTitre = (ListView) this
+				.findViewById(R.id.produitListViewDupplicTitre);
+
+		ProduitListView1.setOnItemClickListener(this);
+
+	}
+
+	@Override
+	public void ChoisiLeTheme() {
+		AccesTableParams accesParam = new AccesTableParams(this);
+		switch (accesParam.getThemeChoisi()) {
+			case Bisounours:
+				setContentView(R.layout.theme_bisounours_affiche_liste_produit_a_duppliquer);
+				break;
+			case Classique:
+				accesParam.majTheme(EnTheme.Fleur);
+				ChoisiLeTheme();
+				break;
+			case Fleur:
+				setContentView(R.layout.theme_fleur_affiche_liste_produit_a_duppliquer);
+				break;
+		}
 
 	}
 
