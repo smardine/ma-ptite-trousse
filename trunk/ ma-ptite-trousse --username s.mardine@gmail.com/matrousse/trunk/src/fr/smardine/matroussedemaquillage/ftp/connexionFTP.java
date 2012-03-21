@@ -3,6 +3,8 @@ package fr.smardine.matroussedemaquillage.ftp;
 import java.io.IOException;
 import java.util.Locale;
 
+import android.util.Log;
+
 import com.enterprisedt.net.ftp.FTPConnectMode;
 import com.enterprisedt.net.ftp.FTPException;
 import com.enterprisedt.net.ftp.FTPTransferType;
@@ -14,6 +16,7 @@ import com.enterprisedt.net.ftp.WriteMode;
  */
 public class connexionFTP {
 	FileTransferClient ftp;
+	final String TAG = this.getClass().getCanonicalName();
 
 	/**
 	 * @param host
@@ -40,14 +43,10 @@ public class connexionFTP {
 		try {
 			ftp.connect();
 		} catch (FTPException e) {
-			// TODO Auto-generated catch block
-			// e.printStackTrace();
-			System.out.println("FTP exeption : " + e);
+			Log.e(TAG, "FTP exeption : " + e);
 			return false;
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			// e.printStackTrace();
-			System.out.println("IO exeption : " + e);
+			Log.e(TAG, "IO exeption : " + e);
 			return false;
 		}
 		return true;
@@ -61,14 +60,10 @@ public class connexionFTP {
 		try {
 			ftp.disconnect();
 		} catch (FTPException e) {
-			// TODO Auto-generated catch block
-			// e.printStackTrace();
-			System.out.println("deconnexion FTP exeption : " + e);
+			Log.e(TAG, "Deconnexion FTP exeption : " + e);
 			return false;
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			// e.printStackTrace();
-			System.out.println("deconnexion IO exeption : " + e);
+			Log.e(TAG, "Deconnexion IO exeption : " + e);
 			return false;
 		}
 		return true;
@@ -163,14 +158,14 @@ public class connexionFTP {
 	}
 
 	/**
-	 * @param DirName
+	 * @param p_DirName
 	 * @return tab de sous dossiers
 	 */
-	public String[] getParticularDirectory(String DirName) {
+	public String[] getParticularDirectory(String p_DirName) {
 
 		String[] descriptions = null;
 		try {
-			descriptions = ftp.directoryNameList(DirName, true);
+			descriptions = ftp.directoryNameList(p_DirName, true);
 		} catch (FTPException e) {
 			// TODO Auto-generated catch block
 			// e.printStackTrace();
@@ -223,10 +218,10 @@ public class connexionFTP {
 	}
 
 	/**
-	 * @param TargetDirectory
+	 * @param p_targetDirectory
 	 * @return true ou false
 	 */
-	public boolean ChangeDirectory(String TargetDirectory) {
+	public boolean ChangeDirectory(String p_targetDirectory) {
 		// on attrape la "directory actuelle"
 		String directory = null;
 		try {
@@ -244,7 +239,7 @@ public class connexionFTP {
 		}
 		// on change la "directory"
 		try {
-			ftp.changeDirectory(TargetDirectory);
+			ftp.changeDirectory(p_targetDirectory);
 		} catch (FTPException e) {
 			// TODO Auto-generated catch block
 			// e.printStackTrace();
@@ -270,11 +265,8 @@ public class connexionFTP {
 			System.out.println("ChangeDirectory IO exeption : " + e);
 			return false;
 		}
-		if (directory.equals(TargetDirectory)) {
-			return true;
-		} else {
-			return false;
-		}
+
+		return directory.equals(p_targetDirectory);
 
 	}
 
@@ -300,13 +292,13 @@ public class connexionFTP {
 	}
 
 	/**
-	 * @param LocalFilePath
-	 * @param RemoteFilePath
+	 * @param p_localFilePath
+	 * @param p_remoteFilePath
 	 * @return true ou false
 	 */
-	public boolean UploadFile(String LocalFilePath, String RemoteFilePath) {
+	public boolean UploadFile(String p_localFilePath, String p_remoteFilePath) {
 		try {
-			ftp.uploadFile(LocalFilePath, RemoteFilePath);
+			ftp.uploadFile(p_localFilePath, p_remoteFilePath);
 		} catch (FTPException e) {
 			// TODO Auto-generated catch block
 			// e.printStackTrace();
@@ -323,13 +315,13 @@ public class connexionFTP {
 	}
 
 	/**
-	 * @param LocalFilePath
-	 * @param RemoteFilePath
+	 * @param p_localFilePath
+	 * @param p_remoteFilePath
 	 * @return true ou false
 	 */
-	public boolean UploadWithAppend(String LocalFilePath, String RemoteFilePath) {
+	public boolean UploadWithAppend(String p_localFilePath, String p_remoteFilePath) {
 		try {
-			ftp.uploadFile(LocalFilePath, RemoteFilePath, WriteMode.APPEND);
+			ftp.uploadFile(p_localFilePath, p_remoteFilePath, WriteMode.APPEND);
 		} catch (FTPException e) {
 			// TODO Auto-generated catch block
 			// e.printStackTrace();

@@ -289,10 +289,13 @@ public class formulaire_entree_page1bis extends SuperActivity implements
 		byte[] extra = getIntent().getByteArrayExtra(
 				MlProduit.class.getCanonicalName());
 		Object o = SerialisableHelper.deserializeObject(extra);
-		if (o instanceof MlProduit) {
-			produit = (MlProduit) o;
-			textViewMarque.setText(produit.getMarque());
+		if (extra != null) {
+			if (o instanceof MlProduit) {
+				produit = (MlProduit) o;
+				textViewMarque.setText(produit.getMarque());
+			}
 		}
+
 		return produit;
 	}
 
