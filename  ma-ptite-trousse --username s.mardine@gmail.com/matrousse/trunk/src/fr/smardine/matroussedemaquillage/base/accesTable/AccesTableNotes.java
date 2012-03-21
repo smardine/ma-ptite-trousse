@@ -29,17 +29,14 @@ public class AccesTableNotes {
 	}
 
 	/**
-	 * @param p_idNote
-	 * @param p_titre
-	 * @param p_message
+	 * @param p_note
 	 */
-	public void majTitreEtMessage(String p_idNote, String p_titre,
-			String p_message) {
+	public void majTitreEtMessage(MlNote p_note) {
 		ContentValues modifiedValues = new ContentValues();
-		modifiedValues.put("Titre", p_titre);
-		modifiedValues.put("Message", p_message);
+		modifiedValues.put("Titre", p_note.getTitre());
+		modifiedValues.put("Message", p_note.getMessage());
 		String whereClause = "id_note=?";
-		String[] whereArgs = { p_idNote };
+		String[] whereArgs = { "" + p_note.getIdNote() };
 		requeteFact.majTable(EnTable.NOTES, modifiedValues, whereClause,
 				whereArgs);
 	}

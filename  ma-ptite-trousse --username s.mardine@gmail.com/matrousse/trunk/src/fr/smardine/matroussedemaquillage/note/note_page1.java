@@ -1,5 +1,6 @@
 package fr.smardine.matroussedemaquillage.note;
 
+import helper.SerialisableHelper;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -28,6 +29,7 @@ import fr.smardine.matroussedemaquillage.R;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableNotes;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableParams;
 import fr.smardine.matroussedemaquillage.mdl.MlListeNote;
+import fr.smardine.matroussedemaquillage.mdl.MlNote;
 import fr.smardine.matroussedemaquillage.note.noteListAdapter.ViewHolder;
 import fr.smardine.matroussedemaquillage.param.tab_param;
 import fr.smardine.matroussedemaquillage.recherche.Recherche;
@@ -45,15 +47,16 @@ public class note_page1 extends SuperActivity implements OnItemClickListener,
 	ImageView BtAddNote, BtSupprTtteNote;
 	ListView NoteListView;
 	AlertDialog.Builder adTitre, adSupprNote, adHelp;
-	Intent intentSaisieNote;
+	// Intent intentSaisieNote;
 	noteListAdapter adpt;
 	// private BDAcces objBd;
 	// AlertDialog.Builder adPlusieurCat,adAucuneCat;
 	String Txt01, Txt02;
-	String Id = "";
-	String Titre = "";
+	// String Id = "";
+	// String Titre = "";
 
 	int VISIBLE = 1, INVISIBLE = 4, GONE = 8;
+	private MlNote note;
 
 	/** Called when the activity is first created. */
 
@@ -214,8 +217,8 @@ public class note_page1 extends SuperActivity implements OnItemClickListener,
 	}
 
 	@Override
-	public void onItemClick(AdapterView<?> p_Parent, View p_view, int p_position,
-			long p_id) {
+	public void onItemClick(AdapterView<?> p_Parent, View p_view,
+			int p_position, long p_id) {
 		// TODO Auto-generated method stub
 		// int Itemposition = Parent.getSelectedItemPosition();
 
@@ -226,9 +229,10 @@ public class note_page1 extends SuperActivity implements OnItemClickListener,
 
 		Txt01 = (String) holder.TvIdNote.getText();
 		Txt02 = (String) holder.TvTitreNote.getText();
-
-		intentSaisieNote = new Intent(note_page1.this, note_saisie.class);
-		intentSaisieNote.putExtra(ActivityParam.IdNote, Txt01);
+		note = new MlNote(Integer.parseInt(Txt01), this);
+		Intent intentSaisieNote = new Intent(note_page1.this, note_saisie.class);
+		transfereMlNoteToActivity(intentSaisieNote);
+		// intentSaisieNote.putExtra(ActivityParam.IdNote, Txt01);
 		startActivity(intentSaisieNote);
 		termineActivity();
 
@@ -399,6 +403,23 @@ public class note_page1 extends SuperActivity implements OnItemClickListener,
 				setContentView(R.layout.theme_fleur_note_page1);
 				break;
 		}
+
+	}
+
+	@Override
+	public MlNote recupereNoteFromPreviousActivity() {
+
+		return null;
+	}
+
+	@Override
+	public void transfereMlNoteToActivity(Intent p_intent) {
+		if (note == null) {
+			note = new MlNote();
+		}
+
+		p_intent.putExtra(MlNote.class.getCanonicalName(),
+				SerialisableHelper.serialize(note));
 
 	}
 

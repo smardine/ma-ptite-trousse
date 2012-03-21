@@ -1,5 +1,6 @@
 package fr.smardine.matroussedemaquillage.note;
 
+import helper.SerialisableHelper;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -17,23 +18,27 @@ import android.widget.TextView;
 import android.widget.Toast;
 import fr.smardine.matroussedemaquillage.R;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableNotes;
+import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableParams;
 import fr.smardine.matroussedemaquillage.mdl.MlNote;
 import fr.smardine.matroussedemaquillage.param.tab_param;
 import fr.smardine.matroussedemaquillage.recherche.Recherche;
 import fr.smardine.matroussedemaquillage.remplir.SuperActivity;
 import fr.smardine.matroussedemaquillage.variableglobale.ActivityParam;
+import fr.smardine.matroussedemaquillage.variableglobale.EnTheme;
 
 /**
  * @author smardine
  */
-public class note_saisie extends SuperActivity implements OnClickListener {
+public class note_saisie extends SuperActivity implements OnClickListener,
+		INoteActivity {
 
 	// private BDAcces objBd;
-	String IdNote = "", Titre = "", Message = "";
+	// String IdNote = "", Titre = "", Message = "";
 	TextView txtTitre;
 	TextView editMessage;
 	ImageView ChangerTitre, ChangerMessage;
 	AlertDialog.Builder adTitre, adMessage;
+	private MlNote note;
 
 	/** Called when the activity is first created. */
 
@@ -42,24 +47,18 @@ public class note_saisie extends SuperActivity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		// ExceptionHandler.register(this,
 		// "http://simon.mardine.free.fr/trousse_maquillage/test/server.php","ma_ptite_trousse");
-		// ChoisiLeTheme();
+		ChoisiLeTheme();
+		initComposantVisuel();
+		note = recupereNoteFromPreviousActivity();
 
-		txtTitre = (TextView) findViewById(R.id.TvTitreNote);
-		editMessage = (TextView) findViewById(R.id.TvMessageNote);
-		ChangerTitre = (ImageView) findViewById(R.id.IvChangerTitre);
-		ChangerMessage = (ImageView) findViewById(R.id.IvChangerMessage);
+		// IdNote = getIntent().getStringExtra(ActivityParam.IdNote).trim();
 
-		ChangerTitre.setOnClickListener(this);
-		ChangerMessage.setOnClickListener(this);
+		// MlNote n = new MlNote(Integer.parseInt(IdNote), this);
 
-		IdNote = getIntent().getStringExtra(ActivityParam.IdNote).trim();
-
-		MlNote n = new MlNote(Integer.parseInt(IdNote), this);
-
-		Titre = n.getTitre();
-		Message = n.getMessage();
-		txtTitre.setText(Titre);
-		editMessage.setText(Message);
+		// Titre = n.getTitre();
+		// Message = n.getMessage();
+		txtTitre.setText(note.getTitre());
+		editMessage.setText(note.getMessage());
 		// objBd = new BDAcces(this);
 		// // objBd.open();
 		// String[] Colonnes = { "id_note", "Titre", "Message" };
@@ -289,9 +288,10 @@ public class note_saisie extends SuperActivity implements OnClickListener {
 			case 2001:
 				Toast.makeText(this, "Paramètres", 1000).show();
 				intentParametres = new Intent(this, tab_param.class);
+				transfereMlNoteToActivity(intentParametres);
 				intentParametres.putExtra(ActivityParam.LaunchFromNoteSaisie,
 						true);
-				intentParametres.putExtra(ActivityParam.IdNote, IdNote);
+				// intentParametres.putExtra(ActivityParam.IdNote, IdNote);
 				// on demarre la nouvelle activité
 				startActivity(intentParametres);
 				termineActivity();
@@ -313,11 +313,11 @@ public class note_saisie extends SuperActivity implements OnClickListener {
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
-			Titre = txtTitre.getText().toString();
-			Message = editMessage.getText().toString();
+			note.setTitre(txtTitre.getText().toString().trim());
+			note.setMessage(editMessage.getText().toString().trim());
 
 			AccesTableNotes accesNote = new AccesTableNotes(this);
-			accesNote.majTitreEtMessage(IdNote, Titre, Message);
+			accesNote.majTitreEtMessage(note);
 			//
 			// ContentValues modifiedValues = new ContentValues();
 			// modifiedValues.put("Titre", Titre);
@@ -343,6 +343,56 @@ public class note_saisie extends SuperActivity implements OnClickListener {
 			termineActivity();
 		}
 		return super.onKeyDown(keyCode, event);
+	}
+
+	@Override
+	public void initComposantVisuel() {
+		txtTitre = (TextView) findViewById(R.id.TvTitreNote);
+		editMessage = (TextView) findViewById(R.id.TvMessageNote);
+		ChangerTitre = (ImageView) findViewById(R.id.IvChangerTitre);
+		ChangerMessage = (ImageView) findViewById(R.id.IvChangerMessage);
+
+		ChangerTitre.setOnClickListener(this);
+		ChangerMessage.setOnClickListener(this);
+
+	}
+
+	@Override
+	public void ChoisiLeTheme() {
+		AccesTableParams accesParam = new AccesTableParams(this);
+		switch (accesParam.getThemeChoisi()) {
+			case Bisounours:
+				setContentView(R.layout.theme_bisounours_note_saisie);
+
+				break;
+			case Classique:
+				accesParam.majTheme(EnTheme.Fleur);
+				ChoisiLeTheme();
+				break;
+			case Fleur:
+				setContentView(R.layout.theme_fleur_note_saisie);
+				break;
+		}
+
+	}
+
+	@Override
+	public void transfereMlNoteToActivity(Intent p_itent) {
+
+	}
+
+	@Override
+	public MlNote recupereNoteFromPreviousActivity() {
+		byte[] extra = getIntent().getByteArrayExtra(
+				MlNote.class.getCanonicalName());
+		Object o = SerialisableHelper.deserializeObject(extra);
+		if (extra != null) {
+			if (o instanceof MlNote) {
+				note = (MlNote) o;
+			}
+		}
+
+		return note;
 	}
 
 	// /**
