@@ -5,7 +5,7 @@
   <groupId>com.myorg</groupId>
   <artifactId>android-project</artifactId>
   <name>android project</name>
-  <version>0.0.1-SNAPSHOT</version>
+ 
   <build>
         <sourceDirectory>src</sourceDirectory>
         <outputDirectory>bin</outputDirectory>
