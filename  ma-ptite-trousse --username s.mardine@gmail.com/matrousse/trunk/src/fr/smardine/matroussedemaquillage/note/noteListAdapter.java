@@ -32,19 +32,16 @@ public class noteListAdapter extends BaseAdapter {
 
 	@Override
 	public int getCount() {
-		// TODO Auto-generated method stub
 		return this.lstNotes.size();
 	}
 
 	@Override
 	public Object getItem(int arg0) {
-		// TODO Auto-generated method stub
 		return this.lstNotes.get(arg0);
 	}
 
 	@Override
 	public long getItemId(int arg0) {
-		// TODO Auto-generated method stub
 		return arg0;
 	}
 
@@ -103,7 +100,5 @@ public class noteListAdapter extends BaseAdapter {
 
 		return convertView;
 	}
-
-	// System.out.println(textDuBouton);
 
 }
