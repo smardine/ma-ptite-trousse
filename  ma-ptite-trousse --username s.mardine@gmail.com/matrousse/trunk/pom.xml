@@ -12,10 +12,18 @@
   <dependencies>
    <dependency>   
     <groupId>deps</groupId>
-    <artifactId>dep1</artifactId>
-    <version>0.1</version>
-    <scope>system</scope>
-    <systemPath>${basedir}/libs/edtftpj.jar</systemPath>
+	    <artifactId>dep1</artifactId>
+	    <version>0.1</version>
+	    <scope>system</scope>
+	    <systemPath>${basedir}/libs/edtftpj.jar</systemPath>
+	 
+	</dependency>
+	<dependency>
+	<groupId>deps</groupId>
+		<artifactId>dep2</artifactId>
+		<version>0.2</version>
+		<scope>system</scope>
+		<systemPath>C:\android\android-sdk-windows\platforms\android-7\android.jar</systemPath>
 	</dependency>
   </dependencies>
   
