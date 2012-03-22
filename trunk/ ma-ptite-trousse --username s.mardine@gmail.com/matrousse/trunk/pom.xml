@@ -10,7 +10,7 @@
   <version>2.3.${HUDSON_SVN_REVISION}</version>
   <build>
         <sourceDirectory>src</sourceDirectory>
-        <outputDirectory>bin/Classes</outputDirectory>
+        <outputDirectory>bin</outputDirectory>
         <plugins>
            <plugin>
               <groupId>org.apache.maven.plugins</groupId>
