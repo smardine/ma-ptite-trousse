@@ -5,7 +5,7 @@
   <groupId>com.myorg</groupId>
   <artifactId>android-project</artifactId>
   <name>android project</name>
-  <version>2.3.${SVN_REVISION}</version>
+  <version>2.3.${HUDSON_SVN_REVISION}</version>
   <build>
         <sourceDirectory>src</sourceDirectory>
         <outputDirectory>bin</outputDirectory>
