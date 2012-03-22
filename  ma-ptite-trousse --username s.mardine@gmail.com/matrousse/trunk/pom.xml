@@ -9,15 +9,6 @@
   <build>
         <sourceDirectory>src</sourceDirectory>
         <outputDirectory>bin</outputDirectory>
-         <pluginManagement>
-		    <plugins>
-			    <plugin>
-			      <groupId>org.codehaus.mojo</groupId>
-			      <artifactId>sonar-maven-plugin</artifactId>
-			      <version>2.0</version>
-			    </plugin>
-		    </plugins>
-		 </pluginManagement>
         <plugins>
            <plugin>
               <groupId>org.apache.maven.plugins</groupId>
@@ -34,6 +25,6 @@
   </build>
   <properties>
   	<sonar.dynamicAnalysis>false</sonar.dynamicAnalysis>
-  	
+  	<libraries>libs/android.jar</libraries>  	
   </properties>
 </project>
