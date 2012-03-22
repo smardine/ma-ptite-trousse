@@ -18,9 +18,10 @@
               <configuration>
                   <source>1.5</source>
                   <target>1.5</target>
-                  <excludes>
+                  <!--  <excludes>
                       <exclude>**/*.*</exclude>
                   </excludes>
+                  -->
               </configuration>
            </plugin>
         </plugins>
