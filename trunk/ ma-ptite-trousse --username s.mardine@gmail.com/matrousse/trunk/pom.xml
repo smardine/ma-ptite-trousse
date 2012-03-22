@@ -8,6 +8,18 @@
   <!-- Dans hudson, dans action a la suite du build, dans la partie sonar, dans propriete additionelles, ajouter
    -DHUDSON_SVN_REVISION=${SVN_REVISION} -->
   <version>2.3.${HUDSON_SVN_REVISION}</version>
+  
+  <dependencies>
+   <dependency>   
+    <groupId>deps</groupId>
+    <artifactId>dep1</artifactId>
+    <version>0.1</version>
+    <scope>system</scope>
+    <systemPath>./libs/edtftpj.jar</systemPath>
+	</dependency>
+  </dependencies>
+  
+  
   <build>
         <sourceDirectory>src</sourceDirectory>
         <outputDirectory>bin</outputDirectory>
@@ -27,7 +39,6 @@
         </plugins>
   </build>
   <properties>
-  	<sonar.dynamicAnalysis>false</sonar.dynamicAnalysis>
-  	<libraries>libs/android.jar</libraries>  	
+  	<sonar.dynamicAnalysis>false</sonar.dynamicAnalysis>  		
   </properties>
 </project>
