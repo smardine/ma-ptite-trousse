@@ -5,6 +5,8 @@
   <groupId>com.myorg</groupId>
   <artifactId>android-project</artifactId>
   <name>android project</name>
+  <!-- Dans hudson, dans action a la suite du build, dans la partie sonar, dans propriete additionelles, ajouter
+   -DHUDSON_SVN_REVISION=${SVN_REVISION} -->
   <version>2.3.${HUDSON_SVN_REVISION}</version>
   <build>
         <sourceDirectory>src</sourceDirectory>
