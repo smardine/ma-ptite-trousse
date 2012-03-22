@@ -25,6 +25,6 @@
   </build>
   <properties>
   	<sonar.dynamicAnalysis>false</sonar.dynamicAnalysis>
-  	<libraries>libs/edtftpj.jar</libraries>
+  	<libraries>libs</libraries>
   </properties>
 </project>
