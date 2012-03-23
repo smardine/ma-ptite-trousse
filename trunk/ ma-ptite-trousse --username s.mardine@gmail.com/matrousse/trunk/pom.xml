@@ -3,7 +3,7 @@
        xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>fr.simscorps</groupId>
-  <artifactId>android-project</artifactId>
+  <artifactId>androidproject</artifactId>
   <name>android project</name>
   <!-- Dans hudson, dans action a la suite du build, dans la partie sonar, dans propriete additionelles, ajouter
    -DHUDSON_SVN_REVISION=${SVN_REVISION} -->
