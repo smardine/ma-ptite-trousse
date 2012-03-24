@@ -46,12 +46,12 @@ public class recherche_produit_perime extends SuperRechercheActivity implements
 	ArrayList<produitRecherche> produitRecherche = new ArrayList<produitRecherche>();
 	ArrayList<produitRecherche> produitRechercheTitre = new ArrayList<produitRecherche>();
 	int VISIBLE = 1, INVISIBLE = 4, GONE = 8;
-	ListView ProduitListView1, ProduitListViewTitre;
+	ListView listViewProduit, listViewTitre;
 	produitRechercheListAdapter adpt;
-	// BDAcces objBd;
+
 	AlertDialog.Builder adAucunProduit;
 	Context ctx = recherche_produit_perime.this;
-	// TextView RechercheTxt1;
+
 	String MarqueChoisie;
 	String DureeVie;
 	String DateChoisie;
@@ -123,9 +123,9 @@ public class recherche_produit_perime extends SuperRechercheActivity implements
 
 	private void initComposantVisuel() {
 		ChoisiLeTheme();
-		ProduitListView1 = (ListView) this
+		listViewProduit = (ListView) this
 				.findViewById(R.id.produitListViewRecherche);
-		ProduitListViewTitre = (ListView) this
+		listViewTitre = (ListView) this
 				.findViewById(R.id.produitListViewRechercheTitre);
 
 		Cat = (ToggleButton) findViewById(R.id.BTcat);
@@ -133,8 +133,8 @@ public class recherche_produit_perime extends SuperRechercheActivity implements
 		Tout = (ToggleButton) findViewById(R.id.BTtout);
 		EtFiltrage = (EditText) findViewById(R.id.EtFiltrage);
 
-		ProduitListView1.setOnItemClickListener(this);
-		ProduitListView1.setOnItemLongClickListener(this);
+		listViewProduit.setOnItemClickListener(this);
+		listViewProduit.setOnItemLongClickListener(this);
 		Cat.setOnClickListener(this);
 		Marque.setOnClickListener(this);
 		Tout.setOnClickListener(this);
@@ -157,7 +157,7 @@ public class recherche_produit_perime extends SuperRechercheActivity implements
 			produitRecherche.removeAll(produitRecherche);
 			produitRechercheTitre.removeAll(produitRechercheTitre);
 			AfficheLeContenu(EnCategorieFiltrage.CATEGORIE,
-					produitRechercheTitre, ProduitListViewTitre, p_txtFiltrage,
+					produitRechercheTitre, listViewProduit, p_txtFiltrage,
 					true);
 			// AfficheLeContenu("CatégorieAvecFiltrage", produitRecherche,
 			// ProduitListView1, );
@@ -167,7 +167,7 @@ public class recherche_produit_perime extends SuperRechercheActivity implements
 			produitRecherche.removeAll(produitRecherche);
 			produitRechercheTitre.removeAll(produitRechercheTitre);
 			AfficheLeContenu(EnCategorieFiltrage.MARQUE, produitRechercheTitre,
-					ProduitListViewTitre, p_txtFiltrage, true);
+					listViewProduit, p_txtFiltrage, true);
 			// AfficheLeContenu("MarqueAvecFiltrage", produitRecherche,
 			// ProduitListView1, );
 
@@ -176,7 +176,7 @@ public class recherche_produit_perime extends SuperRechercheActivity implements
 			produitRecherche.removeAll(produitRecherche);
 			produitRechercheTitre.removeAll(produitRechercheTitre);
 			AfficheLeContenu(EnCategorieFiltrage.TOUT, produitRechercheTitre,
-					ProduitListViewTitre, p_txtFiltrage, true);
+					listViewProduit, p_txtFiltrage, true);
 			// AfficheLeContenu("ToutAvecFiltrage", produitRecherche,
 			// ProduitListView1, p_txtFiltrage);
 

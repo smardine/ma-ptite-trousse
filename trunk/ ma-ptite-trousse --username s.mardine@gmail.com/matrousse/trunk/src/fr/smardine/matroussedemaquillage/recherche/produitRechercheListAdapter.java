@@ -1,6 +1,6 @@
 package fr.smardine.matroussedemaquillage.recherche;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -15,19 +15,20 @@ import fr.smardine.matroussedemaquillage.R;
  */
 public class produitRechercheListAdapter extends BaseAdapter {
 
-	private final ArrayList<produitRecherche> produitRecherche;
+	private final List<fr.smardine.matroussedemaquillage.recherche.produitRecherche> produitRecherche;
 	// créer un layoutinflater pour intégrer la listview dedans
 	private final LayoutInflater myInflaterRecherche;
 
 	/**
 	 * @param context
-	 * @param _produitsRecherche
+	 * @param produitRechercheTitre
 	 */
-	public produitRechercheListAdapter(Context context,
-			ArrayList<produitRecherche> _produitsRecherche) {
+	public produitRechercheListAdapter(
+			Context context,
+			List<fr.smardine.matroussedemaquillage.recherche.produitRecherche> produitRechercheTitre) {
 		// paramètrer le layout en prenant celui du context
 		this.myInflaterRecherche = LayoutInflater.from(context);
-		this.produitRecherche = _produitsRecherche;
+		this.produitRecherche = produitRechercheTitre;
 
 	}
 
