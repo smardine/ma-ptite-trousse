@@ -142,7 +142,7 @@ public class modif_cat extends SuperActivity implements OnClickListener {
 	@Override
 	public void onClick(View v) {
 
-		if (v == BtVisage) {// si le bouton cliqué est le "BoutonVisage"
+		if (v.equals(BtVisage)) {// si le bouton cliqué est le "BoutonVisage"
 			String[] NomProduits = recupereSousCategorie("Visage");
 			int idProdCoche = recupereIndiceSousCategorieCochee("Visage");
 			AlertDialog.Builder adChoixVisage = new AlertDialog.Builder(this);
@@ -197,7 +197,7 @@ public class modif_cat extends SuperActivity implements OnClickListener {
 			adChoixVisage.show();
 
 		}
-		if (v == BtYeux) {
+		if (v.equals(BtYeux)) {
 
 			String[] NomProduits = recupereSousCategorie("Yeux");
 			int idProdCoche = recupereIndiceSousCategorieCochee("Yeux");
@@ -251,7 +251,7 @@ public class modif_cat extends SuperActivity implements OnClickListener {
 			adChoixYeux.show();
 
 		}
-		if (v == BtLevres) {
+		if (v.equals(BtLevres)) {
 			String[] NomProduits = recupereSousCategorie("Levres");
 			int idProdCoche = recupereIndiceSousCategorieCochee("Levres");
 			AlertDialog.Builder adChoixLevre = new AlertDialog.Builder(this);
@@ -292,7 +292,7 @@ public class modif_cat extends SuperActivity implements OnClickListener {
 			adChoixLevre.show();
 
 		}
-		if (v == BtAutres) {
+		if (v.equals(BtAutres)) {
 			String[] NomProduits = recupereSousCategorie("Autres");
 			int idProdCoche = recupereIndiceSousCategorieCochee("Autres");
 			AlertDialog.Builder adChoixAutres = new AlertDialog.Builder(this);

@@ -88,14 +88,10 @@ public class connexionFTP {
 		try {
 			ftp.setContentType(FTPTransferType.ASCII);
 		} catch (FTPException e) {
-			// TODO Auto-generated catch block
-			// e.printStackTrace();
-			System.out.println("ASCIIMODE FTP exeption : " + e);
+			Log.e(TAG, "ASCIIMODE FTP exeption : " + e);
 			return false;
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			// e.printStackTrace();
-			System.out.println("ASCIIMODE IO exeption : " + e);
+			Log.e(TAG, "ASCIIMODE IO exeption : " + e);
 			return false;
 		}
 		return true;
@@ -109,14 +105,10 @@ public class connexionFTP {
 		try {
 			ftp.setContentType(FTPTransferType.BINARY);
 		} catch (FTPException e) {
-			// TODO Auto-generated catch block
-			// e.printStackTrace();
-			System.out.println("BINARYMODE FTP exeption : " + e);
+			Log.e(TAG, "BINARYMODE FTP exeption : " + e);
 			return false;
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			// e.printStackTrace();
-			System.out.println("BINARYMODE IO exeption : " + e);
+			Log.e(TAG, "BINARYMODE IO exeption : " + e);
 			return false;
 		}
 		return true;
@@ -133,8 +125,7 @@ public class connexionFTP {
 				ftp.getAdvancedFTPSettings().setConnectMode(
 						FTPConnectMode.ACTIVE);
 			} catch (FTPException e) {
-				// TODO Auto-generated catch block
-				System.out.println("ActiveOrPassiveMod FTP exeption : " + e);
+				Log.e(TAG, "ActiveOrPassiveMod FTP exeption : " + e);
 				return false;
 			}
 		}
@@ -143,8 +134,7 @@ public class connexionFTP {
 				ftp.getAdvancedFTPSettings()
 						.setConnectMode(FTPConnectMode.PASV);
 			} catch (FTPException e) {
-				// TODO Auto-generated catch block
-				System.out.println("ActiveOrPassiveMod FTP exeption : " + e);
+				Log.e(TAG, "ActiveOrPassiveMod FTP exeption : " + e);
 				return false;
 			}
 		}
@@ -167,13 +157,9 @@ public class connexionFTP {
 		try {
 			descriptions = ftp.directoryNameList(p_DirName, true);
 		} catch (FTPException e) {
-			// TODO Auto-generated catch block
-			// e.printStackTrace();
-			System.out.println("getParticularDirectory FTP exeption : " + e);
+			Log.e(TAG, "getParticularDirectory FTP exeption : " + e);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			// e.printStackTrace();
-			System.out.println("getParticularDirectory IO exeption : " + e);
+			Log.e(TAG, "getParticularDirectory IO exeption : " + e);
 		}
 		return descriptions;
 
@@ -187,13 +173,9 @@ public class connexionFTP {
 		try {
 			directory = ftp.getRemoteDirectory();
 		} catch (FTPException e) {
-			// TODO Auto-generated catch block
-			// e.printStackTrace();
-			System.out.println("getDirectory FTP exeption : " + e);
+			Log.e(TAG, "getDirectory FTP exeption : " + e);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			// e.printStackTrace();
-			System.out.println("getDirectory IO exeption : " + e);
+			Log.e(TAG, "getDirectory IO exeption : " + e);
 		}
 		return directory;
 	}
@@ -206,13 +188,9 @@ public class connexionFTP {
 		try {
 			files = ftp.directoryNameList();
 		} catch (FTPException e) {
-			// TODO Auto-generated catch block
-			// e.printStackTrace();
-			System.out.println("getListDirectory FTP exeption : " + e);
+			Log.e(TAG, "getListDirectory FTP exeption : " + e);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			// e.printStackTrace();
-			System.out.println("getListDirectory IO exeption : " + e);
+			Log.e(TAG, "getListDirectory IO exeption : " + e);
 		}
 		return files;
 	}
@@ -226,43 +204,15 @@ public class connexionFTP {
 		String directory = null;
 		try {
 			directory = ftp.getRemoteDirectory();
-		} catch (FTPException e) {
-			// TODO Auto-generated catch block
-			// e.printStackTrace();
-			System.out.println("ChangeDirectory FTP exeption : " + e);
-			return false;
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			// e.printStackTrace();
-			System.out.println("ChangeDirectory IO exeption : " + e);
-			return false;
-		}
-		// on change la "directory"
-		try {
+			// on change la "directory"
 			ftp.changeDirectory(p_targetDirectory);
-		} catch (FTPException e) {
-			// TODO Auto-generated catch block
-			// e.printStackTrace();
-			System.out.println("ChangeDirectory FTP exeption : " + e);
-			return false;
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			// e.printStackTrace();
-			System.out.println("ChangeDirectory IO exeption : " + e);
-			return false;
-		}
-		// on verifie que la directory a bien changé
-		try {
+			// on verifie que la directory a bien changé
 			directory = ftp.getRemoteDirectory();
 		} catch (FTPException e) {
-			// TODO Auto-generated catch block
-			// e.printStackTrace();
-			System.out.println("ChangeDirectory FTP exeption : " + e);
+			Log.e(TAG, "ChangeDirectory FTP exeption : " + e);
 			return false;
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			// e.printStackTrace();
-			System.out.println("ChangeDirectory IO exeption : " + e);
+			Log.e(TAG, "ChangeDirectory IO exeption : " + e);
 			return false;
 		}
 
@@ -277,14 +227,10 @@ public class connexionFTP {
 		try {
 			ftp.changeToParentDirectory();
 		} catch (FTPException e) {
-			// TODO Auto-generated catch block
-			// e.printStackTrace();
-			System.out.println("ChangeToParentDirectory FTP exeption : " + e);
+			Log.e(TAG, "ChangeToParentDirectory FTP exeption : " + e);
 			return false;
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			// e.printStackTrace();
-			System.out.println("ChangeToParentDirectory IO exeption : " + e);
+			Log.e(TAG, "ChangeToParentDirectory IO exeption : " + e);
 			return false;
 		}
 
@@ -300,14 +246,10 @@ public class connexionFTP {
 		try {
 			ftp.uploadFile(p_localFilePath, p_remoteFilePath);
 		} catch (FTPException e) {
-			// TODO Auto-generated catch block
-			// e.printStackTrace();
-			System.out.println("UploadFile FTP exeption : " + e);
+			Log.e(TAG, "UploadFile FTP exeption : " + e);
 			return false;
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			// e.printStackTrace();
-			System.out.println("UploadFile IO exeption : " + e);
+			Log.e(TAG, "UploadFile IO exeption : " + e);
 			return false;
 		}
 
@@ -319,18 +261,15 @@ public class connexionFTP {
 	 * @param p_remoteFilePath
 	 * @return true ou false
 	 */
-	public boolean UploadWithAppend(String p_localFilePath, String p_remoteFilePath) {
+	public boolean UploadWithAppend(String p_localFilePath,
+			String p_remoteFilePath) {
 		try {
 			ftp.uploadFile(p_localFilePath, p_remoteFilePath, WriteMode.APPEND);
 		} catch (FTPException e) {
-			// TODO Auto-generated catch block
-			// e.printStackTrace();
-			System.out.println("UploadWithAppend FTP exeption : " + e);
+			Log.e(TAG, "UploadWithAppend FTP exeption : " + e);
 			return false;
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			// e.printStackTrace();
-			System.out.println("UploadWithAppend IO exeption : " + e);
+			Log.e(TAG, "UploadWithAppend IO exeption : " + e);
 			return false;
 		}
 
@@ -346,14 +285,10 @@ public class connexionFTP {
 		try {
 			ftp.downloadFile(localFilePath, remoteFileName);
 		} catch (FTPException e) {
-			// TODO Auto-generated catch block
-			// e.printStackTrace();
-			System.out.println("DownloadFile FTP exeption : " + e);
+			Log.e(TAG, "DownloadFile FTP exeption : " + e);
 			return false;
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			// e.printStackTrace();
-			System.out.println("DownloadFile IO exeption : " + e);
+			Log.e(TAG, "DownloadFile IO exeption : " + e);
 			return false;
 		}
 		return true;

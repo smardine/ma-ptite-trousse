@@ -413,7 +413,7 @@ public class Recherche extends SuperRechercheActivity implements
 	@Override
 	public void onClick(View v) {
 
-		if (v == BtFiltrerPar) {
+		if (v.equals(BtFiltrerPar)) {
 			adChoixFiltrage.show();
 		}
 
@@ -429,10 +429,10 @@ public class Recherche extends SuperRechercheActivity implements
 			termineActivity();
 			return true;
 		}
-		if (keyCode == KeyEvent.KEYCODE_SEARCH) {
-			// on ne fait rien, on est deja dans cette activity
-
-		}
+		// if (keyCode == KeyEvent.KEYCODE_SEARCH) {
+		// // on ne fait rien, on est deja dans cette activity
+		//
+		// }
 		return super.onKeyDown(keyCode, event);
 	}
 

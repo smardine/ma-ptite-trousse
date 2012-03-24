@@ -6,10 +6,13 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Vector;
 
+import android.util.Log;
+
 /**
  * @author smardine
  */
 public class WriteFile {
+	private final String TAG = this.getClass().getCanonicalName();
 
 	/**
 	 * 
@@ -32,7 +35,8 @@ public class WriteFile {
 			out.write(contenu);
 			out.close();
 		} catch (IOException e) {
-			System.out.println("erreur " + e);
+			Log.e(TAG, "Erreur à l'écriture du fichier " + e);
+
 		}
 	}
 

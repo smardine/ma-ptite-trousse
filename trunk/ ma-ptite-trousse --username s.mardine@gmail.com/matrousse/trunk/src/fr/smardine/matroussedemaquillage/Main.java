@@ -44,6 +44,7 @@ public class Main extends Activity implements OnClickListener {
 	Context ctx = Main.this;
 	// private CheckBox cb;
 	boolean nouveau = false, dupplique = false;
+	private final String TAG = this.getClass().getCanonicalName();
 
 	/** Called when the activity is first created. */
 	@Override
@@ -71,7 +72,7 @@ public class Main extends Activity implements OnClickListener {
 
 					@Override
 					public void onClick(DialogInterface dialog, int id) {
-						System.out.println("etat de la coche " + cb.isChecked());
+						Log.d(TAG, "etat de la coche " + cb.isChecked());
 						if (cb.isChecked()) {
 							// si la case est cochée par l'utilisateur , on met
 							// a jour la table "param"
@@ -201,7 +202,7 @@ public class Main extends Activity implements OnClickListener {
 	@Override
 	public void onClick(View v) {
 
-		if (v == btRemplir) {
+		if (v.equals(btRemplir)) {
 			// objBd = new BDAcces(ctx);
 			// //objBd.open();
 			AccesTableProduitEnregistre accesProduit = new AccesTableProduitEnregistre(
@@ -268,9 +269,9 @@ public class Main extends Activity implements OnClickListener {
 			}
 
 		}
-		if (v == btDuppliquer) {// on verifie si on a au moins un
-								// enregistrement, si oui, on permet la
-								// dpplication,
+		if (v.equals(btDuppliquer)) {// on verifie si on a au moins un
+			// enregistrement, si oui, on permet la
+			// dpplication,
 			// sinon, on indique a l'utilisateur que la dupplication est
 			// impossible
 			AccesTableProduitEnregistre accesProduit = new AccesTableProduitEnregistre(
@@ -302,14 +303,14 @@ public class Main extends Activity implements OnClickListener {
 			// objBd.close();
 
 		}
-		if (v == btNotes) {
+		if (v.equals(btNotes)) {
 			intentNote = new Intent(Main.this, note_page1.class);
 			intentNote.putExtra(ActivityParam.LaunchFromMain, true);
 			startActivity(intentNote);
 			termineActivity();
 
 		}
-		if (v == btPerime) {
+		if (v.equals(btPerime)) {
 
 			AccesTableProduitEnregistre accesProduit = new AccesTableProduitEnregistre(
 					ctx);
@@ -552,10 +553,11 @@ public class Main extends Activity implements OnClickListener {
 							// l'application
 			popUp("onPause, l'utilisateur à demandé la fermeture via un finish()");
 
-		} else {// sinon, on pert juste le "focus sur l'appli (lors d'un appel
-				// telephonique entrant par exemple)
-
 		}
+		// else {// sinon, on pert juste le "focus sur l'appli (lors d'un appel
+		// // telephonique entrant par exemple)
+		//
+		// }
 	}
 
 	/**

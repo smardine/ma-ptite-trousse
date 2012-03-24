@@ -506,7 +506,7 @@ public class affiche_detail extends SuperActivity implements OnClickListener {
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
-		if (v == BTChangerCat) {
+		if (v.equals(BTChangerCat)) {
 			AccesTableTrousseProduits accesProduit = new AccesTableTrousseProduits(
 					this);
 			accesProduit.majSouscatChoisie(categorie);
@@ -537,10 +537,10 @@ public class affiche_detail extends SuperActivity implements OnClickListener {
 			termineActivity();
 
 		}
-		if (v == BTChangerDateAchat) {
+		if (v.equals(BTChangerDateAchat)) {
 			showDialog(DATE_DIALOG_ID);
 		}
-		if (v == BTChangerDatePermeption) {
+		if (v.equals(BTChangerDatePermeption)) {
 			final EditText inputDurreeVie = new EditText(this);
 			inputDurreeVie.addTextChangedListener(new TextWatcher() {
 				@SuppressWarnings("unused")
@@ -694,7 +694,7 @@ public class affiche_detail extends SuperActivity implements OnClickListener {
 					});
 			adChoixNbMois.show();
 		}
-		if (v == BTChangerMarque) {
+		if (v.equals(BTChangerMarque)) {
 			final AutoCompleteTextView inputMarque = new AutoCompleteTextView(
 					this);
 			adMarque = new AlertDialog.Builder(this);
@@ -739,7 +739,7 @@ public class affiche_detail extends SuperActivity implements OnClickListener {
 					});
 			adMarque.show();
 		}
-		if (v == BTChangerNom) {
+		if (v.equals(BTChangerNom)) {
 			final EditText inputProduit = new EditText(this);
 			adProduit = new AlertDialog.Builder(this);
 			adProduit.setTitle("Choix du produit");
@@ -765,7 +765,7 @@ public class affiche_detail extends SuperActivity implements OnClickListener {
 					});
 			adProduit.show();
 		}
-		if (v == BTChangerTeinte) {
+		if (v.equals(BTChangerTeinte)) {
 			final EditText inputTeinte = new EditText(this);
 			adTeinte = new AlertDialog.Builder(this);
 			adTeinte.setTitle("Choix de la teinte");

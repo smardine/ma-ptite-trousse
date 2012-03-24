@@ -120,7 +120,8 @@ public static void DeleteContenuRepertoireAvecFiltre (File RepAVider,final Strin
             	DeleteContenuRepertoireAvecFiltre( list[i], extension);
             } 
         } else {
-        	System.err.println(RepAVider + " : Erreur de lecture.");
+        	Log.e(TAG, RepAVider + " : Erreur de lecture.");
+        	
         }
         
 		}

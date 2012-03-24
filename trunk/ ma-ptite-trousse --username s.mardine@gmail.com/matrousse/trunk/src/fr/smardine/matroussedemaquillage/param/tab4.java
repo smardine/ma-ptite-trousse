@@ -251,7 +251,7 @@ public class tab4 extends Activity implements OnClickListener {
 
 	@Override
 	public void onClick(View p_v) {
-		if (p_v == videBase) {
+		if (p_v.equals(videBase)) {
 			// objBd = new BDAcces(this);
 			// objBd.open();
 			AccesTableProduitEnregistre accesProd = new AccesTableProduitEnregistre(
@@ -262,7 +262,7 @@ public class tab4 extends Activity implements OnClickListener {
 			// System.out.println(nbLignedeleted + " lignes effacée");
 			// objBd.close();
 		}
-		if (p_v == sauvegardeBase) {
+		if (p_v.equals(sauvegardeBase)) {
 			// objBd = new BDAcces(this);
 			// objBd.close();
 			AccesTableParams accesParam = new AccesTableParams(this);
@@ -309,7 +309,7 @@ public class tab4 extends Activity implements OnClickListener {
 			adSauvegarde.show();
 
 		}
-		if (p_v == importeBase) {
+		if (p_v.equals(importeBase)) {
 
 			// objBd = new BDAcces(this);
 			// objBd.close();

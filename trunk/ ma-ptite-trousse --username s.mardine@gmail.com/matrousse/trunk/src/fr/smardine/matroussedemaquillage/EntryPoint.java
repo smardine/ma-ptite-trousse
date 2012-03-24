@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.Gallery.LayoutParams;
 import android.widget.ImageSwitcher;
@@ -35,6 +36,7 @@ public class EntryPoint extends Activity implements ViewFactory {
 	int total;
 	private boolean isLaunchFromMain = false;
 	long timeToSleep = 500L;
+	private final String TAG = this.getClass().getCanonicalName();
 
 	// BDAcces objBd;
 	Context ctx = null;
@@ -360,7 +362,8 @@ public class EntryPoint extends Activity implements ViewFactory {
 					DatePeremtInMilli, perime, presqueperime);
 
 		} catch (Exception e) {
-			System.out.println("erreur calcul date peremp " + e.getMessage());
+			Log.e(TAG, "erreur calcul date peremp " + e.getMessage());
+
 			return;
 		}
 
@@ -406,7 +409,7 @@ public class EntryPoint extends Activity implements ViewFactory {
 		//
 		// // //objBd.close();
 		// } catch (Exception e) {
-		// System.out.println("message d'erreur " + e);
+		// .println("message d'erreur " + e);
 		// }
 
 	}
@@ -538,98 +541,83 @@ public class EntryPoint extends Activity implements ViewFactory {
 		total = 35;
 		try {
 			Thread.sleep(timeToSleep);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			System.out.println(e);
-		}
-		AccesTableParams accesParam = new AccesTableParams(this);
-		String cheminBase = accesParam.getDatabasePath();
-		File baseDansTel = new File(cheminBase);
-		String PATH = "/sdcard/ma_trousse/";
-		File path = new File(PATH);
-		if (!path.exists()) {
-			path.mkdirs();
-		}
-		total = 45;
-		try {
-			Thread.sleep(timeToSleep);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			System.out.println(e);
-		}
 
-		// si une base appellée "trousse_baseé existe, la supprimer, ca
-		// correspond a l'ancien format de sauvegarde
-
-		File f = new File(PATH + "trousse_base");
-		if (f.exists()) {
-			boolean delete = f.delete();
-			if (!delete) {
-				f.deleteOnExit();
+			AccesTableParams accesParam = new AccesTableParams(this);
+			String cheminBase = accesParam.getDatabasePath();
+			File baseDansTel = new File(cheminBase);
+			String PATH = "/sdcard/ma_trousse/";
+			File path = new File(PATH);
+			if (!path.exists()) {
+				path.mkdirs();
 			}
-		}
-		total = 55;
-		try {
+			total = 45;
+
 			Thread.sleep(timeToSleep);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			System.out.println(e);
-		}
 
-		int mYear;
-		int mMonth;
-		int mDay;
-		final Calendar c = Calendar.getInstance();
-		mYear = c.get(Calendar.YEAR);
-		mMonth = c.get(Calendar.MONTH) + 1;
-		mDay = c.get(Calendar.DAY_OF_MONTH);
+			// si une base appellée "trousse_baseé existe, la supprimer, ca
+			// correspond a l'ancien format de sauvegarde
 
-		String sYear = "" + mYear;
-		String sMonth;
-		if (mMonth < 10) {
-			sMonth = "0" + mMonth;
-		} else {
-			sMonth = "" + mMonth;
-		}
-		String sDay;
-		if (mDay < 10) {
-			sDay = "0" + mDay;
-		} else {
-			sDay = "" + mDay;
-		}
-		total = 65;
-		try {
-			Thread.sleep(timeToSleep);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			System.out.println(e);
-		}
-
-		File fichierSurCarteSD = new File(PATH + "trousse_base" + sYear
-				+ sMonth + sDay);
-
-		result = ManipFichier.copier(baseDansTel, fichierSurCarteSD);
-
-		total = 85;
-		try {
-			Thread.sleep(timeToSleep);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			System.out.println(e);
-		}
-
-		// si la sauvegarde s'est bien passée, on verifie que l'on a pas + de 10
-		// sauvegarde, sinon, on suppr la + ancienne.
-		if (result) {
-			Comptage compte = new Comptage(PATH);
-			int nbFichier = compte.getNbFichier();
-			if (nbFichier > 5) {
-				if (compte.supprFichierPlusAncien(PATH)) {
-					return true;
+			File f = new File(PATH + "trousse_base");
+			if (f.exists()) {
+				boolean delete = f.delete();
+				if (!delete) {
+					f.deleteOnExit();
 				}
 			}
-			return result;
+			total = 55;
 
+			Thread.sleep(timeToSleep);
+
+			int mYear;
+			int mMonth;
+			int mDay;
+			final Calendar c = Calendar.getInstance();
+			mYear = c.get(Calendar.YEAR);
+			mMonth = c.get(Calendar.MONTH) + 1;
+			mDay = c.get(Calendar.DAY_OF_MONTH);
+
+			String sYear = "" + mYear;
+			String sMonth;
+			if (mMonth < 10) {
+				sMonth = "0" + mMonth;
+			} else {
+				sMonth = "" + mMonth;
+			}
+			String sDay;
+			if (mDay < 10) {
+				sDay = "0" + mDay;
+			} else {
+				sDay = "" + mDay;
+			}
+			total = 65;
+
+			Thread.sleep(timeToSleep);
+
+			File fichierSurCarteSD = new File(PATH + "trousse_base" + sYear
+					+ sMonth + sDay);
+
+			result = ManipFichier.copier(baseDansTel, fichierSurCarteSD);
+
+			total = 85;
+
+			Thread.sleep(timeToSleep);
+
+			// si la sauvegarde s'est bien passée, on verifie que l'on a pas +
+			// de 10
+			// sauvegarde, sinon, on suppr la + ancienne.
+			if (result) {
+				Comptage compte = new Comptage(PATH);
+				int nbFichier = compte.getNbFichier();
+				if (nbFichier > 5) {
+					if (compte.supprFichierPlusAncien(PATH)) {
+						return true;
+					}
+				}
+				return result;
+
+			}
+		} catch (InterruptedException e) {
+			Log.e(TAG, "Erreur lors de l'interruption du thread " + e);
 		}
 		return result;
 	}

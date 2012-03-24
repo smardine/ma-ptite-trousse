@@ -277,10 +277,10 @@ public class formulaire_entree_page3 extends SuperActivity implements
 	@Override
 	public void onClick(View v) {
 
-		if (v == BoutonAide) {
+		if (v.equals(BoutonAide)) {
 			adAide.show();
 		}
-		if (v == BoutonValider3) {
+		if (v.equals(BoutonValider3)) {
 			if (checkInfoManquante()) {
 				adManqueInfo.show();
 				return;

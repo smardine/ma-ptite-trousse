@@ -8,7 +8,7 @@
   <!-- Dans hudson, dans action a la suite du build, dans la partie sonar, dans propriete additionelles, ajouter
    -DHUDSON_SVN_REVISION=${SVN_REVISION} -->
   <version>2.3.${HUDSON_SVN_REVISION}</version>
-  
+  <!-- les dependencies servent a rajouter les librairies exterieures au projet -->
   <dependencies>
    <dependency>   
     <groupId>deps</groupId>
