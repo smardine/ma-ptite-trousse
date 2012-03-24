@@ -241,7 +241,7 @@ public class note_page1 extends SuperActivity implements OnItemClickListener,
 	@Override
 	public void onClick(final View v) {
 		// TODO Auto-generated method stub
-		if (v == BtAddNote) {
+		if (v.equals(BtAddNote)) {
 			popUp("Ajouter note");
 
 			final EditText inputProduit = new EditText(this);
@@ -287,7 +287,7 @@ public class note_page1 extends SuperActivity implements OnItemClickListener,
 			adTitre.show();
 
 		}
-		if (v == BtSupprTtteNote) {
+		if (v.equals(BtSupprTtteNote)) {
 			popUp("Supprimer ttes les notes");
 
 			adSupprNote = new AlertDialog.Builder(this);

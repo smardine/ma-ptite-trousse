@@ -203,9 +203,9 @@ public class formulaire_entree_page1bis extends SuperActivity implements
 		// cette methode prend en charge le fait que le controle clicqué soit un
 		// bouton de cateegorie ou pas.
 		traiteBoutonCat(v);
-		if (v == textViewMarque) {
+		if (v.equals(textViewMarque)) {
 			textViewMarque.setFocusable(true);
-		} else if (v == BoutonValider) {
+		} else if (v.equals(BoutonValider)) {
 
 			// on recupere le nom de marque choisi par l'utilisateur
 			if (textViewMarque.getText().toString().equals("")) {
@@ -264,19 +264,19 @@ public class formulaire_entree_page1bis extends SuperActivity implements
 
 	private void traiteBoutonCat(View p_v) {
 		AlertDialog.Builder adChoixCat = null;
-		if (p_v == BtVisage) {// si le bouton cliqué est le "BoutonVisage"
+		if (p_v.equals(BtVisage)) {// si le bouton cliqué est le "BoutonVisage"
 			adChoixCat = af.getChoixCatDialog(EnTypeAlertDialogChoixCat.VISAGE);
 			adChoixCat.show();
 			return;
-		} else if (p_v == BtYeux) {
+		} else if (p_v.equals(BtYeux)) {
 			adChoixCat = af.getChoixCatDialog(EnTypeAlertDialogChoixCat.YEUX);
 			adChoixCat.show();
 			return;
-		} else if (p_v == BtLevres) {
+		} else if (p_v.equals(BtLevres)) {
 			adChoixCat = af.getChoixCatDialog(EnTypeAlertDialogChoixCat.LEVRE);
 			adChoixCat.show();
 			return;
-		} else if (p_v == BtAutres) {
+		} else if (p_v.equals(BtAutres)) {
 			adChoixCat = af.getChoixCatDialog(EnTypeAlertDialogChoixCat.AUTRE);
 			adChoixCat.show();
 			return;
@@ -288,11 +288,12 @@ public class formulaire_entree_page1bis extends SuperActivity implements
 	public MlProduit recupereMlProduitfromPreviousActivity() {
 		byte[] extra = getIntent().getByteArrayExtra(
 				MlProduit.class.getCanonicalName());
-		Object o = SerialisableHelper.deserializeObject(extra);
 		if (extra != null) {
+			Object o = SerialisableHelper.deserializeObject(extra);
 			if (o instanceof MlProduit) {
 				produit = (MlProduit) o;
 				textViewMarque.setText(produit.getMarque());
+
 			}
 		}
 

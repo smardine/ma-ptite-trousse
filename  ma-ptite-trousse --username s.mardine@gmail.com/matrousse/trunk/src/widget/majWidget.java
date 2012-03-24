@@ -11,6 +11,7 @@ import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.widget.RemoteViews;
 import fr.smardine.matroussedemaquillage.R;
 import fr.smardine.matroussedemaquillage.base.BDAcces;
@@ -29,6 +30,7 @@ import fr.smardine.matroussedemaquillage.variableglobale.ValeurParDefaut;
 public class majWidget {
 	BDAcces objBd;
 	private final Context ctx;
+	private final String TAG = this.getClass().getCanonicalName();
 
 	/**
 	 * constructeur, met a jour le widget:
@@ -106,8 +108,8 @@ public class majWidget {
 	}
 
 	private void majBddProduitPerime(Context p_context) {
-		System.out.println("maj bdd produit perime dans maj Widget");
-		// //objBd.open();
+		Log.d(TAG, "maj bdd produit perime dans maj Widget");
+
 		AccesTableProduitEnregistre accesProduits = new AccesTableProduitEnregistre(
 				ctx);
 		int nbDenregistrement = accesProduits.getNbEnregistrement();
@@ -179,7 +181,7 @@ public class majWidget {
 					DatePeremtInMilli, perime, presqueperime);
 
 		} catch (Exception e) {
-			System.out.println("erreur calcul date peremp " + e.getMessage());
+			Log.e(TAG, "erreur calcul date peremp " + e.getMessage());
 			return;
 		}
 

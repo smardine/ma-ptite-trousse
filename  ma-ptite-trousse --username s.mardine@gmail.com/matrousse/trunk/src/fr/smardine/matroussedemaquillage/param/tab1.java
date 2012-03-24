@@ -385,7 +385,7 @@ public class tab1 extends Activity implements OnClickListener,
 
 	@Override
 	public void onClick(View p_v) {
-		if (p_v == BtColorPicker) {
+		if (p_v.equals(BtColorPicker)) {
 			ValeurParDefaut val = new ValeurParDefaut(this);
 			new ColorPickerDialog(this, this, val.getCouleurPastille()).show();
 		}

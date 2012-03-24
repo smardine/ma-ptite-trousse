@@ -46,7 +46,13 @@ public class Comptage {
 
 	/**
 	 * permet de supprimer le fichier le plus ancien present dans "Path" Pour
-	 * cela on se base sur le nom de fichier qui est "trousse_baseAAAAmmJJ"
+	 * cela on se base sur le nom de fichier qui est "trousse_baseAAAAmmJJ" //
+	 * les mois commence à 0 (janvier) et se termine à // 11 (decembre) // les
+	 * années commence à 0(1900), pour avoir l'année // exacte a partir d'une //
+	 * velur contenu dans un string, il faut retrancher // 1900 a la valeur de
+	 * // l'année. // exemple, l'année 2010 est considérée comme // 2010-1900 =
+	 * 110 // Calendar dateFichier = new Calendar(annee - 1900, // mois - 1,
+	 * jour);
 	 * @param p_path String -le nom du sossier sur la carte SD
 	 * @return true si ca a marché.
 	 */
@@ -55,7 +61,6 @@ public class Comptage {
 		Calendar datePlusAncienne = null;
 		if (!directory.exists()) {
 			return false;
-		} else if (directory.isFile()) {
 		} else {
 			if (directory.isDirectory()) {
 				File[] subfiles = directory.listFiles();
@@ -70,17 +75,7 @@ public class Comptage {
 							int annee = Integer.parseInt(date.substring(0, 4));
 							int mois = Integer.parseInt(date.substring(4, 6));
 							int jour = Integer.parseInt(date.substring(6));
-							// les mois commence à 0 (janvier) et se termine à
-							// 11 (decembre)
-							// les années commence à 0(1900), pour avoir l'année
-							// exacte a partir d'une
-							// velur contenu dans un string, il faut retrancher
-							// 1900 a la valeur de
-							// l'année.
-							// exemple, l'année 2010 est considérée comme
-							// 2010-1900 = 110
-							// Calendar dateFichier = new Calendar(annee - 1900,
-							// mois - 1, jour);
+
 							Calendar dateFichier = Calendar.getInstance();
 							dateFichier.set(annee, mois, jour);
 
@@ -91,7 +86,7 @@ public class Comptage {
 								datePlusAncienne = dateFichier;
 							}
 						}
-						// supprFichierPlusAncien(subfiles[i].toString());
+
 					}
 				}
 
@@ -122,7 +117,6 @@ public class Comptage {
 			}
 			return !f.exists();
 		}
-		return false;
 
 	}
 

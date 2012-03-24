@@ -475,7 +475,7 @@ public class recherche_produit_perime extends SuperRechercheActivity implements
 	@Override
 	public void onClick(View v) {
 
-		if (v == Cat) {
+		if (v.equals(Cat)) {
 			Cat.setChecked(true);
 			Marque.setChecked(false);
 			Tout.setChecked(false);
@@ -489,7 +489,7 @@ public class recherche_produit_perime extends SuperRechercheActivity implements
 			// AfficheLeContenu("Catégorie", produitRecherche, ProduitListView1,
 			// null);
 		}
-		if (v == Marque) {
+		if (v.equals(Marque)) {
 			Cat.setChecked(false);
 			Marque.setChecked(true);
 			Tout.setChecked(false);
@@ -503,7 +503,7 @@ public class recherche_produit_perime extends SuperRechercheActivity implements
 			// AfficheLeContenu("Marque", produitRecherche, ProduitListView1,
 			// null);
 		}
-		if (v == Tout) {
+		if (v.equals(Tout)) {
 			Cat.setChecked(false);
 			Marque.setChecked(false);
 			Tout.setChecked(true);

@@ -132,7 +132,7 @@ public class note_saisie extends SuperActivity implements OnClickListener,
 	@Override
 	public void onClick(View v) {
 
-		if (v == ChangerTitre) {
+		if (v.equals(ChangerTitre)) {
 			final EditText inputTeinte = new EditText(this);
 			adTitre = new AlertDialog.Builder(this);
 			adTitre.setTitle("Modification du titre");
@@ -158,7 +158,7 @@ public class note_saisie extends SuperActivity implements OnClickListener,
 					});
 			adTitre.show();
 		}
-		if (v == ChangerMessage) {
+		if (v.equals(ChangerMessage)) {
 			final EditText inputTeinte = new EditText(this);
 			adMessage = new AlertDialog.Builder(this);
 			adMessage.setTitle("Modification du message");

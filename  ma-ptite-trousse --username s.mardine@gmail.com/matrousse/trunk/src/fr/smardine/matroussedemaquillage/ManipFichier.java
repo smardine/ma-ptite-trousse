@@ -3,10 +3,14 @@ package fr.smardine.matroussedemaquillage;
 import java.io.File;
 import java.io.FilenameFilter;
 
+import android.util.Log;
+
 /**
  * @author smardine
  */
 public class ManipFichier {
+
+	private final static String TAG = ManipFichier.class.getCanonicalName();
 
 	/**
 	 * Deplace un fichier
@@ -111,7 +115,8 @@ public class ManipFichier {
 					DeleteContenuRepertoireAvecFiltre(list[i], extension);
 				}
 			} else {
-				System.err.println(RepAVider + " : Erreur de lecture.");
+				Log.e(TAG, RepAVider + " : Erreur de lecture.");
+
 			}
 
 		}
