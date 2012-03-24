@@ -12,7 +12,7 @@ import android.util.Log;
 
 public class ManipFichier {
 	
-	private final String TAG = this.getClass().getCanonicalName();
+	private final static String TAG = ManipFichier.class.getCanonicalName();
 	
 	 /**
      * Deplace un fichier 
