@@ -12,6 +12,8 @@ import android.util.Log;
 
 public class ManipFichier {
 	
+	private final String TAG = this.getClass().getCanonicalName();
+	
 	 /**
      * Deplace un fichier 
      * @param source -File le fichier source
