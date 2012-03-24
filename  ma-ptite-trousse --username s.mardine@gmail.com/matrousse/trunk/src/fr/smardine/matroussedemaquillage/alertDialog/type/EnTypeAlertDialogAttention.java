@@ -19,7 +19,11 @@ public enum EnTypeAlertDialogAttention {
 			"Vous n'avez rentré aucune marque \nMerci d'en saisir une", "Ok",
 			null), //
 	MANQUE_INFO("Attention",
-			"Vous avez oublié de rentrer certaines informations.", "Ok", null);
+			"Vous avez oublié de rentrer certaines informations.", "Ok", null), //
+	AUCUN_PRODUIT_ENREGISTRE(
+			"Pour information",
+			"Aucun produit n'est actuellement enregistré dans Ma p'tite trousse",
+			"Ok", null);
 
 	private String titre;
 	private String message;

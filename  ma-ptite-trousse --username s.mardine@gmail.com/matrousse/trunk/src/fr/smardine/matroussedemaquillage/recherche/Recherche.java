@@ -1,8 +1,7 @@
 package fr.smardine.matroussedemaquillage.recherche;
 
-import helper.DateHelper;
-
 import java.util.ArrayList;
+import java.util.List;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -18,11 +17,6 @@ import android.view.MenuItem;
 import android.view.SubMenu;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
-import android.view.animation.AnimationSet;
-import android.view.animation.LayoutAnimationController;
-import android.view.animation.TranslateAnimation;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
@@ -32,10 +26,11 @@ import android.widget.ListView;
 import android.widget.Toast;
 import fr.smardine.matroussedemaquillage.Main;
 import fr.smardine.matroussedemaquillage.R;
+import fr.smardine.matroussedemaquillage.alertDialog.AlertDialogFactory;
+import fr.smardine.matroussedemaquillage.alertDialog.type.EnTypeAlertDialogAttention;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableNotes;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableParams;
 import fr.smardine.matroussedemaquillage.base.accesTable.AccesTableProduitEnregistre;
-import fr.smardine.matroussedemaquillage.mdl.MlListeProduits;
 import fr.smardine.matroussedemaquillage.mdl.MlProduit;
 import fr.smardine.matroussedemaquillage.note.note_page1;
 import fr.smardine.matroussedemaquillage.param.tab_param;
@@ -52,15 +47,15 @@ public class Recherche extends SuperRechercheActivity implements
 	// ToggleButton Cat, Marque, Tout;
 	EditText EtFiltrage;
 	Button BtFiltrerPar;
-	ArrayList<produitRecherche> produitRecherche = new ArrayList<produitRecherche>();
-	ArrayList<produitRecherche> produitRechercheTitre = new ArrayList<produitRecherche>();
+	List<produitRecherche> produitRecherche = new ArrayList<produitRecherche>();
+	List<produitRecherche> produitRechercheTitre = new ArrayList<produitRecherche>();
 	int VISIBLE = 1, INVISIBLE = 4, GONE = 8;
-	ListView ProduitListView1, ProduitListViewTitre;
+	ListView listViewProduit, listViewTitre;
 	produitRechercheListAdapter adpt;
-	// BDAcces objBd;
+
 	AlertDialog.Builder adAucunProduit, adChoixFiltrage;
 	Context ctx = Recherche.this;
-	// TextView RechercheTxt1;
+
 	String MarqueChoisie;
 	String DureeVie;
 	String DateChoisie;
@@ -86,6 +81,15 @@ public class Recherche extends SuperRechercheActivity implements
 		// objBd = new BDAcces(this);
 
 		ChoisiLeTheme();
+
+		listViewProduit = (ListView) this
+				.findViewById(R.id.produitListViewRecherche);
+		listViewTitre = (ListView) this
+				.findViewById(R.id.produitListViewRechercheTitre);
+
+		listViewProduit.setOnItemClickListener(this);
+		listViewProduit.setOnItemLongClickListener(this);
+
 		BtFiltrerPar = (Button) findViewById(R.id.BtFiltrerPar);
 		BtFiltrerPar.setOnClickListener(this);
 		// Cat = (ToggleButton) findViewById(R.id.BTcat);
@@ -115,20 +119,9 @@ public class Recherche extends SuperRechercheActivity implements
 
 			}
 		});
-
-		ProduitListView1 = (ListView) this
-				.findViewById(R.id.produitListViewRecherche);
-		ProduitListViewTitre = (ListView) this
-				.findViewById(R.id.produitListViewRechercheTitre);
-
-		ProduitListView1.setOnItemClickListener(this);
-		ProduitListView1.setOnItemLongClickListener(this);
-
-		adAucunProduit = new AlertDialog.Builder(this);
-		adAucunProduit.setTitle("Pour information");
-		adAucunProduit
-				.setMessage("Aucun produit n'est actuellement enregistré dans Ma p'tite trousse");
-		adAucunProduit.setPositiveButton("Ok", null);
+		AlertDialogFactory dialFact = new AlertDialogFactory(ctx);
+		adAucunProduit = dialFact
+				.getAttentionDialog(EnTypeAlertDialogAttention.AUCUN_PRODUIT_ENREGISTRE);
 
 		adChoixFiltrage = new AlertDialog.Builder(this);
 		adChoixFiltrage
@@ -190,7 +183,7 @@ public class Recherche extends SuperRechercheActivity implements
 		produitRecherche.removeAll(produitRecherche);
 		produitRechercheTitre.removeAll(produitRechercheTitre);
 		AfficheLeContenu(p_filtrageChoisi, produitRechercheTitre,
-				ProduitListViewTitre, p_txtFiltrage, false);
+				listViewProduit, p_txtFiltrage, false);
 
 	}
 
@@ -268,23 +261,14 @@ public class Recherche extends SuperRechercheActivity implements
 		return super.onOptionsItemSelected(item);
 	}
 
-	/**
-	 * 
-	 */
-	// @Override
-	// private void termineActivity() {
-	// finish();
-	// }
-
-	@SuppressWarnings("unused")
 	@Override
 	public void onItemClick(AdapterView<?> Parent, View view, int position,
 			long id) {
 
-		int Itemposition = Parent.getSelectedItemPosition();
-
-		int ChildCount = Parent.getChildCount();
-		View view1 = Parent.getChildAt(position);
+		// int Itemposition = Parent.getSelectedItemPosition();
+		//
+		// int ChildCount = Parent.getChildCount();
+		// View view1 = Parent.getChildAt(position);
 
 		ViewHolder holder = (ViewHolder) view.getTag();
 
@@ -434,57 +418,6 @@ public class Recherche extends SuperRechercheActivity implements
 		//
 		// }
 		return super.onKeyDown(keyCode, event);
-	}
-
-	@Override
-	public void AfficheLeContenu(EnCategorieFiltrage p_TypeRecherche,
-			ArrayList<produitRecherche> produitFinal, ListView produitListView,
-			String p_Filtrage, boolean rechPerime) {
-
-		AccesTableProduitEnregistre accesProduit = new AccesTableProduitEnregistre(
-				this);
-		if (rechPerime) {
-			produitFinal.add(new produitRecherche("-1", "Date Peremp.",
-					"Produit", "Marque"));
-			MlListeProduits lstProduit = accesProduit
-					.getListeProduitPerimeFiltree(p_TypeRecherche, p_Filtrage);
-			for (MlProduit p : lstProduit) {
-				produitFinal.add(new produitRecherche("" + p.getIdProduit(),
-						DateHelper.getDateforDatabase(p.getDatePeremption()), p
-								.getNomProduit(), p.getMarque()));
-			}
-		} else {
-			produitFinal.add(new produitRecherche("-1", "Catégorie", "Produit",
-					"Marque"));
-			MlListeProduits lstProduit = accesProduit.getListeProduitFiltree(
-					p_TypeRecherche, p_Filtrage);
-			for (MlProduit p : lstProduit) {
-				produitFinal.add(new produitRecherche("" + p.getIdProduit(), p
-						.getCategorie().getCategorie().name(), p
-						.getNomProduit(), p.getMarque()));
-			}
-		}
-
-		// animation d'affichage cascade du haut vers le bas
-		AnimationSet set = new AnimationSet(true);
-		Animation animation = new AlphaAnimation(0.0f, 1.0f);
-		animation.setDuration(100);
-		set.addAnimation(animation);
-		animation = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0.0f,
-				Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF,
-				-1.0f, Animation.RELATIVE_TO_SELF, 0.0f);
-		animation.setDuration(100);
-		set.addAnimation(animation);
-		LayoutAnimationController controller = new LayoutAnimationController(
-				set, 0.5f);
-		produitListView.setLayoutAnimation(controller);
-
-		// paramètrer l'adapteur correspondant
-		produitRechercheListAdapter adpt = new produitRechercheListAdapter(
-				this, produitFinal);
-		// paramèter l'adapter sur la listview
-		produitListView.setAdapter(adpt);
-
 	}
 
 }

@@ -2,7 +2,7 @@ package fr.smardine.matroussedemaquillage.recherche;
 
 import helper.DateHelper;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import android.app.Activity;
 import android.view.animation.AlphaAnimation;
@@ -23,30 +23,32 @@ public class SuperRechercheActivity extends Activity {
 	}
 
 	public void AfficheLeContenu(EnCategorieFiltrage p_TypeRecherche,
-			ArrayList<produitRecherche> produitFinal, ListView produitListView,
-			String p_Filtrage, boolean rechPerime) {
+			List<produitRecherche> produitRechercheTitre,
+			ListView produitListView, String p_Filtrage, boolean rechPerime) {
 
 		AccesTableProduitEnregistre accesProduit = new AccesTableProduitEnregistre(
 				this);
 		if (rechPerime) {
-			produitFinal.add(new produitRecherche("-1", "Date Peremp.",
-					"Produit", "Marque"));
+			produitRechercheTitre.add(new produitRecherche("-1",
+					"Date Peremp.", "Produit", "Marque"));
 			MlListeProduits lstProduit = accesProduit
 					.getListeProduitPerimeFiltree(p_TypeRecherche, p_Filtrage);
 			for (MlProduit p : lstProduit) {
-				produitFinal.add(new produitRecherche("" + p.getIdProduit(),
-						DateHelper.getDateforDatabase(p.getDatePeremption()), p
-								.getNomProduit(), p.getMarque()));
+				produitRechercheTitre
+						.add(new produitRecherche("" + p.getIdProduit(),
+								DateHelper.getDateforDatabase(p
+										.getDatePeremption()), p
+										.getNomProduit(), p.getMarque()));
 			}
 		} else {
-			produitFinal.add(new produitRecherche("-1", "Catégorie", "Produit",
-					"Marque"));
+			produitRechercheTitre.add(new produitRecherche("-1", "Catégorie",
+					"Produit", "Marque"));
 			MlListeProduits lstProduit = accesProduit.getListeProduitFiltree(
 					p_TypeRecherche, p_Filtrage);
 			for (MlProduit p : lstProduit) {
-				produitFinal.add(new produitRecherche("" + p.getIdProduit(), p
-						.getCategorie().getCategorie().name(), p
-						.getNomProduit(), p.getMarque()));
+				produitRechercheTitre.add(new produitRecherche(""
+						+ p.getIdProduit(), p.getCategorie().getCategorie()
+						.name(), p.getNomProduit(), p.getMarque()));
 			}
 		}
 
@@ -66,7 +68,7 @@ public class SuperRechercheActivity extends Activity {
 
 		// paramètrer l'adapteur correspondant
 		produitRechercheListAdapter adpt = new produitRechercheListAdapter(
-				this, produitFinal);
+				this, produitRechercheTitre);
 		// paramèter l'adapter sur la listview
 		produitListView.setAdapter(adpt);
 
