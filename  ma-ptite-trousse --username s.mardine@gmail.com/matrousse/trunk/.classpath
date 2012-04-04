@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry excluding="fr/smardine/matroussedemaquillage/crashreport/DefaultExceptionHandler.java|fr/smardine/matroussedemaquillage/crashreport/ExceptionHandler.java|fr/smardine/matroussedemaquillage/crashreport/G.java|fr/smardine/matroussedemaquillage/crashreport/ManipFichier.java|fr/smardine/matroussedemaquillage/ReadFile.java|fr/smardine/matroussedemaquillage/param/parametres.java|fr/smardine/matroussedemaquillage/param/ImageSwitcher1.java|fr/smardine/matroussedemaquillage/remplir/produit.java|fr/smardine/matroussedemaquillage/remplir/produitListAdapter.java|fr/smardine/matroussedemaquillage/remplir/formulaire_entree_page2.java|fr/smardine/matroussedemaquillage/remplir/formulaire_entree_page1.java|fr/smardine/matroussedemaquillage/remplir/formulaire_entree_recap.java|widget/CountdownConfiguration.java|fr/smardine/matroussedemaquillage/base/accesTable/AccesTableTrousseTempo.java" kind="src" path="src"/>
+	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="gen"/>
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
 	<classpathentry kind="lib" path="libs/edtftpj.jar"/>
-	<classpathentry kind="output" path="bin"/>
+	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
+	<classpathentry kind="output" path="bin/classes"/>
 </classpath>
