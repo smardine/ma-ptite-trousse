@@ -3,7 +3,7 @@
 <project basedir="." default="sonar" name="Android Project">
 	<!-- Proprietées globales du scripts ant  -->
 	
-	<property name="classes.dir" value="../bin"/>
+	<property name="classes.dir" value="../bin/classes"/>
 	<property name="src.dir" value="../src"/>
 	<property name="jars.dir" value="../libs"/>
 	<property name="antask.dir" value="${basedir}/etc"/>
