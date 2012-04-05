@@ -83,7 +83,7 @@
  
       <!-- path to libraries (optional). These libraries are for example used by the Java Findbugs plugin -->
       <libraries>
-      	<path location="../libs/edtftpj.jar,C:\android\android-sdk-windows\platforms\android-7\android.jar" />  
+      	<path location="../libs/edtftpj.jar" />  
       	 
       </libraries>
     </sonar:sonar>

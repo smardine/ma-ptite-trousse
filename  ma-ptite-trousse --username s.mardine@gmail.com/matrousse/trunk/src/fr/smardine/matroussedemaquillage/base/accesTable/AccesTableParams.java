@@ -60,12 +60,11 @@ public class AccesTableParams {
 	/**
 	 * Mettre a jour le theme de l'appli
 	 * @param p_theme
-	 * @return true ou false
 	 */
-	public boolean majTheme(EnTheme p_theme) {
+	public void majTheme(EnTheme p_theme) {
 		ContentValues values = new ContentValues();
 		values.put("Theme", p_theme.getLib());
-		return (requeteFact.majTable(EnTable.PARAM, values, "", null) > 0);
+		requeteFact.majTable(EnTable.PARAM, values, "", null);
 
 	}
 
