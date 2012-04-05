@@ -1,0 +1,52 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>fr.simscorps</groupId>
+  <artifactId>androidproject</artifactId>
+  <name>android project</name>
+  <!-- Dans hudson, dans action a la suite du build, dans la partie sonar, dans propriete additionelles, ajouter
+   -DHUDSON_SVN_REVISION=${SVN_REVISION} -->
+  <version>2.3.${HUDSON_SVN_REVISION}</version>
+  <!-- les dependencies servent a rajouter les librairies exterieures au projet -->
+  <dependencies>
+   <dependency>   
+    <groupId>deps</groupId>
+	    <artifactId>dep1</artifactId>
+	    <version>0.1</version>
+	    <scope>system</scope>
+	    <systemPath>${basedir}/libs/edtftpj.jar</systemPath>
+	 
+	</dependency>
+	<dependency>
+	<groupId>deps</groupId>
+		<artifactId>dep2</artifactId>
+		<version>0.2</version>
+		<scope>system</scope>
+		<systemPath>C:\android\android-sdk-windows\platforms\android-7\android.jar</systemPath>
+	</dependency>
+  </dependencies>
+  
+  
+  <build>
+        <sourceDirectory>src</sourceDirectory>
+        <outputDirectory>bin</outputDirectory>
+        <plugins>
+           <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-compiler-plugin</artifactId>
+              <configuration>
+                  <source>1.5</source>
+                  <target>1.5</target>
+                   <excludes>
+                      <exclude>**/*.*</exclude>
+                  </excludes>
+                 
+              </configuration>
+           </plugin>
+        </plugins>
+  </build>
+  <properties>
+  	<sonar.dynamicAnalysis>false</sonar.dynamicAnalysis>  		
+  </properties>
+</project>

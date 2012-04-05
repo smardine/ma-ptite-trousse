@@ -1,0 +1,138 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<project name="macrodefs">
+	<!--
+	=======================================================================
+	   Constantes d'utilisation de subversion
+	=======================================================================
+	<property name="svn" value="${svn.home}\svn.exe"/>
+	-->
+
+    <condition property="svn" value="${svn.home}\svn.exe" else="svn.exe">
+	   <isset property="svn.home"/>
+    </condition>
+
+	<!--
+	=======================================================================
+	   Macro d'appel de subversion
+	   Paramètres	   :
+		dir : répertoire ou poser le fichier de ressources.
+		function: fonction à appeler
+		svn-elements : arguments optionnels.
+	  note : cette macro utilise toujour l'utilisateur MICROCONECPT et interdit
+	         le mode interactif.
+	=======================================================================
+	-->
+	<macrodef name="call-svn">
+		<attribute name="function"/>
+		<attribute name="dir"/>
+		<element name="svn-elements" implicit="yes" optional="true"/>
+		<sequential>
+			<exec executable="${svn}" dir="@{dir}" failonerror="true">
+     			<arg value="--non-interactive"/>
+     			<arg value="--no-auth-cache"/>				
+				<arg line="--username MICROCONCEPT"/>
+				<arg line="--password 2450"/>				
+				<arg value="@{function}"/>
+				<svn-elements/>
+			</exec>		
+		</sequential>
+	</macrodef>
+
+	<!-- RENVOYER dans type le nº de build du dernier COMMIT réalisé sur chemin -->
+	<macrodef name="get-svnrev">
+		<attribute name="type"/>
+		<attribute name="chemin"/>
+		<sequential>
+			<!-- Exécuter "svn - -xml info" pour obtenir les details  -->
+			<exec executable="${svn}" dir="@{chemin}" failonerror="true" output=".svnInfo1.xml">
+	   			<arg value="--non-interactive"/>
+	   			<arg value="--no-auth-cache"/>				
+				<arg line="--username MICROCONCEPT"/>
+				<arg line="--password 2450"/>				
+	   			<arg value="--xml"/>				
+				<arg value="info"/>
+			</exec>
+
+			<!-- extraire le numéro de version  du fichier XML -->
+			<xmlproperty file=".svnInfo1.xml"/>
+			<property name="@{type}" value="${info.entry.commit(revision)}"/>
+			<delete file=".svnInfo1.xml" />
+		</sequential>
+	</macrodef>
+	
+	
+	<!--
+	=======================================================================
+	   Tache de lecture du numéro de révision de la copie de travail.
+	   propriétés :
+	      basedir répertoire de la copie de travail
+	  retour
+	    svn.revision= version de la copie de travail.
+	=======================================================================
+	-->
+	<target name="svnrevision"  description="Extraire le numéro de la copie de travail" >
+		<!-- Exécuter "svn - -xml info" pour obtenir les details  -->
+		<exec executable="${svn}" dir="${basedir}" failonerror="true" output=".svnInfo.xml">
+   			<arg value="--non-interactive"/>
+   			<arg value="--no-auth-cache"/>				
+			<arg line="--username MICROCONCEPT"/>
+			<arg line="--password 2450"/>				
+			
+   			<arg value="--xml"/>				
+			<arg value="info"/>
+		</exec>
+
+		<!-- extraire le numéro de version  du fichier XML -->
+		<xmlproperty file=".svnInfo.xml"/>
+		<property name="svn.revision" value="${info.entry.commit(revision)}" />
+		<echo message="Version de la copie de travail:${svn.revision}"/>
+		<delete file=".svnInfo.xml" />
+	</target>
+
+
+	<!--
+	=======================================================================
+	   Tache de modification de AndroidManifest.xml
+	=======================================================================
+	-->
+    <target name="manifest-versioncode" description="modifier android.versionCode dans le manifest">
+              
+   		<property name="ver.code" value="${version.code}"/>
+		<echo message="manifest.andoid.versionCode : ${ver.code}"/>
+		<replaceregexp file="AndroidManifest.xml"
+				match='android:versionCode="(.*)"'
+				replace='android:versionCode="${ver.code}"'
+				byline="false">		
+		</replaceregexp>
+    	
+	</target>
+	
+	
+	<!--
+	=======================================================================
+	   Tache de modification de AndroidManifest.xml
+	   propriétés en entrée:
+	      svn.revision= version de la copie de travail.
+	=======================================================================
+	-->
+    <target name="manifest-versionname" depends="svnrevision" description="modifier android.versionName dans le manifest">
+        <property name="version.build" value="${svn.revision}"/>
+              
+        <condition property="version.build" value="0">
+           <not>
+               <isset property="version.build"/>
+           </not>
+	    </condition>
+
+   		<property name="ver.name" value="${version.major}.${version.minor}.${svn.revision}"/>
+		<echo message="manifest.andoid.versionName : ${ver.name}"/>
+		<replaceregexp file="AndroidManifest.xml"
+				match='android:versionName="(.*)"'
+				replace='android:versionName="${ver.name}"'
+				byline="false">		
+		</replaceregexp>
+    	
+	</target>
+
+
+</project>
