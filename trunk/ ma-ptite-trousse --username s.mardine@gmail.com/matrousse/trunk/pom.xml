@@ -30,7 +30,7 @@
   
   <build>
         <sourceDirectory>src</sourceDirectory>
-        <outputDirectory>bin</outputDirectory>
+        <outputDirectory>bin/classes</outputDirectory>
         <plugins>
            <plugin>
               <groupId>org.apache.maven.plugins</groupId>
