@@ -1,10 +1,14 @@
 package fr.smardine.matroussedemaquillage.param;
 
+import helper.SerialisableHelper;
 import widget.majWidget;
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.KeyEvent;
 import fr.smardine.matroussedemaquillage.Main;
+import fr.smardine.matroussedemaquillage.mdl.MlNote;
+import fr.smardine.matroussedemaquillage.mdl.MlProduit;
 import fr.smardine.matroussedemaquillage.note.note_page1;
 import fr.smardine.matroussedemaquillage.note.note_saisie;
 import fr.smardine.matroussedemaquillage.recherche.Recherche;
@@ -16,6 +20,16 @@ import fr.smardine.matroussedemaquillage.remplir.formulaire_entree_page3;
 import fr.smardine.matroussedemaquillage.variableglobale.ActivityParam;
 
 public class SuperParamActivity extends Activity {
+
+	private MlProduit produit;
+	private MlNote note;
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		recupereMlProduitfromPreviousActivity();
+		recupereMlNoteFromPreviousActivity();
+	}
 
 	/**
 	 * Exécuté lorsque l'activité devient visible à l'utilisateur. La fonction
@@ -103,16 +117,18 @@ public class SuperParamActivity extends Activity {
 
 			}
 			if (isLaunchByNoteSaisie) {
-				String idNote = getIntent()
-						.getStringExtra(ActivityParam.IdNote);
+				// String idNote = getIntent()
+				// .getStringExtra(ActivityParam.IdNote);
 				intent = new Intent(this, note_saisie.class);
-				intent.putExtra(ActivityParam.IdNote, idNote);
+				transfereMlNoteToActivity(intent);
+				// intent.putExtra(ActivityParam.IdNote, idNote);
 			}
 			if (isLaunchByAfficheDetail) {
-				String idProduit = getIntent().getStringExtra(
-						ActivityParam.IdProduit);
+				// String idProduit = getIntent().getStringExtra(
+				// ActivityParam.IdProduit);
 				intent = new Intent(this, affiche_detail.class);
-				intent.putExtra(ActivityParam.IdProduit, idProduit);
+				transfereMlProduitToActivity(intent);
+				// intent.putExtra(ActivityParam.IdProduit, idProduit);
 				intent.putExtra(
 						ActivityParam.LaunchFromRecherche,
 						getIntent().getBooleanExtra(
@@ -133,45 +149,49 @@ public class SuperParamActivity extends Activity {
 				intent = new Intent(this, choix_produit_a_duppliquer.class);
 			}
 			if (isLaunchByPage1) {
-				String MarqueChoisie = getIntent().getStringExtra(
-						ActivityParam.Marque);
-				String DureeVie = getIntent().getStringExtra(
-						ActivityParam.DurreeDeVie);
-				String DateChoisie = getIntent().getStringExtra(
-						ActivityParam.DateAchat);
-				String numTeinte = getIntent().getStringExtra(
-						ActivityParam.NumeroDeTeinte);
-				String nomProduitRecup = getIntent().getStringExtra(
-						ActivityParam.NomProduit);
+				// String MarqueChoisie = getIntent().getStringExtra(
+				// ActivityParam.Marque);
+				// String DureeVie = getIntent().getStringExtra(
+				// ActivityParam.DurreeDeVie);
+				// String DateChoisie = getIntent().getStringExtra(
+				// ActivityParam.DateAchat);
+				// String numTeinte = getIntent().getStringExtra(
+				// ActivityParam.NumeroDeTeinte);
+				// String nomProduitRecup = getIntent().getStringExtra(
+				// ActivityParam.NomProduit);
 
 				intent = new Intent(this, formulaire_entree_page1bis.class);
-				intent.putExtra(ActivityParam.Marque, MarqueChoisie.trim());
-				intent.putExtra(ActivityParam.DurreeDeVie, DureeVie.trim());
-				intent.putExtra(ActivityParam.DateAchat, DateChoisie.trim());
-				intent.putExtra(ActivityParam.NumeroDeTeinte, numTeinte.trim());
-				intent.putExtra(ActivityParam.NomProduit,
-						nomProduitRecup.trim());
+				transfereMlProduitToActivity(intent);
+				// intent.putExtra(ActivityParam.Marque, MarqueChoisie.trim());
+				// intent.putExtra(ActivityParam.DurreeDeVie, DureeVie.trim());
+				// intent.putExtra(ActivityParam.DateAchat, DateChoisie.trim());
+				// intent.putExtra(ActivityParam.NumeroDeTeinte,
+				// numTeinte.trim());
+				// intent.putExtra(ActivityParam.NomProduit,
+				// nomProduitRecup.trim());
 
 			}
 			if (isLaunchBypagerecap) {
-				String MarqueChoisie = getIntent().getStringExtra(
-						ActivityParam.Marque);
-				String DureeVie = getIntent().getStringExtra(
-						ActivityParam.DurreeDeVie);
-				String DateChoisie = getIntent().getStringExtra(
-						ActivityParam.DateAchat);
-				String numTeinte = getIntent().getStringExtra(
-						ActivityParam.NumeroDeTeinte);
-				String nomProduitRecup = getIntent().getStringExtra(
-						ActivityParam.NomProduit);
+				// String MarqueChoisie = getIntent().getStringExtra(
+				// ActivityParam.Marque);
+				// String DureeVie = getIntent().getStringExtra(
+				// ActivityParam.DurreeDeVie);
+				// String DateChoisie = getIntent().getStringExtra(
+				// ActivityParam.DateAchat);
+				// String numTeinte = getIntent().getStringExtra(
+				// ActivityParam.NumeroDeTeinte);
+				// String nomProduitRecup = getIntent().getStringExtra(
+				// ActivityParam.NomProduit);
 
 				intent = new Intent(this, formulaire_entree_page3.class);
-				intent.putExtra(ActivityParam.Marque, MarqueChoisie.trim());
-				intent.putExtra(ActivityParam.DurreeDeVie, DureeVie.trim());
-				intent.putExtra(ActivityParam.DateAchat, DateChoisie.trim());
-				intent.putExtra(ActivityParam.NumeroDeTeinte, numTeinte.trim());
-				intent.putExtra(ActivityParam.NomProduit,
-						nomProduitRecup.trim());
+				transfereMlProduitToActivity(intent);
+				// intent.putExtra(ActivityParam.Marque, MarqueChoisie.trim());
+				// intent.putExtra(ActivityParam.DurreeDeVie, DureeVie.trim());
+				// intent.putExtra(ActivityParam.DateAchat, DateChoisie.trim());
+				// intent.putExtra(ActivityParam.NumeroDeTeinte,
+				// numTeinte.trim());
+				// intent.putExtra(ActivityParam.NomProduit,
+				// nomProduitRecup.trim());
 			}
 			if (isLaunchByMain) {
 				intent = new Intent(this, Main.class);
@@ -196,6 +216,51 @@ public class SuperParamActivity extends Activity {
 	 */
 	private void termineActivity() {
 		finish();
+	}
+
+	public MlNote recupereMlNoteFromPreviousActivity() {
+		byte[] extra = getIntent().getByteArrayExtra(
+				MlNote.class.getCanonicalName());
+		if (extra != null) {
+			Object o = SerialisableHelper.deserializeObject(extra);
+			if (o instanceof MlNote) {
+				note = (MlNote) o;
+			}
+		}
+
+		return note;
+	}
+
+	public MlProduit recupereMlProduitfromPreviousActivity() {
+
+		byte[] extra = getIntent().getByteArrayExtra(
+				MlProduit.class.getCanonicalName());
+		if (extra != null) {
+			Object o = SerialisableHelper.deserializeObject(extra);
+			if (o instanceof MlProduit) {
+				produit = (MlProduit) o;
+			}
+		}
+
+		return produit;
+	}
+
+	public void transfereMlProduitToActivity(Intent p_intent) {
+		if (produit == null) {
+			produit = new MlProduit();
+		}
+
+		p_intent.putExtra(MlProduit.class.getCanonicalName(),
+				SerialisableHelper.serialize(produit));
+
+	}
+
+	public void transfereMlNoteToActivity(Intent p_intent) {
+		if (note == null) {
+			note = new MlNote();
+		}
+		p_intent.putExtra(MlNote.class.getCanonicalName(),
+				SerialisableHelper.serialize(note));
 	}
 
 }
